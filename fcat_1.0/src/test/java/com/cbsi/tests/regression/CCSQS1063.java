@@ -25,7 +25,7 @@ public class CCSQS1063 extends BaseTest{
 	private String tempFile = "";
 	
 	@Test
-	public void DisableSaveIfRequiredFieldsNotFilled(){
+	public void DisableSaveIfRequiredFieldsNotFilled() throws InterruptedException{
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		//System.out.println("passed first...");
 		//driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
@@ -37,7 +37,8 @@ public class CCSQS1063 extends BaseTest{
 		UploadPopupPage uploadPopupPage = addCatalogsPage.fillInName();
 		
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage.uploadFile("LondonDrugsTxt");
+		
+		uploadPopupPage.uploadLocalFileFromFinder();
 		uploadPopupPage.clickNext();
 		
 		MappingPage mappingPage = uploadPopupPage.clickNextAfterUpload();
@@ -46,8 +47,9 @@ public class CCSQS1063 extends BaseTest{
 	}
 
 
+	
 	@After
-	public void cleanup(){
+	public void cleanUp(){
 		super.cleanUpThenDeleteTemp(tempFile);
 	}
 

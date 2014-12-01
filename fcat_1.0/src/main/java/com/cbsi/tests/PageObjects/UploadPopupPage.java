@@ -1,6 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -114,5 +115,20 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		return progress.getText();
+	}
+	
+	public UploadPopupPage uploadLocalFileFromFinder() throws InterruptedException{
+		Thread.sleep(1500);
+		WebElement fileInput = null;
+		try{
+			fileInput = driver.findElement(By.cssSelector("input[type='file']"));
+			System.out.println("found input type file");
+		}catch(NoSuchElementException e){
+			System.out.println("didn't find input type file");
+		}
+		
+		fileInput.sendKeys("/Users/alpark/Documents/LondonDrugsTxt.csv");
+		
+		return this;
 	}
 }

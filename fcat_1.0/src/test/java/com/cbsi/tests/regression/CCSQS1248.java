@@ -1,6 +1,9 @@
 package com.cbsi.tests.regression;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.BaseTest;
@@ -21,9 +24,15 @@ public class CCSQS1248 extends BaseTest{
 		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
 		UploadPopupPage uploadPopupPage = catalogPage.clickUpload();
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage.uploadFile("LondonDrugsTxt");
+		//uploadPopupPage.uploadFile("LondonDrugsTxt");
+		
+		//Trying finder grab with selenium
+		uploadPopupPage.uploadLocalFileFromFinder();
+		
+		
 		
 		uploadPopupPage.clickNext();
+		
 		//System.out.println(uploadPopupPage.getProgress());
 		assert uploadPopupPage.getProgress().contains("100%");
 		

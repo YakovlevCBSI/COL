@@ -102,7 +102,9 @@ public class BaseTest {
 		}
 	}
 	
-	private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
+	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
+	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/chromedriver";
+
 	public WebDriver getChromeDriver(){
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		return new ChromeDriver();
@@ -152,7 +154,8 @@ public class BaseTest {
 			System.out.println("Delete Temp in Actions");
 			System.out.println("----------------------------");
 
-			cleanUp();
+			takeScreenshot();
+			driver.quit();
 			startUp();
 			
 			try{
@@ -164,7 +167,7 @@ public class BaseTest {
 			}
 		}
 		
-		cleanUp();
+		driver.quit();
 	}
 	
 	@Rule

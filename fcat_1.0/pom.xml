@@ -4,7 +4,10 @@
   <artifactId>FCat</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  <dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
    <build>
 	<plugins>
       <plugin>
@@ -20,6 +23,7 @@
     </plugins>
   </build>
   
+  <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

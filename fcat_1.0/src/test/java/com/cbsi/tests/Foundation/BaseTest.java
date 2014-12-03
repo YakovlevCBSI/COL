@@ -112,7 +112,7 @@ public class BaseTest {
 	}
 	
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
-	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/2.12/";
+	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/2.11/";
 
 	public WebDriver getChromeDriver(){
 		

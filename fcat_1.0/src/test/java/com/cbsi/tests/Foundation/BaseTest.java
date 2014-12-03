@@ -127,7 +127,7 @@ public class BaseTest {
 		}
 		else{
 			//pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
-			pathToChromeDriver = "/home/qe/Desktop/chromedriver_linux32";
+			pathToChromeDriver = "/usr/local/bin/chromedriver_linux32";
 		}
 		
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);

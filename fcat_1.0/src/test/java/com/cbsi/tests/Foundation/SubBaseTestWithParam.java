@@ -10,20 +10,17 @@ import org.junit.Test;
  *
  */
 public class SubBaseTestWithParam extends BaseTest{
+
+	public SubBaseTestWithParam(String URL, String browser) {
+		super(URL, browser);
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
 	}
 	*/
-	
-	public SubBaseTestWithParam(){
-		
-	}
-	
-	@Test
-	public void test(){
-		System.out.println("hello world");
-	}
+
 
 }

@@ -1,13 +1,24 @@
 package com.cbsi.tests.Foundation;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import com.cbsi.tests.util.GlobalVar;
+import com.cbsi.tests.util.ReadFile;
 
 
 public class ParameterFeeder {
 	private String browser="";
 	private String URL="";
+	public ParameterFeeder(){
+		
+		try {
+			ReadFile.setGlobalVars();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public Object[][] configureTestParams(){
 		

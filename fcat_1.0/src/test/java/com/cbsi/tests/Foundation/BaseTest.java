@@ -2,6 +2,7 @@ package com.cbsi.tests.Foundation;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -14,12 +15,15 @@ import org.junit.rules.TestName;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.PageObjects.BFPLoginPage;
@@ -129,10 +133,14 @@ public class BaseTest {
 			//pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
 			pathToChromeDriver = "/usr/local/bin/chromedriver_linux32";
 		}
-		
+		/**
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
-		return new ChromeDriver();
 		
+		return new ChromeDriver();
+		*/
+		
+		Capabilities caps = DesiredCapabilities.chrome();
+		return new RemoteWebDriver(caps);
 	}
 	
 	@After

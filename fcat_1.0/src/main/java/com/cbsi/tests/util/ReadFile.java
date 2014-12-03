@@ -40,6 +40,7 @@ public class ReadFile {
 		GlobalVar.BFPServer = tempVar[6];	
 	}
 	
+	//For debug.
 	public static void main(String[] args){
 		try {
 			setGlobalVars();
@@ -48,7 +49,7 @@ public class ReadFile {
 			e.printStackTrace();
 		}
 		
-		System.out.println(GlobalVar.stageServer);
+		//System.out.println(GlobalVar.stageServer);
 	}
 	
 	

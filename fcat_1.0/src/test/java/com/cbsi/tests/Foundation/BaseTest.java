@@ -8,6 +8,7 @@ import java.util.Collection;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.junit.rules.Timeout;
@@ -27,6 +28,7 @@ import com.cbsi.tests.PageObjects.EmbedPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
 import com.cbsi.tests.util.GlobalVar;
+import com.cbsi.tests.util.ReadFile;
 
 @RunWith(Parameterized.class)
 public class BaseTest {
@@ -34,10 +36,6 @@ public class BaseTest {
 	
 	private String browser;
 	private String URL;
-	
-	public BaseTest(){
-		
-	}
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
@@ -58,6 +56,17 @@ public class BaseTest {
 	@Rule 
 	public Timeout globalTimeout = new Timeout(120000);
 	
+	/**
+	@BeforeClass
+	public static void configureSetup(){
+		try {
+			ReadFile.setGlobalVars();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
 	@Before
 	public void startUp(){
 	

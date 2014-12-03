@@ -130,17 +130,17 @@ public class BaseTest {
 			pathToChromeDriver = pathToChromeDriver + "chromedriver_mac32";
 		}
 		else{
-			//pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
-			pathToChromeDriver = "/usr/local/bin/chromedriver_linux32";
+			pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
+			//pathToChromeDriver = "/usr/local/bin/chromedriver_linux32";
 		}
-		/**
+		
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		
 		return new ChromeDriver();
-		*/
 		
-		Capabilities caps = DesiredCapabilities.chrome();
-		return new RemoteWebDriver(caps);
+		
+		//Capabilities caps = DesiredCapabilities.chrome();
+		//return new RemoteWebDriver(caps);
 	}
 	
 	@After

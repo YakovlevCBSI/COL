@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.util.GlobalVar;
-import com.sun.org.apache.xml.internal.resolver.Catalog;
 
 public class BFPLoginPage extends BasePage{
 	public BFPLoginPage(WebDriver driver){

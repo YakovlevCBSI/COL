@@ -1,8 +1,5 @@
 package com.cbsi.tests.PageObjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 

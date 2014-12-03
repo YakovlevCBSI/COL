@@ -16,7 +16,7 @@
         <version>2.16</version>
          <configuration>
              <includes>
-                 <include>**/*.java</include>
+                 <include>**/CCSQS*.java</include>
              </includes>
          </configuration> 
       </plugin>

@@ -112,9 +112,17 @@ public class BaseTest {
 	}
 	
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
-	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/chromedriver";
+	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/";
 
 	public WebDriver getChromeDriver(){
+		
+		//Checking mac or Linux condition here for chromedriver.
+		if(System.getProperty("os.name").toLowerCase().contains("mac")){
+			pathToChromeDriver = pathToChromeDriver + "chromeDriver_Linux32";
+		}
+		else{
+			pathToChromeDriver = pathToChromeDriver + "chromedriver_mac32";
+		}
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		return new ChromeDriver();
 		

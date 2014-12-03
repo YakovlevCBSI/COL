@@ -121,7 +121,7 @@ public class BaseTest {
 			pathToChromeDriver = pathToChromeDriver + "chromedriver_mac32";
 		}
 		else{
-			pathToChromeDriver = pathToChromeDriver + "chromeDriver_Linux32";
+			pathToChromeDriver = pathToChromeDriver + "chromedriver_Linux32";
 		}
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		return new ChromeDriver();

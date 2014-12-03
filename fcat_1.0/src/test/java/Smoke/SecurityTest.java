@@ -1,7 +1,9 @@
 package Smoke;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.Test;
 
 import com.cbsi.tests.Foundation.BaseTest;
 import com.cbsi.tests.PageObjects.FCatHomePage;
@@ -17,7 +19,7 @@ public class SecurityTest extends BaseTest{
 	public void login(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage = loginPage.loginToHomePage();
-		assert(homePage.isSideBarPresent());
+		assertTrue(homePage.isSideBarPresent());
 		
 	}
 	

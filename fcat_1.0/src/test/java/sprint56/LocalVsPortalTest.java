@@ -1,8 +1,10 @@
 package sprint56;
 
-import org.testng.annotations.Test;
+import static org.junit.Assert.assertTrue;
 
-import com.cbsi.tests.Foundation.BaseTest;
+import org.junit.Test;
+
+import com.cbsi.tests.Foundation.*;
 import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
@@ -15,10 +17,10 @@ public class LocalVsPortalTest extends BaseTest{
 
 	@Test
 	public void headerShows(){
-		FCatHomePage homePage = EasyLogin();
+		FCatHomePage homePage = EasyLoginToLocal();
 		CatalogsPage catalogsPage = homePage.goToCatalogs();
 		AddCatalogPage addCatalogPage = catalogsPage.goToAddCatalog();
-		assert(addCatalogPage.isHeaderDisplayed());
+		assertTrue(addCatalogPage.isHeaderDisplayed());
 		
 	}
 }

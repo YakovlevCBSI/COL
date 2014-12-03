@@ -42,6 +42,10 @@ public class BaseTest {
 		this.browser = browser;
 	}
 	
+	/**
+	 * passing parameters to sub test classes.
+	 * @return
+	 */
 	@Parameterized.Parameters
 	public static Collection testParam(){
 		return Arrays.asList(
@@ -112,17 +116,20 @@ public class BaseTest {
 	}
 	
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
-	private String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/2.9/";
+	private double chromeDriverVersion = 2.9;
 
 	public WebDriver getChromeDriver(){
+		String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/" + chromeDriverVersion +"/";
 		
 		//Checking mac or Linux condition here for chromedriver.
 		if(System.getProperty("os.name").toLowerCase().contains("mac")){
 			pathToChromeDriver = pathToChromeDriver + "chromedriver_mac32";
 		}
 		else{
-			pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
+			//pathToChromeDriver = pathToChromeDriver + "chromedriver_linux32";
+			pathToChromeDriver = "/home/qe/Desktop/chromedriver_linux32";
 		}
+		
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		return new ChromeDriver();
 		

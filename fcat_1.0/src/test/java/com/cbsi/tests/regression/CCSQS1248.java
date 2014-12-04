@@ -1,14 +1,12 @@
 package com.cbsi.tests.regression;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.BaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
-import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 
 public class CCSQS1248 extends BaseTest{
@@ -32,9 +30,8 @@ public class CCSQS1248 extends BaseTest{
 		
 		
 		uploadPopupPage.clickNext();
-		
 		//System.out.println(uploadPopupPage.getProgress());
-		assert uploadPopupPage.getProgress().contains("100%");
+		assertTrue(uploadPopupPage.getProgress().contains("100%"));
 		
 	/**
 		//new ImageNavigation().clickImageTarget("LondonDrugsTxt.png");

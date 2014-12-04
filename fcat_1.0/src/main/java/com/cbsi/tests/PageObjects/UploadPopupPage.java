@@ -99,7 +99,7 @@ public class UploadPopupPage extends BasePage{
 		int count =0;
 		String status= "";
 		long startTime= System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < 30000){
+		while(System.currentTimeMillis() - startTime < 40000){
 			if (!status.equals(progress.getText())){
 				status = progress.getText();
 				System.out.println(status);

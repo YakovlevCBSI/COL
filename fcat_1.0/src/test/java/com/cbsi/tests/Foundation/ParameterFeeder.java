@@ -62,7 +62,7 @@ public class ParameterFeeder {
 	
 	public String[] getBrowsers(){
 		String[] browsers = {
-				//"chrome 34",
+				"chrome 34",
 				"firefox 29",
 				//"internet explorer",
 		};

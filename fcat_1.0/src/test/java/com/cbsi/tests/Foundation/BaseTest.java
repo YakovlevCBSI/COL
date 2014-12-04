@@ -62,7 +62,7 @@ public class BaseTest {
 	
 	//Need Time out rule here
 	@Rule 
-	public Timeout globalTimeout = new Timeout(120000);
+	public Timeout globalTimeout = new Timeout(150000);
 	
 	/**
 	@BeforeClass
@@ -231,7 +231,7 @@ public class BaseTest {
 	public void takeScreenshot(){
 		String testName= this.getClass().getName();
 		String methodName = testInfo.getMethodName();
-		String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_")+ ".png";
+		String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_") + "." + getBrowser()+ ".png";
 
 		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		try {

@@ -126,8 +126,9 @@ public class UploadPopupPage extends BasePage{
 		}catch(NoSuchElementException e){
 			System.out.println("didn't find input type file");
 		}
-		
-		fileInput.sendKeys("/Users/alpark/Documents/LondonDrugsTxt.csv");
+		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
+		System.out.println(pathToFile);
+		fileInput.sendKeys(pathToFile);
 		
 		return this;
 	}

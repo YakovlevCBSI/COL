@@ -2,6 +2,7 @@ package com.cbsi.tests.regression;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
@@ -16,10 +17,12 @@ public class CCSQS1248 extends BaseTest{
 		// TODO Auto-generated constructor stub
 	}
 
+	private String tempFile;
 	@Test
 	public void UploadFileViaFormBasedAuth() throws InterruptedException{
 
 		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
+		
 		UploadPopupPage uploadPopupPage = catalogPage.clickUpload();
 		uploadPopupPage.clickUploadFile();
 		//uploadPopupPage.uploadFile("LondonDrugsTxt");

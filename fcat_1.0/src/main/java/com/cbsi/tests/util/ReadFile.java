@@ -22,7 +22,7 @@ public class ReadFile {
 				inputStream.close();
 			}
 			
-			System.out.println(lines);
+			//System.out.println(lines);
 			
 			return StringUtils.substringsBetween(lines, "\"", "\"");
 	}
@@ -42,13 +42,8 @@ public class ReadFile {
 	
 	//For debug.
 	public static void main(String[] args){
-		try {
-			setGlobalVars();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		System.out.println(System.getProperty("os.name"));
+		System.out.println(System.getProperty("user.dir"));
 		//System.out.println(GlobalVar.stageServer);
 	}
 	

@@ -24,7 +24,7 @@ public class ParameterFeeder {
 		
 		int dataLength = 2;
 		int numBrowser = getBrowsers().length;
-		int numURL = 5;
+		int numURL = getURL().length;
 		int totalNumOfTest = numBrowser * numURL ;
 		
 		Object[][] objects= new Object[totalNumOfTest][dataLength];
@@ -50,10 +50,10 @@ public class ParameterFeeder {
 	public String[] getURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,
-				GlobalVar.stageServer + GlobalVar.embedPath,
-				GlobalVar.BFPServer, // BFP only embed.
-				GlobalVar.devServer,
-				GlobalVar.devServer + GlobalVar.embedPath
+				//GlobalVar.stageServer + GlobalVar.embedPath,
+				//GlobalVar.BFPServer, // BFP only embed.
+				//GlobalVar.devServer,
+				//GlobalVar.devServer + GlobalVar.embedPath
 				
 		};
 		

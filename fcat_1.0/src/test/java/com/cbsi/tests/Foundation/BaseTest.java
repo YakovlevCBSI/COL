@@ -79,6 +79,7 @@ public class BaseTest {
 	public void startUp(){
 	
 		//Test page header goes here
+		System.out.println();
 		System.out.println("\nURL: " + getURL() +  "\t\tBrowser: " + getBrowser());
 		System.out.println("------------------------------------------");
 		

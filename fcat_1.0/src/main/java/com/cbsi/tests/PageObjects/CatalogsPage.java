@@ -29,7 +29,8 @@ public class CatalogsPage extends BasePage{
 	@FindBy(css="a.link-button.navy")
 	private WebElement AddCatalog;
 	public AddCatalogPage goToAddCatalog(){
-		//customWait(20);
+		waitForElementToClickable("a.link-button.navy");
+		//customWait(10);
 		AddCatalog.click();
 		
 		return PageFactory.initElements(driver, AddCatalogPage.class);
@@ -112,6 +113,7 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public CatalogsPage deleteTempFile(String fileToDelete){
+		System.out.println("Deleting test catalog...");
 		CatalogsPage catalogsPage =PageFactory.initElements(driver, CatalogsPage.class);
 		WebElement tempElement = driver.findElement(By.linkText(fileToDelete));
 		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));

@@ -26,6 +26,7 @@ public class AddCatalogPage extends CatalogsPage {
 	
 	
 	public UploadPopupPage fillInName(){
+		System.out.println("filling out catalog name. Next...");
 		//customWait(20);
 		name.sendKeys(tempFileName);
 		customWait(5);

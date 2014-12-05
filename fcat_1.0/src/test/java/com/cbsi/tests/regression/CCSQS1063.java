@@ -3,6 +3,7 @@ package com.cbsi.tests.regression;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,7 +24,7 @@ public class CCSQS1063 extends BaseTest{
 
 
 	private String tempFile = "";
-	
+	@Ignore
 	@Test
 	public void DisableSaveIfRequiredFieldsNotFilled() throws InterruptedException{
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);

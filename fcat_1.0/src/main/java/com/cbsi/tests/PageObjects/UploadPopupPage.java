@@ -48,7 +48,7 @@ public class UploadPopupPage extends BasePage{
 	
 		Actions actions = new Actions(driver);
 		//actions.moveByOffset(100, 0).click().build().perform();
-		actions.moveToElement(UploadFile, 1000, 20).click().build().perform();
+		actions.moveToElement(UploadFile, 800, 20).click().build().perform();
 		return this;
 	}
 	
@@ -61,6 +61,7 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div#backButtonContainer a#progressNextButton")
 	private WebElement NextAfterUpload;
 	public MappingPage clickNextAfterUpload(){
+		customWait(5);
 		NextAfterUpload.click();
 		return PageFactory.initElements(driver, MappingPage.class);		
 	}

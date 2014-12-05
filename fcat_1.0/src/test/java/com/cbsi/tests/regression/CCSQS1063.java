@@ -24,7 +24,7 @@ public class CCSQS1063 extends BaseTest{
 
 
 	private String tempFile = "";
-	@Ignore
+	
 	@Test
 	public void DisableSaveIfRequiredFieldsNotFilled() throws InterruptedException{
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);

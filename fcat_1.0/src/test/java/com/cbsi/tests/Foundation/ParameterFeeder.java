@@ -50,10 +50,10 @@ public class ParameterFeeder {
 	public String[] getURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,
-				//GlobalVar.stageServer + GlobalVar.embedPath,
-				//GlobalVar.BFPServer, // BFP only embed.
-				//GlobalVar.devServer,
-				//GlobalVar.devServer + GlobalVar.embedPath
+				GlobalVar.stageServer + GlobalVar.embedPath,
+				GlobalVar.BFPServer, // BFP only embed.
+				GlobalVar.devServer,
+				GlobalVar.devServer + GlobalVar.embedPath
 				
 		};
 		
@@ -62,9 +62,10 @@ public class ParameterFeeder {
 	
 	public String[] getBrowsers(){
 		String[] browsers = {
-				"chrome 34",
-				"firefox 29",
+				"chrome 39",
+				"firefox 34",
 				//"internet explorer",
+				//safari
 		};
 		
 		return browsers;

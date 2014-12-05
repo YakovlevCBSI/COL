@@ -28,17 +28,13 @@ public class CCSQS1063 extends BaseTest{
 	@Test
 	public void DisableSaveIfRequiredFieldsNotFilled() throws InterruptedException{
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		//System.out.println("passed first...");
-		//driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
 		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
-		//System.out.println("pass catalogpsage");
-		
+
 		/** set file name to cleanup**/
 		tempFile = addCatalogsPage.getTempFileName();
+		
 		UploadPopupPage uploadPopupPage = addCatalogsPage.fillInName();
-		
 		uploadPopupPage.clickUploadFile();
-		
 		uploadPopupPage.uploadLocalFileFromFinder();
 		uploadPopupPage.clickNext();
 		

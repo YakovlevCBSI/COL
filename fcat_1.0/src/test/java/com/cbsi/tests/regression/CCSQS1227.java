@@ -19,7 +19,7 @@ public class CCSQS1227 extends BaseTest{
 	public void adminPageAlwaysRequireAuth(){
 		EmbedPage embedPage = GotoEmbedPage();
 		if(embedPage.getCurrentURL().contains(GlobalVar.embedPath)){
-			System.out.println("condition passed....");
+			System.out.println("embed page condition passed....");
 			FCatLoginPage fcatLoginPage = embedPage.goToLoginPage();
 			assertTrue(fcatLoginPage.isBeforeLoginPage());
 		}

@@ -29,9 +29,6 @@ public class CCSQS1248 extends BaseTest{
 		
 		//Trying finder grab with selenium
 		uploadPopupPage.uploadLocalFileFromFinder();
-		
-		
-		
 		uploadPopupPage.clickNext();
 		//System.out.println(uploadPopupPage.getProgress());
 		assertTrue(uploadPopupPage.getProgress().contains("100%"));

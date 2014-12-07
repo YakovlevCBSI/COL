@@ -21,14 +21,12 @@ public class Regression extends AllBaseTest{
 	}
 	
 	private String tempFile = "";
-	/**
 	@Test
 	public void CCSQS1063() throws InterruptedException{
 		MappingPage mappingPage = navigateToMappingPage();
 		assertTrue(mappingPage.isSaveDisabled());
 		
 	}
-	*/
 	@Test
 	public void UrlEncodingTextsHaveSameStyles() throws InterruptedException{
 		MappingPage mappingPage = navigateToMappingPage();

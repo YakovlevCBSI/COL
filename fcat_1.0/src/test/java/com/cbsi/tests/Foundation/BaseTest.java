@@ -36,8 +36,8 @@ import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
 import com.cbsi.tests.util.GlobalVar;
 import com.cbsi.tests.util.ReadFile;
+import com.thoughtworks.selenium.SeleneseTestBase;
 
-@RunWith(Parameterized.class)
 public class BaseTest {
 	public WebDriver driver = null;
 	
@@ -53,19 +53,13 @@ public class BaseTest {
 	 * passing parameters to sub test classes.
 	 * @return
 	 */
-	@Parameterized.Parameters
-	public static Collection testParam(){
-		return Arrays.asList(
-				new ParameterFeeder().configureTestParams()
-				);
-	}
 	
 	public String getBrowser() { return browser; }
 	public String getURL() { return URL; }
 	
 	//Need Time out rule here
 	@Rule 
-	public Timeout globalTimeout = new Timeout(150000);
+	public Timeout globalTimeout = new Timeout(180000);
 	
 	/**
 	@BeforeClass
@@ -247,7 +241,7 @@ public class BaseTest {
 	
 	//rerun failed test for false-positive cases.
 	@Rule
-	public Retry retry = new Retry(2);
+	public Retry retry = new Retry(1);
 	
 	class Retry implements TestRule {
         private int retryCount;

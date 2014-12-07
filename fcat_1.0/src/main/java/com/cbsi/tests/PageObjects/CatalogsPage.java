@@ -1,8 +1,10 @@
 package com.cbsi.tests.PageObjects;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,10 +24,18 @@ public class CatalogsPage extends BasePage{
 		//customWait(20);
 	}
 	
+	/**
+	 * switched the css path due to catalogs 
+	 */
 	@Override
 	public void waitForPageToLoad(){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.panel div.header")));
+		try{
+			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.panel div.catalogs-index")));
+		}catch(TimeoutException e){
+			System.out.println("You are on AddCatalogPage");
+		}
 	}
+	
 	@FindBy(css="a.link-button.navy")
 	private WebElement AddCatalog;
 	public AddCatalogPage goToAddCatalog(){

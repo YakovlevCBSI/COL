@@ -1,6 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -61,7 +62,7 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div#backButtonContainer a#progressNextButton")
 	private WebElement NextAfterUpload;
 	public MappingPage clickNextAfterUpload(){
-		customWait(5);
+		customWait(30);
 		NextAfterUpload.click();
 		return PageFactory.initElements(driver, MappingPage.class);		
 	}
@@ -130,6 +131,7 @@ public class UploadPopupPage extends BasePage{
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
 		System.out.println(pathToFile);
 		fileInput.sendKeys(pathToFile);
+		//fileInput.sendKeys(Keys.RETURN);
 		
 		return this;
 	}

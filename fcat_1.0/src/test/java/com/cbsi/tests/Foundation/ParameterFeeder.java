@@ -20,11 +20,23 @@ public class ParameterFeeder {
 		}
 	}
 	
-	public Object[][] configureTestParams(){
+	public Object[][] configureTestParams(String whichURLArray){
+		String[] URLs = null;
+		
+		if(whichURLArray.equals("all")){
+			URLs= getAllURL();
+		}
+		else if(whichURLArray.equals("embed")){
+			URLs = getEmbedURL();
+		}
+		else if(whichURLArray.equals("form")){
+			URLs = getFormURL();
+		}
 		
 		int dataLength = 2;
 		int numBrowser = getBrowsers().length;
-		int numURL = getURL().length;
+		
+		int numURL = URLs.length;
 		int totalNumOfTest = numBrowser * numURL ;
 		
 		Object[][] objects= new Object[totalNumOfTest][dataLength];
@@ -32,7 +44,7 @@ public class ParameterFeeder {
 		int count =0;
 		for(int i=0; i< objects.length; i++){
 
-				objects[i][0] = getURL()[i/numBrowser];
+				objects[i][0] = URLs[i/numBrowser];
 				
 				if(i%numBrowser == 0){
 					objects[i][1] = getBrowsers()[0];
@@ -47,7 +59,7 @@ public class ParameterFeeder {
 		
 	}
 
-	public String[] getURL(){
+	public String[] getAllURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,
 				GlobalVar.stageServer + GlobalVar.embedPath,
@@ -60,6 +72,31 @@ public class ParameterFeeder {
 		return URLs;
 	}
 	
+	public String[] getEmbedURL(){
+		String[] URLs = {
+			//	GlobalVar.stageServer,
+				GlobalVar.stageServer + GlobalVar.embedPath,
+				GlobalVar.BFPServer, // BFP only embed.
+			//	GlobalVar.devServer,
+				GlobalVar.devServer + GlobalVar.embedPath
+				
+		};
+		
+		return URLs;
+	}
+	
+	public String[] getFormURL(){
+		String[] URLs = {
+				GlobalVar.stageServer,
+				//GlobalVar.stageServer + GlobalVar.embedPath,
+				//GlobalVar.BFPServer, // BFP only embed.
+				GlobalVar.devServer,
+				//GlobalVar.devServer + GlobalVar.embedPath
+				
+		};
+		
+		return URLs;
+	}
 	public String[] getBrowsers(){
 		String[] browsers = {
 				"chrome 39",
@@ -73,7 +110,7 @@ public class ParameterFeeder {
 	}
 	
 	public static void main(String[] args){
-		Object[][] objects =  new ParameterFeeder().configureTestParams();
+		Object[][] objects =  new ParameterFeeder().configureTestParams("form");
 		for(int i= 0; i< objects.length; i++){
 			for (int j=0; j<objects[i].length; j++){
 				System.out.println(objects[i][j]);

@@ -74,20 +74,20 @@ public class BaseTest {
 	*/
 	@Before
 	public void startUp(){
-	
+		
 		//Test page header goes here
-		System.out.println();
-		System.out.println("\nURL: " + getURL() +  "\t\tBrowser: " + getBrowser());
-		System.out.println("------------------------------------------");
-		
-		
+		insertHeader();
 		driver = configureDrivers();
 		//driver.manage().window().setPosition(new Point(1200, 0));
 		navigateToHomePage();
-		
-		
-		
 		maximizeWindow();
+	}
+	
+	public void insertHeader(){
+		
+		String headerText = "testName: " + testInfo.getMethodName() + "\tURL: " + getURL() + "\tBrowser: " + getBrowser();
+		String separator = new String(new char[headerText.length()]).replace("\0", "-");
+		System.out.println(separator + "\n" + headerText + "\n" + separator);
 	}
 	
 	public WebDriver configureDrivers(){

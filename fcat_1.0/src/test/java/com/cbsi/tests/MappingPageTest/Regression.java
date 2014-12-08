@@ -27,6 +27,7 @@ public class Regression extends AllBaseTest{
 		assertTrue(mappingPage.isSaveDisabled());
 		
 	}
+	
 	@Test
 	public void UrlEncodingTextsHaveSameStyles() throws InterruptedException{
 		MappingPage mappingPage = navigateToMappingPage();

@@ -16,7 +16,7 @@
         <version>2.16</version>
          <configuration>
              <excludes>
-             	<exclude>com.cbsi.test.Foundation/**.java</exclude>
+             	<exclude>com.cbsi.test.Foundation/**</exclude>
              </excludes>
          </configuration> 
       </plugin>

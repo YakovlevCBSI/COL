@@ -1,5 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +48,37 @@ public class ProductsCatalogPage extends BasePage{
 		}catch(NoSuchElementException e){
 			return false;
 		}
+		return true;
+	}
+	
+	public boolean iconsShowCorrectly(){
+		List<WebElement> iconList = driver.findElements(By.cssSelector("tr td.actions"));
+		String gpicon= "gp-icon ";
+		
+		int count=0;
+		for(WebElement e: iconList){
+			
+			String checkOrPlus = e.findElement(By.xpath("a[1]/div")).getAttribute("class");
+			if(!(checkOrPlus.equals(gpicon + "check") || checkOrPlus.equals(gpicon + "plus"))){
+				System.out.println("check " + checkOrPlus  + "/ " + count);
+				return false;
+			}
+			
+			String edit = e.findElement(By.xpath("a[2]/div")).getAttribute("class");
+			if(!(edit.equals(gpicon +"edit"))){
+				System.out.println("edit: " + edit + "/ " + count);
+				return false;
+			}
+			
+			String trash = e.findElement(By.xpath("a[3]/div")).getAttribute("class");
+			if(!(trash.equals(gpicon + "trash"))){
+				System.out.println("trash; " + trash + "/ " + count);
+				return false;
+			}
+			
+			count++;
+		}
+		
 		return true;
 	}
 	

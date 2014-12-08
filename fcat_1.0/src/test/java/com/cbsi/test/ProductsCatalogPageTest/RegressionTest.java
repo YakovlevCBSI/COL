@@ -15,6 +15,8 @@ public class RegressionTest extends AllBaseTest{
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ProductsCatalogPage  productsCatalogPage = null;
 
 	@Test
 	public void CCSQ1246(){
@@ -25,5 +27,19 @@ public class RegressionTest extends AllBaseTest{
 		
 		//to use image or vf using html element structure.
 		assertTrue(productsCatalogPage.isTableCorrectlyRendered());
+	}
+	/**
+	@Test
+	public void ActionIconsDisplayCorrectly(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		assertTrue (productsCatalogPage.iconsShowCorrectly());
+		
+	}
+		*/
+	public ProductsCatalogPage navigateToProductsCatalogPage(){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
+		
+		return productsCatalogPage;
 	}
 }

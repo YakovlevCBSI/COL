@@ -15,10 +15,9 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.16</version>
          <configuration>
-             <includes>
-             	<include>com.cbsi.tests.MappingPageTest/*.java</include>
-                 <include>**/CCSQS*.java</include>
-             </includes>
+             <excludes>
+             	<exclude>com.cbsi.test.Foundation/**.java</exclude>
+             </excludes>
          </configuration> 
       </plugin>
       

@@ -9,9 +9,9 @@ import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 
-public class regression extends AllBaseTest{
+public class RegressionTest extends AllBaseTest{
 
-	public regression(String URL, String browser) {
+	public RegressionTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}

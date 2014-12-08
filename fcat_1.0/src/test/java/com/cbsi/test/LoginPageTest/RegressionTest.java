@@ -8,9 +8,9 @@ import com.cbsi.tests.Foundation.EmbedBaseTest;
 import com.cbsi.tests.PageObjects.EmbedPage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
 
-public class Regression extends EmbedBaseTest{
+public class RegressionTest extends EmbedBaseTest{
 
-	public Regression(String URL, String browser) {
+	public RegressionTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}

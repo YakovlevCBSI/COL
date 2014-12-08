@@ -16,7 +16,8 @@
         <version>2.16</version>
          <configuration>
              <excludes>
-             	<exclude>com.cbsi.test.Foundation/**</exclude>
+             	<exclude>com.cbsi.tests.Foundation/**</exclude>
+             	<exclude>com.cbsi.test.regression/**</exclude>
              </excludes>
          </configuration> 
       </plugin>

@@ -9,7 +9,7 @@ import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 
-public class LocalVsPortalTest extends BaseTest{
+public class LocalVsPortalTest extends AllBaseTest{
 	public LocalVsPortalTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub

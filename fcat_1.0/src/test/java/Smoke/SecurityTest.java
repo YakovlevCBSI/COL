@@ -5,11 +5,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.Foundation.BaseTest;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
 
-public class SecurityTest extends BaseTest{
+public class SecurityTest extends AllBaseTest{
 	public SecurityTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub

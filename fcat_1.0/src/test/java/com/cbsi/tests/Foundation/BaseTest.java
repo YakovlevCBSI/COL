@@ -62,13 +62,19 @@ public class BaseTest {
 	*/
 	@Before
 	public void startUp(){
-		
+		System.out.println("super before method is starting");
 		//Test page header goes here
 		insertHeader();
 		driver = configureDrivers();
 		//driver.manage().window().setPosition(new Point(1200, 0));
 		navigateToHomePage();
 		maximizeWindow();
+	}
+	
+	public void startUpWithoutLogin(){
+		insertHeader();
+		driver = configureDrivers();
+		navigateToLoginPage();
 	}
 	
 	public void insertHeader(){
@@ -92,6 +98,7 @@ public class BaseTest {
 		return emptyDriver;
 	}
 	
+	//Navigate to Catalogs page(HOMePAGe)
 	public void navigateToHomePage(){
 		driver.get(getURL());
 		if(getURL().contains(embedPath)){
@@ -105,6 +112,19 @@ public class BaseTest {
 		}
 	}
 	
+	//Navigate to Login pagedirectly.  For phx and stage formbased login.
+	public void navigateToLoginPage(){
+		driver.get(getURL());
+		if(getURL().contains(embedPath)){
+			//do nothing
+		}
+		else if (getURL().contains(BFP)){
+			//do nothing.
+		}
+		else{
+			EasyLoginToLoginPage();
+		}
+	}
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
 	private double chromeDriverVersion = 2.12;
 
@@ -148,10 +168,16 @@ public class BaseTest {
 		driver.manage().window().maximize();
 	}
 	
-	public FCatHomePage EasyLoginToLocal(){
+	public CatalogsPage EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage = loginPage.loginToHomePage();
-		homePage.goToCatalogs();
+		return homePage.goToCatalogs();
+
+	}
+	
+	public FCatHomePage EasyLoginToLoginPage(){
+		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
+		FCatHomePage homePage = loginPage.loginToHomePage();
 		return homePage;
 	}
 	

@@ -5,13 +5,19 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ProductsCatalogPage extends CatalogsPage{
+public class ProductsCatalogPage extends BasePage{
 	public ProductsCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+
 	}
 	
+	@Override
+	public void waitForPageToLoad(){
+		waitForPageToLoad(By.cssSelector("table[class*='catalog']"));
+	}
 	@FindBy(css="a.nav-button.next")
 	private WebElement goRight;
 	
@@ -22,7 +28,7 @@ public class ProductsCatalogPage extends CatalogsPage{
 		goRight.click();
 		
 		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < 20000){
+		while(System.currentTimeMillis() - startTime < 30000){
 			if(!pageNum.equals(refreshStaleElement(currentPage).getText())){
 				break;
 			}

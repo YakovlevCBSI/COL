@@ -14,7 +14,7 @@ public class AddCatalogPage extends CatalogsPage {
 
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad();
+		//waitForPageToLoad();
 	}
 	
 	@Override

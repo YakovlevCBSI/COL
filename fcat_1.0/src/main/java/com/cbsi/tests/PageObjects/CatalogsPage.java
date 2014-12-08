@@ -32,7 +32,7 @@ public class CatalogsPage extends BasePage{
 		try{
 			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.panel div.catalogs-index")));
 		}catch(TimeoutException e){
-			System.out.println("You are on AddCatalogPage");
+			System.out.println("Checking if this is addCatalogsPage");
 		}
 	}
 	

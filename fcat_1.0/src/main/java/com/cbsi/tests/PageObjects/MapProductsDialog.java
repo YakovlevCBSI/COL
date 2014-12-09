@@ -32,7 +32,9 @@ public class MapProductsDialog extends BasePage{
 	
 	public MapProductsDialog searchName(String searchText){
 		ManufactuererName.sendKeys(searchText);
+		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
 		waitForElementToBeInvisible(By.cssSelector("tbody.loading"));
+		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
 		return this;
 	}
 	

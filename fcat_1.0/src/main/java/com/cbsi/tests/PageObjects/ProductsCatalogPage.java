@@ -31,7 +31,7 @@ public class ProductsCatalogPage extends BasePage{
 		goRight.click();
 		
 		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < 30000){
+		while(System.currentTimeMillis() - startTime < 45000){
 			if(!pageNum.equals(refreshStaleElement(currentPage).getText())){
 				break;
 			}
@@ -52,13 +52,20 @@ public class ProductsCatalogPage extends BasePage{
 	
 	@FindBy(css="div[title='Not mapped']")
 	private WebElement NotMappedIcon;
-	public MapProductsDialog clickNotMappedIcon(){
-		NotMappedIcon.click();
+	
+	@FindBy(css="div[title='Mapped']")
+	private WebElement MappedIcon;
+	public MapProductsDialog clickNotMappedOrMappedIcon(){
+		try{
+			MappedIcon.click();
+		}catch(NoSuchElementException e){
+			NotMappedIcon.click();
+		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
 	}
 	
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
-		MapProductsDialog mapProductsDialog = clickNotMappedIcon();
+		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
 		mapProductsDialog.searchName(searchText).selectAnItemFromResult(nthResult);
 		return mapProductsDialog.clickSave();
 		

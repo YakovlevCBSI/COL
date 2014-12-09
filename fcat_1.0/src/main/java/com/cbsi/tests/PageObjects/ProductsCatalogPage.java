@@ -7,6 +7,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductsCatalogPage extends BasePage{
@@ -18,7 +19,7 @@ public class ProductsCatalogPage extends BasePage{
 	
 	@Override
 	public void waitForPageToLoad(){
-		waitForPageToLoad(By.cssSelector("table[class*='catalog']"));
+		waitForPageToLoad(By.cssSelector("table[class*='catalog-product-list']"));
 	}
 	@FindBy(css="a.nav-button.next")
 	private WebElement goRight;
@@ -40,8 +41,30 @@ public class ProductsCatalogPage extends BasePage{
 			throw new NoSuchElementException("Page was still loading...");
 		}
 		
-		return this;
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
+	
+	@FindBy(css="div[title='Not mapped']")
+	private WebElement NotMappedIcon;
+	public MapProductsDialog clickNotMappedIcon(){
+		NotMappedIcon.click();
+		return PageFactory.initElements(driver, MapProductsDialog.class);
+	}
+	
+	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
+		MapProductsDialog mapProductsDialog = clickNotMappedIcon();
+		mapProductsDialog.searchName(searchText).selectAnItemFromResult(nthResult);
+		return mapProductsDialog.clickSave();
+		
+	}
+	
+	
 	public boolean isTableCorrectlyRendered(){
 		try{
 			driver.findElement(By.cssSelector("table.catalog-product-list tbody tr td"));

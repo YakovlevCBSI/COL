@@ -17,7 +17,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	public ProductsCatalogPage  productsCatalogPage = null;
-
+/**
 	@Test
 	public void CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
@@ -28,18 +28,25 @@ public class RegressionTest extends AllBaseTest{
 		//to use image or vf using html element structure.
 		assertTrue(productsCatalogPage.isTableCorrectlyRendered());
 	}
-	/**
+	
 	@Test
 	public void ActionIconsDisplayCorrectly(){
 		productsCatalogPage = navigateToProductsCatalogPage();
 		assertTrue (productsCatalogPage.iconsShowCorrectly());
 		
 	}
-		*/
+	**/
+	@Test
+	public void IconsDisplayCorrectlyAfterMapping(){
+		productsCatalogPage = navigateToProductsCatalogPage().clickGoRight();
+		productsCatalogPage.mapUnmappedItem("Sony", 1);
+		assertTrue(productsCatalogPage.iconsShowCorrectly());
+	}
+		
 	public ProductsCatalogPage navigateToProductsCatalogPage(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
-		
 		return productsCatalogPage;
 	}
+	
 }

@@ -16,8 +16,8 @@
         <version>2.16</version>
          <configuration>
              <excludes>
-             	<exclude>*Foundation/*.java</exclude>
-             	<exclude>*regression/*.java</exclude>
+             	<exclude>**/*Base.java</exclude>
+             	<exclude>**/*Base*.java</exclude>
              </excludes>
          </configuration> 
       </plugin>

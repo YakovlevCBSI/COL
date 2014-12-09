@@ -17,7 +17,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	public ProductsCatalogPage  productsCatalogPage = null;
-/**
+
 	@Test
 	public void CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
@@ -35,7 +35,7 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue (productsCatalogPage.iconsShowCorrectly());
 		
 	}
-	**/
+	
 	@Test
 	public void IconsDisplayCorrectlyAfterMapping(){
 		productsCatalogPage = navigateToProductsCatalogPage().clickGoRight();

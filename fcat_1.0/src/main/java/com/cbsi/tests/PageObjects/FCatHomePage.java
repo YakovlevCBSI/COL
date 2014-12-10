@@ -17,7 +17,10 @@ public class FCatHomePage extends BasePage{
 	
 	public CatalogsPage goToCatalogs(){
 		Catalogs.click();
-		//customWait(20);
+		
+		//firefox needs wait here. Otherwise throws an exception while inititating catalogPage object.
+		customWait(20);
+		
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 	

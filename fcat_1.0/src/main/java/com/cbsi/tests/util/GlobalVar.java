@@ -15,6 +15,9 @@ public class GlobalVar {
 
 	public static String embedPath ="manageCatalog/embed-test";
 	
+	public static String BSId = "";
+	public static String BSAccessKey = "";
+	
 	
 
 	public void setBFPId(String BFPID){
@@ -43,5 +46,13 @@ public class GlobalVar {
 	
 	public void setBFPServer(String BFPServer){
 		this.BFPServer = BFPServer;
+	}
+	
+	public void setBSId(String BSId){
+		this.BSId = BSId;
+	}
+	
+	public void setBSAccessKey(String BSAccessKey){
+		this.BSAccessKey = BSAccessKey;
 	}
 }

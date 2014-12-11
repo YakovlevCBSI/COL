@@ -19,7 +19,7 @@ public class RegressionTest extends AllBaseTest{
 	public ProductsCatalogPage  productsCatalogPage = null;
 
 	@Test
-	public void CCSQ1246(){
+	public void TableRenderIssue_CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
 		productsCatalogPage.clickGoRight();
@@ -32,17 +32,40 @@ public class RegressionTest extends AllBaseTest{
 	@Test
 	public void ActionIconsDisplayCorrectly(){
 		productsCatalogPage = navigateToProductsCatalogPage();
-		assertTrue (productsCatalogPage.iconsShowCorrectly());
+		assertTrue (productsCatalogPage.actionIconsRenderCorrectly());
 		
 	}
 	
 	@Test
-	public void IconsDisplayCorrectlyAfterMapping(){
+	public void IconsDisplayCorrectlyAfterMapping_CCSQS1258(){
 		productsCatalogPage = navigateToProductsCatalogPage().clickGoRight();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
-		assertTrue(productsCatalogPage.iconsShowCorrectly());
+		assertTrue(productsCatalogPage.actionIconsRenderCorrectly());
 	}
+	
+	//Test this to see if it really collects error.(wonder if its only js error or Any console error...?
+	@Test
+	public void Error404OnMappingAnExisitngItem_CCSQS1253(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage.mapUnmappedItem("Sony", 1);
+		assertTrue(hasNoError());	
+	}
+	
+
+	@Test
+	public void Error500OnWhenNoChangesAreMadeOnMappingDialog_CCSQS1256(){
+		ProductsCatalogPage prodcutsCatalogPage = navigateToProductsCatalogPage();
+		prodcutsCatalogPage.exitWithoutSaveOnMapppingDialog();
+		assertTrue(hasNoError());
+	}
+	
+	@Test
+	public void IconsToolTipVisible(){
 		
+	}
+	
+
+
 	public ProductsCatalogPage navigateToProductsCatalogPage(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);

@@ -37,7 +37,9 @@ public class ParameterFeeder {
 		int numBrowser = getBrowsers().length;
 		
 		int numURL = URLs.length;
-		int totalNumOfTest = numBrowser * numURL ;
+		
+		//- number of browser stack used browsers * number of devserver.
+		int totalNumOfTest = numBrowser * numURL;  //- (RemovePhxForIEFromParam(URLs, getBrowsers()));
 		
 		Object[][] objects= new Object[totalNumOfTest][dataLength];
 
@@ -46,17 +48,31 @@ public class ParameterFeeder {
 
 				objects[i][0] = URLs[i/numBrowser];
 				
-				if(i%numBrowser == 0){
-					objects[i][1] = getBrowsers()[0];
-				}
-				else{
-					objects[i][1] = getBrowsers()[1];
-				}
+				objects[i][1] =getBrowsers()[i%numBrowser];
 				
 		}
 		
 		return objects;
 		
+	}
+	
+	public int RemovePhxForIEFromParam(String[] URL, String[] browsers){
+		
+		int URLToRemoveInBrowserStack=0;
+		for(String url: URL){
+			if(url.contains(GlobalVar.devServer)){
+				URLToRemoveInBrowserStack++;
+			}
+		}
+		
+		int BrowserToRemoveInBrowserStack=0;
+		for(String browser: browsers){
+			if(browser.contains("internet explorer")){
+				BrowserToRemoveInBrowserStack++;
+			}
+		}
+		
+		return URLToRemoveInBrowserStack * BrowserToRemoveInBrowserStack;
 	}
 
 	public String[] getAllURL(){
@@ -101,7 +117,7 @@ public class ParameterFeeder {
 		String[] browsers = {
 				"chrome 39",
 				"firefox 34",
-				//"internet explorer",
+				"internet explorer 11",
 				//safari
 		};
 		
@@ -110,7 +126,7 @@ public class ParameterFeeder {
 	}
 	
 	public static void main(String[] args){
-		Object[][] objects =  new ParameterFeeder().configureTestParams("form");
+		Object[][] objects =  new ParameterFeeder().configureTestParams("all");
 		for(int i= 0; i< objects.length; i++){
 			for (int j=0; j<objects[i].length; j++){
 				System.out.println(objects[i][j]);

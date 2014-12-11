@@ -36,7 +36,7 @@ public class BasePage {
 	}
 	
 	public void waitForElementToClickable(String path){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.cssSelector(path)));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.cssSelector(path)));
 
 	}
 	

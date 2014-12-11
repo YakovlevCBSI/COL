@@ -66,9 +66,17 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
-		mapProductsDialog.searchName(searchText).selectAnItemFromResult(nthResult);
+		mapProductsDialog.searchName(searchText);
+		mapProductsDialog.selectAnItemFromResult(nthResult);
+		System.out.println("item selected");
 		return mapProductsDialog.clickSave();
 		
+	}
+	
+	public ProductsCatalogPage exitWithoutSaveOnMapppingDialog(){
+		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
+		mapProductsDialog.clickSave();
+		return this;
 	}
 	
 	
@@ -81,7 +89,7 @@ public class ProductsCatalogPage extends BasePage{
 		return true;
 	}
 	
-	public boolean iconsShowCorrectly(){
+	public boolean actionIconsRenderCorrectly(){
 		List<WebElement> iconList = driver.findElements(By.cssSelector("tr td.actions"));
 		String gpicon= "gp-icon ";
 		

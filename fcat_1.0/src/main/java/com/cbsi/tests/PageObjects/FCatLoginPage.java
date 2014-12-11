@@ -12,7 +12,7 @@ public class FCatLoginPage extends BasePage{
 
 	public FCatLoginPage(WebDriver driver) {
 		super(driver);
-		waitForPageToLoad(By.cssSelector("div#header a"));
+		waitForPageToLoad(By.cssSelector("div[role='region']"));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -50,11 +50,12 @@ public class FCatLoginPage extends BasePage{
 		customWait(5);
 		LoginLink.click();
 		
-		customWait(5);
-		usernameField.click();
+		customWait(20);
+		//usernameField.click();
 		usernameField.sendKeys(adminU);
 		
-		passwordField.click();
+		customWait(20);
+		//passwordField.click();
 		passwordField.sendKeys(adminP);
 		
 		Submit.click();

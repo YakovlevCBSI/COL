@@ -20,18 +20,11 @@ public class RegressionTest extends AllBaseTest{
 	
 	@Test
 	public void CCSQS1248() throws InterruptedException{
-
-		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
-
-		UploadPopupPage uploadPopupPage = catalogPage.clickUpload();
-		uploadPopupPage.clickUploadFile();
-		//uploadPopupPage.uploadFile("LondonDrugsTxt");
-		
-		//Trying finder grab with selenium
-		uploadPopupPage.uploadLocalFileFromFinder();
-		uploadPopupPage.clickNext();
-		//System.out.println(uploadPopupPage.getProgress());
+		UploadPopupPage uploadPopupPage = UploadFile();
 		assertTrue(uploadPopupPage.getProgress().contains("100%"));
 	}
 
+	
+
+	
 }

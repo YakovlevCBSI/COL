@@ -21,6 +21,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	private String tempFile = "";
+	
 	@Test
 	public void CCSQS1063() throws InterruptedException{
 		MappingPage mappingPage = navigateToMappingPage();
@@ -50,8 +51,7 @@ public class RegressionTest extends AllBaseTest{
 		
 		UploadPopupPage uploadPopupPage = addCatalogsPage.fillInName();
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage.uploadLocalFileFromFinder();
-		uploadPopupPage.clickNext();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
 		
 		MappingPage mappingPage = uploadPopupPage.clickNextAfterUpload();
 		return mappingPage;

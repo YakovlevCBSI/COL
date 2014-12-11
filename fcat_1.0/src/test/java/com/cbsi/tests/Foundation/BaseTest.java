@@ -2,6 +2,13 @@ package com.cbsi.tests.Foundation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -17,6 +24,13 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.PageObjects.BFPLoginPage;
@@ -24,6 +38,7 @@ import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EmbedPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
+import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
 public class BaseTest {
@@ -47,7 +62,7 @@ public class BaseTest {
 	
 	//Need Time out rule here
 	@Rule 
-	public Timeout globalTimeout = new Timeout(180000);
+	public Timeout globalTimeout = new Timeout(240000);
 	
 	/**
 	@BeforeClass
@@ -62,7 +77,7 @@ public class BaseTest {
 	*/
 	@Before
 	public void startUp(){
-		System.out.println("super before method is starting");
+		//System.out.println("super before method is starting");
 		//Test page header goes here
 		insertHeader();
 		driver = configureDrivers();
@@ -90,7 +105,10 @@ public class BaseTest {
 		if(getBrowser().contains("chrome")){
 			System.out.println("in chromecondition");
 			emptyDriver = getChromeDriver();
-		}else{
+		}else if(getBrowser().contains("internet explorer")){
+			emptyDriver = getIEDriver();
+		}
+		else{
 			emptyDriver = new FirefoxDriver();
 			System.out.println("in firefox conditions");
 		}
@@ -142,18 +160,61 @@ public class BaseTest {
 		
 		System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
 		
-		return new ChromeDriver();
+		// Adding logging caps to chromedriver.  This is required for reading console messages.
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		LoggingPreferences logprefs = new LoggingPreferences();
+		logprefs.enable(LogType.BROWSER, Level.ALL);
+		caps.setCapability(CapabilityType.LOGGING_PREFS, logprefs);
+		
+		return new ChromeDriver(caps);
 		
 		
 		//Capabilities caps = DesiredCapabilities.chrome();
 		//return new RemoteWebDriver(caps);
 	}
 	
+	public String browserStackHub = "http://" + GlobalVar.BSId + ":" + GlobalVar.BSAccessKey + "@hub.browserstack.com/wd/hub";
+	
+	//Using IE on browserStack.
+	public WebDriver getIEDriver(){
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setCapability("browser", "IE");
+		caps.setCapability("os", "Windows");
+		caps.setCapability("os_version", "7");
+		caps.setCapability("browserstack.debug", "true");
+		caps.setCapability("browserstack.local", "true");
+		//caps.setCapability("browserstack.localIdentifier", "Test123");
+		String version = "";
+		
+		if(getBrowser().contains("11")){	
+			version = "11.0";
+		}
+		else if(getBrowser().contains("10")){
+			version = "10.0";
+		}
+		
+		caps.setCapability("browser_version", version);	
+		
+		//System.out.println("bsh: " + browserStackHub);
+		try {
+			driver = new RemoteWebDriver(new URL(browserStackHub), caps);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Failed to connect to browser stack hub...");
+			e.printStackTrace();
+		}
+		
+		driver.manage().deleteCookieNamed("JSESSIONID");
+		return driver;
+	}
+	
 	@After
 	public void cleanUp(){
 		
-		takeScreenshot();
-		driver.quit();
+		if (driver != null){
+			takeScreenshot();
+			driver.quit();
+		}
 		//screenshot
 		//run again for false positive
 	}
@@ -255,7 +316,7 @@ public class BaseTest {
 	
 	//rerun failed test for false-positive cases.
 	@Rule
-	public Retry retry = new Retry(1);
+	public Retry retry = new Retry(System.getProperty("user.name").equals("jenkins")?2:1);
 	
 	class Retry implements TestRule {
         private int retryCount;
@@ -281,6 +342,7 @@ public class BaseTest {
                             return;
                         } catch (Throwable t) {
                             caughtThrowable = t;
+              
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
                         }
                     }
@@ -290,4 +352,74 @@ public class BaseTest {
             };
         }
 	}
+	
+	//------------------------------------------common methods-----------------------------------
+	
+	/**
+	 * This was for reading console error on firefox browser.  Keep it and see if this works.
+	 */
+	public boolean hasNoError(){
+		if(getBrowser().contains("firefox")){
+			List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
+			
+			if(!jsErrors.isEmpty()){
+				for(JavaScriptError e: jsErrors){
+					System.out.println("console message: " + e.getConsole());
+					System.out.println("js error message:" + e.getErrorMessage());
+				}
+				
+				return false;
+			}
+		}
+		//For Chrome this also might work w/ firefox. Haven't tested for firefox browser yet, since 
+		//our error message catcher catches firefox error that shows up on console.
+		else if(getBrowser().contains("chrome")){
+			LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+			for(LogEntry e: logEntries){
+				if(e.getLevel().toString().contains("SEVERE") ){
+					//System.out.println(e.getLevel());
+					System.out.println(e.toString());
+					return false;
+				}
+			}
+			
+		}
+		
+		//IE will return true since, there is no method to read console.
+		
+		return true;
+	}
+	
+	public UploadPopupPage uploadLocalFileOSSpecific(UploadPopupPage uploadPopupPage){
+		if(getBrowser().contains("chrome") || getBrowser().contains("firefox")){
+			try {
+				uploadPopupPage.uploadLocalFileFromFinder();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				uploadPopupPage.uploadLocalFileFromFinder("C:\\Users\\hello\\Documents\\documents\\text-sample1.txt");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return uploadPopupPage;
+	}
+	
+	public  UploadPopupPage UploadFile(){
+		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
+
+		UploadPopupPage uploadPopupPage = catalogPage.clickUpload();
+		uploadPopupPage.clickUploadFile();
+		//uploadPopupPage.uploadFile("LondonDrugsTxt");
+		
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
+
+		
+		return uploadPopupPage;
+	}
+	
 }

@@ -42,8 +42,14 @@ public class MapProductsDialog extends BasePage{
 	WebElement tbody;
 	public MapProductsDialog selectAnItemFromResult(int nthResult){
 		WebElement result = refreshStaleElement(tbody).findElement(By.xpath("tr[" + nthResult + "]/td[3]/a"));
-		quickWait();
+		customWait(5);
 		result.click();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return this;
 	}
 }

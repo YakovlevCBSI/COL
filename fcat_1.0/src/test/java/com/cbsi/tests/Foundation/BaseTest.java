@@ -204,7 +204,8 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 		
-		driver.manage().deleteCookieNamed("JSESSIONID");
+		//Not needed as of now.
+		//driver.manage().deleteCookieNamed("JSESSIONID");
 		return driver;
 	}
 	

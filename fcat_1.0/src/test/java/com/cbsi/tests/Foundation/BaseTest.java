@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+//import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -359,6 +359,8 @@ public class BaseTest {
 	 * This was for reading console error on firefox browser.  Keep it and see if this works.
 	 */
 	public boolean hasNoError(){
+		//Firefox is disable temporarily because javascriptError pacakage needs to be added separately for maven.
+		/**
 		if(getBrowser().contains("firefox")){
 			List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
 			
@@ -371,9 +373,10 @@ public class BaseTest {
 				return false;
 			}
 		}
+		*/
 		//For Chrome this also might work w/ firefox. Haven't tested for firefox browser yet, since 
 		//our error message catcher catches firefox error that shows up on console.
-		else if(getBrowser().contains("chrome")){
+		if(getBrowser().contains("chrome")){
 			LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
 			for(LogEntry e: logEntries){
 				if(e.getLevel().toString().contains("SEVERE") ){

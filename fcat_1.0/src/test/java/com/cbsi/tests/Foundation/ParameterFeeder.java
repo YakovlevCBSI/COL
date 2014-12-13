@@ -117,7 +117,7 @@ public class ParameterFeeder {
 		String[] browsers = {
 				"chrome 39",
 				"firefox 34",
-				"internet explorer 11",
+				//"internet explorer 11",
 				//safari
 		};
 		

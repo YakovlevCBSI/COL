@@ -33,7 +33,7 @@ public class ReadFile {
 		String[] tempVar = getVariables(file);
 		/**
 		System.out.println(tempVar.length);
-		for (String s: tempVar){Œ
+		for (String s: tempVar){
 			System.out.println(s);
 		}
 		*/

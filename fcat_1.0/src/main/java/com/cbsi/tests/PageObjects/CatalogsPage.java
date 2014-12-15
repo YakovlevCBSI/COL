@@ -96,6 +96,7 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public UploadPopupPage clickUpload(){
+		System.out.println("Catalog name: " + myCatalog.getText());
 		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
 		customWait(3);
 		Upload.click();

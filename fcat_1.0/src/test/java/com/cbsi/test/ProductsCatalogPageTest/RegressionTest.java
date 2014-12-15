@@ -3,6 +3,8 @@ package com.cbsi.test.ProductsCatalogPageTest;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
@@ -35,7 +37,7 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue (productsCatalogPage.actionIconsRenderCorrectly());
 		
 	}
-	
+		
 	@Test
 	public void IconsDisplayCorrectlyAfterMapping_CCSQS1258(){
 		productsCatalogPage = navigateToProductsCatalogPage().clickGoRight();
@@ -51,6 +53,11 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(hasNoError());	
 	}
 	
+	@Test
+	public void Error400ErrorOnDeleteProduct(){
+		
+	}
+	
 
 	@Test
 	public void Error500OnWhenNoChangesAreMadeOnMappingDialog_CCSQS1256(){
@@ -61,6 +68,22 @@ public class RegressionTest extends AllBaseTest{
 	
 	@Test
 	public void IconsToolTipVisible(){
+		
+	}
+	
+
+	@Test
+	public void ErrorWhenYouDeleteManualMapItem(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage.mapUnmappedItem("Sony", 1);
+		WebElement tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
+		
+		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
+		navigateToProductsCatalogPage();
+		
+		tempElement.findElement(By.xpath("../a[@class='trash']")).click();
+		
+		assertTrue(hasNoError());
 		
 	}
 	

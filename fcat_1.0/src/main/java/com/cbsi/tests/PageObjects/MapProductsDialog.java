@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import org.openqa.selenium.TimeoutException;
+
 public class MapProductsDialog extends BasePage{
 
 	public MapProductsDialog(WebDriver driver) {
@@ -21,6 +23,7 @@ public class MapProductsDialog extends BasePage{
 	private WebElement Save;
 	public ProductsCatalogPage clickSave(){
 		Save.click();
+		waitForElementToBeInvisible(By.cssSelector("div.button a[onclick*='save']"));
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
@@ -32,7 +35,11 @@ public class MapProductsDialog extends BasePage{
 	
 	public MapProductsDialog searchName(String searchText){
 		ManufactuererName.sendKeys(searchText);
-		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
+		try{
+			waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
+		}catch(TimeoutException t){
+			System.out.println("skipping wait for IE.");
+		}
 		waitForElementToBeInvisible(By.cssSelector("tbody.loading"));
 		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
 		return this;

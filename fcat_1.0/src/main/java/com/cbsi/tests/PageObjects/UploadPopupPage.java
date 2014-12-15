@@ -61,10 +61,15 @@ public class UploadPopupPage extends BasePage{
 	
 	@FindBy(css="div#backButtonContainer a#progressNextButton")
 	private WebElement NextAfterUpload;
-	public MappingPage clickNextAfterUpload(){
+	public BasePage clickNextAfterUpload(boolean noMappingDefined){
 		customWait(30);
 		NextAfterUpload.click();
+		if(noMappingDefined){
 		return PageFactory.initElements(driver, MappingPage.class);		
+		}
+		else{
+			return PageFactory.initElements(driver, DetailsPage.class);
+		}
 	}
 	
 	@FindBy(css="div.upload-result")
@@ -96,6 +101,45 @@ public class UploadPopupPage extends BasePage{
 		new ImageNavigation().clickImageTarget("OK");
 	}
 	
+	@FindBy(css="label#lb_Full_File")
+	private WebElement FullFile;
+	public UploadPopupPage checkFullFile(){
+		if(!FullFile.isSelected()){
+			FullFile.click();
+		}
+		
+		return this;
+	}
+	
+	@FindBy(css="lb_ChangeImportSettings")
+	private WebElement SetUpColumnMapping;
+	public void clickSetUpColumnMapping(){
+		if(!SetUpColumnMapping.isEnabled()){
+			SetUpColumnMapping.click();
+		}
+	}
+	
+	@FindBy(css="a.selectBox")
+	private WebElement dropbox;
+	
+	@FindBy(css="li a[rel='Comma']")
+	private WebElement CSV;
+	
+	@FindBy(css="li a[rel='Tab']")
+	private WebElement TXT;
+	
+	@FindBy(css="li a[rel='Excel']")
+	private WebElement Excel;
+	
+	public UploadPopupPage selectDropBoxOption(String option){
+		dropbox.click();
+		quickWait();
+		if(option.equals("CSV")) CSV.click();
+		else if(option.equals("TXT")) TXT.click();
+		else if(option.equals("Excel")) Excel.click();
+		
+		return this;
+	}
 
 	public String getProgress(){
 		int count =0;
@@ -140,7 +184,7 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
-	public UploadPopupPage uploadLocalFileFromFinder(String path) throws InterruptedException{
+	public UploadPopupPage uploadLocalFileFromFinder(String BigOrSmall) throws InterruptedException{
 		Thread.sleep(1500);
 		WebElement fileInput = null;
 		try{
@@ -150,7 +194,13 @@ public class UploadPopupPage extends BasePage{
 			System.out.println("didn't find input type file");
 		}
 		
-		String pathToFile = path;
+		String pathToFile ="";
+		if(BigOrSmall.equals("small")){
+			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/smallLondon.csv";
+
+		}else{
+			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
+		}
 		
 		
 		System.out.println(pathToFile);

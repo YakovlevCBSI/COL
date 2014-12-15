@@ -10,12 +10,14 @@ import java.net.URL;
 
 //import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
+
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
 import org.junit.rules.Timeout;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -42,7 +44,7 @@ import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
 public class BaseTest {
-	public WebDriver driver = null;
+	public WebDriver driver;
 	
 	private String browser;
 	private String URL;
@@ -212,10 +214,6 @@ public class BaseTest {
 	@After
 	public void cleanUp(){
 		
-		if (driver != null){
-			takeScreenshot();
-			driver.quit();
-		}
 		//screenshot
 		//run again for false positive
 	}
@@ -310,7 +308,7 @@ public class BaseTest {
 		try {
 			FileUtils.copyFile(srcFile, new File(filename));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		}
 	}
@@ -318,6 +316,11 @@ public class BaseTest {
 	//rerun failed test for false-positive cases.
 	@Rule
 	public Retry retry = new Retry(System.getProperty("user.name").equals("jenkins")?2:1);
+	
+	@Rule
+	public ScreenshotRule screenshotRule = new ScreenshotRule();
+	
+	//----------------------------Innerclass Rule for fail-try---------------------/
 	
 	class Retry implements TestRule {
         private int retryCount;
@@ -343,7 +346,7 @@ public class BaseTest {
                             return;
                         } catch (Throwable t) {
                             caughtThrowable = t;
-              
+                            //takeScreenshot();
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
                         }
                     }
@@ -354,7 +357,33 @@ public class BaseTest {
         }
 	}
 	
-	//------------------------------------------common methods-----------------------------------
+	//--------------------------------Screenshot inner class ------------------------------//
+	
+	class ScreenshotRule extends TestWatcher{
+		@Override
+		protected void failed(Throwable e, Description description){
+			takeScreenshot();
+			System.out.println("Took a screenshot");
+			//System.out.println(driver == null);
+			
+		}
+		
+		@Override
+		protected void finished(Description description){
+			//System.out.println("finished ovverride");
+
+				//System.out.println("driver clean up");
+				try{
+					driver.quit();
+				}catch(Exception e){
+					System.out.println("driver was null.. skip clean up in innerclass.");
+				}
+		
+		}
+	}
+	
+	
+	//------------------------------------------common methods-----------------------------------//
 	
 	/**
 	 * This was for reading console error on firefox browser.  Keep it and see if this works.

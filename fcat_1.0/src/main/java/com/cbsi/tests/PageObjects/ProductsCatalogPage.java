@@ -50,26 +50,44 @@ public class ProductsCatalogPage extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
+	@FindBy(css="div.page-button-bar div.link-button-bar")
+	private WebElement ReturnToList;
+	
+	public CatalogsPage clickReturnToList(){
+		//waitForElementToClickable("a.link-button.gray");
+		ReturnToList.click();
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
 	@FindBy(css="div[title='Not mapped']")
 	private WebElement NotMappedIcon;
 	
 	@FindBy(css="div[title='Mapped']")
 	private WebElement MappedIcon;
+	
+	public WebElement rowThatWasMapped;
 	public MapProductsDialog clickNotMappedOrMappedIcon(){
 		try{
+			rowThatWasMapped = MappedIcon;
 			MappedIcon.click();
 		}catch(NoSuchElementException e){
+			rowThatWasMapped = NotMappedIcon;
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
 	}
 	
+	public WebElement getRowThatWasMapped(){
+		return rowThatWasMapped;
+	}
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
 		mapProductsDialog.searchName(searchText);
 		mapProductsDialog.selectAnItemFromResult(nthResult);
 		System.out.println("item selected");
-		return mapProductsDialog.clickSave();
+		mapProductsDialog.clickSave();
+
+		return this;
 		
 	}
 	

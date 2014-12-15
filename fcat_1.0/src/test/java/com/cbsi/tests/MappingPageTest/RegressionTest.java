@@ -53,7 +53,7 @@ public class RegressionTest extends AllBaseTest{
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
 		
-		MappingPage mappingPage = uploadPopupPage.clickNextAfterUpload();
+		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
 		return mappingPage;
 	}
 }

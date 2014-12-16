@@ -19,7 +19,7 @@
              	<exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
              </excludes>
-             <!--
+             <!-- for some odd reason, jenkins fails to run with executor error in jenkins log.
              <parallel>methods</parallel>
              <threadCount>2</threadCount>
              -->

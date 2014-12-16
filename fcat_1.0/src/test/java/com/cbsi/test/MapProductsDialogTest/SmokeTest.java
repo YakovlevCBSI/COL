@@ -47,15 +47,6 @@ public class SmokeTest extends AllBaseTest{
 	   }
 	}
 	*/
-	
-	@Test
-	public void failTest(){
-		assertTrue(false);
-	}
-	
-	@Test
-	public void pass(){
-		assertTrue(true);
-	}
+
 
 }

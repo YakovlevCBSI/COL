@@ -19,8 +19,10 @@
              	<exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
              </excludes>
+             <!--
              <parallel>methods</parallel>
              <threadCount>2</threadCount>
+             -->
          </configuration> 
       </plugin>
       

@@ -76,7 +76,7 @@ public class RegressionTest extends AllBaseTest{
 	public void ErrorWhenYouDeleteManualMapItem(){
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
-		WebElement tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
+		By tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
 		
 		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
 		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();

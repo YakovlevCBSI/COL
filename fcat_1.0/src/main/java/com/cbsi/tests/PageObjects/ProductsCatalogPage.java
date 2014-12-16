@@ -50,7 +50,7 @@ public class ProductsCatalogPage extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
-	@FindBy(css="div.page-button-bar div.link-button-bar")
+	@FindBy(css="div.page-button-bar div.link-button-bar a")
 	private WebElement ReturnToList;
 	
 	public CatalogsPage clickReturnToList(){
@@ -65,19 +65,19 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div[title='Mapped']")
 	private WebElement MappedIcon;
 	
-	public WebElement rowThatWasMapped;
+	private By rowThatWasMapped;
 	public MapProductsDialog clickNotMappedOrMappedIcon(){
 		try{
-			rowThatWasMapped = MappedIcon;
+			rowThatWasMapped = By.cssSelector("div[title='Mapped']");
 			MappedIcon.click();
 		}catch(NoSuchElementException e){
-			rowThatWasMapped = NotMappedIcon;
+			rowThatWasMapped = By.cssSelector("div[title='Not mapped']");
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
 	}
 	
-	public WebElement getRowThatWasMapped(){
+	public By getRowThatWasMapped(){
 		return rowThatWasMapped;
 	}
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){

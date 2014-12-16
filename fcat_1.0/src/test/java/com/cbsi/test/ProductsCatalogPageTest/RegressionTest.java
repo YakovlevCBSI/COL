@@ -81,8 +81,14 @@ public class RegressionTest extends AllBaseTest{
 		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
 		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();
 		
-		productCatalogPage.refreshStaleElement(tempElement).findElement(By.xpath("../a[@class='trash']")).click();
+		productCatalogPage.refreshStaleElement(tempElement).findElement(By.xpath("../../a[@oldtitle='Delete']/div")).click();
 		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(hasNoError());
 		
 	}

@@ -108,11 +108,18 @@ public class BaseTest {
 			System.out.println("in chromecondition");
 			emptyDriver = getChromeDriver();
 		}else if(getBrowser().contains("internet explorer")){
+			System.out.println("in ie condition");
 			emptyDriver = getIEDriver();
 		}
 		else{
-			emptyDriver = new FirefoxDriver();
 			System.out.println("in firefox conditions");
+			try{
+			emptyDriver = new FirefoxDriver();
+			}catch(Exception e){
+				System.out.println("Failed to create a firefox driver");
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return emptyDriver;

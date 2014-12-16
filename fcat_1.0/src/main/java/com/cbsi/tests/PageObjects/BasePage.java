@@ -63,4 +63,8 @@ public class BasePage {
 	public String getCurrentURL(){
 		return driver.getCurrentUrl();
 	}
+	
+	public void refresh(){
+		driver.navigate().refresh();
+	}
 }

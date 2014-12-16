@@ -119,7 +119,7 @@ public class UploadPopupPage extends BasePage{
 		}
 	}
 	
-	@FindBy(css="a.selectBox")
+	@FindBy(css="div.tab-panel div a.selectBox span.selectBox-arrow")
 	private WebElement dropbox;
 	
 	@FindBy(css="li a[rel='Comma']")
@@ -132,6 +132,12 @@ public class UploadPopupPage extends BasePage{
 	private WebElement Excel;
 	
 	public UploadPopupPage selectDropBoxOption(String option){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dropbox.click();
 		quickWait();
 		if(option.equals("CSV")) CSV.click();

@@ -79,9 +79,9 @@ public class RegressionTest extends AllBaseTest{
 		WebElement tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
 		
 		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
-		navigateToProductsCatalogPage();
+		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();
 		
-		tempElement.findElement(By.xpath("../a[@class='trash']")).click();
+		productCatalogPage.refreshStaleElement(tempElement).findElement(By.xpath("../a[@class='trash']")).click();
 		
 		assertTrue(hasNoError());
 		

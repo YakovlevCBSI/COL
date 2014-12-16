@@ -32,12 +32,12 @@ public class ProductsCatalogPage extends BasePage{
 		
 		long startTime = System.currentTimeMillis();
 		while(System.currentTimeMillis() - startTime < 45000){
-			if(!pageNum.equals(refreshStaleElement(currentPage).getText())){
+			if(!pageNum.equals(refreshStaleElement(By.cssSelector("div#page-number-container-low")).getText())){
 				break;
 			}
 		}
 		
-		if(pageNum.equals(refreshStaleElement(currentPage).getText())){
+		if(pageNum.equals(refreshStaleElement(By.cssSelector("div#page-number-container-low")).getText())){
 			throw new NoSuchElementException("Page was still loading...");
 		}
 		

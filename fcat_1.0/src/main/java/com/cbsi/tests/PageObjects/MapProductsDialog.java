@@ -48,7 +48,7 @@ public class MapProductsDialog extends BasePage{
 	@FindBy(css="tbody#mapping-table-body")
 	WebElement tbody;
 	public MapProductsDialog selectAnItemFromResult(int nthResult){
-		WebElement result = refreshStaleElement(tbody).findElement(By.xpath("tr[" + nthResult + "]/td[3]/a"));
+		WebElement result = refreshStaleElement(By.cssSelector("tbody#mapping-table-body")).findElement(By.xpath("tr[" + nthResult + "]/td[3]/a"));
 		customWait(5);
 		result.click();
 		try {

@@ -24,8 +24,9 @@ public class DetailsPage extends BasePage{
 	public String getStatus(){
 		WebElement status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
 		while(status.getText().equals("In progress")){
+			System.out.println("waiting for deatils progress toc complete.");
 			refresh();
-			status = refreshStaleElement(status);
+			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
 		}
 		return status.getText();
 	}

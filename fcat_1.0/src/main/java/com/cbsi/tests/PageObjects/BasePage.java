@@ -56,8 +56,9 @@ public class BasePage {
 		new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
-	public WebElement refreshStaleElement(WebElement element){
-		return element.findElement(By.xpath("."));
+	public WebElement refreshStaleElement(By by){
+		waitForElementToBeVisible(by);
+		return driver.findElement(by);
 	}
 	
 	public String getCurrentURL(){

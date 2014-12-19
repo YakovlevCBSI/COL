@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -65,6 +66,13 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div[title='Mapped']")
 	private WebElement MappedIcon;
 	
+	@FindBy(css="a#download-catalog span")
+	private WebElement Download;
+	
+	public ProductsCatalogPage clickDownload(){
+		Download.click();
+		return this;
+	}
 	private By rowThatWasMapped;
 	public MapProductsDialog clickNotMappedOrMappedIcon(){
 		try{
@@ -75,6 +83,25 @@ public class ProductsCatalogPage extends BasePage{
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
+	}
+	
+	public ProductsCatalogPage hoverOverMappedOrNotMappedIcon(){
+		try{
+			Actions action = new Actions(driver);
+			action.moveToElement(MappedIcon).build().perform();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			MappedIcon = driver.findElement(By.cssSelector("div[title='Mapped']"));
+			System.out.println(MappedIcon.getCssValue("color"));
+		}catch(NoSuchElementException e){
+			e.printStackTrace();
+		}
+		
+		return this;
 	}
 	
 	public By getRowThatWasMapped(){
@@ -137,5 +164,15 @@ public class ProductsCatalogPage extends BasePage{
 		
 		return true;
 	}
+	
+	//-----------------------------------Delete Catalog dialog-----------------------------------------//
+	
+	@FindBy(linkText="Yes")
+	private WebElement Yes;
+	public void clickYes(){
+		waitForElementToBeVisible(By.linkText("Yes"));
+		Yes.click();
+	}
+	
 	
 }

@@ -1,11 +1,13 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +15,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CatalogsPage extends BasePage{
-
 	public CatalogsPage(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad();
@@ -24,6 +25,25 @@ public class CatalogsPage extends BasePage{
 		//customWait(20);
 	}
 	
+	public void setMyCatalog(){
+		System.out.println("looking for mycatralog eleemtn to use");
+		List<WebElement> elements = driver.findElements(By.partialLinkText("albert"));
+		WebElement elementToUse = null;
+		int count=0;
+		
+		OuterLoop:
+		for(WebElement e: elements){
+			if(!e.getText().toLowerCase().contains("ftp")){
+				elementToUse = e;
+				System.out.println("foudn mycatalog element :"+ e.getText() + " \n count:" + count);
+				break OuterLoop;
+			}
+			count++;
+		}
+		myCatalog = elementToUse;
+
+		
+	}
 	/**
 	 * switched the css path due to catalogs 
 	 */
@@ -42,7 +62,6 @@ public class CatalogsPage extends BasePage{
 		waitForElementToClickable("a.link-button.navy");
 		//customWait(10);
 		AddCatalog.click();
-		
 		return PageFactory.initElements(driver, AddCatalogPage.class);
 	}
 	
@@ -51,6 +70,7 @@ public class CatalogsPage extends BasePage{
 	 */
 	@FindBy(partialLinkText="albert")
 	private WebElement myCatalog;
+
 	//public WebElement myCatalog = driver.findElement(By.linkText("albert-test1"));
 	/**
 	//@FindBy(xpath="//tr/td[@class='actions']/a[1]")
@@ -96,8 +116,10 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public UploadPopupPage clickUpload(){
-		System.out.println("Catalog name: " + myCatalog.getText());
+		//setMyCatalog();
 		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
+		//WebElement Upload = myCatalog.findElement(By.xpath("../.."));
+
 		customWait(3);
 		Upload.click();
 		
@@ -121,6 +143,17 @@ public class CatalogsPage extends BasePage{
 	protected String tempFileName = System.currentTimeMillis() + "";
 	public String getTempFileName(){
 		return tempFileName;
+	}
+	
+	public List<String> getCatalogNamesAsList(){
+		List<WebElement> catalogNameList = driver.findElements(By.cssSelector("tbody[id*='catalog-list'] td.name-column a"));
+		List<String> catalogNameAsString = new ArrayList<String>();
+		
+		for(WebElement e: catalogNameList){
+			catalogNameAsString.add(e.getText());
+		}
+		
+		return catalogNameAsString;
 	}
 	
 	public CatalogsPage deleteTempFile(String fileToDelete){
@@ -153,6 +186,5 @@ public class CatalogsPage extends BasePage{
 	
 	}
 	
-	
-	
+
 }

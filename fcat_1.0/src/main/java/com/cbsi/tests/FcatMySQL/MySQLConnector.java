@@ -1,0 +1,104 @@
+package com.cbsi.tests.FcatMySQL;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.cbsi.tests.FCatSqlObject.Catalog;
+
+public class MySQLConnector {
+	
+	//ALL CREDITINAL SHOULD GO ON FCATCredit.txt
+	static String dbURL = "jdbc:mysql://fcat-engine.cloudapp.net:3306";
+	static String userName = "greenbox";
+	static String password = "greenbox";
+	
+	//#####################################################################//
+	
+	static String dbClass = "com.mysql.jdbc.Driver";
+	
+	private static Connection con;
+	
+	public MySQLConnector connectToFcatDB(){
+		
+		try {
+			Class.forName(dbClass).newInstance();
+			con = DriverManager.getConnection(dbURL, userName, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return this;
+	}
+	
+	
+	public <T> List<T> runQuery(String query, Class<T> c1){
+		List<T> objectList = null;
+		try{
+
+			Statement stmt = (Statement) con.createStatement();
+			PreparedStatement prs= con.prepareStatement(query);
+			ResultSet result = (ResultSet) prs.executeQuery();
+			
+			objectList = new ArrayList<T>();
+			
+			while(result.next()){
+				T inst = c1.newInstance();
+				if(inst instanceof Catalog){
+					Catalog catalog = new Catalog();
+					catalog.setCatalog_name(result.getString("catalog_name"));
+					//catalog.setCreated(result.getDate("created"));
+					//catalog.setParty(result.getBigDecimal("party"));
+					catalog.setItemCount(result.getBigDecimal("item_count"));
+					catalog.setModifiedBy(result.getString("modified_by"));
+					
+					objectList.add((T) catalog);
+				}
+				
+			}
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return objectList;
+	}
+	
+	
+	//--------------------------------------Debug--------------------------------------------//
+	
+	public static void main(String[] args) throws InterruptedException{
+		String query = "select *from fcat.catalog"
+				+ " where fcat.catalog.party = 1 and not active =0" 
+				+ " order by catalog_name";
+		
+		List<Catalog> list = new MySQLConnector().connectToFcatDB().runQuery(query, Catalog.class);
+		
+		for(Catalog c: list){
+			System.out.println(c.getCatalog_name());
+		}
+	}
+}

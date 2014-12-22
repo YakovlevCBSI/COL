@@ -32,6 +32,9 @@ public class ParameterFeeder {
 		else if(whichURLArray.equals("form")){
 			URLs = getFormURL();
 		}
+		else if(whichURLArray.equals("stage")){
+			URLs = getStageURL();
+		}
 		
 		int dataLength = 2;
 		int numBrowser = getBrowsers().length;
@@ -107,6 +110,19 @@ public class ParameterFeeder {
 				//GlobalVar.stageServer + GlobalVar.embedPath,
 				//GlobalVar.BFPServer, // BFP only embed.
 				GlobalVar.devServer,
+				//GlobalVar.devServer + GlobalVar.embedPath
+				
+		};
+		
+		return URLs;
+	}
+	
+	public String[] getStageURL(){
+		String[] URLs = {
+				GlobalVar.stageServer,
+				GlobalVar.stageServer + GlobalVar.embedPath,
+				//GlobalVar.BFPServer, // BFP only embed.
+				//GlobalVar.devServer,
 				//GlobalVar.devServer + GlobalVar.embedPath
 				
 		};

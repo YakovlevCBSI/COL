@@ -41,7 +41,9 @@ public class RegressionTest extends AllBaseTest{
 		super.cleanUpThenDeleteTemp(tempFile);
 	}
 	
-	//-------------------------------common methods-----------------------------------//
+	
+	//-------------------------------------------  Helper Method --------------------------------------------//
+
 	public MappingPage navigateToMappingPage() throws InterruptedException{
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();

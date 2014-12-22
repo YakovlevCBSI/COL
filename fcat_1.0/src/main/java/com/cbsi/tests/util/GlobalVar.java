@@ -1,7 +1,5 @@
 package com.cbsi.tests.util;
 
-import java.io.IOException;
-
 public class GlobalVar {
 	public static String BFPId = "";
 	public static String BFPPw= "";
@@ -18,6 +16,9 @@ public class GlobalVar {
 	public static String BSId = "";
 	public static String BSAccessKey = "";
 	
+	public static String dbURL = "";
+	public static String dbUserName="";
+	public static String dbPassword="";
 	
 
 	public void setBFPId(String BFPID){
@@ -54,5 +55,15 @@ public class GlobalVar {
 	
 	public void setBSAccessKey(String BSAccessKey){
 		this.BSAccessKey = BSAccessKey;
+	}
+	
+	public void setDbURL(String dbURL){
+		this.dbURL = dbURL;
+	}
+	public void setDbUserName(String dbUserName){
+		this.dbUserName = dbUserName;
+	}
+	public void setDbPassword(String dbPassword){
+		this.dbPassword = dbPassword;
 	}
 }

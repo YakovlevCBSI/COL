@@ -140,13 +140,14 @@ public class BaseTest {
 	}
 	
 	//Navigate to Login pagedirectly.  For phx and stage formbased login.
+
 	public void navigateToLoginPage(){
 		driver.get(getURL());
 		if(getURL().contains(embedPath)){
 			//do nothing
 		}
 		else if (getURL().contains(BFP)){
-			//do nothing.
+			EasyLoginToBFP();
 		}
 		else{
 			EasyLoginToLoginPage();
@@ -413,7 +414,7 @@ public class BaseTest {
 		*/
 		//For Chrome this also might work w/ firefox. Haven't tested for firefox browser yet, since 
 		//our error message catcher catches firefox error that shows up on console.
-		if(getBrowser().contains("chrome")){
+		if(getBrowser().contains("chrome") || getBrowser().contains("firefox")){
 			LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
 			for(LogEntry e: logEntries){
 				if(e.getLevel().toString().contains("SEVERE") ){

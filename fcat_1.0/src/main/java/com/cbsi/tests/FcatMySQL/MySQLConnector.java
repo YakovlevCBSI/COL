@@ -14,13 +14,14 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.cbsi.tests.FCatSqlObject.Catalog;
+import com.cbsi.tests.util.GlobalVar;
 
 public class MySQLConnector {
 	
 	//ALL CREDITINAL SHOULD GO ON FCATCredit.txt
-	static String dbURL = "jdbc:mysql://fcat-engine.cloudapp.net:3306";
-	static String userName = "greenbox";
-	static String password = "greenbox";
+	static String dbURL = GlobalVar.dbURL;
+	static String userName = GlobalVar.dbUserName;
+	static String password = GlobalVar.dbPassword;
 	
 	//#####################################################################//
 	

@@ -46,6 +46,9 @@ public class ReadFile {
 		GlobalVar.BFPServer = tempVar[6];
 		GlobalVar.BSId= tempVar[7];
 		GlobalVar.BSAccessKey= tempVar[8];
+		GlobalVar.dbURL=tempVar[9];
+		GlobalVar.dbUserName=tempVar[10];
+		GlobalVar.dbPassword=tempVar[11];
 	}
 	
 	//For debug.
@@ -54,10 +57,12 @@ public class ReadFile {
 		System.out.println(System.getProperty("os.name"));
 		System.out.println(System.getProperty("user.dir"));
 		System.out.println(System.getProperty("user.home"));
-		//System.out.println(GlobalVar.stageServer);
+		*///System.out.println(GlobalVar.stageServer);
 		ReadFile.setGlobalVars();
 		System.out.println(GlobalVar.BSId + "/ " + GlobalVar.BSAccessKey);
-		*/
+		
+		
+		System.out.println(GlobalVar.dbURL + "\n" + GlobalVar.dbUserName + "\n" + GlobalVar.dbPassword);
 	}
 	
 	

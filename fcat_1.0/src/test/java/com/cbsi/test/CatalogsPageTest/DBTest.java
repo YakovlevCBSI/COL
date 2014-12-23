@@ -90,6 +90,8 @@ public class DBTest extends StageBaseTest{
 	@Test
 	public void allPartiesDisplayInPartySelectorDialog(){
 		//get parties from first three pages, then match with db.
+		if(getURL().contains(GlobalVar.embedPath)) return;
+		
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		PartyPopupPage partyPopup = catalogsPage.clickSearchParty();
 

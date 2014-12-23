@@ -186,5 +186,14 @@ public class CatalogsPage extends BasePage{
 	
 	}
 	
+	@FindBy(id="topbar-party-search")
+	private WebElement searchParty;
+	
+	public PartyPopupPage clickSearchParty(){
+		searchParty.click();
+		return PageFactory.initElements(driver, PartyPopupPage.class);
+	}
+	
+	
 
 }

@@ -21,7 +21,9 @@ import com.cbsi.tests.FCatSqlObject.Catalog;
 import com.cbsi.tests.FcatMySQL.MySQLConnector;
 import com.cbsi.tests.Foundation.StageBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
+import com.cbsi.tests.PageObjects.PartyPopupPage;
 import com.cbsi.tests.util.GlobalVar;
+
 
 public class DBTest extends StageBaseTest{
 
@@ -37,16 +39,28 @@ public class DBTest extends StageBaseTest{
 	private static String query_CatalogNamesEmbed = "select * from fcat.catalog " + 
 			"where not active = 0 and fcat.catalog.party = 5 " + 
 			"order by catalog_name";
+	/**
+	private static String query_searchPartyLimit30 = "SELECT (party_name) FROM fcat.catalog " + 
+													"right join fcat.party " + 
+													"on fcat.catalog.party = fcat.party.id " + 
+													"order by party_name limit 30";
+													*/
+	private static String query_searchPartyLimit30 = "SELECT (party_name) FROM fcat.party " + 
+			"order by party_name limit 30";
 	
 	private static List<com.cbsi.tests.FCatSqlObject.Catalog> catalogsFromForm;
 	private static List<com.cbsi.tests.FCatSqlObject.Catalog> catalogsFromEmbed;
+	private static List<String> partiesLimit30;
 
 	
 	@BeforeClass
 	public static void readFromDB(){
-		catalogsFromForm = new MySQLConnector().connectToFcatDB().runQuery(query_CatalogNamesForm, com.cbsi.tests.FCatSqlObject.Catalog.class);
-		catalogsFromEmbed = new MySQLConnector().connectToFcatDB().runQuery(query_CatalogNamesEmbed, com.cbsi.tests.FCatSqlObject.Catalog.class);
-
+		MySQLConnector mysql = new MySQLConnector();
+		catalogsFromForm = mysql.connectToFcatDB().runQuery(query_CatalogNamesForm, com.cbsi.tests.FCatSqlObject.Catalog.class);
+		catalogsFromEmbed = mysql.connectToFcatDB().runQuery(query_CatalogNamesEmbed, com.cbsi.tests.FCatSqlObject.Catalog.class);
+		partiesLimit30 = mysql.runQuery(query_searchPartyLimit30);
+		mysql.quit();
+		
 	}
 
 	
@@ -71,9 +85,45 @@ public class DBTest extends StageBaseTest{
 		
 		assertTrue(twoListsAreEqual(catalogsNameFromSQL, catalogNameFromWeb));
 		
+	}
+
+	@Test
+	public void allPartiesDisplayInPartySelectorDialog(){
+		//get parties from first three pages, then match with db.
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		PartyPopupPage partyPopup = catalogsPage.clickSearchParty();
+
+		List<String> searchElementsPage1 = partyPopup.searchResultToText();
+		List<String> searchElementsPage2 = partyPopup.clickNext().searchResultToText();
+		List<String> searchElementsPage3 = partyPopup.clickNext().searchResultToText();
 		
+		List<String> searchElementsAll = new ArrayList<String>();
+		
+		searchElementsAll.addAll(searchElementsPage1);
+		searchElementsAll.addAll(searchElementsPage2);
+		searchElementsAll.addAll(searchElementsPage3);
+		/**
+		System.out.println(searchElementsAll.size());
+		for(String s: searchElementsAll){
+			System.out.println(s);
+		}
+		*/
+		assertTrue(twoListsAreEqual(partiesLimit30, searchElementsAll));
+		
+	
 		
 	}
+	
+	@Test
+	public void PartyChooserSearchMatchesDB(){
+		//search some party, then match with db
+	}
+	
+	@Test
+	public void selectPartyMatchesCorrectOnDB(){
+		
+	}
+	
 	/**
 	@Test
 	public void DisplayNumberOfProductsMatchDB(){
@@ -120,8 +170,13 @@ public class DBTest extends StageBaseTest{
 				System.out.println();
 				System.out.println("list1: ");
 				for(Object c: subtractedList1){
-					Catalog convertC= (Catalog)c;
-					System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					if(c instanceof Catalog){
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					}
+					else{
+						System.out.println(c.toString());
+					}
 				}
 			}
 			
@@ -129,8 +184,13 @@ public class DBTest extends StageBaseTest{
 				System.out.println();
 				System.out.println("list2: ");
 				for(Object c: subtractedList2){
-					Catalog convertC= (Catalog)c;
-					System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					if(c instanceof Catalog){
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					}
+					else{
+						System.out.println(c.toString());
+					}
 				}
 			}
 			return false;

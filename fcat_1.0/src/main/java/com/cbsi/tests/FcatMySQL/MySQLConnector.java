@@ -74,18 +74,39 @@ public class MySQLConnector {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		finally{
-			if(con != null){
-				try {
-					con.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 		
 		return objectList;
+	}
+	
+	public List<String> runQuery(String query){
+		List<String> list = new ArrayList<String>();
+		try{
+
+			Statement stmt = (Statement) con.createStatement();
+			PreparedStatement prs= con.prepareStatement(query);
+			ResultSet result = (ResultSet) prs.executeQuery();
+			
+			while(result.next()){
+				list.add(result.getString("party_name"));
+			}
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public void quit(){
+		if(con != null){
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

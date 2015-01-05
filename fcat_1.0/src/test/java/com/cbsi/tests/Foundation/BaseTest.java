@@ -266,8 +266,8 @@ public class BaseTest {
 			System.out.println("Delete Temp in Actions");
 			System.out.println("----------------------------");
 
-			takeScreenshot();
-			driver.quit();
+			//takeScreenshot();
+			//driver.quit();
 			startUp();
 			
 			try{
@@ -279,7 +279,7 @@ public class BaseTest {
 			}
 		}
 		
-		driver.quit();
+		//driver.quit();
 	}
 	
 	@Rule

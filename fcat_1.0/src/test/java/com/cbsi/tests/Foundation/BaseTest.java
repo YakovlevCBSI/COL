@@ -11,6 +11,8 @@ import java.net.URL;
 //import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 
+
+
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -397,6 +399,13 @@ public class BaseTest {
 	 * This was for reading console error on firefox browser.  Keep it and see if this works.
 	 */
 	public boolean hasNoError(){
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Firefox is disable temporarily because javascriptError pacakage needs to be added separately for maven.
 		/**
 		if(getBrowser().contains("firefox")){

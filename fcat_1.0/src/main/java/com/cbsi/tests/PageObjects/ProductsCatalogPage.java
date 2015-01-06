@@ -69,6 +69,14 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="a#download-catalog span")
 	private WebElement Download;
 	
+	@FindBy(css="div.edit")
+	private WebElement Edit;
+	
+	public EditProductPopupPage clickEdit(){
+		Edit.click();
+		return PageFactory.initElements(driver, EditProductPopupPage.class);
+	}
+	
 	public ProductsCatalogPage clickDownload(){
 		Download.click();
 		return this;

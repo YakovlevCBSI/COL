@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
+import com.cbsi.tests.PageObjects.EditProductPopupPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 
 public class RegressionTest extends AllBaseTest{
@@ -63,15 +64,29 @@ public class RegressionTest extends AllBaseTest{
 	public void Error500OnWhenNoChangesAreMadeOnMappingDialog_CCSQS1256(){
 		ProductsCatalogPage prodcutsCatalogPage = navigateToProductsCatalogPage();
 		prodcutsCatalogPage.exitWithoutSaveOnMapppingDialog();
+		
+	
+		
 		assertTrue(hasNoError());
 	}
 	
 	@Test
-	public void IconsToolTipVisible(){
+	public void Error500WhenYouSaveInEdit_CCSQS1281(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		EditProductPopupPage eppp = productsCatalogPage.clickEdit();
+		eppp.clickSave();
+		
+		assertTrue(hasNoError());
 		
 	}
 	
-
+/**	
+	@Test
+	public void IconsToolTipVisible(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage.hoverOverMappedOrNotMappedIcon();
+	}
+*/
 	@Test
 	public void ErrorWhenYouDeleteManualMapItem(){
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
@@ -82,19 +97,53 @@ public class RegressionTest extends AllBaseTest{
 		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();
 		
 		productCatalogPage.refreshStaleElement(tempElement).findElement(By.xpath("../../a[@oldtitle='Delete']/div")).click();
+		productCatalogPage.clickYes();
 		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		assertTrue(hasNoError());
 		
 	}
+
+	@Test
+	public void ErrorWhenYouDownload_CCSQS1251(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage.clickDownload();
+
+		assertTrue(hasNoError());
+	}
 	
+	@Test
+	public void DisplayProductsNumberMatchDB(){
+		
+	}
+	
+	@Test
+	public void DisplayProductIDMatchDB(){
+		
+	}
+	
+	@Test
+	public void DisplayMFNameMatchDB(){
+		
+	}
+	
+	@Test
+	public void DisplayMFPartNumberMatchDB(){
+		
+	}
+	
+	@Test
+	public void DisplayProductTableMatchCSV(){
+		
+	}
+	
+	@Test
+	public void DisplayProductTableMatchTXT(){
+		
+	}
 
 
+//-------------------------------------------  Helper Method --------------------------------------------//
+	
 	public ProductsCatalogPage navigateToProductsCatalogPage(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);

@@ -25,8 +25,16 @@ public class PartyPopupPage extends BasePage{
 	@FindBy(css="input#party-name")
 	private WebElement partyNameField;
 	
+	private String text;
 	public PartyPopupPage searchParty(String text){
+		this.text = text;
 		partyNameField.sendKeys(text);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		waitForPageToLoad();
 		return this;
 	}
@@ -80,5 +88,20 @@ public class PartyPopupPage extends BasePage{
 		}
 		return textList;
 	}
+	
+	public CatalogsPage pickFromResult(){
+		List<WebElement> list = driver.findElements(By.cssSelector("tr td.party-name-column"));
+		outerLoop:
+			for(WebElement e: list){
+				if(e.getText().equals(this.text)){
+					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
+					plusIcon.click();
+					break outerLoop;
+				}
+			}
+		
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
 
 }

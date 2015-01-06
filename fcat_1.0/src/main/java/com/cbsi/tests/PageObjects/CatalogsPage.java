@@ -69,7 +69,7 @@ public class CatalogsPage extends BasePage{
 	 * Define action buttons on each column.
 	 */
 	@FindBy(partialLinkText="albert")
-	private WebElement myCatalog;
+	public WebElement myCatalog;
 
 	//public WebElement myCatalog = driver.findElement(By.linkText("albert-test1"));
 	/**

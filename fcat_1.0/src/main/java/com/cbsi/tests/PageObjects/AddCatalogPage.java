@@ -46,6 +46,24 @@ public class AddCatalogPage extends CatalogsPage {
 		return PageFactory.initElements(driver, UploadPopupPage.class);
 	}
 	
+	public void fillInName(String title){
+		System.out.println("filling out catalog name. Next...");
+		//customWait(20);
+		name.sendKeys(title);
+		customWait(5);
+		Next.click();
+		
+		return;
+	}
+	
+	public boolean fieldValidationErrorIsDisplayed(){
+		By errorSpanPath = By.cssSelector("span.field-validation-error");
+		
+		waitForElementToBeVisible(errorSpanPath);
+		WebElement errorSpan = driver.findElement(errorSpanPath);
+		return errorSpan.isDisplayed();	
+	}
+	
 
 
 }

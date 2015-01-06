@@ -110,36 +110,7 @@ public class RegressionTest extends AllBaseTest{
 
 		assertTrue(hasNoError());
 	}
-	
-	@Test
-	public void DisplayProductsNumberMatchDB(){
-		
-	}
-	
-	@Test
-	public void DisplayProductIDMatchDB(){
-		
-	}
-	
-	@Test
-	public void DisplayMFNameMatchDB(){
-		
-	}
-	
-	@Test
-	public void DisplayMFPartNumberMatchDB(){
-		
-	}
-	
-	@Test
-	public void DisplayProductTableMatchCSV(){
-		
-	}
-	
-	@Test
-	public void DisplayProductTableMatchTXT(){
-		
-	}
+
 
 
 //-------------------------------------------  Helper Method --------------------------------------------//

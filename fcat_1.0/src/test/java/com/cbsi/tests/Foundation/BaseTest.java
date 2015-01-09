@@ -13,6 +13,7 @@ import java.net.URL;
 
 
 
+
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -42,6 +43,7 @@ import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EmbedPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
+import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
@@ -471,5 +473,12 @@ public class BaseTest {
 		
 		return uploadPopupPage;
 	}
+	
+	public ProductsCatalogPage navigateToProductsCatalogPage(){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
+		return productsCatalogPage;
+	}
+	
 	
 }

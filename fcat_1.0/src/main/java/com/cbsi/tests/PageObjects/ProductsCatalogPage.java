@@ -72,6 +72,61 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div.edit")
 	private WebElement Edit;
 	
+	//----------------------stats, pageRowSelector, stickyButtons and textbox elements-------------------//
+
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[1]/td[1]")
+	public WebElement TotalProducts;
+	
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[1]/td[2]")
+	public WebElement TotalProductsValue;
+	
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[2]/td[1]")
+	public WebElement Mapped;
+	
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[2]/td[2]")
+	public WebElement MappedValue;
+	
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[3]/td[1]")
+	public WebElement NotMapped;
+	
+	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[3]/td[2]")
+	public WebElement NotMappedValue;
+	
+	
+	@FindBy(css="input#product-id")
+	public WebElement ProductIDInput;
+	
+	@FindBy(css="input#manufacturer-name")
+	public WebElement ManufacturerNameInput;
+	
+	@FindBy(css="input#manufacturer-pn")
+	public WebElement ManufacturerParNumberInput;
+	
+	
+	@FindBy(css="div.page-rows-selector a span.selectBox-label")
+	public WebElement pageSelector;
+	
+	@FindBy(css="div.page-number-container")
+	public WebElement pageNumber;
+	
+	
+	@FindBy(css="span.icon.download")
+	public WebElement DownloadIcon;
+	
+	@FindBy(css="span.icon.upload")
+	public WebElement UploadIcon;
+	
+	@FindBy(css="span.icon.document")
+	public WebElement AddProductIcon;
+	
+	@FindBy(css="span.icon.info")
+	public WebElement ShowDetailsIcon;
+	
+	@FindBy(css="span.icon.edit")
+	public WebElement EditFileIcon;
+	
+	//-----------------------------------------------------------------//
+	
 	public EditProductPopupPage clickEdit(){
 		Edit.click();
 		return PageFactory.initElements(driver, EditProductPopupPage.class);

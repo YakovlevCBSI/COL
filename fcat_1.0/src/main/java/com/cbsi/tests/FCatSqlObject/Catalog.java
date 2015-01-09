@@ -13,6 +13,7 @@ public class Catalog {
 	private BigDecimal party;
 	private BigDecimal itemCount;
 	private String modifiedBy;
+	private String id;
 	
 	public String getCatalog_name(){
 		return catalog_name;
@@ -53,6 +54,14 @@ public class Catalog {
 		this.modifiedBy = modifiedBy;
 	}
 	
+	public String getId(){
+		return id;
+	}
+	
+	public void setId(String id){
+		this.id = id;
+	}
+	
 	@Override
 	public boolean equals(Object other){
 		if(!(other instanceof Catalog)) return false;
@@ -67,6 +76,12 @@ public class Catalog {
 				&& (this.modifiedBy==null?this.modifiedBy==that.modifiedBy: this.modifiedBy.equals(that.modifiedBy))
 				&& (this.party==null?this.party==that.party: this.party.equals(that.party));
 		
+	}
+	
+	@Override 
+	public String toString(){
+		return "name: " + getCatalog_name() + "\t modified: " + getModifiedBy() + "\tparty: " + getParty() 
+				+ "\titemCount: " + getItemCount() + "\tcatalog_id: " + getId();
 	}
 	
 }

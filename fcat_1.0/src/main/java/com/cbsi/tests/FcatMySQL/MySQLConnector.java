@@ -50,6 +50,7 @@ public class MySQLConnector {
 		try{
 
 			Statement stmt = (Statement) con.createStatement();
+			stmt.execute("use fcat;");
 			PreparedStatement prs= con.prepareStatement(query);
 			ResultSet result = (ResultSet) prs.executeQuery();
 			
@@ -86,9 +87,13 @@ public class MySQLConnector {
 			PreparedStatement prs= con.prepareStatement(query);
 			ResultSet result = (ResultSet) prs.executeQuery();
 			
+			int count = 0;
 			while(result.next()){
+				count++;
 				list.add(result.getString("party_name"));
 			}
+			
+			System.out.println("RunQuery count: " + count);
 			
 		}
 		catch(Exception e){

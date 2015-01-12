@@ -141,7 +141,8 @@ public class ProductsCatalogPage extends BasePage{
 		try{
 			rowThatWasMapped = By.cssSelector("div[title='Mapped']");
 			MappedIcon.click();
-		}catch(NoSuchElementException e){
+		}catch(Exception e){
+			System.out.println("couldn't find mapped icon, finding not mapped instead.");
 			rowThatWasMapped = By.cssSelector("div[title='Not mapped']");
 			NotMappedIcon.click();
 		}

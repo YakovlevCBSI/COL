@@ -65,6 +65,7 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(linkText="Get File")
 	private WebElement GetFile;
 	public UploadPopupPage clickGetFile(){
+		waitForElementToClickable(By.linkText("Get File"));
 		GetFile.click();
 		return this;
 	}

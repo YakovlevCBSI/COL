@@ -408,7 +408,10 @@ public class BaseTest {
 				//kill any remaining drivers on console.
 				
 				try {
-					Runtime.getRuntime().exec("pkill -f firefox chromedriver chrome");
+					Runtime.getRuntime().exec("pkill -f firefox");
+					Runtime.getRuntime().exec("pkill -f chromedriver");
+
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

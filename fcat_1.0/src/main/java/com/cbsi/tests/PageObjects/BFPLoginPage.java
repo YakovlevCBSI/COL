@@ -33,4 +33,15 @@ public class BFPLoginPage extends BasePage{
 		
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
+	
+	public CatalogsPage loginToHomePage(String username, String pw){
+		userNameField.click();
+		userNameField.sendKeys(username);
+		passwordField.click();
+		passwordField.sendKeys(pw);
+		
+		Submit.click();
+		
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
 }

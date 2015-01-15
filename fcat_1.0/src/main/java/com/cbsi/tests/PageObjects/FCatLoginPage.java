@@ -28,19 +28,7 @@ public class FCatLoginPage extends BasePage{
 	
 	@FindBy(css="span a[href*='login']")
 	private WebElement LoginLink;
-	public FCatHomePage loginToHomePage(String username, String password){
-		LoginLink.click();
-		
-		usernameField.click();
-		usernameField.sendKeys(username);
-		
-		passwordField.click();
-		passwordField.sendKeys(password);
-		
-		Submit.click();
-		
-		return PageFactory.initElements(driver, FCatHomePage.class);
-	}
+
 	
 	private String adminU = GlobalVar.LocalId;
 	private String adminP= GlobalVar.LocalPw;
@@ -63,12 +51,35 @@ public class FCatLoginPage extends BasePage{
 		return PageFactory.initElements(driver, FCatHomePage.class);
 	}
 
+//Testing bad credit
+	public FCatLoginPage loginToHomePage(String username, String pw){
+		customWait(5);
+		LoginLink.click();
+		
+		customWait(20);
+		//usernameField.click();
+		usernameField.sendKeys(username);
+		
+		customWait(20);
+		//passwordField.click();
+		passwordField.sendKeys(pw);
+		
+		Submit.click();
+		return this;
+	}
+
 	@FindBy(css="span a[href='login']")
 	private WebElement loginLink;
 	
 	public boolean isBeforeLoginPage(){
 		return loginLink.isDisplayed();
 	}
-
+	
+	@FindBy(css="div.errors p")
+	private WebElement error;
+	
+	public String getErrorMessage(){
+		return error.getText();
+	}
 
 }

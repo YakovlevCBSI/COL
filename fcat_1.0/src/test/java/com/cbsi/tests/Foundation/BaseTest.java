@@ -406,7 +406,7 @@ public class BaseTest {
 					System.out.println("driver was null.. skip clean up in innerclass.");
 				}
 				//kill any remaining drivers on console.
-				
+				/**
 				try {
 					Runtime.getRuntime().exec("pkill -f firefox");
 					Runtime.getRuntime().exec("pkill -f chromedriver");
@@ -416,7 +416,7 @@ public class BaseTest {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		
+		*/
 		}
 	}
 

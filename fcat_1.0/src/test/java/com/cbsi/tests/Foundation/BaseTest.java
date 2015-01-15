@@ -8,18 +8,6 @@ import java.util.logging.Level;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-//import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
-
-
-
-
-
-
-
-
-
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;

@@ -14,6 +14,12 @@ import java.net.URL;
 
 
 
+
+
+
+
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -24,6 +30,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.rules.Timeout;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -95,7 +102,7 @@ public class BaseTest {
 	public void startUpWithoutLogin(){
 		insertHeader();
 		driver = configureDrivers();
-		navigateToLoginPage();
+		//navigateToLoginPage();
 	}
 	
 	public void insertHeader(){
@@ -157,6 +164,21 @@ public class BaseTest {
 			EasyLoginToLoginPage();
 		}
 	}
+	
+	public void navigateToLoginPage(String username, String pw){
+		driver.get(getURL());
+		if(getURL().contains(embedPath)){
+			//do nothing
+		}
+		else if (getURL().contains(BFP)){
+			return;
+		}
+		else{
+			EasyLoginToFcat(username, pw);
+		}
+	}
+
+
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
 	private double chromeDriverVersion = 2.12;
 
@@ -259,6 +281,12 @@ public class BaseTest {
 		return catalogsPage;
 	}
 	
+	public FCatLoginPage EasyLoginToFcat(String username, String pw){
+		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
+		return loginPage.loginToHomePage(username, pw);
+		
+	}
+	
 	public EmbedPage GotoEmbedPage(){
 		return PageFactory.initElements(driver, EmbedPage.class);
 		
@@ -282,8 +310,7 @@ public class BaseTest {
 				e.printStackTrace();
 			}
 		}
-		
-		//driver.quit();
+	
 	}
 	
 	@Rule
@@ -370,7 +397,7 @@ public class BaseTest {
 	}
 	
 	//--------------------------------Screenshot inner class ------------------------------//
-	
+
 	class ScreenshotRule extends TestWatcher{
 		@Override
 		protected void failed(Throwable e, Description description){
@@ -379,7 +406,7 @@ public class BaseTest {
 			//System.out.println(driver == null);
 			
 		}
-		
+	
 		@Override
 		protected void finished(Description description){
 			//System.out.println("finished ovverride");
@@ -390,10 +417,18 @@ public class BaseTest {
 				}catch(Exception e){
 					System.out.println("driver was null.. skip clean up in innerclass.");
 				}
+				//kill any remaining drivers on console.
+				
+				try {
+					Runtime.getRuntime().exec("pkill -f firefox chromedriver chrome");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		
 		}
 	}
-	
+
 	
 	//------------------------------------------common methods-----------------------------------//
 	
@@ -409,20 +444,25 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 		//Firefox is disable temporarily because javascriptError pacakage needs to be added separately for maven.
-		/**
+		
 		if(getBrowser().contains("firefox")){
-			List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
+			
+			/**List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
 			
 			if(!jsErrors.isEmpty()){
 				for(JavaScriptError e: jsErrors){
 					System.out.println("console message: " + e.getConsole());
 					System.out.println("js error message:" + e.getErrorMessage());
 				}
-				
+			
+			
 				return false;
-			}
+			}*/
+			String js = (String) ((JavascriptExecutor)driver).executeScript("return window.javascript_errors ");
+			System.out.println("message:" + js);
+			
 		}
-		*/
+
 		//For Chrome this also might work w/ firefox. Haven't tested for firefox browser yet, since 
 		//our error message catcher catches firefox error that shows up on console.
 		if(getBrowser().contains("chrome") || getBrowser().contains("firefox")){

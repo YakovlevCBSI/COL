@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
@@ -34,6 +35,7 @@ public class SanityTest extends AllBaseTest{
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 
+	@Ignore("pending dev")
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);

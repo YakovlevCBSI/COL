@@ -49,6 +49,9 @@ public class ReadFile {
 		GlobalVar.dbURL=tempVar[9];
 		GlobalVar.dbUserName=tempVar[10];
 		GlobalVar.dbPassword=tempVar[11];
+		GlobalVar.ftpURL=tempVar[12];
+		GlobalVar.ftpUserName=tempVar[13];
+		GlobalVar.ftpPassword=tempVar[14];
 	}
 	
 	//For debug.

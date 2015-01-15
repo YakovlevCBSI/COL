@@ -20,7 +20,10 @@ public class UploadPopupPage extends BasePage{
 	}
 	
 	public void waitForPageToLoad(){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.fileinput-button")));
+		//new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.fileinput-button")));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("p.link-button-bar")));
+		customWait(5);
+
 	}
 	
 	@FindBy(css="label#lb_ChangeImportSettings")
@@ -56,6 +59,13 @@ public class UploadPopupPage extends BasePage{
 	public UploadPopupPage clickNext(){
 		waitForElementToClickable("div.tab-panel p a.next-button");
 		Next.click();
+		return this;
+	}
+	
+	@FindBy(linkText="Get File")
+	private WebElement GetFile;
+	public UploadPopupPage clickGetFile(){
+		GetFile.click();
 		return this;
 	}
 	

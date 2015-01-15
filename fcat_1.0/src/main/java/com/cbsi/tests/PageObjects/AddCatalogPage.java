@@ -36,6 +36,11 @@ public class AddCatalogPage extends CatalogsPage {
 	@FindBy(css="input#Name") private WebElement name;
 	@FindBy(linkText="Next") private WebElement Next;
 	
+	public UploadPopupPage clickNext(){
+		Next.click();
+		return PageFactory.initElements(driver, UploadPopupPage.class);
+
+	}
 	
 	public UploadPopupPage fillInName(){
 		System.out.println("filling out catalog name. Next...");
@@ -64,6 +69,83 @@ public class AddCatalogPage extends CatalogsPage {
 		return errorSpan.isDisplayed();	
 	}
 	
+	//=================================== Automatic components ==========================================//
+	
+	@FindBy(css="label#lb_UploadMode_Manual")
+	private WebElement ManualUpload;
+	
+	public AddCatalogPage switchToManual(){
+		ManualUpload.click();
+		return this;
+	}
+	@FindBy(css="label#lb_UploadMode_Automatic")
+	private WebElement Automatic;
+	
+	public AddCatalogPage switchToAutomatic(){
+		Automatic.click();
+		return this;
+	}
+	
+	
+	@FindBy(css="input#FileLocation_FileUrl")
+	private WebElement FileLocation;
+	
+	@FindBy(css="input#FileLocation_Login")
+	private WebElement Username;
+	
+	@FindBy(css="input#FileLocation_Password")
+	private WebElement Password;
+	
+	public AddCatalogPage typeFileLocation(String fileLocal){
+		FileLocation.sendKeys(fileLocal);
+		return this;
+	}
+	public AddCatalogPage typeUserName(String username){
+		Username.sendKeys(username);
+		return this;
+	}
+	
+	public AddCatalogPage typePassword(String password){
+		Password.sendKeys(password);
+		return this;
+	}
+	
+	@FindBy(linkText="Set Schedule")
+	private WebElement SetSchedule;
+	
+	public SchedulePopup clickSetSchedule(){
+		SetSchedule.click();
+		return PageFactory.initElements(driver, SchedulePopup.class);
+	}
+
+	@FindBy(css="a.schedule-result-text")
+	private WebElement scheduleResult;
+	
+	public String getScheduleResult(){
+		while(scheduleResult.getText().isEmpty()){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("waiting for message...");
+		}
+		return scheduleResult.getText();
+	}
+	
+	@FindBy(linkText="Save")
+	private WebElement Save;
+	
+	public CatalogsPage clickSave(){
+		Save.click();
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+
+	public AddCatalogPage typeFileAndUserInfoAll(String fileLocation, String username, String password){
+		return typeFileLocation(fileLocation).typeUserName(username).typePassword(password);
+		
+	}
 
 
 }

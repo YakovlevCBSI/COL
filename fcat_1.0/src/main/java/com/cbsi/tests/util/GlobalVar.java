@@ -20,6 +20,10 @@ public class GlobalVar {
 	public static String dbUserName="";
 	public static String dbPassword="";
 	
+	
+	public static String ftpURL= "";
+	public static String ftpUserName = "";
+	public static String ftpPassword = "";
 
 	public void setBFPId(String BFPID){
 		this.BFPId = BFPID;
@@ -65,5 +69,17 @@ public class GlobalVar {
 	}
 	public void setDbPassword(String dbPassword){
 		this.dbPassword = dbPassword;
+	}
+	
+	public void setFtpUrl(String ftpURL){
+		this.ftpURL = ftpURL;
+	}
+	
+	public void setFtpUserName(String ftpUserName){
+		this.ftpUserName = ftpUserName;
+	}
+	
+	public void setFtpPassword(String ftpPassword){
+		this.ftpPassword = ftpPassword;
 	}
 }

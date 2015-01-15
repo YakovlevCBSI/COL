@@ -71,6 +71,21 @@ public class CatalogsPage extends BasePage{
 	@FindBy(partialLinkText="albert")
 	public WebElement myCatalog;
 
+	
+	public CatalogsPage setMyCatalogToAutomaticCatalog(){
+		List<WebElement> list = driver.findElements(By.partialLinkText("albert"));
+		
+		outerLoop:
+		for(WebElement e: list){
+			if(e.getText().toLowerCase().contains("ftp")){
+				myCatalog = e;
+				break outerLoop;
+			}
+		}
+		
+		return this;
+		
+	}
 	//public WebElement myCatalog = driver.findElement(By.linkText("albert-test1"));
 	/**
 	//@FindBy(xpath="//tr/td[@class='actions']/a[1]")
@@ -108,11 +123,11 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	public CatalogsPage clickEdit(){
+	public AddCatalogPage clickEdit(){
 		WebElement Edit = myCatalog.findElement(By.xpath("../../td[6]/a[2]"));
 		customWait(3);
 		Edit.click();
-		return this;
+		return PageFactory.initElements(driver, AddCatalogPage.class);
 	}
 	
 	public UploadPopupPage clickUpload(){

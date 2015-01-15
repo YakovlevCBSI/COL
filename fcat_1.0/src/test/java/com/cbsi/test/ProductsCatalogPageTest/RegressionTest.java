@@ -49,6 +49,7 @@ public class RegressionTest extends AllBaseTest{
 	//Test this to see if it really collects error.(wonder if its only js error or Any console error...?
 	@Test
 	public void Error404OnMappingAnExisitngItem_CCSQS1253(){
+		
 		productsCatalogPage = navigateToProductsCatalogPage();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
 		assertTrue(hasNoError());	
@@ -113,12 +114,5 @@ public class RegressionTest extends AllBaseTest{
 
 
 
-//-------------------------------------------  Helper Method --------------------------------------------//
-	
-	public ProductsCatalogPage navigateToProductsCatalogPage(){
-		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
-		return productsCatalogPage;
-	}
 	
 }

@@ -72,10 +72,11 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div#backButtonContainer a#progressNextButton")
 	private WebElement NextAfterUpload;
 	public BasePage clickNextAfterUpload(boolean noMappingDefined){
-		customWait(30);
+		//customWait(30);
+		waitForElementToBeVisible(By.cssSelector("div#backButtonContainer a#progressNextButton"));
 		NextAfterUpload.click();
 		if(noMappingDefined){
-		return PageFactory.initElements(driver, MappingPage.class);		
+			return PageFactory.initElements(driver, MappingPage.class);		
 		}
 		else{
 			return PageFactory.initElements(driver, DetailsPage.class);

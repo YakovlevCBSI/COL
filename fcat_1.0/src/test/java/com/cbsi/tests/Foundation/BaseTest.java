@@ -340,9 +340,10 @@ public class BaseTest {
 		}
 	}
 	
+	private String username = System.getProperty("user.name");
 	//rerun failed test for false-positive cases.
 	@Rule
-	public Retry retry = new Retry(System.getProperty("user.name").equals("jenkins")?2:1);
+	public Retry retry = new Retry(username.equals("jenkins")?2:1);
 	
 	@Rule
 	public ScreenshotRule screenshotRule = new ScreenshotRule();
@@ -407,15 +408,17 @@ public class BaseTest {
 				}
 				//kill any remaining drivers on console.
 				
-				try {
-					Runtime.getRuntime().exec("pkill -f firefox");
-					//Runtime.getRuntime().exec("pkill -f chromedriver");
-					Runtime.getRuntime().exec("pkill -f chrome");
-
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if(username.equals("jenkins")){
+					try {
+						Runtime.getRuntime().exec("pkill -f firefox");
+						Runtime.getRuntime().exec("pkill -f chromedriver");
+						Runtime.getRuntime().exec("pkill -f chrome");
+	
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 		
 		}
@@ -495,7 +498,7 @@ public class BaseTest {
 	
 	public  UploadPopupPage UploadFile(){
 		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
-
+		catalogPage.setMyCatalogToManualCatalog();
 		UploadPopupPage uploadPopupPage = catalogPage.clickUpload();
 		uploadPopupPage.clickUploadFile();
 		//uploadPopupPage.uploadFile("LondonDrugsTxt");

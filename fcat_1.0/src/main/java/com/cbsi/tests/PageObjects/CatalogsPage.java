@@ -18,11 +18,26 @@ public class CatalogsPage extends BasePage{
 	public CatalogsPage(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad();
-		// TODO Auto-generated constructor stub
-		//driver.manage().window().maximize();
+
+		//System.out.println("constructor: "  + myCatalog.getText());
+	}
+	
+	//@FindBy(partialLinkText="albert")
+	public WebElement myCatalog;
+	
+	public WebElement setMyCatalogToManualCatalog(){
+		List<WebElement> myCatalogs = driver.findElements(By.partialLinkText("albert"));
 		
-		//driver.findElement(By.cssSelector("div.header h1"));
-		//customWait(20);
+		outerLoop:
+			for(WebElement e: myCatalogs){
+				if(!e.getText().toLowerCase().contains("ftp")){
+					this.myCatalog = e;
+					//System.out.println(e.getText());
+					break outerLoop;
+				}
+			}
+		
+		return myCatalog;
 	}
 	
 	public void setMyCatalog(){
@@ -68,8 +83,7 @@ public class CatalogsPage extends BasePage{
 	/**
 	 * Define action buttons on each column.
 	 */
-	@FindBy(partialLinkText="albert")
-	public WebElement myCatalog;
+	
 
 	
 	public CatalogsPage setMyCatalogToAutomaticCatalog(){
@@ -131,6 +145,8 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public UploadPopupPage clickUpload(){
+		System.out.println(myCatalog == null);
+		System.out.println("text : " + myCatalog.getText());
 		//setMyCatalog();
 		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
 		//WebElement Upload = myCatalog.findElement(By.xpath("../.."));

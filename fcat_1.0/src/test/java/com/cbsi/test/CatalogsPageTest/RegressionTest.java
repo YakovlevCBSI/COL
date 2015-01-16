@@ -1,6 +1,6 @@
 package com.cbsi.test.CatalogsPageTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
@@ -17,24 +17,30 @@ public class RegressionTest extends AllBaseTest{
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Test
-	public void UploadFullFileSuccessfully() throws InterruptedException{
+	public void UploadFullFileManualOnExisting() throws InterruptedException{
 		DetailsPage detailsPage = uploadFileWihtoutMapping("full");
 		assertTrue("Status showed '" + detailsPage.getStatus() + "'",detailsPage.getStatus().equals("DONE"));
 	}
-	
+
 	@Test
-	public void UploadIncremental() throws InterruptedException{
+	public void UploadIncrementalManualOnExisting() throws InterruptedException{
 		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
 		assertTrue("Status showed '" + detailsPage.getStatus() + "'", detailsPage.getStatus().equals("DONE"));
 	}
 	
+
+	
+	
+	//-------------------------------------------  Helper Method --------------------------------------------//
+	
 	public DetailsPage uploadFileWihtoutMapping(String fullOrIncremental) throws InterruptedException{
-		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		UploadPopupPage uploadPopupPage = catalogsPage.clickUpload();
-		
-		
+		//CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		CatalogsPage catalogsPage = new CatalogsPage(driver);
+		catalogsPage.setMyCatalogToManualCatalog();
+		 UploadPopupPage uploadPopupPage = catalogsPage.clickUpload();
+
 		//since default is unchecked, check it you wanna upload as FullFile.
 		if(fullOrIncremental.equals("incremental")){
 			uploadPopupPage.selectDropBoxOption("CSV").clickUploadFile();
@@ -53,4 +59,6 @@ public class RegressionTest extends AllBaseTest{
 		return (DetailsPage)uploadPopupPage.clickNextAfterUpload(false);
 	
 	}
+	
+	
 }

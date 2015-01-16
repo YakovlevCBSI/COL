@@ -462,7 +462,7 @@ public class BaseTest {
 			for(LogEntry e: logEntries){
 				if(e.getLevel().toString().contains("SEVERE") ){
 					//System.out.println(e.getLevel());
-					System.out.println(e.toString());
+					System.err.println(e.toString());
 					return false;
 				}
 			}
@@ -511,6 +511,7 @@ public class BaseTest {
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
 		return productsCatalogPage;
 	}
+	
 	
 	
 }

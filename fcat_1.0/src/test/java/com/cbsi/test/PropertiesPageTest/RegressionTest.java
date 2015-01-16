@@ -33,6 +33,7 @@ public class RegressionTest extends AllBaseTest{
 	
 	public String getExistingCatalogName(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		//catalogsPage.setMyCatalogToManualCatalog();
 		return catalogsPage.myCatalog.getText();
 	}
 	

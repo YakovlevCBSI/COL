@@ -111,6 +111,15 @@ public class RegressionTest extends AllBaseTest{
 
 		assertTrue(hasNoError());
 	}
+	
+	@Test
+	public void SpecialCharacterInSearchCausesError_CCSQS1267(){
+		String searchText = "() {} []";
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage.searchFor("Product ID", searchText);
+		
+		assertTrue(hasNoError());
+	}
 
 
 

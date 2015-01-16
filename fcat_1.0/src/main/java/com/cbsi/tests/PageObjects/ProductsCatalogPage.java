@@ -125,8 +125,21 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="span.icon.edit")
 	public WebElement EditFileIcon;
 	
-	//-----------------------------------------------------------------//
-	
+	//---------------------Search fields-----------------------------//
+
+	public ProductsCatalogPage searchFor(String whichType, String searchText){
+		if(whichType.toLowerCase().equals("product id")){
+			ProductIDInput.sendKeys(searchText);
+		}
+		else if(whichType.toLowerCase().equals("manufacturer name")){
+			ManufacturerNameInput.sendKeys(searchText);
+		}
+		else{
+			ManufacturerParNumberInput.sendKeys(searchText);
+		}
+		
+		return this;
+	}
 	public EditProductPopupPage clickEdit(){
 		Edit.click();
 		return PageFactory.initElements(driver, EditProductPopupPage.class);

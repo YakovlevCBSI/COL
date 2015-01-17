@@ -20,6 +20,7 @@ public class CatalogsPage extends BasePage{
 		waitForPageToLoad();
 
 		//System.out.println("constructor: "  + myCatalog.getText());
+
 	}
 	
 	//@FindBy(partialLinkText="albert")
@@ -30,7 +31,7 @@ public class CatalogsPage extends BasePage{
 		
 		outerLoop:
 			for(WebElement e: myCatalogs){
-				if(!e.getText().toLowerCase().contains("ftp")){
+				if(!e.getText().toLowerCase().contains("ftp")  && !e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().equals("0")){
 					this.myCatalog = e;
 					//System.out.println(e.getText());
 					break outerLoop;

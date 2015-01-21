@@ -62,10 +62,10 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
-	@FindBy(linkText="Get File")
+	@FindBy(css="#uploadFileForm > div.tabs.inside-dialog > div.tab-panel > p > a.link-button.green")
 	private WebElement GetFile;
 	public UploadPopupPage clickGetFile(){
-		waitForElementToClickable(By.linkText("Get File"));
+		waitForElementToClickable(By.cssSelector("#uploadFileForm > div.tabs.inside-dialog > div.tab-panel > p > a.link-button.green"));
 		GetFile.click();
 		return this;
 	}

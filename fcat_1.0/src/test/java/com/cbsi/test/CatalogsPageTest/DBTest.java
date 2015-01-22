@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +21,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.FCatSqlObject.Catalog;
-import com.cbsi.tests.FcatMySQL.MySQLConnector;
+import com.cbsi.tests.FcatDB.MySQLConnector;
 import com.cbsi.tests.Foundation.StageBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.PartyPopupPage;
@@ -189,7 +188,7 @@ public class DBTest extends StageBaseTest{
 		List<Catalog> catalogNameFromWeb = turnCatalogsTableIntoObject();
 
 		assertTrue(twoListsAreEqual(activeCatalogs, catalogNameFromWeb));
-		
+		           
 	}
 	
 	/**
@@ -205,7 +204,7 @@ public class DBTest extends StageBaseTest{
 		List<Catalog> catalogsNameFromSQL = (getURL().contains(GlobalVar.embedPath) ? catalogsFromEmbed:catalogsFromForm);
 		List<String> catalogsNameFromSQLGetName = new ArrayList<String>();
 		for(Catalog c: catalogsNameFromSQL){
-			//catalogsNameFromSQLGetName.add(c.get);
+			//catalogsNameFromSQLGetName.add(                  c.get);
 		}
 		
 	}

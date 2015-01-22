@@ -1,4 +1,4 @@
-package com.cbsi.tests.FcatMySQL;
+package com.cbsi.tests.FcatDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,5 +1,6 @@
 package com.cbsi.tests.FcatDB;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,7 +46,7 @@ public class MySQLConnector {
 	}
 	
 	
-	public <T> List<T> runQuery(String query, Class<T> c1){
+	public <T> List<T> runQuery(String query, Class<T> c1, boolean mongoInUse){
 		List<T> objectList = null;
 		try{
 
@@ -65,6 +66,12 @@ public class MySQLConnector {
 					//catalog.setParty(result.getBigDecimal("party"));
 					catalog.setItemCount(result.getBigDecimal("item_count"));
 					catalog.setModifiedBy(result.getString("modified_by"));
+					
+					//This will also set catId and partyID;
+					if(mongoInUse){
+						catalog.setId(result.getBigDecimal("id")+"");
+						catalog.setParty(result.getBigDecimal("party"));
+					}
 					
 					objectList.add((T) catalog);
 				}
@@ -122,7 +129,7 @@ public class MySQLConnector {
 				+ " where fcat.catalog.party = 1 and not active =0" 
 				+ " order by catalog_name";
 		
-		List<Catalog> list = new MySQLConnector().connectToFcatDB().runQuery(query, Catalog.class);
+		List<Catalog> list = new MySQLConnector().connectToFcatDB().runQuery(query, Catalog.class, false);
 		
 		for(Catalog c: list){
 			System.out.println(c.getCatalog_name());

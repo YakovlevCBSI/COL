@@ -78,14 +78,14 @@ public class DBTest extends StageBaseTest{
 		mysql.connectToFcatDB();
 		
 		//-------- matchCatalogsObjects_name_itemCount_modifiedBy_onDefaultPage----------//
-		catalogsFromForm = mysql.runQuery(query_CatalogNamesForm, Catalog.class);
-		catalogsFromEmbed = mysql.runQuery(query_CatalogNamesEmbed, Catalog.class);
+		catalogsFromForm = mysql.runQuery(query_CatalogNamesForm, Catalog.class, false);
+		catalogsFromEmbed = mysql.runQuery(query_CatalogNamesEmbed, Catalog.class, false);
 		
 		//------- allPartiesDisplayInPartySelectorDialog ----------//
 		partiesLimit30 = mysql.runQuery(query_searchPartyLimit30);
 		
 		//---- partyChooserSearchMatchDB ----------//
-		activeCatalogs = mysql.runQuery(query_searchPartyWithActiveCatalogs, Catalog.class);
+		activeCatalogs = mysql.runQuery(query_searchPartyWithActiveCatalogs, Catalog.class, false);
 		partiesWithActiveCatalogs = mysql.runQuery(query_searchPartyWithActiveCatalogs);
 		
 		

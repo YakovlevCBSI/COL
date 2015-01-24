@@ -43,7 +43,7 @@ public class RegressionTest extends AllBaseTest{
 
 		//since default is unchecked, check it you wanna upload as FullFile.
 		if(fullOrIncremental.equals("incremental")){
-			uploadPopupPage.selectDropBoxOption("CSV").clickUploadFile();
+			uploadPopupPage.selectDropBoxOption("TXT").clickUploadFile();
 			uploadPopupPage.uploadLocalFileFromFinder("small").clickNext();
 
 		}

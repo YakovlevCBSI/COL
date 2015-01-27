@@ -1,5 +1,6 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -73,6 +74,7 @@ public class SchedulePopup extends BasePage {
 					if(e.getAttribute("id").toLowerCase().contains(days[i].toLowerCase())){
 						//System.out.println("match: " + days[i]);
 						e.click();
+						//forceWait(200);
 					}
 				}
 			}
@@ -85,8 +87,9 @@ public class SchedulePopup extends BasePage {
 		
 	}
 	
+	private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+	
 	public static String[] generateRandomDays(){
-		String[] days = {"monday", "tueday", "wednesday", "thursday", "friday", "saturday", "sunday"};
 
 		
 		int rand1 = (int)(Math.random() * days.length);
@@ -106,6 +109,33 @@ public class SchedulePopup extends BasePage {
 		return randArray;
 		
 	}
+	
+	public static String generateRandomDay(){
+		int rand1 = (int)(Math.random() * days.length);
+		
+		return days[rand1];
+	}
+	
+	public String[] ExcludedDays(String[] chosenDays){
+		List<String> list = new ArrayList<String>();
+		
+		for(int i=0; i< days.length; i++ ){
+			boolean notFound = true;
+			
+			for (int j=0; j<chosenDays.length; j++){
+				if(days[i].equals(chosenDays[j])){
+					notFound=false;
+					//System.out.println("not found false; " + days[i]);
+				}
+			}
+			
+			if(notFound){
+				list.add(days[i]);
+			}	
+		}
+		return list.toArray(new String[list.size()]);
+	}
+	
 	@FindBy(linkText="OK")
 	private WebElement OK;
 	
@@ -122,10 +152,35 @@ public class SchedulePopup extends BasePage {
 				e.click();
 			}
 		}
+		//forceWait(500);
 		
 		return this;
 	}
 	public static void main(String[] args){
 		generateRandomDays();
+	}
+	
+	public boolean dayCheckBoxesAreChecked(String...days){
+		
+		List<WebElement> list = driver.findElements(By.cssSelector("label[for ^= 'ScheduleSetting_SelectedWeekDays_']"));
+		System.out.println(list.size());
+		for(String s: days){
+			boolean matchesTheList= false;
+			for(WebElement e: list){
+				if(e.getAttribute("class").contains("checked")){
+					e.getAttribute("id").contains(s);
+					matchesTheList = true;
+					
+					
+				}
+			}
+			if(!matchesTheList){
+				return false;
+			}
+		
+		}
+		
+		return true;
+		
 	}
 }

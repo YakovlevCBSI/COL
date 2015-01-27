@@ -12,9 +12,9 @@ import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.SchedulePopup;
 
-public class Regression extends AllBaseTest {
+public class RegressionTest extends AllBaseTest {
 
-	public Regression(String URL, String browser) {
+	public RegressionTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}

@@ -1,11 +1,12 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.openqa.selenium.TimeoutException;
 
 public class MapProductsDialog extends BasePage{
@@ -33,7 +34,9 @@ public class MapProductsDialog extends BasePage{
 	@FindBy(css="input[id='manufacturer-name-mapper']")
 	private WebElement ManufactuererName;
 	
-	public MapProductsDialog searchName(String searchText){
+	public MapProductsDialog searchName(String searchText){	
+		Actions action = new Actions(driver);
+		action.moveToElement(ManufactuererName).doubleClick().build().perform();
 		ManufactuererName.sendKeys(searchText);
 		try{
 			waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));

@@ -95,7 +95,7 @@ public class RegressionTest extends AllBaseTest {
 	
 		System.out.println("result: " + result);
 		assertTrue(
-				result.contains(days));
+				result.toLowerCase().contains(days));
 	}
 
 	

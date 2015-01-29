@@ -52,6 +52,10 @@ public class ReadFile {
 		GlobalVar.ftpURL=tempVar[12];
 		GlobalVar.ftpUserName=tempVar[13];
 		GlobalVar.ftpPassword=tempVar[14];
+		
+		GlobalVar.MongoHost=tempVar[15];
+		GlobalVar.MongoUsername=tempVar[16];
+		GlobalVar.MongoPassword= tempVar[17];
 	}
 	
 	//For debug.

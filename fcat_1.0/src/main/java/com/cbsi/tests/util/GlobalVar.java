@@ -24,6 +24,11 @@ public class GlobalVar {
 	public static String ftpURL= "";
 	public static String ftpUserName = "";
 	public static String ftpPassword = "";
+	
+	public static String MongoHost="";
+	public static String MongoUsername="";
+	public static String MongoPassword="";
+	
 
 	public void setBFPId(String BFPID){
 		this.BFPId = BFPID;

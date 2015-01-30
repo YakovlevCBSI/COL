@@ -20,7 +20,7 @@ public class RegressionTest extends AllBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 	
-	private String tempFile = "";
+	//private String tempFile = "";
 	
 	@Test
 	public void CCSQS1063() throws InterruptedException{

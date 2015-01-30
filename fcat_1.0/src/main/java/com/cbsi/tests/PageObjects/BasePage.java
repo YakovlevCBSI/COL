@@ -41,11 +41,11 @@ public class BasePage {
 	}
 	
 	public void waitForElementToClickable(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(by));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(by));
 	}
 	
 	public void waitForElementToBeVisible(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(by));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 	
 	public void waitForElementToBeVisible(String path){
@@ -53,7 +53,7 @@ public class BasePage {
 	}
 	
 	public void waitForElementToBeInvisible(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(by));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
 	public WebElement refreshStaleElement(By by){

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,8 @@ public class MappingPage extends BasePage{
 	
 	public DetailsPage automap(){
 		List<WebElement> headers = collectHeaders();
+		JavascriptExecutor js= (JavascriptExecutor)driver;
+		int scrollCount = 1;
 		for(WebElement e: headers){
 			//System.out.println("header: " + e.getText());
 			String selectThisOption ="";
@@ -45,15 +48,21 @@ public class MappingPage extends BasePage{
 			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));
 			//System.out.println("dropdownselections size: " + dropdownSelections.size());
 			boolean matchIsFound = false;
-
+			
+			
 			for(WebElement matchingElement: dropdownSelections){
 				if(matchingElement.isDisplayed()){
 					WebElement aElement = matchingElement.findElement(By.xpath("a"));
 					if(aElement.getText().toLowerCase().equals(selectThisOption)){
+						//System.out.println(selectThisOption);
 						aElement.click();
 						matchIsFound = true;
+
 						//System.out.println(aElement.getText() + " was clicked.");
+						//System.out.println(50*scrollCount);
+						
 						break;
+						
 					}
 				}
 				
@@ -61,7 +70,10 @@ public class MappingPage extends BasePage{
 			}
 			if(!matchIsFound){
 					dropdown.click();
-				}
+				}	
+			
+			js.executeScript("scroll(0," + (50*scrollCount) +")");
+			scrollCount++;		
 		}
 		
 		clickSave();
@@ -84,9 +96,9 @@ public class MappingPage extends BasePage{
 	private static String[] msrp = {"msrp", "msr"};
 	private static String[] price = {"price", "sell price"};
 	private static String[] inventory = {"inventory"};
-	private static String[] productURL = {"product url", "product", "url"};
+	//private static String[] productURL = {"product url", "product", "url"};
 	
-	static List<String[]> headerMap = new ArrayList<String[]>(Arrays.asList(id, mfpn, mf, cnetSkuId, upcean, msrp, price, inventory, productURL));
+	static List<String[]> headerMap = new ArrayList<String[]>(Arrays.asList(id, mfpn, mf, cnetSkuId, upcean, msrp, price, inventory/*, productURL*/));
 	
 	public static String getMatchingCNETFields(String clientHeader) throws Exception{
 		boolean hasMatch = false;

@@ -152,7 +152,7 @@ public class DBTest extends StageBaseTest{
 			product.setMf(editPopup.getManufacturerName());
 			product.setMfpn(editPopup.getManufacturerPartNumber());
 			product.setCentSkuId(editPopup.getCnetSkuId());
-			product.setProductUrl(editPopup.getProductURL());
+			//product.setProductUrl(editPopup.getProductURL());
 			product.setInventory(editPopup.getInventory());
 			product.setPrice(editPopup.getPrice());
 			product.setMsrp(editPopup.getMsrp());

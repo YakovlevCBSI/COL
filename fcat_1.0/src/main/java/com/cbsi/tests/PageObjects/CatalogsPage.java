@@ -26,7 +26,7 @@ public class CatalogsPage extends BasePage{
 	//@FindBy(partialLinkText="albert")
 	public WebElement myCatalog;
 	
-	public WebElement setMyCatalogToManualCatalog(){
+	public CatalogsPage setMyCatalogToManualCatalog(){
 		List<WebElement> myCatalogs = driver.findElements(By.partialLinkText("albert"));
 		
 		outerLoop:
@@ -38,7 +38,14 @@ public class CatalogsPage extends BasePage{
 				}
 			}
 		
-		return myCatalog;
+		return this;
+	}
+	
+	public CatalogsPage setMyCatalog(String name){
+		this.myCatalog = driver.findElement(By.partialLinkText(name));
+		
+		
+		return this;
 	}
 	
 	public void setMyCatalog(){

@@ -146,6 +146,8 @@ public class AddCatalogPage extends CatalogsPage {
 		return typeFileLocation(fileLocation).typeUserName(username).typePassword(password);
 		
 	}
+	
+	
 
 
 }

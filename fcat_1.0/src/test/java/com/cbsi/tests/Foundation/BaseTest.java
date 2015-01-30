@@ -2,12 +2,14 @@ package com.cbsi.tests.Foundation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -33,11 +35,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.tests.FCatMongoObject.Product;
+import com.cbsi.tests.FCatSqlObject.Catalog;
+import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.BFPLoginPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EmbedPage;
 import com.cbsi.tests.PageObjects.FCatHomePage;
 import com.cbsi.tests.PageObjects.FCatLoginPage;
+import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
@@ -76,6 +82,9 @@ public class BaseTest {
 		}
 	}
 	*/
+	
+	protected CatalogsPage catalogsPage;
+	
 	@Before
 	public void startUp(){
 		//System.out.println("super before method is starting");
@@ -129,6 +138,7 @@ public class BaseTest {
 		driver.get(getURL());
 		if(getURL().contains(embedPath)){
 			//do nothing
+			catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		}
 		else if (getURL().contains(BFP)){
 			EasyLoginToBFP();
@@ -250,10 +260,11 @@ public class BaseTest {
 		driver.manage().window().maximize();
 	}
 	
-	public CatalogsPage EasyLoginToLocal(){
+	public void EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage = loginPage.loginToHomePage();
-		return homePage.goToCatalogs();
+		catalogsPage = homePage.goToCatalogs();
+		return;
 
 	}
 	
@@ -263,10 +274,10 @@ public class BaseTest {
 		return homePage;
 	}
 	
-	public CatalogsPage EasyLoginToBFP(){
+	public void EasyLoginToBFP(){
 		BFPLoginPage bfpLoginPage = PageFactory.initElements(driver, BFPLoginPage.class);
-		CatalogsPage catalogsPage = bfpLoginPage.loginToHomePage();
-		return catalogsPage;
+		catalogsPage = bfpLoginPage.loginToHomePage();
+		return;
 	}
 	
 	public FCatLoginPage EasyLoginToFcat(String username, String pw){
@@ -280,7 +291,7 @@ public class BaseTest {
 		
 	}
 	
-	public void cleanUpThenDeleteTemp(String tempFile){
+	public void cleanUpThenDeleteTemp(){
 		if(tempFile.length() != 0){
 			System.out.println();
 			System.out.println("Delete Temp in Actions");
@@ -292,7 +303,28 @@ public class BaseTest {
 			
 			try{
 				CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-				catalogsPage.deleteTempFile(tempFile);
+				catalogsPage.deleteTempFile(this.tempFile);
+			} catch(Exception e){
+				System.out.println("failed to delete temp file...");
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
+	public void cleanUpThenDeleteTemp(String ownTempFile){
+		if(tempFile.length() != 0){
+			System.out.println();
+			System.out.println("Delete Temp in Actions");
+			System.out.println("----------------------------");
+
+			//takeScreenshot();
+			//driver.quit();
+			startUp();
+			
+			try{
+				CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+				catalogsPage.deleteTempFile(ownTempFile);
 			} catch(Exception e){
 				System.out.println("failed to delete temp file...");
 				e.printStackTrace();
@@ -439,7 +471,7 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 		//Firefox is disable temporarily because javascriptError pacakage needs to be added separately for maven.
-		
+		/**
 		if(getBrowser().contains("firefox")){
 			
 			/**List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
@@ -452,12 +484,12 @@ public class BaseTest {
 			
 			
 				return false;
-			}*/
+			}
 			String js = (String) ((JavascriptExecutor)driver).executeScript("return window.javascript_errors ");
 			System.out.println("message:" + js);
 			
 		}
-
+		 */
 		//For Chrome this also might work w/ firefox. Haven't tested for firefox browser yet, since 
 		//our error message catcher catches firefox error that shows up on console.
 		if(getBrowser().contains("chrome") || getBrowser().contains("firefox")){
@@ -513,6 +545,83 @@ public class BaseTest {
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
 		return productsCatalogPage;
+	}
+	
+	public MappingPage UploadFullFile() throws InterruptedException{
+		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
+		uploadPopupPage.clickUploadFile();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
+		
+		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
+		return mappingPage;
+	}
+	
+	protected String tempFile = "";
+	
+	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
+		//System.out.println("drive rnull? " + driver == null);
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
+		
+		this.tempFile = addCatalogsPage.getTempFileName();
+		
+		if(isAutomatic){
+			addCatalogsPage.switchToAutomatic();
+			
+		}
+		
+		return addCatalogsPage;
+	}
+	
+	public <T> boolean twoListsAreEqual(List<T> list1, List<T> list2){
+		//System.out.println("is it equal " + list1.equals(list2));
+		if(!list1.equals(list2)){ 
+			Collection subtractedList1 = CollectionUtils.subtract(list1, list2);
+			Collection subtractedList2 = CollectionUtils.subtract(list2, list1);
+			
+			if(subtractedList1.size() >= 1){
+				System.out.println();
+				System.out.println("list1: ");
+				for(Object c: subtractedList1){
+					if(c instanceof Catalog){
+						System.out.println("===comparing catalogs object list===");
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					}
+					else if(c instanceof Product){
+						System.out.println("===comparing Products object list===");
+						Product convertP = (Product)c;
+						System.out.println(convertP.toString());
+					}
+					else{
+						System.out.println(c.toString());
+					}
+				}
+				//return false;
+			}
+			
+			if(subtractedList2.size() >= 1){
+				System.out.println();
+				System.out.println("list2: ");
+				for(Object c: subtractedList2){
+					if(c instanceof Catalog){
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
+					}
+					else if(c instanceof Product){
+						Product convertP = (Product)c;
+						System.out.println(convertP.toString());
+					}
+					else{
+						System.out.println(c.toString());
+					}
+				}
+				return false;
+			}
+			
+		}
+		
+		return true;
 	}
 	
 	

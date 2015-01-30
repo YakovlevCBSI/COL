@@ -1,6 +1,8 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -72,6 +74,33 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div.edit")
 	private WebElement Edit;
 	
+	private WebElement productRow;
+	public ProductsCatalogPage setProductToUse(String productName){
+		productRow = driver.findElement(By.cssSelector("tr[data-id='" + productName + "']"));
+		return this;
+	}
+	
+	public BasePage clickAction(String actionButtonName){
+		if(actionButtonName.toLowerCase().equals("map")){
+			productRow.findElement(By.xpath("td[@class='state actions']/a[1]")).click();
+			return PageFactory.initElements(driver, MapProductsDialog.class);
+		}
+		else if(actionButtonName.toLowerCase().equals("edit")){
+			productRow.findElement(By.xpath("td[@class='state actions']/a[2]")).click();
+			return PageFactory.initElements(driver, EditProductPopupPage.class);
+		}
+		else if(actionButtonName.toLowerCase().equals("delete")){
+			productRow.findElement(By.xpath("td[@class='state actions']/a[3]")).click();
+		}
+		else{
+			System.err.println("parameter takes " + "\"map\" or \"edit\" or \"delete\".");
+		}
+		
+		return this;
+	}
+	
+	
+	
 	//----------------------stats, pageRowSelector, stickyButtons and textbox elements-------------------//
 
 	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[1]/td[1]")
@@ -140,6 +169,26 @@ public class ProductsCatalogPage extends BasePage{
 		
 		return this;
 	}
+	
+	///---------------------Table row to object---------------------//
+	@FindBy(css="tbody#product-table-body")
+	private WebElement productTBody;
+	
+	public List<WebElement> getDataRows(){
+		return productTBody.findElements(By.xpath("tr"));
+	}
+	
+	public Map<String, String> dataRowToProductObject(WebElement dataTr){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("product id", dataTr.findElement(By.xpath("td[starts-with(@class, 'product-id')]")).getText());
+		map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
+		map.put("part number", dataTr.findElement(By.xpath("td[starts-with(@class, 'part-number')]")).getText());
+		map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
+		map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("title"));
+		
+		return map;
+	}
+	
 	public EditProductPopupPage clickEdit(){
 		Edit.click();
 		return PageFactory.initElements(driver, EditProductPopupPage.class);

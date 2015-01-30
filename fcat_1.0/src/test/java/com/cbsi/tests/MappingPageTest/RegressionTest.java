@@ -38,7 +38,7 @@ public class RegressionTest extends AllBaseTest{
 
 	@After
 	public void cleanUp(){
-		super.cleanUpThenDeleteTemp(tempFile);
+		super.cleanUpThenDeleteTemp();
 	}
 	
 	

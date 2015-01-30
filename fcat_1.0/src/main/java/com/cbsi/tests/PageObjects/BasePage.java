@@ -68,4 +68,13 @@ public class BasePage {
 	public void refresh(){
 		driver.navigate().refresh();
 	}
+	
+	public void forceWait(long time){
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

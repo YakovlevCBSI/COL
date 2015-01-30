@@ -23,11 +23,11 @@ public class SanityTest extends AllBaseTest{
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
-	private String tempFile = "";
+
 	
 	@After
 	public void cleanUp(){
-		super.cleanUpThenDeleteTemp(tempFile);
+		super.cleanUpThenDeleteTemp();
 
 	}
 	
@@ -83,29 +83,11 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 	
-	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
-		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
-		
-		this.tempFile = addCatalogsPage.getTempFileName();
-		
-		if(isAutomatic){
-			addCatalogsPage.switchToAutomatic();
-			
-		}
-		
-		return addCatalogsPage;
-	}
+	//----------------------------com methods---------------//
 	
-	public MappingPage UploadFullFile() throws InterruptedException{
-		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
-		uploadPopupPage.clickUploadFile();
-		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
-		
-		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
-		return mappingPage;
-	}
+
 	
+
 	
 	
 }

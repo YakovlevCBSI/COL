@@ -35,8 +35,9 @@ public class MapProductsDialog extends BasePage{
 	private WebElement ManufactuererName;
 	
 	public MapProductsDialog searchName(String searchText){	
-		Actions action = new Actions(driver);
-		action.moveToElement(ManufactuererName).doubleClick().build().perform();
+		waitForElementToClickable(By.cssSelector("input[id='manufacturer-name-mapper']"));
+		//forceWait(3);
+		deleteText();
 		ManufactuererName.sendKeys(searchText);
 		try{
 			waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
@@ -47,7 +48,8 @@ public class MapProductsDialog extends BasePage{
 		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
 		return this;
 	}
-	
+
+
 	@FindBy(css="tbody#mapping-table-body")
 	WebElement tbody;
 	public MapProductsDialog selectAnItemFromResult(int nthResult){
@@ -63,5 +65,16 @@ public class MapProductsDialog extends BasePage{
 		}
 		*/
 		return this;
+	}
+	
+	public void deleteText(){
+		try{
+			int wordLength = this.ManufactuererName.getAttribute("value").length();
+			for(int i=0; i<wordLength; i++){
+				this.ManufactuererName.sendKeys(Keys.BACK_SPACE);
+			}
+		}catch(NullPointerException e){
+			System.out.println("deleteText is ignored...");
+		}
 	}
 }

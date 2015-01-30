@@ -1,12 +1,14 @@
 package com.cbsi.tests.PageObjects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class MappingPage extends BasePage{
 	public MappingPage(WebDriver driver) {
@@ -18,6 +20,121 @@ public class MappingPage extends BasePage{
 	@Override
 	public void waitForPageToLoad(){
 		waitForPageToLoad(By.cssSelector("div.panel div.content"));
+	}
+	
+	//---------------------Define mapping dropdown ---------------//
+	
+	public DetailsPage automap(){
+		List<WebElement> headers = collectHeaders();
+		for(WebElement e: headers){
+			//System.out.println("header: " + e.getText());
+			String selectThisOption ="";
+			try {
+				selectThisOption = getMatchingCNETFields(e.getText().trim());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				//System.out.println("auto map failed at automap method...");
+				e1.printStackTrace();
+			}
+			//System.out.println(e.getText() + " matches -> selected option: " + selectThisOption);
+				
+			WebElement dropdown = e.findElement(By.xpath("../td[contains(@class,'fields-column')]/a/span[@class='selectBox-label']"));
+			dropdown.click();
+			customWait(5);
+			
+			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));
+			//System.out.println("dropdownselections size: " + dropdownSelections.size());
+			boolean matchIsFound = false;
+
+			for(WebElement matchingElement: dropdownSelections){
+				if(matchingElement.isDisplayed()){
+					WebElement aElement = matchingElement.findElement(By.xpath("a"));
+					if(aElement.getText().toLowerCase().equals(selectThisOption)){
+						aElement.click();
+						matchIsFound = true;
+						//System.out.println(aElement.getText() + " was clicked.");
+						break;
+					}
+				}
+				
+				
+			}
+			if(!matchIsFound){
+					dropdown.click();
+				}
+		}
+		
+		clickSave();
+		
+		return PageFactory.initElements(driver, DetailsPage.class);
+
+	}
+	
+	public List<WebElement> collectHeaders(){
+		List<WebElement> headers = driver.findElements(By.cssSelector("tr.highlighted td.file-headers-column"));
+		System.out.println("header size; " + headers.size());
+		return headers;
+	}
+	
+	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number"};
+	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer"};
+	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer"};
+	private static String[] cnetSkuId={"cnet sku id", "cnetSkuId", "cnetproductid"}; 
+	private static String[] upcean = {"upc/ean", "upcean", "upc", "ean"};
+	private static String[] msrp = {"msrp", "msr"};
+	private static String[] price = {"price", "sell price"};
+	private static String[] inventory = {"inventory"};
+	private static String[] productURL = {"product url", "product", "url"};
+	
+	static List<String[]> headerMap = new ArrayList<String[]>(Arrays.asList(id, mfpn, mf, cnetSkuId, upcean, msrp, price, inventory, productURL));
+	
+	public static String getMatchingCNETFields(String clientHeader) throws Exception{
+		boolean hasMatch = false;
+		String matchword ="";
+		for(String[] sArray: headerMap){
+			for(String s:sArray){
+				if(clientHeader.toLowerCase().equals(s)){
+					matchword = sArray[0];
+					return matchword;
+				}
+			}
+		}
+		if(!hasMatch){
+			for(String[] sArray: headerMap){
+				int numOfMatch = 0;
+				for(String s:sArray){
+					if(clientHeader.toLowerCase().contains(s)){
+						numOfMatch++;
+					}
+				}
+				
+				if((numOfMatch/(double)sArray.length) >= 0.5){
+					matchword = sArray[0];
+					return matchword;
+				}
+			//	System.out.println(sArray[0] + " / " + numOfMatch);
+			}
+		}
+		if(!hasMatch){
+			//throw new Exception("no matching word was found.  Auto Mapping will fail now....");
+			System.out.println("no automapping found for " + clientHeader);
+		}
+		return "";
+	}
+	
+	public static void main(String[] args){
+		
+		String match="";
+		try {
+			 match = getMatchingCNETFields("cnetproductid");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(match);
+		
+		
+
 	}
 	
 	@FindBy(css="a#save_mappings_button")
@@ -104,5 +221,7 @@ public class MappingPage extends BasePage{
 		
 		return true;
 	}
+	
+	
 	
 }

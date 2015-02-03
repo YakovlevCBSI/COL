@@ -66,6 +66,7 @@ public class UploadPopupPage extends BasePage{
 	private WebElement GetFile;
 	public UploadPopupPage clickGetFile(){
 		waitForElementToClickable(By.cssSelector("#uploadFileForm > div.tabs.inside-dialog > div.tab-panel > p > a.link-button.green"));
+		forceWait(1000);
 		GetFile.click();
 		return this;
 	}

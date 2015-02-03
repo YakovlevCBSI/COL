@@ -77,7 +77,7 @@ public class PartyPopupPage extends BasePage{
 	
 	public List<WebElement> getSearchResult(){
 		tbody = refreshStaleElement(By.cssSelector("tbody#party-chooser-table-body"));
-		List<WebElement> searchElementsText = tbody.findElements(By.xpath("tr/td[@class='party-name-column']"));
+		List<WebElement> searchElementsText = tbody.findElements(By.xpath("tr/td[@class='party-name-column'][1]"));
 		return searchElementsText;
 	}
 	

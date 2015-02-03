@@ -26,6 +26,7 @@ public class MappingPage extends BasePage{
 	//---------------------Define mapping dropdown ---------------//
 	
 	public DetailsPage automap(){
+		forceWait(1500);
 		List<WebElement> headers = collectHeaders();
 		JavascriptExecutor js= (JavascriptExecutor)driver;
 		int scrollCount = 1;

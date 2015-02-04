@@ -49,6 +49,8 @@ public class DBTest extends StageBaseTest{
 	 * matche these validations
 	 * @throws  
 	 */
+	
+	boolean pass= false;
 	@After
 	public  void cleanup(){
 
@@ -58,13 +60,22 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void a_addACatalog() throws InterruptedException{
+	
+		try{
 		MappingPage mappingPage = UploadFullFile();
+		thisTempFile = tempFile;
 		DetailsPage detailsPage = mappingPage.automap();
-		
-		//mappingPage.forceWait(5);
+			
+			//mappingPage.forceWait(5);
 		thisTempFile = tempFile;
 		System.out.println("catName: " + thisTempFile);
-
+		pass = true;
+		}catch(Exception e){
+			System.out.println("failed on adding a catalog...");
+			System.out.println("deleting a catalog...");
+			cleanUpThenDeleteTemp();
+		}
+		
 	}
 	
 	private static String catalogId = "";
@@ -72,6 +83,8 @@ public class DBTest extends StageBaseTest{
 	
 	@Test             
 	public void b_runQueryonMysql(){
+		if(!pass) return;
+		
 		System.out.println(getQuery());
 		MySQLConnector sql = new MySQLConnector().connectToFcatDB();
 		List<Catalog> catalogObject = sql.runQuery(getQuery(), Catalog.class, true);
@@ -88,6 +101,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void c_runQueryOnMongo(){
+		if(!pass) return;
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();
@@ -99,6 +113,8 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void d_fileMatchesMongo() throws Exception{
+		if(!pass) return;
+		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();
@@ -114,6 +130,8 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void e_mongoMatchesProductsOnFront() throws Exception{
+		if(!pass) return;
+		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();
@@ -131,6 +149,8 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void f_mongoMatchesContentsAttributesOnFront() throws InterruptedException{
+		if(!pass) return;
+		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();

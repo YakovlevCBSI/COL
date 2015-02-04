@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +22,6 @@ import com.cbsi.tests.FCatSqlObject.Catalog;
 import com.cbsi.tests.FcatDB.MongoConnector;
 import com.cbsi.tests.FcatDB.MySQLConnector;
 import com.cbsi.tests.Foundation.StageBaseTest;
-import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.EditProductPopupPage;
@@ -50,7 +50,7 @@ public class DBTest extends StageBaseTest{
 	 * @throws  
 	 */
 	
-	boolean pass= false;
+	private static boolean pass= false;
 	@After
 	public  void cleanup(){
 
@@ -62,20 +62,24 @@ public class DBTest extends StageBaseTest{
 	public void a_addACatalog() throws InterruptedException{
 	
 		try{
-		MappingPage mappingPage = UploadFullFile();
-		thisTempFile = tempFile;
-		DetailsPage detailsPage = mappingPage.automap();
+			MappingPage mappingPage = UploadFullFile();
+			thisTempFile = tempFile;
+			DetailsPage detailsPage = mappingPage.automap();
+				
+				//mappingPage.forceWait(5);
+			thisTempFile = tempFile;
+			System.out.println("catName: " + thisTempFile);
+			pass = true;
 			
-			//mappingPage.forceWait(5);
-		thisTempFile = tempFile;
-		System.out.println("catName: " + thisTempFile);
-		pass = true;
+			return;
+			
 		}catch(Exception e){
 			System.out.println("failed on adding a catalog...");
 			System.out.println("deleting a catalog...");
 			cleanUpThenDeleteTemp();
 		}
 		
+		Assert.fail();
 	}
 	
 	private static String catalogId = "";

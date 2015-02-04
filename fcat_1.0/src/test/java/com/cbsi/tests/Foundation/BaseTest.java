@@ -133,6 +133,11 @@ public class BaseTest {
 		return emptyDriver;
 	}
 	
+	public void goHome(){
+		driver.get(getURL());
+		FCatHomePage fcatHomePage = PageFactory.initElements(driver, FCatHomePage.class);
+		catalogsPage = fcatHomePage.goToCatalogs();
+	}
 	//Navigate to Catalogs page(HOMePAGe)
 	public void navigateToHomePage(){
 		driver.get(getURL());
@@ -302,7 +307,6 @@ public class BaseTest {
 			startUp();
 			
 			try{
-				CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 				catalogsPage.deleteTempFile(this.tempFile);
 			} catch(Exception e){
 				System.out.println("failed to delete temp file...");

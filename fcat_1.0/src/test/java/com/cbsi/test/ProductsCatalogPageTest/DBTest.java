@@ -67,7 +67,7 @@ public class DBTest extends StageBaseTest{
 			DetailsPage detailsPage = mappingPage.automap();
 				
 				//mappingPage.forceWait(5);
-			thisTempFile = tempFile;
+
 			System.out.println("catName: " + thisTempFile);
 			pass = true;
 			
@@ -193,7 +193,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void g_deleteTemp(){
-		cleanUpThenDeleteTemp();
+		cleanUpThenDeleteTemp(thisTempFile);
 	}
 	
 	public String getQuery(){

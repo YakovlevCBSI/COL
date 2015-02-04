@@ -297,6 +297,7 @@ public class BaseTest {
 	}
 	
 	public void cleanUpThenDeleteTemp(){
+		System.out.println(tempFile.length());
 		if(tempFile.length() != 0){
 			System.out.println();
 			System.out.println("Delete Temp in Actions");
@@ -560,7 +561,7 @@ public class BaseTest {
 		return mappingPage;
 	}
 	
-	protected String tempFile = "";
+	protected static String tempFile = "";
 	
 	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
 		//System.out.println("drive rnull? " + driver == null);

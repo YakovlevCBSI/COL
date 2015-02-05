@@ -1,4 +1,4 @@
-package com.cbsi.tests.Foundation;
+package com.cbsi.tests.util;
 
 public class ActionsElement {
 	public final static String MAP = "map";

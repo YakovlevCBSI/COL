@@ -552,6 +552,12 @@ public class BaseTest {
 		return productsCatalogPage;
 	}
 	
+	public ProductsCatalogPage navigateToProductsCatalogPage(int num1, int num2){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(num1, num2);
+		return productsCatalogPage;
+	}
+	
 	public MappingPage UploadFullFile() throws InterruptedException{
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
 		uploadPopupPage.clickUploadFile();

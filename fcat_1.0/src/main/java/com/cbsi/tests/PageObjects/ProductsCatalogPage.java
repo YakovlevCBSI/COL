@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductsCatalogPage extends BasePage{
@@ -91,6 +93,7 @@ public class ProductsCatalogPage extends BasePage{
 		}
 		else if(actionButtonName.toLowerCase().equals("delete")){
 			productRow.findElement(By.xpath("td[@class='state actions']/a[3]")).click();
+			
 		}
 		else{
 			System.err.println("parameter takes " + "\"map\" or \"edit\" or \"delete\".");
@@ -145,7 +148,7 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="span.icon.upload")
 	public WebElement UploadIcon;
 	
-	@FindBy(css="span.icon.document")
+	@FindBy(css="a#add-product")
 	public WebElement AddProductIcon;
 	
 	@FindBy(css="span.icon.info")
@@ -153,6 +156,11 @@ public class ProductsCatalogPage extends BasePage{
 	
 	@FindBy(css="span.icon.edit")
 	public WebElement EditFileIcon;
+	
+	public AddProductPopup clickAddProduct(){
+		AddProductIcon.click();
+		return PageFactory.initElements(driver, AddProductPopup.class);
+	}
 	
 	//---------------------Search fields-----------------------------//
 

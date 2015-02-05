@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
+import com.cbsi.tests.PageObjects.AddProductPopup;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EditProductPopupPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
@@ -119,6 +120,27 @@ public class RegressionTest extends AllBaseTest{
 		productsCatalogPage.searchFor("Product ID", searchText);
 		
 		assertTrue(hasNoError());
+	}
+	
+	@Test
+	public void UnableToDeleteProductIdWithHtml_1308(){
+		String htmlText= "</table>" + System.currentTimeMillis();
+ 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
+		
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(htmlText);
+		addProductPopup.setMf("some Text");
+		addProductPopup.setMfpn("some Text");
+		
+		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
+		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction("delete");
+		productsCatalogPageNew.clickYes();
+		
+		assertTrue(hasNoError());
+	}
+	
+	public String escapeHtml(String text){
+		return text.replace("<", "&lt;").replace(">","&gt;");
 	}
 
 

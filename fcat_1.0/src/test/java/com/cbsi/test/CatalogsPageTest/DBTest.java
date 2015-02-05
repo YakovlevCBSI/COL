@@ -136,6 +136,7 @@ public class DBTest extends StageBaseTest{
 			System.out.println(s);
 		}
 		*/
+		
 		assertTrue(twoListsAreEqual(partiesLimit30, searchElementsAll));
 		
 	

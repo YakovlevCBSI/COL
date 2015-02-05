@@ -225,6 +225,21 @@ public class CatalogsPage extends BasePage{
 	
 	}
 	
+	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num1, int num2){
+		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
+		WebElement elementToUse =null;
+		for(WebElement e: productNumbers){
+			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
+				elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+				break;
+			}
+		}
+		elementToUse.click();
+		
+		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	
+	}
+	
 	@FindBy(id="topbar-party-search")
 	private WebElement searchParty;
 	

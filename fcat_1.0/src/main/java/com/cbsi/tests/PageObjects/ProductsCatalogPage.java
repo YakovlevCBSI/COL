@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cbsi.tests.Foundation.ActionsElement;
 
+
 public class ProductsCatalogPage extends BasePage{
 	public ProductsCatalogPage(WebDriver driver){
 		super(driver);

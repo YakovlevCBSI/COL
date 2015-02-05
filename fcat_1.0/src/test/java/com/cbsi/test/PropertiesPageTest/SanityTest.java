@@ -35,13 +35,13 @@ public class SanityTest extends AllBaseTest{
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 
-	@Ignore("pending dev")
+	//@Ignore("pending dev")
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
-		
-		try{ addCatalogPage.fillInName();} catch(RuntimeException e){}
+		addCatalogPage.fillInName().clickGetFile();
+		try{ } catch(RuntimeException e){}
 		
 		assertTrue(hasNoError());
 	}

@@ -15,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.cbsi.tests.Foundation.ActionsElement;
+
 public class ProductsCatalogPage extends BasePage{
 	public ProductsCatalogPage(WebDriver driver){
 		super(driver);
@@ -83,15 +85,15 @@ public class ProductsCatalogPage extends BasePage{
 	}
 	
 	public BasePage clickAction(String actionButtonName){
-		if(actionButtonName.toLowerCase().equals("map")){
+		if(actionButtonName.toLowerCase().equals(ActionsElement.MAP)){
 			productRow.findElement(By.xpath("td[@class='state actions']/a[1]")).click();
 			return PageFactory.initElements(driver, MapProductsDialog.class);
 		}
-		else if(actionButtonName.toLowerCase().equals("edit")){
+		else if(actionButtonName.toLowerCase().equals(ActionsElement.EDIT)){
 			productRow.findElement(By.xpath("td[@class='state actions']/a[2]")).click();
 			return PageFactory.initElements(driver, EditProductPopupPage.class);
 		}
-		else if(actionButtonName.toLowerCase().equals("delete")){
+		else if(actionButtonName.toLowerCase().equals(ActionsElement.DELETE)){
 			productRow.findElement(By.xpath("td[@class='state actions']/a[3]")).click();
 			
 		}

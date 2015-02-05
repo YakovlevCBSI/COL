@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.tests.Foundation.ActionsElement;
 import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.AddProductPopup;
 import com.cbsi.tests.PageObjects.CatalogsPage;
@@ -133,7 +134,7 @@ public class RegressionTest extends AllBaseTest{
 		addProductPopup.setMfpn("some Text");
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
-		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction("delete");
+		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ActionsElement.DELETE);
 		productsCatalogPageNew.clickYes();
 		
 		assertTrue(hasNoError());

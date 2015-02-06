@@ -76,7 +76,10 @@ public class DBTest extends StageBaseTest{
 		}catch(Exception e){
 			System.out.println("failed on adding a catalog...");
 			System.out.println("deleting a catalog...");
+			e.printStackTrace();
+			System.out.println(" end of stacktrace.");
 			cleanUpThenDeleteTemp();
+			
 		}
 		
 		Assert.fail();

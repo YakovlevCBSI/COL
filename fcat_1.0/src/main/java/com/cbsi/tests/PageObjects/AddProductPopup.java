@@ -15,6 +15,8 @@ public class AddProductPopup extends BasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForPageToLoad(By.cssSelector("div#editDialog"));
+		waitForPageToLoad(By.cssSelector("td.field-value"));
+		
 	}
 
 	@FindBy(xpath="//table[@class='fcat-tbl']/tbody/tr[1]/td[2]/input")
@@ -54,6 +56,7 @@ public class AddProductPopup extends BasePage{
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        forceWait(2000); //change this to wait for splash screen.
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	

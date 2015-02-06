@@ -12,7 +12,7 @@ import com.cbsi.tests.PageObjects.AddProductPopup;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EditProductPopupPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
-import com.cbsi.tests.util.ActionsElement;
+import com.cbsi.tests.util.ElementConstants;
 
 public class RegressionTest extends AllBaseTest{
 
@@ -134,7 +134,7 @@ public class RegressionTest extends AllBaseTest{
 		addProductPopup.setMfpn("some Text");
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
-		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ActionsElement.DELETE);
+		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ElementConstants.DELETE);
 		productsCatalogPageNew.clickYes();
 		
 		assertTrue(hasNoError());

@@ -628,13 +628,14 @@ public class BaseTest {
 					}
 				}
 				return false;
-			}
-			
-		}
-		
+			}	
+		}	
 		return true;
 	}
 	
+	public String escapeHtml(String text){
+		return text.replace("<", "&lt;").replace(">","&gt;");
+	}
 	
 	
 }

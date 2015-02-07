@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
@@ -37,6 +38,7 @@ public class RegressionTest extends AllBaseTest {
 		randomDays = SchedulePopup.generateRandomDays();
 	}
 	
+
 	@Test
 	public void checkSelectedDayIsSaved() throws InterruptedException{
 		SchedulePopup schedulePopup = navigateToSchedule();

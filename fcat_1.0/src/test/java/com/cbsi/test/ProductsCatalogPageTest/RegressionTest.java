@@ -2,6 +2,7 @@ package com.cbsi.test.ProductsCatalogPageTest;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -123,8 +124,9 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 	
+	@Ignore("1328")
 	@Test
-	public void UnableToDeleteProductIdWithHtml_1308(){
+	public void UnableToDeleteProductIdWithHtml_1308() throws InterruptedException{
 		String htmlText= "</table>" + System.currentTimeMillis();
  		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
 		
@@ -135,14 +137,13 @@ public class RegressionTest extends AllBaseTest{
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
 		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ElementConstants.DELETE);
+		Thread.sleep(5000);
 		productsCatalogPageNew.clickYes();
 		
 		assertTrue(hasNoError());
 	}
 	
-	public String escapeHtml(String text){
-		return text.replace("<", "&lt;").replace(">","&gt;");
-	}
+
 
 
 

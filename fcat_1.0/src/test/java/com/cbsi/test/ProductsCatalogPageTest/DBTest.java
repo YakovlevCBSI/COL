@@ -90,7 +90,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test             
 	public void b_runQueryonMysql(){
-		if(!pass) return;
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
 		
 		System.out.println(getQuery());
 		MySQLConnector sql = new MySQLConnector().connectToFcatDB();
@@ -108,7 +108,8 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void c_runQueryOnMongo(){
-		if(!pass) return;
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
+
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();
@@ -120,7 +121,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void d_fileMatchesMongo() throws Exception{
-		if(!pass) return;
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
 		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
@@ -137,7 +138,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void e_mongoMatchesProductsOnFront() throws Exception{
-		if(!pass) return;
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
 		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
@@ -156,7 +157,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void f_mongoMatchesContentsAttributesOnFront() throws InterruptedException{
-		if(!pass) return;
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
 		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
@@ -196,6 +197,7 @@ public class DBTest extends StageBaseTest{
 	
 	@Test
 	public void g_deleteTemp(){
+		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
 		cleanUpThenDeleteTemp(thisTempFile);
 	}
 	

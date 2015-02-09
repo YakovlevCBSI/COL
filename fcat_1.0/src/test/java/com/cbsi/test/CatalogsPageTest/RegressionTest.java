@@ -3,6 +3,9 @@ package com.cbsi.test.CatalogsPageTest;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
@@ -40,7 +43,20 @@ public class RegressionTest extends AllBaseTest{
 		assertFalse(lastLoaded.equals(catalogsPageNew.getMyCatalogLastLoaded()));
 	}
 	
-
+	@Test
+	public void LastLoadedShowsLocalTimeZone_1274() throws InterruptedException{
+		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
+		CatalogsPage catalogsPageNew = detailsPage.clickReturnToList();
+		String time = catalogsPageNew.setMyCatalogToManualCatalog().getMyCatalogLastLoaded().replaceAll("[^\\d]", " ");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH");
+		String localTime = sdf.format(new Date());
+		
+		System.out.println("localtime: " + localTime);
+		System.out.println("displayed time: " + time);
+		
+		assertTrue(time.contains(localTime));
+	}
 	
 	
 	//-------------------------------------------  Helper Method --------------------------------------------//

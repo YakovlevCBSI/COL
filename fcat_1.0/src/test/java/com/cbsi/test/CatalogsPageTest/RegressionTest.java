@@ -1,5 +1,6 @@
 package com.cbsi.test.CatalogsPageTest;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -30,6 +31,15 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue("Status showed '" + detailsPage.getStatus() + "'", detailsPage.getStatus().equals("DONE"));
 	}
 	
+	private String lastLoaded = "";
+	@Test
+	public void LastLoadedColumnIsUpdated_1303() throws InterruptedException{
+		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
+		CatalogsPage catalogsPageNew = detailsPage.clickReturnToList();
+		catalogsPageNew.setMyCatalogToManualCatalog();
+		assertFalse(lastLoaded.equals(catalogsPageNew.getMyCatalogLastLoaded()));
+	}
+	
 
 	
 	
@@ -39,6 +49,7 @@ public class RegressionTest extends AllBaseTest{
 		//CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		CatalogsPage catalogsPage = new CatalogsPage(driver);
 		catalogsPage.setMyCatalogToManualCatalog();
+		this.lastLoaded = catalogsPage.getMyCatalogLastLoaded();
 		 UploadPopupPage uploadPopupPage = catalogsPage.clickUpload();
 
 		//since default is unchecked, check it you wanna upload as FullFile.

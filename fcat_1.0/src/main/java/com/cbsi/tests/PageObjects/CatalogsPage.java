@@ -33,12 +33,16 @@ public class CatalogsPage extends BasePage{
 			for(WebElement e: myCatalogs){
 				if(!e.getText().toLowerCase().contains("ftp")  && !e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().equals("0")){
 					this.myCatalog = e;
-					//System.out.println(e.getText());
+					System.out.println(e.getText());
 					break outerLoop;
 				}
 			}
 		
 		return this;
+	}
+	
+	public String getMyCatalogLastLoaded(){
+		return myCatalog.findElement(By.xpath("../../td[@class='date-column']/span[@data-utc-year]")).getText();
 	}
 	
 	public CatalogsPage setMyCatalog(String name){
@@ -74,11 +78,8 @@ public class CatalogsPage extends BasePage{
 	public void waitForPageToLoad(){
 		try{
 			waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
-		}catch(TimeoutException e1){
+		}catch(TimeoutException e){
 			System.out.println("Checking if this is addCatalogsPage");
-		}catch(Exception e2){
-			System.out.println("was not timedout, but catching Exception. Proceed to next step if possible...");
-			e2.printStackTrace();
 		}
 	}
 	

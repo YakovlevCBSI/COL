@@ -74,8 +74,11 @@ public class CatalogsPage extends BasePage{
 	public void waitForPageToLoad(){
 		try{
 			waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
-		}catch(TimeoutException e){
+		}catch(TimeoutException e1){
 			System.out.println("Checking if this is addCatalogsPage");
+		}catch(Exception e2){
+			System.out.println("was not timedout, but catching Exception. Proceed to next step if possible...");
+			e2.printStackTrace();
 		}
 	}
 	

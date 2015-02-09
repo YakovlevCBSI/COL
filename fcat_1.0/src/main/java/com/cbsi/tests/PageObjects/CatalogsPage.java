@@ -73,7 +73,7 @@ public class CatalogsPage extends BasePage{
 	@Override
 	public void waitForPageToLoad(){
 		try{
-			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.panel div.catalogs-index")));
+			waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
 		}catch(TimeoutException e){
 			System.out.println("Checking if this is addCatalogsPage");
 		}

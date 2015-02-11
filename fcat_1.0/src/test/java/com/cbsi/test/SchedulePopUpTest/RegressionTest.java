@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
@@ -24,9 +26,7 @@ public class RegressionTest extends AllBaseTest {
 	@Before
 	public void startUp(){
 		super.startUp();
-		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		catalogsPage.setMyCatalogToAutomaticCatalog();
-		catalogsPage.clickEdit();
+		jumpToEdit();
 	}
 	
 	private static String randomDay;
@@ -45,10 +45,10 @@ public class RegressionTest extends AllBaseTest {
 
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDay);
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
-		CatalogsPage catalogsPage = propertiesPageNew.clickSave();
-		AddCatalogPage propertiesPageNew2 = catalogsPage.setMyCatalogToAutomaticCatalog().clickEdit();
-		
-		SchedulePopup schedulePopup2 = navigateToSchedule();
+		CatalogsPage catalogsPage2 = propertiesPageNew.clickSave();
+
+		AddCatalogPage propertiesPageNew2 =  jumpToEdit();		
+		SchedulePopup schedulePopup2 = propertiesPageNew2.clickSetSchedule();
 		
 		Thread.sleep(3000);
 		assertTrue( "manually checked day is " +randomDay, schedulePopup2.dayCheckBoxesAreChecked(randomDay));
@@ -59,18 +59,14 @@ public class RegressionTest extends AllBaseTest {
 		SchedulePopup schedulePopup = navigateToSchedule();
 
 		String[] excludedDays = schedulePopup.ExcludedDays(randomDays);
-		for(String s: randomDays){
-			System.out.println("include: " + s);
-		}
-		for(String s: excludedDays){
-			System.out.println("exclude: " + s);
-		}
+		printIncludeExcludeDays(randomDays, excludedDays);
+		
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDays);
-
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
+		propertiesPageNew.clickSave();
 
-		CatalogsPage catalogsPage = propertiesPageNew.clickSave();
-		AddCatalogPage propertiesPageNew2 = catalogsPage.setMyCatalogToAutomaticCatalog().clickEdit();
+		//Instantiating a new page object due to unreachablebrowser exception.
+		AddCatalogPage propertiesPageNew2 = jumpToEdit();
 
 		String result = propertiesPageNew2.getScheduleResult();
 	
@@ -91,7 +87,7 @@ public class RegressionTest extends AllBaseTest {
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
 
 		CatalogsPage catalogsPage = propertiesPageNew.clickSave();
-		AddCatalogPage propertiesPageNew2 = catalogsPage.setMyCatalogToAutomaticCatalog().clickEdit();
+		AddCatalogPage propertiesPageNew2 =  jumpToEdit();
 
 		String result = propertiesPageNew2.getScheduleResult();
 	
@@ -105,6 +101,22 @@ public class RegressionTest extends AllBaseTest {
 		AddCatalogPage propertiesPage = PageFactory.initElements(driver, AddCatalogPage.class);
 		SchedulePopup schedulePopup = propertiesPage.clickSetSchedule();
 		return schedulePopup;
+	}
+	
+	//Fix to unreachable browser exceptoion. instantiate a new page object.s
+	public AddCatalogPage jumpToEdit(){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		catalogsPage.setMyCatalogToAutomaticCatalog();
+		return catalogsPage.clickEdit();
+	}
+	
+	public void printIncludeExcludeDays(String[] includes, String[] excludes){
+		for(String s: includes){
+			System.out.println("include : " + s);
+		}
+		for(String s: excludes){
+			System.out.println("exclude: " + s);
+		}
 	}
 	
 

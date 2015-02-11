@@ -10,17 +10,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class AddCatalogPage extends CatalogsPage {
+public class AddCatalogPage extends BasePage {
 
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
-		//waitForPageToLoad();
+		waitForPageToLoad();
 	}
 	
 	@Override
 	public void waitForPageToLoad(){
 		try{
-			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form#editCatalogForm")));
+			waitForElementToBeVisible(By.cssSelector("form#editCatalogForm"));
 		}catch(TimeoutException e){
 			System.out.println("redirect to AddCatalogPage");
 		}
@@ -45,7 +45,7 @@ public class AddCatalogPage extends CatalogsPage {
 	public UploadPopupPage fillInName(){
 		System.out.println("filling out catalog name. Next...");
 		//customWait(20);
-		name.sendKeys(tempFileName);
+		//name.sendKeys(tempFileName);
 		customWait(5);
 		Next.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);
@@ -123,12 +123,7 @@ public class AddCatalogPage extends CatalogsPage {
 	
 	public String getScheduleResult(){
 		while(scheduleResult.getText().isEmpty()){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			forceWait(500);
 			System.out.println("waiting for message...");
 		}
 		return scheduleResult.getText();
@@ -139,8 +134,11 @@ public class AddCatalogPage extends CatalogsPage {
 	
 	public CatalogsPage clickSave(){
 		Save.click();
-		customWait(5000);
 		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
+	public void clickSaveNone(){
+		Save.click();
 	}
 
 	public AddCatalogPage typeFileAndUserInfoAll(String fileLocation, String username, String password){

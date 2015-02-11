@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -22,21 +24,20 @@ public class RegressionTest extends AllBaseTest {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Rule 
+	public Timeout timeout = new Timeout(150000);
+	
 	@Override
 	@Before
 	public void startUp(){
 		super.startUp();
-		jumpToEdit();
+		randomDay = SchedulePopup.generateRandomDay();
+		randomDays = SchedulePopup.generateRandomDays();
 	}
 	
 	private static String randomDay;
 	private static String[] randomDays;
 	
-	@BeforeClass
-	public static void beforeStartup(){
-		randomDay = SchedulePopup.generateRandomDay();
-		randomDays = SchedulePopup.generateRandomDays();
-	}
 	
 
 	@Test
@@ -45,12 +46,12 @@ public class RegressionTest extends AllBaseTest {
 
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDay);
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
-		CatalogsPage catalogsPage2 = propertiesPageNew.clickSave();
+		propertiesPageNew.clickSaveNone();
 
 		AddCatalogPage propertiesPageNew2 =  jumpToEdit();		
 		SchedulePopup schedulePopup2 = propertiesPageNew2.clickSetSchedule();
 		
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 		assertTrue( "manually checked day is " +randomDay, schedulePopup2.dayCheckBoxesAreChecked(randomDay));
 	}
 	
@@ -63,7 +64,7 @@ public class RegressionTest extends AllBaseTest {
 		
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDays);
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
-		propertiesPageNew.clickSave();
+		propertiesPageNew.clickSaveNone();
 
 		//Instantiating a new page object due to unreachablebrowser exception.
 		AddCatalogPage propertiesPageNew2 = jumpToEdit();
@@ -85,8 +86,7 @@ public class RegressionTest extends AllBaseTest {
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays("all");
 
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
-
-		CatalogsPage catalogsPage = propertiesPageNew.clickSave();
+		propertiesPageNew.clickSaveNone();
 		AddCatalogPage propertiesPageNew2 =  jumpToEdit();
 
 		String result = propertiesPageNew2.getScheduleResult();
@@ -98,13 +98,15 @@ public class RegressionTest extends AllBaseTest {
 
 	
 	public SchedulePopup navigateToSchedule(){
-		AddCatalogPage propertiesPage = PageFactory.initElements(driver, AddCatalogPage.class);
+		skipFirefox();
+		AddCatalogPage propertiesPage = jumpToEdit();
 		SchedulePopup schedulePopup = propertiesPage.clickSetSchedule();
 		return schedulePopup;
 	}
 	
 	//Fix to unreachable browser exceptoion. instantiate a new page object.s
 	public AddCatalogPage jumpToEdit(){
+		
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		catalogsPage.setMyCatalogToAutomaticCatalog();
 		return catalogsPage.clickEdit();
@@ -118,6 +120,11 @@ public class RegressionTest extends AllBaseTest {
 			System.out.println("exclude: " + s);
 		}
 	}
+	
+	public void skipFirefox(){
+		if(getBrowser().toLowerCase().contains("firefox")) return;
+	}
+
 	
 
 }

@@ -24,9 +24,6 @@ public class RegressionTest extends AllBaseTest {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Rule 
-	public Timeout timeout = new Timeout(150000);
-	
 	@Override
 	@Before
 	public void startUp(){

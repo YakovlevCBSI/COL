@@ -174,11 +174,11 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	public CatalogsPage clickCoverageReport(){
-		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[7]/a[1]"));
+	public CoverageReportPage clickCoverageReport(){
+		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[6]/a[5]"));
 		customWait(3);
 		CoverageReport.click();
-		return this;
+		return PageFactory.initElements(driver, CoverageReportPage.class);
 	}
 	
 	public List<String> getCatalogNamesAsList(){

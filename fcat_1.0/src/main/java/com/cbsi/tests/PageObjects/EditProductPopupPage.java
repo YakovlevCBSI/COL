@@ -2,10 +2,13 @@ package com.cbsi.tests.PageObjects;
 
 import java.util.List;
 
+import javax.crypto.AEADBadTagException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -24,10 +27,10 @@ public class EditProductPopupPage extends BasePage{
 		waitForElementToBeVisible(By.cssSelector("#content > div.fancybox-wrap.fancybox-desktop.fancybox-type-html.fancybox-opened > div > div > div > div > div.overlay-body.dialog"));
 	}
 	
-	@FindBy(linkText="Save")
+	@FindBy(css="#saveButton")
 	private WebElement Save;
 	
-	@FindBy(linkText = "Cancel")
+	@FindBy(css = "#editDialog div div div a[onclick*='close']")
 	private WebElement Cancel;
 	
 	public ProductsCatalogPage clickSave(){
@@ -120,8 +123,14 @@ public class EditProductPopupPage extends BasePage{
 
 	public Actions action = new Actions(driver);
 	public void sendKeysHelper(WebElement e, String...value){
+		if(driver instanceof FirefoxDriver){
+			e.click();
+			e.sendKeys(SELECT_ALL, value[0]);
+		}else{
+			//chrome, etc/
 			deleteAllInput(e);
 			e.sendKeys(value[0]);
+		}
 	}
 	private WebElement productId;
 	private WebElement manufacturerName;

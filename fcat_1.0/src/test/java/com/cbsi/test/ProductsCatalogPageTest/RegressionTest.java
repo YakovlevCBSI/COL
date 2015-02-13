@@ -209,7 +209,6 @@ public class RegressionTest extends AllBaseTest{
 		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();
 		productsCatalogPageFinal.setProductToUse(rowMapped);
 
-		Thread.sleep(5000);
 		assertTrue(productsCatalogPageFinal.isProductRowMapped());
 		
 		

@@ -53,7 +53,7 @@ public class BasePage {
 	}
 	
 	public void waitForElementToBeInvisible(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(by));
+		new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
 	public WebElement refreshStaleElement(By by){

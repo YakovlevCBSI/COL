@@ -81,8 +81,13 @@ public class ProductsCatalogPage extends BasePage{
 	
 	private WebElement productRow;
 	public ProductsCatalogPage setProductToUse(String productName){
-		productRow = driver.findElement(By.cssSelector("tr[data-id='" + productName + "']"));
+		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + productName + "']"));
 		return this;
+	}
+	
+	public boolean isProductRowMapped(){
+		//for compound xpath class name, make sure to use @contains!!! otherwise it never finds the element.
+		return this.productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("title").toLowerCase().equals("mapped");
 	}
 	
 	public BasePage clickAction(String actionButtonName){
@@ -209,14 +214,16 @@ public class ProductsCatalogPage extends BasePage{
 		Download.click();
 		return this;
 	}
-	private By rowThatWasMapped;
+	private String rowThatWasMapped;
 	public MapProductsDialog clickNotMappedOrMappedIcon(){
 		try{
-			rowThatWasMapped = By.cssSelector("div[title='Mapped']");
+			/*
+			 * **/
+			rowThatWasMapped = MappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
 			MappedIcon.click();
 		}catch(Exception e){
 			System.out.println("couldn't find mapped icon, finding not mapped instead.");
-			rowThatWasMapped = By.cssSelector("div[title='Not mapped']");
+			rowThatWasMapped = NotMappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
@@ -241,8 +248,13 @@ public class ProductsCatalogPage extends BasePage{
 		return this;
 	}
 	
-	public By getRowThatWasMapped(){
+	public String getRowThatWasMapped(){
+		//System.out.println(row);
 		return rowThatWasMapped;
+	}
+	
+	public boolean isRowMapped(By rowThatWasMapped){
+		return driver.findElement(rowThatWasMapped).getAttribute("title").toLowerCase().equals("mapped");
 	}
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();

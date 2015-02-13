@@ -19,17 +19,42 @@ public class MapProductsDialog extends BasePage{
 		//waitforpage to Load.
 	}
 	
+	@FindBy(css="#mappedFlag")
+	private WebElement mappedFlag;
 	
+	public boolean isMapped(){
+		if(mappedFlag.getText().toLowerCase().contains("none")){
+			return false;
+		}
+		
+		return true;
+	}
 	@FindBy(css="div.buttons a[onclick*='save']")
 	private WebElement Save;
 	public ProductsCatalogPage clickSave(){
 		Save.click();
 		waitForElementToBeInvisible(By.cssSelector("div.button a[onclick*='save']"));
+		forceWait(500);
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
-	@FindBy(css="div.button a[onclick*='close']")
+	@FindBy(css="div.buttons a[onclick*='close']")
 	private WebElement Cancel;
+	
+	public ProductsCatalogPage clickCancel(){
+		Cancel.click();
+		waitForElementToBeInvisible(By.cssSelector("div.buttons a[onclick*='closeMapping']"));
+		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+		
+	}
+	
+	@FindBy(css="span.gp-icon.minus")
+	private WebElement Unmap;
+	
+	public MapProductsDialog clickUnmap(){
+		Unmap.click();
+		return this;
+	}
 	
 	@FindBy(css="input[id='manufacturer-name-mapper']")
 	private WebElement ManufactuererName;

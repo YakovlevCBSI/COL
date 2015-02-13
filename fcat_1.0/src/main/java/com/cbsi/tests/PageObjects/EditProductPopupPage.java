@@ -3,8 +3,10 @@ package com.cbsi.tests.PageObjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,6 +32,8 @@ public class EditProductPopupPage extends BasePage{
 	
 	public ProductsCatalogPage clickSave(){
 		Save.click();
+		waitForElementToBeInvisible(By.cssSelector("#content > div.fancybox-wrap.fancybox-desktop.fancybox-type-html.fancybox-opened > div > div > div > div > div.overlay-body.dialog"));
+
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
@@ -79,6 +83,46 @@ public class EditProductPopupPage extends BasePage{
 		return msrp.getAttribute("value");
 	}
 	
+	
+	public void setManufacturerName(String...value){
+		sendKeysHelper(manufacturerName, value);
+	}
+	
+	public void setManufacturerPartNumber(String...value){
+		sendKeysHelper(manufacturerPartNumber, value);
+	}
+	
+	public void setCnetSkuId(String...value){
+		sendKeysHelper(cnetSkuId, value);
+	}
+	
+	public void setProductURL(String...value){
+		sendKeysHelper(productUrl, value);
+	}
+	
+	public void setInventory(String...value){
+		sendKeysHelper(inventory, value);
+	}
+	
+	public void setPrice(String...value){
+		sendKeysHelper(price, value);
+	}
+	
+	public void setUpcEan(String...value){
+		sendKeysHelper(upcEan, value);
+	}
+	
+	public void setMsrp(String...value){
+		sendKeysHelper(msrp, value);
+	}
+	
+	public static final String SELECT_ALL = Keys.chord(Keys.COMMAND, "a");
+
+	public Actions action = new Actions(driver);
+	public void sendKeysHelper(WebElement e, String...value){
+			deleteAllInput(e);
+			e.sendKeys(value[0]);
+	}
 	private WebElement productId;
 	private WebElement manufacturerName;
 	private WebElement manufacturerPartNumber;
@@ -130,5 +174,11 @@ public class EditProductPopupPage extends BasePage{
 	
 	public WebElement reverseFindElement(WebElement e, String xpathExpression){
 		return e.findElement(By.xpath(xpathExpression));
+	}
+	
+	public void deleteAllInput(WebElement e){
+		while(!e.getAttribute("value").trim().isEmpty()){
+			action.moveToElement(e).doubleClick().sendKeys(Keys.DELETE).build().perform();
+		}
 	}
 }

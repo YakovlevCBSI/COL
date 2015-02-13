@@ -1,10 +1,12 @@
 package com.cbsi.test.ProductsCatalogPageTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -12,6 +14,7 @@ import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.AddProductPopup;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.EditProductPopupPage;
+import com.cbsi.tests.PageObjects.MapProductsDialog;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.util.ElementConstants;
 
@@ -95,12 +98,12 @@ public class RegressionTest extends AllBaseTest{
 	public void ErrorWhenYouDeleteManualMapItem(){
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
-		By tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
+		String tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
 		
 		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
 		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();
 		
-		productCatalogPage.refreshStaleElement(tempElement).findElement(By.xpath("../../a[@oldtitle='Delete']/div")).click();
+		productCatalogPage.setProductToUse(tempElement).clickAction(ElementConstants.DELETE);
 		productCatalogPage.clickYes();
 		
 		assertTrue(hasNoError());
@@ -124,7 +127,7 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 	
-	@Ignore("1328")
+	//("1328")
 	@Test
 	public void UnableToDeleteProductIdWithHtml_1308() throws InterruptedException{
 		String htmlText= "</table>" + System.currentTimeMillis();
@@ -137,10 +140,82 @@ public class RegressionTest extends AllBaseTest{
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
 		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ElementConstants.DELETE);
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		productsCatalogPageNew.clickYes();
 		
 		assertTrue(hasNoError());
+	}
+	
+
+	@Test
+	public void UPCEanFieldSaveChanges_1295() throws InterruptedException{
+		String time= System.currentTimeMillis() + "";
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
+		EditProductPopupPage editProductPage =productsCatalogPage.clickEdit();
+		editProductPage.setData();
+		
+		//System.out.println(editProductPage.getManufacturerName());
+		editProductPage.setManufacturerName(time);
+		editProductPage.setManufacturerPartNumber(time);
+		editProductPage.setUpcEan(time);
+		editProductPage.setCnetSkuId(time);
+		editProductPage.setInventory(time);
+		editProductPage.setPrice(time);
+		editProductPage.setMsrp(time);
+		
+		ProductsCatalogPage productsCatalogPageNew = editProductPage.clickSave();
+		EditProductPopupPage editProductPageNew = productsCatalogPageNew.clickEdit().setData();
+		
+		assertEquals(time, editProductPageNew.getManufacturerName());
+		assertEquals(time, editProductPageNew.getManufacturerPartNumber());
+		assertEquals(time, editProductPageNew.getUpcEan());
+		assertEquals(time, editProductPageNew.getCnetSkuId());
+		assertEquals(time, editProductPageNew.getInventory());
+		assertEquals(time, editProductPageNew.getPrice());
+		assertEquals(time, editProductPageNew.getMsrp());
+	}
+	
+	public static final String mfn= "SONY";
+	public static final String  mfpn= "paltov";
+	@Test
+	public void AutomapAfterEditRefreshesMapIcon() throws InterruptedException{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		MapProductsDialog mapDialog = productsCatalogPage.clickNotMappedOrMappedIcon();
+		
+		//--does this work??--//
+		String rowMapped = productsCatalogPage.getRowThatWasMapped();
+		System.out.println("mid check: " + rowMapped);
+		ProductsCatalogPage productsCatalogPageNew = null;
+		
+		if(!mapDialog.isMapped()){
+			productsCatalogPageNew= mapDialog.clickCancel();
+		}
+		else{
+			System.out.println("UNMAPPING!");
+			mapDialog.clickUnmap();
+			productsCatalogPageNew = mapDialog.clickSave();
+		}
+		
+		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
+		editProduct.setData();
+		
+		String s = editProduct.getManufacturerName().toUpperCase();
+		String mfnModified=mfn;
+		if(s.equals(mfn)){
+			mfnModified = mfnModified + " ";
+		}
+		
+		editProduct.setManufacturerName(mfnModified);
+		editProduct.setManufacturerPartNumber(mfpn);
+		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();
+		productsCatalogPageFinal.setProductToUse(rowMapped);
+
+		Thread.sleep(5000);
+		assertTrue(productsCatalogPageFinal.isProductRowMapped());
+		
+		
+		
+		
 	}
 	
 

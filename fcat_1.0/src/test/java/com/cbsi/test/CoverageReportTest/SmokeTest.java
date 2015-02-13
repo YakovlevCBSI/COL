@@ -34,7 +34,12 @@ public class SmokeTest extends FormBaseTest{
 	}
 
 	public void navigateToCR(){
-		catalogsPage.setMyCatalogToAutomaticCatalog();
+		if(getBrowser().contains("firefox")){
+			catalogsPage.setMyCatalogToAutomaticCatalog();
+		}else{
+			catalogsPage.setMyCatalogToManualCatalog();
+		}
+		
 		this.coverageReport= catalogsPage.clickCoverageReport();
 		this.coverageReport.resizeCoverageWindow(600);
 		coverageReport.forceWait(3000);

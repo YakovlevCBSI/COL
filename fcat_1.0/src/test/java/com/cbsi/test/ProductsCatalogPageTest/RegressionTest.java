@@ -150,7 +150,7 @@ public class RegressionTest extends AllBaseTest{
 	@Test
 	public void UPCEanFieldSaveChanges_1295() throws InterruptedException{
 		String time= System.currentTimeMillis() + "";
-		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(5, 10);
 		EditProductPopupPage editProductPage =productsCatalogPage.clickEdit();
 		editProductPage.setData();
 		
@@ -161,8 +161,7 @@ public class RegressionTest extends AllBaseTest{
 		editProductPage.setCnetSkuId(time);
 		editProductPage.setInventory(time);
 		editProductPage.setPrice(time);
-		editProductPage.setMsrp(time);
-		
+ 		
 		ProductsCatalogPage productsCatalogPageNew = editProductPage.clickSave();
 		EditProductPopupPage editProductPageNew = productsCatalogPageNew.clickEdit().setData();
 		
@@ -172,7 +171,7 @@ public class RegressionTest extends AllBaseTest{
 		assertEquals(time, editProductPageNew.getCnetSkuId());
 		assertEquals(time, editProductPageNew.getInventory());
 		assertEquals(time, editProductPageNew.getPrice());
-		assertEquals(time, editProductPageNew.getMsrp());
+		//assertEquals(time, editProductPageNew.getMsrp());
 	}
 	
 	public static final String mfn= "SONY";

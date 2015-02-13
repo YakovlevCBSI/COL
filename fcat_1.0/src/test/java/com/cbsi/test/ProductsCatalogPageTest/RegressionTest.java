@@ -30,7 +30,7 @@ public class RegressionTest extends AllBaseTest{
 	@Test
 	public void TableRenderIssue_CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30, 900);
 		productsCatalogPage.clickGoRight();
 		//wait until page number changes to veirfy.
 		

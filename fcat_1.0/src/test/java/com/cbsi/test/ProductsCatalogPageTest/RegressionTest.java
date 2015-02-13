@@ -132,7 +132,7 @@ public class RegressionTest extends AllBaseTest{
 	public void UnableToDeleteProductIdWithHtml_1308() throws InterruptedException{
 		String htmlText= "</table>" + System.currentTimeMillis();
  		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
-		
+		System.out.println(htmlText);
 		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
 		addProductPopup.setId(htmlText);
 		addProductPopup.setMf("some Text");

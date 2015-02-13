@@ -645,7 +645,7 @@ public class BaseTest {
 	}
 	
 	public String escapeHtml(String text){
-		return text.replace("<", "&lt;").replace(">","&gt;");
+		return text.replace("<", "&amp;lt;").replace(">","&amp;gt;");
 	}
 	
 	

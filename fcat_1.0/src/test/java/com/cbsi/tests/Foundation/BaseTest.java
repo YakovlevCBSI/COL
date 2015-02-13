@@ -26,6 +26,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -122,14 +123,18 @@ public class BaseTest {
 		else{
 			System.out.println("in firefox conditions");
 			try{
-			emptyDriver = new FirefoxDriver();
+				FirefoxProfile profile = new FirefoxProfile();
+				//profile.setPreference("permissions.default.stylesheet", 2);
+				//profile.setPreference("permissions.default.image", 2);
+				//profile.setPreference("javascript.enabled", 2);
+			emptyDriver = new FirefoxDriver(profile);
 			}catch(Exception e){
 				System.out.println("Failed to create a firefox driver");
 				e.printStackTrace();
 			}
 			
 		}
-		
+
 		return emptyDriver;
 	}
 	
@@ -204,7 +209,7 @@ public class BaseTest {
 		LoggingPreferences logprefs = new LoggingPreferences();
 		logprefs.enable(LogType.BROWSER, Level.ALL);
 		caps.setCapability(CapabilityType.LOGGING_PREFS, logprefs);
-		
+
 		return new ChromeDriver(caps);
 		
 		
@@ -555,6 +560,12 @@ public class BaseTest {
 	public ProductsCatalogPage navigateToProductsCatalogPage(int num1, int num2){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(num1, num2);
+		return productsCatalogPage;
+	}
+	
+	public ProductsCatalogPage navigateToProductsCatalogPageManual(){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.setMyCatalogToManualCatalog().goToProductsCatalogPage();
 		return productsCatalogPage;
 	}
 	

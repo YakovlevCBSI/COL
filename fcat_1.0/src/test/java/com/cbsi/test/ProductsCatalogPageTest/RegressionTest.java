@@ -27,7 +27,7 @@ public class RegressionTest extends AllBaseTest{
 	
 	public ProductsCatalogPage  productsCatalogPage = null;
 
-/**	@Test
+	@Test
 	public void TableRenderIssue_CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30, 900);
@@ -94,7 +94,7 @@ public class RegressionTest extends AllBaseTest{
 		productsCatalogPage.hoverOverMappedOrNotMappedIcon();
 	}
 */
-/**	@Test
+	@Test
 	public void ErrorWhenYouDeleteManualMapItem(){
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
@@ -146,7 +146,7 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 	
-*/
+
 	@Test
 	public void UPCEanFieldSaveChanges_1295() throws InterruptedException{
 		String time= System.currentTimeMillis() + "";

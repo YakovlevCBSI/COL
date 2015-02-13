@@ -39,6 +39,7 @@ public class RegressionTest extends AllBaseTest {
 
 	@Test
 	public void checkSelectedDayIsSaved() throws InterruptedException{
+		skipFirefox();
 		SchedulePopup schedulePopup = navigateToSchedule();
 
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDay);
@@ -54,6 +55,7 @@ public class RegressionTest extends AllBaseTest {
 	
 	@Test
 	public void checkSelectedDaysAreDisplayed() throws InterruptedException{
+		skipFirefox();
 		SchedulePopup schedulePopup = navigateToSchedule();
 
 		String[] excludedDays = schedulePopup.ExcludedDays(randomDays);
@@ -79,6 +81,7 @@ public class RegressionTest extends AllBaseTest {
 	
 	@Test
 	public void checkAllDaysAreDisplayed(){
+		skipFirefox();
 		SchedulePopup schedulePopup = navigateToSchedule();
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays("all");
 

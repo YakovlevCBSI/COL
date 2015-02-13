@@ -160,7 +160,7 @@ public class RegressionTest extends AllBaseTest{
 		editProductPage.setUpcEan(time);
 		editProductPage.setCnetSkuId(time);
 		editProductPage.setInventory(time);
-		editProductPage.setPrice(time);
+		//editProductPage.setPrice(time);
  		
 		ProductsCatalogPage productsCatalogPageNew = editProductPage.clickSave();
 		EditProductPopupPage editProductPageNew = productsCatalogPageNew.clickEdit().setData();
@@ -170,7 +170,7 @@ public class RegressionTest extends AllBaseTest{
 		assertEquals(time, editProductPageNew.getUpcEan());
 		assertEquals(time, editProductPageNew.getCnetSkuId());
 		assertEquals(time, editProductPageNew.getInventory());
-		assertEquals(time, editProductPageNew.getPrice());
+		//assertEquals(time, editProductPageNew.getPrice());
 		//assertEquals(time, editProductPageNew.getMsrp());
 	}
 	

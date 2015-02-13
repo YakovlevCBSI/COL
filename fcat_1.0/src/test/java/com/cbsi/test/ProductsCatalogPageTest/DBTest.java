@@ -64,6 +64,7 @@ public class DBTest extends StageBaseTest{
 		try{
 			MappingPage mappingPage = UploadFullFile();
 			thisTempFile = tempFile;
+			System.out.println("file: " +  thisTempFile);
 			DetailsPage detailsPage = mappingPage.automap();
 				
 				//mappingPage.forceWait(5);

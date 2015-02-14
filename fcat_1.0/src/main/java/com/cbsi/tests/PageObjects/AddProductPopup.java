@@ -52,11 +52,11 @@ public class AddProductPopup extends BasePage{
 	
 	public ProductsCatalogPage clickSave(){
 		Save.click();
-		forceWait(2000);
+		forceWait(1000);
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        forceWait(2000); //change this to wait for splash screen.
+        forceWait(1000); //change this to wait for splash screen.
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	

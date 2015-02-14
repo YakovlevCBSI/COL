@@ -228,6 +228,7 @@ public class CatalogsPage extends BasePage{
 		for(WebElement e: productNumbers){
 			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
 				elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+				System.out.println(elementToUse.getText());
 				break;
 			}
 		}

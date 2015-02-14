@@ -140,7 +140,7 @@ public class RegressionTest extends AllBaseTest{
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
 		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ElementConstants.DELETE);
-		//Thread.sleep(5000);
+		
 		productsCatalogPageNew.clickYes();
 		
 		assertTrue(hasNoError());

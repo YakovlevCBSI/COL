@@ -83,8 +83,8 @@ public class ParameterFeeder {
 				GlobalVar.stageServer,
 				GlobalVar.stageServer + GlobalVar.embedPath,
 				GlobalVar.BFPServer, // BFP only embed.
-				GlobalVar.devServer,
-				GlobalVar.devServer + GlobalVar.embedPath
+		//------>GlobalVar.devServer,
+		//------>GlobalVar.devServer + GlobalVar.embedPath
 				
 		};
 		
@@ -97,7 +97,7 @@ public class ParameterFeeder {
 				GlobalVar.stageServer + GlobalVar.embedPath,
 				GlobalVar.BFPServer, // BFP only embed.
 			//	GlobalVar.devServer,
-				GlobalVar.devServer + GlobalVar.embedPath
+		//-------->	GlobalVar.devServer + GlobalVar.embedPath
 				
 		};
 		
@@ -109,10 +109,12 @@ public class ParameterFeeder {
 				GlobalVar.stageServer,
 				//GlobalVar.stageServer + GlobalVar.embedPath,
 				//GlobalVar.BFPServer, // BFP only embed.
-				GlobalVar.devServer,
+			//--------->GlobalVar.devServer,
 				//GlobalVar.devServer + GlobalVar.embedPath
 				
 		};
+		
+	
 		
 		return URLs;
 	}

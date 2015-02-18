@@ -1,6 +1,8 @@
 package com.cbsi.tests.util;
 
 public class GlobalVar {
+	public static final String JENKINS = "jenkins";
+	
 	public static String BFPId = "";
 	public static String BFPPw= "";
 	

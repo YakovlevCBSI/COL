@@ -14,6 +14,8 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.tests.util.GlobalVar;
+
 public class EditProductPopupPage extends BasePage{
 
 	public EditProductPopupPage(WebDriver driver) {
@@ -119,13 +121,18 @@ public class EditProductPopupPage extends BasePage{
 		sendKeysHelper(msrp, value);
 	}
 	
-	public static final String SELECT_ALL = Keys.chord(Keys.COMMAND, "a");
+	public static final String SELECT_ALL_MAC = Keys.chord(Keys.COMMAND, "a");
+	public static final String SELECT_ALL_LINUX = Keys.chord(Keys.CONTROL, "a");
 
 	public Actions action = new Actions(driver);
 	public void sendKeysHelper(WebElement e, String...value){
 		if(driver instanceof FirefoxDriver){
 			e.click();
-			e.sendKeys(SELECT_ALL, value[0]);
+			if(System.getProperty("user.name").equals(GlobalVar.JENKINS)){
+				e.sendKeys(SELECT_ALL_LINUX, value[0]);
+			}else{
+				e.sendKeys(SELECT_ALL_MAC, value[0]);
+			}
 		}else{
 			//chrome, etc/
 			deleteAllInput(e);

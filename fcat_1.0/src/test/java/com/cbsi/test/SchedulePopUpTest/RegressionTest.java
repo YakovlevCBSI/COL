@@ -39,7 +39,7 @@ public class RegressionTest extends AllBaseTest {
 
 	@Test
 	public void checkSelectedDayIsSaved() throws InterruptedException{
-		skipFirefox();
+		if(getBrowser().toLowerCase().contains("firefox")) return;
 		SchedulePopup schedulePopup = navigateToSchedule();
 
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDay);
@@ -55,7 +55,7 @@ public class RegressionTest extends AllBaseTest {
 	
 	@Test
 	public void checkSelectedDaysAreDisplayed() throws InterruptedException{
-		skipFirefox();
+		if(getBrowser().toLowerCase().contains("firefox")) return;
 		SchedulePopup schedulePopup = navigateToSchedule();
 
 		String[] excludedDays = schedulePopup.ExcludedDays(randomDays);
@@ -81,7 +81,7 @@ public class RegressionTest extends AllBaseTest {
 	
 	@Test
 	public void checkAllDaysAreDisplayed(){
-		skipFirefox();
+		if(getBrowser().toLowerCase().contains("firefox")) return;
 		SchedulePopup schedulePopup = navigateToSchedule();
 		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays("all");
 
@@ -98,7 +98,7 @@ public class RegressionTest extends AllBaseTest {
 
 	
 	public SchedulePopup navigateToSchedule(){
-		skipFirefox();
+		if(getBrowser().toLowerCase().contains("firefox")) assertTrue(true);
 		AddCatalogPage propertiesPage = jumpToEdit();
 		SchedulePopup schedulePopup = propertiesPage.clickSetSchedule();
 		return schedulePopup;
@@ -122,7 +122,7 @@ public class RegressionTest extends AllBaseTest {
 	}
 	
 	public void skipFirefox(){
-		if(getBrowser().toLowerCase().contains("firefox")) return;
+		if(getBrowser().toLowerCase().contains("firefox")) assertTrue(true);
 	}
 
 	

@@ -45,6 +45,7 @@ public class AddCatalogPage extends BasePage {
 	public UploadPopupPage fillInName(){
 		System.out.println("filling out catalog name. Next...");
 		//customWait(20);
+		System.out.println("file created: " +tempFileName);
 		name.sendKeys(tempFileName);
 		customWait(5);
 		Next.click();

@@ -21,7 +21,7 @@ public class ParameterFeeder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("DEVTEST!!!!!! " + System.getProperty("environment"));
+		System.out.println("DEVTEST: " + System.getProperty("environment")==null);
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){
@@ -58,6 +58,7 @@ public class ParameterFeeder {
 				objects[i][1] =getBrowsers()[i%numBrowser];
 				
 		}
+		pritnParams();
 		
 		return objects;
 		
@@ -175,7 +176,7 @@ public class ParameterFeeder {
 		
 	}
 	
-	public static void main(String[] args){
+	public static void pritnParams(){
 		Object[][] objects =  new ParameterFeeder().configureTestParams("all");
 		for(int i= 0; i< objects.length; i++){
 			for (int j=0; j<objects[i].length; j++){

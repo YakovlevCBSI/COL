@@ -23,7 +23,13 @@ public class ParameterFeeder {
 		}
 		//if(System.getProperty("environment") != null);
 		//isDevTest = System.getProperty("environment").equals("true")?false:true;
+		
 		System.out.println("DEVTEST: ");
+		try{
+			System.out.println("here it be: ");System.getProperty("environment");
+		}catch(NullPointerException e){
+			System.out.println("passing null ex..");
+		}
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){

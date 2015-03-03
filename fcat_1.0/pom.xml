@@ -15,14 +15,18 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.18</version>
          <configuration>
-             <excludes>
-             	<exclude>**/*Base.java</exclude>
-             	<exclude>**/*Base*.java</exclude>
-             </excludes>
-             <!-- for some odd reason, jenkins fails to run with executor error in jenkins log.
+               <systemPropertyVariables>
+             		<environment>${env.DEV}</environment>
+               </systemPropertyVariables>
+               <excludes>
+               <exclude>**/*Base.java</exclude>
+             	<exclude>**/*Base*.java</exclude>          	   	
+               </excludes>
+            
+             <!-- for some odd reason, jenkins fails to run with executor error in jenkins log. 
              <parallel>methods</parallel>
              <threadCount>2</threadCount>
-             -->
+            -->
          </configuration> 
       </plugin>
       

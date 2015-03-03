@@ -10,6 +10,9 @@ import com.cbsi.tests.util.ReadFile;
 public class ParameterFeeder {
 	private String browser="";
 	private String URL="";
+	public static boolean isDevTest = System.getProperty("environment")==null?false:true;
+	//private boolean isDevTest = true;
+
 	public ParameterFeeder(){
 		
 		try {
@@ -18,6 +21,7 @@ public class ParameterFeeder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("DEVTEST!!!!!! " + System.getProperty("environment"));
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){
@@ -79,44 +83,72 @@ public class ParameterFeeder {
 	}
 
 	public String[] getAllURL(){
-		String[] URLs = {
-				GlobalVar.stageServer,
-				GlobalVar.stageServer + GlobalVar.embedPath,
-				GlobalVar.BFPServer, // BFP only embed.
-		//------>GlobalVar.devServer,
-		//------>GlobalVar.devServer + GlobalVar.embedPath
-				
-		};
-		
-		return URLs;
+		String[] URLFinal;
+		if(!isDevTest){
+			String[] URLs = {
+					GlobalVar.stageServer,
+					GlobalVar.stageServer + GlobalVar.embedPath,
+					GlobalVar.BFPServer, // BFP only embed.
+					
+					
+			};
+			URLFinal = URLs;
+		}
+		else{
+			String[] URLsDev = {
+				GlobalVar.devServer,
+				GlobalVar.devServer + GlobalVar.embedPath
+						};
+			URLFinal = URLsDev;
+
+		}
+		return URLFinal;
 	}
 	
 	public String[] getEmbedURL(){
-		String[] URLs = {
-			//	GlobalVar.stageServer,
-				GlobalVar.stageServer + GlobalVar.embedPath,
-				GlobalVar.BFPServer, // BFP only embed.
-			//	GlobalVar.devServer,
-		//-------->	GlobalVar.devServer + GlobalVar.embedPath
-				
-		};
+		String[] URLFinal;
+		if(!isDevTest){
+			String[] URLs = {
+				//	GlobalVar.stageServer,
+					GlobalVar.stageServer + GlobalVar.embedPath,
+					GlobalVar.BFPServer, // BFP only embed.
+				//	GlobalVar.devServer,
+			//-------->	GlobalVar.devServer + GlobalVar.embedPath
+					
+			};
+			URLFinal = URLs;
+		}
+		else{
+			String[] URLsDev = {
+					GlobalVar.devServer + GlobalVar.embedPath
+			};
+			
+			URLFinal = URLsDev;
+		}
 		
-		return URLs;
+		return URLFinal;
 	}
 	
 	public String[] getFormURL(){
-		String[] URLs = {
-				GlobalVar.stageServer,
-				//GlobalVar.stageServer + GlobalVar.embedPath,
-				//GlobalVar.BFPServer, // BFP only embed.
-			//--------->GlobalVar.devServer,
-				//GlobalVar.devServer + GlobalVar.embedPath
-				
-		};
-		
+		String[] URLFinal;
+		if(!isDevTest){
+			String[] URLs = {
+					GlobalVar.stageServer,
+					//GlobalVar.stageServer + GlobalVar.embedPath,
+					//GlobalVar.BFPServer, // BFP only embed.
+				//--------->GlobalVar.devServer,
+					//GlobalVar.devServer + GlobalVar.embedPath
+			};
+			URLFinal = URLs;	
+		}else{
+			String[] URLsDev = {
+					GlobalVar.devServer
+			};
+			URLFinal = URLsDev;
+		}
 	
 		
-		return URLs;
+		return URLFinal;
 	}
 	
 	public String[] getStageURL(){

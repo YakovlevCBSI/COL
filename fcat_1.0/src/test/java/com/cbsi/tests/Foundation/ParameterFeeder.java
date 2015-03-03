@@ -10,7 +10,7 @@ import com.cbsi.tests.util.ReadFile;
 public class ParameterFeeder {
 	private String browser="";
 	private String URL="";
-	public static boolean isDevTest = System.getProperty("environment")==null?false:true;
+	public static boolean isDevTest = System.getProperty("environment")!=null?true:false;
 	//private boolean isDevTest = true;
 
 	public ParameterFeeder(){
@@ -21,7 +21,9 @@ public class ParameterFeeder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("DEVTEST: " + System.getProperty("environment")==null);
+		//if(System.getProperty("environment") != null);
+		//isDevTest = System.getProperty("environment").equals("true")?false:true;
+		System.out.println("DEVTEST: ");
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){
@@ -58,7 +60,7 @@ public class ParameterFeeder {
 				objects[i][1] =getBrowsers()[i%numBrowser];
 				
 		}
-		pritnParams();
+		//pritnParams();
 		
 		return objects;
 		

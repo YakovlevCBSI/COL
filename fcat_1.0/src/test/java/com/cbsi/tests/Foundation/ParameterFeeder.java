@@ -8,9 +8,7 @@ import com.cbsi.tests.util.ReadFile;
 
 
 public class ParameterFeeder {
-	private String browser="";
-	private String URL="";
-	public static boolean isDevTest = System.getProperty("environment")!=null?true:false;
+	public static boolean isDevTest = false;
 	//private boolean isDevTest = true;
 
 	public ParameterFeeder(){
@@ -21,15 +19,14 @@ public class ParameterFeeder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//if(System.getProperty("environment") != null);
-		//isDevTest = System.getProperty("environment").equals("true")?false:true;
-		
-		System.out.println("DEVTEST: ");
-		try{
-			System.out.println("here it be: " + System.getProperty("environment") + " / " + isDevTest);
-		}catch(NullPointerException e){
-			System.out.println("passing null ex..");
-		}
+		isDevTest = isDevTesting();
+	}
+	
+	public boolean isDevTesting(){
+	
+		if(System.getProperty("environment").equals("true")) return true;
+	
+		return false;
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){

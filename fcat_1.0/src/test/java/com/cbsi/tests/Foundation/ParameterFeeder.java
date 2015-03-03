@@ -26,7 +26,7 @@ public class ParameterFeeder {
 		
 		System.out.println("DEVTEST: ");
 		try{
-			System.out.println("here it be: ");System.getProperty("environment");
+			System.out.println("here it be: " + System.getProperty("environment"));
 		}catch(NullPointerException e){
 			System.out.println("passing null ex..");
 		}

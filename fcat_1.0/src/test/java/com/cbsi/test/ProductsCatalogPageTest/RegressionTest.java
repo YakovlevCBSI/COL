@@ -3,8 +3,11 @@ package com.cbsi.test.ProductsCatalogPageTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -85,6 +88,45 @@ public class RegressionTest extends AllBaseTest{
 		
 		assertTrue(hasNoError());
 		
+	}
+	
+	 @Rule
+	 public ExpectedException exception = ExpectedException.none();
+	 
+	@Test
+	public void addProductWithNoIdValue(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId("");
+		addProductPopup.setMf("blah");
+		addProductPopup.setMfpn("blah");
+		
+		exception.expect(NullPointerException.class);
+		addProductPopup.clickSave();
+	}
+	
+	@Test
+	public void addProductWithNoMfValue(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId("blah");
+		addProductPopup.setMf("");
+		addProductPopup.setMfpn("blah");
+		
+		exception.expect(NullPointerException.class);
+		addProductPopup.clickSave();
+	}
+	
+	@Test
+	public void addProductWithNoMfpnValue(){
+		productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(getRandomNumber());
+		addProductPopup.setMf(getRandomNumber());
+		addProductPopup.setMfpn("");
+		
+		exception.expect(NullPointerException.class);
+		addProductPopup.clickSave();
 	}
 	
 /**	
@@ -184,16 +226,8 @@ public class RegressionTest extends AllBaseTest{
 		//--does this work??--//
 		String rowMapped = productsCatalogPage.getRowThatWasMapped();
 		System.out.println("mid check: " + rowMapped);
-		ProductsCatalogPage productsCatalogPageNew = null;
+		ProductsCatalogPage productsCatalogPageNew = ifMappedUnmapItem(mapDialog);
 		
-		if(!mapDialog.isMapped()){
-			productsCatalogPageNew= mapDialog.clickCancel();
-		}
-		else{
-			System.out.println("UNMAPPING!");
-			mapDialog.clickUnmap();
-			productsCatalogPageNew = mapDialog.clickSave();
-		}
 		
 		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
 		editProduct.setData();
@@ -214,6 +248,55 @@ public class RegressionTest extends AllBaseTest{
 		
 		
 		
+	}
+	
+	//samsung s20c200b monitor
+	public static final String upcEan= "887276007861";
+	
+	@Test
+	public void mapUpcEanWhenMfnameAndMfparnumberAreNotPresent() throws InterruptedException{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		MapProductsDialog mapDialog =productsCatalogPage.clickNotMappedOrMappedIcon();
+		
+		String rowMapped = productsCatalogPage.getRowThatWasMapped();
+		System.out.println(rowMapped);
+		ProductsCatalogPage productsCatalogPageNew= ifMappedUnmapItem(mapDialog);
+		productsCatalogPageNew.setProductToUse(rowMapped);
+		
+		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
+		editProduct.setData();
+		
+		String s = editProduct.getManufacturerName().toUpperCase();
+		String upcEanToAdd=upcEan;
+		if(s.equals(upcEanToAdd)){
+			upcEanToAdd = upcEanToAdd + " ";
+		}
+		
+		editProduct.setManufacturerName("blah");
+		editProduct.setManufacturerPartNumber("blah");
+		editProduct.setUpcEan(upcEanToAdd);
+	
+		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();	
+		productsCatalogPageFinal.setProductToUse(rowMapped);
+
+		assertTrue(productsCatalogPageFinal.isProductRowMapped());
+		
+	}
+	
+	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
+		ProductsCatalogPage productsCatalogPageNew= null;
+		
+		if(!mapDialog.isMapped()){
+			productsCatalogPageNew= mapDialog.clickCancel();
+		}
+		else{
+			System.out.println("UNMAPPING!");
+			mapDialog.clickUnmap();
+			productsCatalogPageNew = mapDialog.clickSave();
+		}
+		
+		return productsCatalogPageNew;
+	
 	}
 	
 

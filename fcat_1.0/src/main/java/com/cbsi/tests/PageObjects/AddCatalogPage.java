@@ -21,6 +21,7 @@ public class AddCatalogPage extends BasePage {
 	public void waitForPageToLoad(){
 		try{
 			waitForElementToBeVisible(By.cssSelector("form#editCatalogForm"));
+			waitForElementToBeVisible(By.cssSelector("a.x-open-schedule"));
 		}catch(TimeoutException e){
 			System.out.println("redirect to AddCatalogPage");
 		}
@@ -147,6 +148,16 @@ public class AddCatalogPage extends BasePage {
 		
 	}
 	
+	@FindBy(css="div.standalone-radio label[id*='_DoNoUseSchedule']")
+	private WebElement DoNotUseSchedule;
+	public boolean doNotUseScheduleIsChecked(){
+		return DoNotUseSchedule.getAttribute("class").contains("checked");
+	}
+	
+	public AddCatalogPage clickDoNotUseSchedule(){
+		DoNotUseSchedule.click();
+		return this;
+	}
 	
 
 

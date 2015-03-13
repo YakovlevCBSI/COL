@@ -224,6 +224,7 @@ public class ProductsCatalogPage extends BasePage{
 		}catch(Exception e){
 			System.out.println("couldn't find mapped icon, finding not mapped instead.");
 			rowThatWasMapped = NotMappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
+			System.out.println("icon: " + rowThatWasMapped);
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);

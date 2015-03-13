@@ -142,6 +142,7 @@ public class SchedulePopup extends BasePage {
 	public AddCatalogPage clickOK(){
 		OK.click();
 		waitForElementToBeInvisible(By.linkText("OK"));
+		forceWait(500);
 		return PageFactory.initElements(driver, AddCatalogPage.class);
 	}
 

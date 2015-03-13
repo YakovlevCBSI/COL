@@ -100,6 +100,9 @@ public class RegressionTest extends AllBaseTest {
 	public SchedulePopup navigateToSchedule(){
 		if(getBrowser().toLowerCase().contains("firefox")) assertTrue(true);
 		AddCatalogPage propertiesPage = jumpToEdit();
+		if(propertiesPage.doNotUseScheduleIsChecked()){
+			propertiesPage.clickDoNotUseSchedule();
+		}
 		SchedulePopup schedulePopup = propertiesPage.clickSetSchedule();
 		return schedulePopup;
 	}

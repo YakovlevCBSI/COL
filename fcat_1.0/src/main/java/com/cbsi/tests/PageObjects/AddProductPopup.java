@@ -1,7 +1,5 @@
 package com.cbsi.tests.PageObjects;
 
-import junit.framework.Assert;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

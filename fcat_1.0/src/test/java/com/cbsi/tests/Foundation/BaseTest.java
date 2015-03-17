@@ -648,5 +648,11 @@ public class BaseTest {
 		return text.replace("<", "&lt;").replace(">","&gt;");
 	}
 	
+	public void skipFirefox(){
+		if(getBrowser().toLowerCase().contains("firefox")) return;
+	}
 	
+	public String getRandomNumber(){
+		return System.currentTimeMillis() + "";
+	}
 }

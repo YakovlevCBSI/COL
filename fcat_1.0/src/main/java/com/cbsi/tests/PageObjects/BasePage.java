@@ -82,4 +82,8 @@ public class BasePage {
 	public String getTempFileName(){
 		return tempFileName;
 	}
+	
+	public String getRandomNum(){
+		return getTempFileName();
+	}
 }

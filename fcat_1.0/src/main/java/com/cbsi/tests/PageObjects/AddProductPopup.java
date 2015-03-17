@@ -1,5 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
+import junit.framework.Assert;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -55,10 +57,14 @@ public class AddProductPopup extends BasePage{
 		forceWait(1000);
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
+        if(alert.getText().contains("can not be empty!")){
+        	throw new NullPointerException("Unable to add product: " + alert.getText());
+        }
         alert.accept();
         forceWait(1000); //change this to wait for splash screen.
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
+	
 	
 	@FindBy(linkText="Cancel")
 	private WebElement Cancel;

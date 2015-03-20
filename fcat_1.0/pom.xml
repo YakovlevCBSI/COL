@@ -28,10 +28,10 @@
              	
              	<!-- temporarily disabled these tests due to a large work exec flow-->
              	
-             	<exclude>com/cbsi/test/CatalogsPageTest/RegressionTest.java</exclude>     	
+             	<exclude>*CatalogsPageTest/RegressionTest.java</exclude>     	
                	<exclude>**/DBTest.java</exclude>    
-             	<exclude>com/cbsi/test/UploadPopupPage/*.java</exclude>
-             	<exclude>com/cbsi/tests/MappingPageTest/*.java</exclude>
+             	<exclude>*UploadPopupPage/*.java</exclude>
+             	<exclude>*MappingPageTest/*.java</exclude>
                	<!-- @Ignored propertiespagetest.sanitytest.upload**-->
                	 	   	
              	   	

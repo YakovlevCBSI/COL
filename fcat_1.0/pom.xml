@@ -30,7 +30,8 @@
              	
              	<exclude>com/cbsi/test/CatalogsPageTest/RegressionTest.java</exclude>     	
                	<exclude>**/DBTest.java</exclude>    
-             	<exclude>com/cbsi/test/UploadPopupPage/*.java</exclude>     	
+             	<exclude>com/cbsi/test/UploadPopupPage/*.java</exclude>
+             	<exclude>com/cbsi/tests/MappingPageTest/*.java</exclude>
                	<!-- @Ignored propertiespagetest.sanitytest.upload**-->
                	 	   	
              	   	

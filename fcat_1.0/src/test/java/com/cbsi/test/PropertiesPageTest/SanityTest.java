@@ -66,7 +66,7 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 	
-	@Ignore("oleg")
+	//@Ignore("oleg")
 	@Test
 	public void UploadFullFileAutomaticFromScratch(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -77,7 +77,7 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(hasNoError());
 	}
 		
-	@Ignore("oleg")
+	//@Ignore("oleg")
 	@Test
 	public void UploadFullFileManualFromScracth() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();

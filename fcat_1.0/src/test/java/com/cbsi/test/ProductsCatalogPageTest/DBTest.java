@@ -50,7 +50,7 @@ public class DBTest extends StageBaseTest{
 	 * @throws  
 	 */
 	
-	private static boolean pass= false;
+	private static boolean pass= true;
 	@After
 	public  void cleanup(){
 
@@ -199,7 +199,7 @@ public class DBTest extends StageBaseTest{
 	@Test
 	public void g_deleteTemp(){
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
-		cleanUpThenDeleteTemp(thisTempFile);
+		cleanUpThenDeleteTemp();
 	}
 	
 	public String getQuery(){

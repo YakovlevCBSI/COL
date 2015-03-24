@@ -33,7 +33,7 @@ public class RegressionTest extends AllBaseTest{
 	@Test
 	public void TableRenderIssue_CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30, 1000);
+		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30, 1500);
 		productsCatalogPage.clickGoRight();
 		//wait until page number changes to veirfy.
 		
@@ -251,7 +251,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	//samsung s20c200b monitor
-	public static final String upcEan= "887276007861";
+	public static final String upcEan= "0887276007861";
 	
 	@Test
 	public void mapUpcEanWhenMfnameAndMfparnumberAreNotPresent() throws InterruptedException{

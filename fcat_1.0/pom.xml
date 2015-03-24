@@ -26,12 +26,13 @@
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
              	
-             	<!-- temporarily disabled these tests due to a large work exec flow-->
+             	<!-- temporarily disabled these tests due to a large work exec flow
              	
              	<exclude>*CatalogsPageTest/RegressionTest.java</exclude>     	
                	<exclude>**/DBTest.java</exclude>    
              	<exclude>*UploadPopupPage/*.java</exclude>
              	<exclude>*MappingPageTest/*.java</exclude>
+             	-->
                	<!-- @Ignored propertiespagetest.sanitytest.upload**-->
                	 	   	
              	   	

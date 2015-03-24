@@ -2,6 +2,7 @@ package com.cbsi.tests.Foundation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -302,42 +303,46 @@ public class BaseTest {
 	}
 	
 	public void cleanUpThenDeleteTemp(){
-		System.out.println(tempFile.length());
-		if(tempFile.length() != 0){
-			System.out.println();
-			System.out.println("Delete Temp in Actions");
-			System.out.println("----------------------------");
-
-			//takeScreenshot();
-			//driver.quit();
-			startUp();
-			
-			try{
-				catalogsPage.deleteTempFile(this.tempFile);
-			} catch(Exception e){
-				System.out.println("failed to delete temp file...");
-				e.printStackTrace();
+		for(String tempFile: tempFiles){
+			System.out.println(tempFile.length());
+			if(!tempFiles.isEmpty() || tempFiles == null){
+				System.out.println();
+				System.out.println("Delete Temp in Actions");
+				System.out.println("----------------------------");
+	
+				//takeScreenshot();
+				//driver.quit();
+				startUp();
+				
+				try{
+					catalogsPage.deleteTempFile(tempFile);
+				} catch(Exception e){
+					System.out.println("failed to delete temp file...");
+					e.printStackTrace();
+				}
 			}
 		}
 	
 	}
 	
-	public void cleanUpThenDeleteTemp(String ownTempFile){
-		if(tempFile.length() != 0){
-			System.out.println();
-			System.out.println("Delete Temp in Actions");
-			System.out.println("----------------------------");
-
-			//takeScreenshot();
-			//driver.quit();
-			startUp();
-			
-			try{
-				CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-				catalogsPage.deleteTempFile(ownTempFile);
-			} catch(Exception e){
-				System.out.println("failed to delete temp file...");
-				e.printStackTrace();
+	public void cleanUpThenDeleteTemp(List<String> tempFiles){
+		if(!tempFiles.isEmpty() || tempFiles == null){
+			for(String tempFile: tempFiles){
+					System.out.println();
+					System.out.println("Delete Temp in Actions");
+					System.out.println("----------------------------");
+		
+					//takeScreenshot();
+					//driver.quit();
+					startUp();
+					
+					try{
+						CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+						catalogsPage.deleteTempFile(tempFile);
+					} catch(Exception e){
+						System.out.println("failed to delete temp file...");
+						e.printStackTrace();
+					}
 			}
 		}
 	
@@ -578,14 +583,15 @@ public class BaseTest {
 		return mappingPage;
 	}
 	
-	protected static String tempFile = "";
+	protected static List<String> tempFiles;
 	
 	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
+		tempFiles= new ArrayList<String>();
 		//System.out.println("drive rnull? " + driver == null);
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
 		
-		this.tempFile = addCatalogsPage.getTempFileName();
+		tempFiles.add(addCatalogsPage.getTempFileName());
 		
 		if(isAutomatic){
 			addCatalogsPage.switchToAutomatic();

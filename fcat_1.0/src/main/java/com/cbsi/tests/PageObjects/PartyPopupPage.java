@@ -93,7 +93,7 @@ public class PartyPopupPage extends BasePage{
 		List<WebElement> list = driver.findElements(By.cssSelector("tr td.party-name-column"));
 		outerLoop:
 			for(WebElement e: list){
-				if(e.getText().equals(this.text)){
+				if(e.getText().toLowerCase().equals(this.text.toLowerCase())){
 					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
 					plusIcon.click();
 					break outerLoop;

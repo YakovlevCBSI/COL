@@ -44,6 +44,7 @@ public class DBTest extends StageBaseTest{
 	private static String query_CatalogNamesEmbed = 
 			"select * from fcat.catalog " + 
 			"where not active = 0 and fcat.catalog.party = 5 " + 
+			"and catalog_type=10 and content_type=11 " + 
 			"order by catalog_name";
 	/**
 	private static String query_searchPartyLimit30 = "SELECT (party_name) FROM fcat.catalog " + 

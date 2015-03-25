@@ -37,7 +37,8 @@ public class DBTest extends StageBaseTest{
 
 	private static String query_CatalogNamesForm = 
 			"select * from fcat.catalog " + 
-			"where not active = 0 and fcat.catalog.party = 1 " + 
+			"where not active = 0 and catalog.party = 1 " + 
+			"and catalog_type=10 and content_type=11 " + 
 			"order by catalog_name";
 	
 	private static String query_CatalogNamesEmbed = 
@@ -58,7 +59,8 @@ public class DBTest extends StageBaseTest{
 			"select * from catalog as c "+
 			"inner join party as p " +
 			"on p.id = c.party " +
-			"where not c.active=0 and p.party_name= \'BFP\'" +
+			"where not c.active=0 and p.party_name= \'BFP\' " +
+			"and catalog_type=10 and content_type=11 " + 
 			"order by c.catalog_name ";
 																		
 	
@@ -76,10 +78,11 @@ public class DBTest extends StageBaseTest{
 		
 		MySQLConnector mysql = new MySQLConnector();
 		mysql.connectToFcatDB();
-		
+		System.out.println(query_CatalogNamesForm);
 		//-------- matchCatalogsObjects_name_itemCount_modifiedBy_onDefaultPage----------//
 		catalogsFromForm = mysql.runQuery(query_CatalogNamesForm, Catalog.class, false);
 		catalogsFromEmbed = mysql.runQuery(query_CatalogNamesEmbed, Catalog.class, false);
+		System.out.println(catalogsFromForm);
 		
 		//------- allPartiesDisplayInPartySelectorDialog ----------//
 		partiesLimit30 = mysql.runQuery(query_searchPartyLimit30);
@@ -184,7 +187,7 @@ public class DBTest extends StageBaseTest{
 		
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		PartyPopupPage partyPopup = catalogsPage.clickSearchParty();
-		CatalogsPage postcatalogPage = partyPopup.searchParty("BFP").pickFromResult();
+		CatalogsPage postcatalogPage = partyPopup.searchParty("bfp").pickFromResult();
 
 		List<Catalog> catalogNameFromWeb = turnCatalogsTableIntoObject();
 

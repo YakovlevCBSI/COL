@@ -136,13 +136,13 @@ public class MongoConnector {
 						String content = nodeExtra.findValue("content").toString();
 						JsonNode lastInnerElement = mapper.readValue(content, JsonNode.class);
 						
-						msrp = findValueNotNull(lastInnerElement,("MSRP"));
+						msrp = findValueNotNull(lastInnerElement,("msrp"));
 						price = findValueNotNull(lastInnerElement,("price"));
 						productUrl = findValueNotNull(lastInnerElement,("productUrl"));
 						//System.out.println("long parse: " + lastInnerElement.findValue("inventory").toString().replace("\"", ""));
 						inventory = findValueNotNull(lastInnerElement,("inventory"));
 						//cnetSkuId = lastInnerElement.findValue("cnetSkuId").toString().replace("\"", "");
-						cnetSkuId = findValueNotNull(lastInnerElement,("cnetSkuId"));
+						cnetSkuId = findValueNotNull(lastInnerElement,("skuId"));
 					//System.out.println(msrp + " / "  + price + " / " + productUrl + " / " + inventory + " / " + cnetSkuId);
 							
 				}	

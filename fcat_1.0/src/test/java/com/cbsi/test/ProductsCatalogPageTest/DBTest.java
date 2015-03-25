@@ -123,7 +123,6 @@ public class DBTest extends StageBaseTest{
 	@Test
 	public void d_fileMatchesMongo() throws Exception{
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
-		
 		MongoConnector mongo = new MongoConnector().connectToMongo();
 		mongo.queryFor("item", new String[]{"catId: " + catalogId, "partyId: " + partyId}, 10);
 		productsFromMongo = mongo.turnQueryIntoProductList();
@@ -132,7 +131,6 @@ public class DBTest extends StageBaseTest{
 		
 		StringBuilder sb = new CatalogReader().readFrom("src/test/resources/Catalogs/London.csv");
 		productsFromFile = new CatalogReader().convertRawDataToProducts(sb, true);
-		cleanFieldsNotFoundInFile(productsFromMongo);
 		
 		assertTrue(twoListsAreEqual(cleanFieldsNotFoundInFile(productsFromMongo), (productsFromFile)));
 	}

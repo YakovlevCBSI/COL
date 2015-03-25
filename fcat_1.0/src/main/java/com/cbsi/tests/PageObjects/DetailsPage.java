@@ -14,6 +14,51 @@ public class DetailsPage extends BasePage{
 		waitForPageToLoad();
 	}
 	
+	public static final String AUTOMATIC= "Automatic";
+	public static final String MANUAL= "Manual Upload";
+	
+	@FindBy(css=".catalog-properties-left div:nth-child(2) label")
+	private WebElement Name;
+	
+	@FindBy(css=".catalog-properties-left div:nth-child(4) label")
+	private WebElement Market;
+	
+	@FindBy(css=".catalog-properties-left div:nth-child(6) label")
+	private WebElement CatalogCode;
+	
+	@FindBy(css=".catalog-properties-right div:nth-child(2) label")
+	private WebElement UpdateMethod;
+	
+	@FindBy(css=".catalog-properties-right div:nth-child(4) label")
+	private WebElement FileLocation;
+	
+	@FindBy(css=".catalog-properties-right > label")
+	private WebElement Schedule;
+	
+	public String getName(){
+		return Name.getText();
+	}
+	
+	public String getMarket(){
+		return Market.getText();
+	}
+	
+	public String getCatalogCode(){
+		return CatalogCode.getText();
+	}
+	
+	public String getUpdateMethod(){
+		return UpdateMethod.getText();
+	}
+	
+	public String getFileLocation(){
+		return FileLocation.getText();
+	}
+	
+	public String getSchedule(){
+		return Schedule.getText();
+	}
+	
 	@Override
 	public void waitForPageToLoad(){
 		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("table.processing-queue thead")));

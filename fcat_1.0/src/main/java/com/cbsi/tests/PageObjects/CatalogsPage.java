@@ -140,11 +140,12 @@ public class CatalogsPage extends BasePage{
 		//customWait(30);
 		return this;
 	}
-	public CatalogsPage clickInfo(){
+	
+	public DetailsPage clickDetails(){
 		WebElement Info = myCatalog.findElement(By.xpath("../../td[6]/a[1]"));
 		customWait(3);
 		Info.click();
-		return this;
+		return PageFactory.initElements(driver, DetailsPage.class);
 	}
 	
 	public AddCatalogPage clickEdit(){
@@ -224,8 +225,10 @@ public class CatalogsPage extends BasePage{
 	
 	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num1, int num2){
 		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
+		
 		WebElement elementToUse =null;
 		for(WebElement e: productNumbers){
+			//System.out.println(e.getText());
 			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
 				elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
 				System.out.println(elementToUse.getText());

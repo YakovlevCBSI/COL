@@ -45,11 +45,10 @@ public class RegressionTest extends AllBaseTest{
 	//-------------------------------------------  Helper Method --------------------------------------------//
 
 	public MappingPage navigateToMappingPage() throws InterruptedException{
-		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
-		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
+		AddCatalogPage addCatalogsPage = navigateToAddcatalogPage(false);
 
 		/** set file name to cleanup**/
-		tempFile = addCatalogsPage.getTempFileName();
+		//tempFile = (addCatalogsPage.getTempFileName());
 		
 		UploadPopupPage uploadPopupPage = addCatalogsPage.fillInName();
 		uploadPopupPage.clickUploadFile();

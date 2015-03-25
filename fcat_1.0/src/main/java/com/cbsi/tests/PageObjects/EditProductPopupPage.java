@@ -6,6 +6,7 @@ import javax.crypto.AEADBadTagException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -126,6 +127,11 @@ public class EditProductPopupPage extends BasePage{
 
 	public Actions action = new Actions(driver);
 	public void sendKeysHelper(WebElement e, String...value){
+		try{
+			e.isDisplayed();
+		}catch(NoSuchElementException error){
+			return;
+		}
 		if(driver instanceof FirefoxDriver){
 			e.click();
 			if(System.getProperty("user.name").equals(GlobalVar.JENKINS)){

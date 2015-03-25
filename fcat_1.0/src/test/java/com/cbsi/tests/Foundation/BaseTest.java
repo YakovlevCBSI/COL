@@ -399,7 +399,7 @@ public class BaseTest {
 	
 	class Retry implements TestRule {
         private int retryCount;
-
+        
         public Retry(int retryCount) {
             this.retryCount = retryCount;
         }
@@ -584,14 +584,14 @@ public class BaseTest {
 	}
 	
 	protected static List<String> tempFiles;
-	
+	public String tempFile;
 	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
 		tempFiles= new ArrayList<String>();
 		//System.out.println("drive rnull? " + driver == null);
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		AddCatalogPage addCatalogsPage = catalogsPage.goToAddCatalog();
-		
-		tempFiles.add(addCatalogsPage.getTempFileName());
+		tempFile = addCatalogsPage.getTempFileName();
+		tempFiles.add(tempFile);
 		
 		if(isAutomatic){
 			addCatalogsPage.switchToAutomatic();

@@ -196,7 +196,16 @@ public class CatalogsPage extends BasePage{
 	public CatalogsPage deleteTempFile(String fileToDelete){
 		System.out.println("Deleting test catalog...");
 		CatalogsPage catalogsPage =PageFactory.initElements(driver, CatalogsPage.class);
-		WebElement tempElement = driver.findElement(By.linkText(fileToDelete));
+		List<WebElement> tempElements = driver.findElements(By.cssSelector("tr[data-id] td.name-column a"));
+		WebElement tempElement= null;
+		if(tempElements == null) throw new IllegalStateException("No Delete File was found");
+		for (WebElement e: tempElements){
+			if(e.getText().equals(fileToDelete)){
+				tempElement = e;
+				System.out.println("ELEMENT FOUND>");
+				break;
+			}
+		}
 		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));
 		customWait(5);
 		tempElementDeleteButton.click();

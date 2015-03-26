@@ -21,7 +21,7 @@ public class UploadPopupPage extends BasePage{
 	
 	public void waitForPageToLoad(){
 		//new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.fileinput-button")));
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("p.link-button-bar")));
+		new WebDriverWait(driver, 40).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("p.link-button-bar")));
 		customWait(5);
 
 	}

@@ -19,13 +19,13 @@ public class AddProductPopup extends BasePage{
 		
 	}
 
-	@FindBy(xpath="//table[@class='fcat-tbl']/tbody/tr[1]/td[2]/input")
+	@FindBy(css="table.fcat-tbl tbody tr td input[name='id']")
 	private WebElement id;
 	
-	@FindBy(xpath="//table[@class='fcat-tbl']/tbody/tr[2]/td[2]/input")
+	@FindBy(css="table.fcat-tbl tbody tr td input[name='mf']")
 	private WebElement mf;
 	
-	@FindBy(xpath="//table[@class='fcat-tbl']/tbody/tr[3]/td[2]/input")
+	@FindBy(css="table.fcat-tbl tbody tr td input[name='mfPn']")
 	private WebElement mfpn;
 	
 	private WebElement upcEan;

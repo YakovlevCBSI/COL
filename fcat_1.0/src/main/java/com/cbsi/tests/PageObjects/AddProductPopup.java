@@ -55,7 +55,7 @@ public class AddProductPopup extends BasePage{
 		forceWait(1000);
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
-        if(alert.getText().contains("needs to be provided!")){
+        if(alert.getText().contains("be mapped")){
         	throw new NullPointerException("Unable to add product: " + alert.getText());
         }
         alert.accept();

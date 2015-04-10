@@ -129,6 +129,33 @@ public class RegressionTest extends AllBaseTest{
 		addProductPopup.clickSave();
 	}
 	
+	@Test
+	public void canAddWithIdAndUpc(){
+		String tempId="";
+		productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		tempId = getRandomNumber();
+		addProductPopup.setId(tempId);
+		addProductPopup.setUpcEan(getRandomNumber());
+		ProductsCatalogPage productsPage = addProductPopup.clickSave();
+		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
+		productsPage.clickYes();		
+	}
+	
+	@Test
+	public void canAddWithIdAndMfAndMfPn(){
+		String tempId="";
+		productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		tempId = getRandomNumber();
+		addProductPopup.setId(tempId);
+		addProductPopup.setMf(getRandomNumber());
+		addProductPopup.setMfpn(getRandomNumber());
+		ProductsCatalogPage productsPage = addProductPopup.clickSave();
+		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
+		productsPage.clickYes();		
+	}
+	
 /**	
 	@Test
 	public void IconsToolTipVisible(){

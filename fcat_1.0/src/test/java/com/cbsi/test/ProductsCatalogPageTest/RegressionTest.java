@@ -278,7 +278,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	//samsung s20c200b monitor
-	public static final String upcEan= "0887276007861";
+	public static final String upcEan= "0000000048750";
 	
 	@Test
 	public void mapUpcEanWhenMfnameAndMfparnumberAreNotPresent() throws InterruptedException{

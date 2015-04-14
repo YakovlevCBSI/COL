@@ -390,7 +390,7 @@ public class BaseTest {
 	private String username = System.getProperty("user.name");
 	//rerun failed test for false-positive cases.
 	@Rule
-	public Retry retry = new Retry(username.equals("jenkins")?2:1);
+	public Retry retry = new Retry(username.equals("jenkins") || username.contains("slave") ?2:1);
 	
 	@Rule
 	public ScreenshotRule screenshotRule = new ScreenshotRule();
@@ -455,7 +455,7 @@ public class BaseTest {
 				}
 				//kill any remaining drivers on console.
 				
-				if(username.equals("jenkins")){
+				if(username.equals("jenkins") || username.contains("slave")){
 					try {
 						Runtime.getRuntime().exec("pkill -f firefox");
 						Runtime.getRuntime().exec("pkill -f chromedriver");

@@ -165,6 +165,24 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="span.icon.edit")
 	public WebElement EditFileIcon;
 	
+	
+	//----------------------------- Table Header-------------------------//
+	
+	@FindBy(css="th.product-id-column")
+	public WebElement productIdColumn;
+	
+	@FindBy(css="th.manufacturer-name-column")
+	public WebElement manufacturerColumn;
+	
+	@FindBy(css="th.part-number-column")
+	public WebElement partNumberColumn;
+	
+	@FindBy(css="th.upcean-column")
+	public WebElement upcEanColumn;
+	
+	@FindBy(css="mapped-column.actions")
+	public WebElement mappedColumn;
+	
 	public AddProductPopup clickAddProduct(){
 		AddProductIcon.click();
 		return PageFactory.initElements(driver, AddProductPopup.class);

@@ -60,4 +60,15 @@ public class SanityTest extends AllBaseTest{
 
 					);
 	}
+	
+	@Test
+	public void verifyColumnsAreDisplayed(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		assertTrue(productsCatalogPage.productIdColumn.isDisplayed()
+				&& productsCatalogPage.manufacturerColumn.isDisplayed()
+				&& productsCatalogPage.partNumberColumn.isDisplayed()
+				&& productsCatalogPage.upcEanColumn.isDisplayed()
+				&& productsCatalogPage.mappedColumn.isDisplayed()
+				);
+	}
 }

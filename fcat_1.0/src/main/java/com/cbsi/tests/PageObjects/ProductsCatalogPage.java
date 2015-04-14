@@ -180,7 +180,7 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="th.upcean-column")
 	public WebElement upcEanColumn;
 	
-	@FindBy(css="mapped-column.actions")
+	@FindBy(css="th.mapped-column.actions")
 	public WebElement mappedColumn;
 	
 	public AddProductPopup clickAddProduct(){

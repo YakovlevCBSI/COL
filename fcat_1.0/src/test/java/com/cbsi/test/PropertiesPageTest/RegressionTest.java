@@ -29,6 +29,16 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(addCatalogPage.fieldValidationErrorIsDisplayed());
 	
 	}
+	
+	@Test
+	public void isDefaultCatalogDisplayed(){
+		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		catalogsPage.setMyCatalogToManualCatalog();
+		AddCatalogPage addCatalogPage = catalogsPage.clickEdit();
+		CatalogsPage defaultCatalogPage = addCatalogPage.clickSetAsDefault().clickSave();
+		assertTrue(defaultCatalogPage.setMyCatalogToManualCatalog().isDefaultCatalog());
+		
+	}
 
 	
 	public String getExistingCatalogName(){

@@ -143,6 +143,16 @@ public class AddCatalogPage extends BasePage {
 		Save.click();
 	}
 
+	@FindBy(css="label#lb_IsDefault")
+	private WebElement Default;
+	
+	public AddCatalogPage clickSetAsDefault(){
+		if(!Default.getAttribute("class").contains("checked")){
+			Default.click();
+		}
+		
+		return this;
+	}
 	public AddCatalogPage typeFileAndUserInfoAll(String fileLocation, String username, String password){
 		return typeFileLocation(fileLocation).typeUserName(username).typePassword(password);
 		

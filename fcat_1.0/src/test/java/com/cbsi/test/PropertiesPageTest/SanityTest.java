@@ -13,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
+import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
@@ -72,7 +73,8 @@ public class SanityTest extends AllBaseTest{
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(hasNoError());
 	}
@@ -81,6 +83,7 @@ public class SanityTest extends AllBaseTest{
 	@Test
 	public void UploadFullFileManualFromScracth() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(hasNoError());
 	}

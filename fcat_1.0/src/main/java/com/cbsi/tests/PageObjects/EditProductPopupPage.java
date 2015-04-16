@@ -2,8 +2,6 @@ package com.cbsi.tests.PageObjects;
 
 import java.util.List;
 
-import javax.crypto.AEADBadTagException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -28,7 +26,7 @@ public class EditProductPopupPage extends BasePage{
 	@Override
 	public void waitForPageToLoad(){
 		waitForElementToBeVisible(By.cssSelector("#content > div.fancybox-wrap.fancybox-desktop.fancybox-type-html.fancybox-opened > div > div > div > div > div.overlay-body.dialog"));
-	}
+		}
 	
 	@FindBy(css="#saveButton")
 	private WebElement Save;

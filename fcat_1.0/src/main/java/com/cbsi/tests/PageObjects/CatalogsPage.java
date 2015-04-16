@@ -258,6 +258,11 @@ public class CatalogsPage extends BasePage{
 		return PageFactory.initElements(driver, PartyPopupPage.class);
 	}
 	
+	public boolean isDefaultCatalog(){
+		String defaultText = myCatalog.findElement(By.xpath("../span")).getText();
+		return defaultText.toLowerCase().contains("(default)");
+	}
+	
 	
 
 }

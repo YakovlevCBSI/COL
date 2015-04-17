@@ -6,7 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 
@@ -24,7 +26,9 @@ public class SanityTest extends AllBaseTest{
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	@Rule 
+	public Timeout globalTimeout = new Timeout(350000);
 	
 	@After
 	public void cleanUp(){
@@ -76,7 +80,7 @@ public class SanityTest extends AllBaseTest{
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
-		assertTrue(hasNoError());
+		assertTrue(detailsPage.FileUploadIsDone());
 	}
 		
 	//@Ignore("oleg")
@@ -85,7 +89,7 @@ public class SanityTest extends AllBaseTest{
 		MappingPage mappingPage = UploadFullFile();
 		DetailsPage detailsPage = mappingPage.automap();
 		
-		assertTrue(hasNoError());
+		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
 	//----------------------------com methods---------------//

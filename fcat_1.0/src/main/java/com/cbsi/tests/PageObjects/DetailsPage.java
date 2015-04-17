@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.cbsi.tests.util.ElementConstants;
+
 public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
@@ -67,6 +69,7 @@ public class DetailsPage extends BasePage{
 	@FindBy(xpath="//tbody/tr[1]")
 	private WebElement FirstProcessingRow;
 	
+	private static String uploadStatus = "";
 	public String getStatus(){
 		WebElement status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
 		while(status.getText().equals("In progress")){
@@ -74,7 +77,20 @@ public class DetailsPage extends BasePage{
 			refresh();
 			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
 		}
-		return status.getText();
+		uploadStatus =status.getText();
+		return uploadStatus;
+	}
+	
+	public boolean FileUploadIsDone(){
+		while(uploadStatus.equals(ElementConstants.INPROGRESS)){		
+			refresh();
+			forceWait(1000);
+		}
+		if(getStatus().equals(ElementConstants.DONE)){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public DetailsPage expandDetails(){

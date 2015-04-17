@@ -89,9 +89,9 @@ public class MappingPage extends BasePage{
 		return headers;
 	}
 	
-	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number"};
-	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer"};
-	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer"};
+	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number", "pn"};
+	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer", "mfpn"};
+	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer", "mfn"};
 	private static String[] cnetSkuId={"cnet sku id", "cnetSkuId", "cnetproductid"}; 
 	private static String[] upcean = {"upc/ean", "upcean", "upc", "ean"};
 	private static String[] msrp = {"msrp", "msr"};

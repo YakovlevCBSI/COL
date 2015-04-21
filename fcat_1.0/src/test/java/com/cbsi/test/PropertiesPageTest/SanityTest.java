@@ -92,6 +92,14 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	@Test
+	public void UploadFullFileManualFromScratchUpcEanOnly() throws InterruptedException {
+		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap(true);
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
 	//----------------------------com methods---------------//
 	
 

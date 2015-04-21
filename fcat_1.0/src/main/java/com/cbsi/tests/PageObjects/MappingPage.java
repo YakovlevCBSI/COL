@@ -26,6 +26,11 @@ public class MappingPage extends BasePage{
 	//---------------------Define mapping dropdown ---------------//
 	
 	public DetailsPage automap(){
+		return automap(false);
+	}
+	
+	//---------------------Automap w/ multi params=-------//
+	public DetailsPage automap(boolean isUpcEanMappingOnly){
 		forceWait(1500);
 		List<WebElement> headers = collectHeaders();
 		JavascriptExecutor js= (JavascriptExecutor)driver;
@@ -34,7 +39,7 @@ public class MappingPage extends BasePage{
 			//System.out.println("header: " + e.getText());
 			String selectThisOption ="";
 			try {
-				selectThisOption = getMatchingCNETFields(e.getText().trim());
+				selectThisOption = getMatchingCNETFields(e.getText().trim(), isUpcEanMappingOnly);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				//System.out.println("auto map failed at automap method...");
@@ -82,6 +87,7 @@ public class MappingPage extends BasePage{
 		return PageFactory.initElements(driver, DetailsPage.class);
 
 	}
+	//------------------------------------------------------------------------------------//
 	
 	public List<WebElement> collectHeaders(){
 		List<WebElement> headers = driver.findElements(By.cssSelector("tr.highlighted td.file-headers-column"));
@@ -101,14 +107,14 @@ public class MappingPage extends BasePage{
 	
 	static List<String[]> headerMap = new ArrayList<String[]>(Arrays.asList(id, mfpn, mf, cnetSkuId, upcean, msrp, price, inventory/*, productURL*/));
 	
-	public static String getMatchingCNETFields(String clientHeader) throws Exception{
+	public static String getMatchingCNETFields(String clientHeader, boolean isUpcEanMappingOnly) throws Exception{
 		boolean hasMatch = false;
 		String matchword ="";
+		
 		for(String[] sArray: headerMap){
 			for(String s:sArray){
 				if(clientHeader.toLowerCase().equals(s)){
 					matchword = sArray[0];
-					return matchword;
 				}
 			}
 		}
@@ -123,7 +129,6 @@ public class MappingPage extends BasePage{
 				
 				if((numOfMatch/(double)sArray.length) >= 0.5){
 					matchword = sArray[0];
-					return matchword;
 				}
 			//	System.out.println(sArray[0] + " / " + numOfMatch);
 			}
@@ -132,14 +137,21 @@ public class MappingPage extends BasePage{
 			//throw new Exception("no matching word was found.  Auto Mapping will fail now....");
 			System.out.println("no automapping found for " + clientHeader);
 		}
-		return "";
+		
+		if(isUpcEanMappingOnly){
+			if(!matchword.isEmpty() && (matchword.equals(mfpn[0]) || matchword.equals(mf[0]))){
+				matchword="";
+			}
+		}
+		
+		return matchword;
 	}
 	
 	public static void main(String[] args){
 		
 		String match="";
 		try {
-			 match = getMatchingCNETFields("cnetproductid");
+			 match = getMatchingCNETFields("cnetproductid", false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

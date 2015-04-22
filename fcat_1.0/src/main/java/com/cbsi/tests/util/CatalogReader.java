@@ -21,7 +21,7 @@ public class CatalogReader {
 
 		        while (line != null) {
 		            sb.append(line);
-		            sb.append(System.lineSeparator());
+		           // sb.append(System.lineSeparator());
 		            line = br.readLine();
 		        }
 		        String everything = sb.toString();
@@ -48,7 +48,7 @@ public class CatalogReader {
 			//System.out.println(lines[0]);
 				String[] ByHeader = lines[0].toLowerCase().split("\t");
 				for(int i=0; i<ByHeader.length; i++){
-					String header = MappingPage.getMatchingCNETFields(ByHeader[i]);
+					String header = MappingPage.getMatchingCNETFields(ByHeader[i], false);
 					if(header.isEmpty()){
 						headerList.add("###");
 					}

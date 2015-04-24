@@ -25,6 +25,7 @@
                <excludes>
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
+               	<exclude>**/DBTest.java</exclude>    
              	
              	<!-- temporarily disabled these tests due to a large work exec flow
              	

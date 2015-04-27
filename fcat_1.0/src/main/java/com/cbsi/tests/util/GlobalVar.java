@@ -31,7 +31,13 @@ public class GlobalVar {
 	public static String MongoUsername="";
 	public static String MongoPassword="";
 	
-
+	public  boolean isJenkins(){
+		String userName=System.getProperty("user.name");
+		if(userName.equals("jenkins") || userName.contains("slave") )
+			return true;
+		
+		return false;
+	}
 	public void setBFPId(String BFPID){
 		this.BFPId = BFPID;
 	}

@@ -132,7 +132,7 @@ public class EditProductPopupPage extends BasePage{
 		}
 		if(driver instanceof FirefoxDriver){
 			e.click();
-			if(System.getProperty("user.name").equals(GlobalVar.JENKINS)){
+			if(new GlobalVar().isJenkins()){
 				e.sendKeys(SELECT_ALL_LINUX, value[0]);
 			}else{
 				e.sendKeys(SELECT_ALL_MAC, value[0]);

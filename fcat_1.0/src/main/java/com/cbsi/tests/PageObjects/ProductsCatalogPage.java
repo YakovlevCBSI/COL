@@ -87,6 +87,7 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public boolean isProductRowMapped(){
 		//for compound xpath class name, make sure to use @contains!!! otherwise it never finds the element.
+		forceWait(3000);
 		return this.productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("title").toLowerCase().equals("mapped");
 	}
 	

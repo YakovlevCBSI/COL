@@ -199,8 +199,8 @@ public class RegressionTest extends AllBaseTest{
 	//("1328")
 	@Test
 	public void UnableToDeleteProductIdWithHtml_1308() throws InterruptedException{
-		String htmlText= "</table>" + System.currentTimeMillis();
- 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(0, 10);
+		String htmlText= "</table>" + (System.currentTimeMillis()+"").substring(4);
+ 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPageManual();
 		System.out.println(htmlText);
 		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
 		addProductPopup.setId(htmlText);
@@ -278,7 +278,7 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	//samsung s20c200b monitor
-	public static final String upcEan= "0000000048750";
+	public static final String upcEan= "0000000057042";
 	
 	@Test
 	public void mapUpcEanWhenMfnameAndMfparnumberAreNotPresent() throws InterruptedException{

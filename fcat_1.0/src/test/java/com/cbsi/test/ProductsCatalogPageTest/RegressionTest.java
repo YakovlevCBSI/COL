@@ -168,12 +168,12 @@ public class RegressionTest extends AllBaseTest{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
 		productsCatalogPage.mapUnmappedItem("Sony", 1);
 		String tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
+		productsCatalogPage.clickReturnToList();
 		
-		CatalogsPage catalogsPage = productsCatalogPage.clickReturnToList();
-		ProductsCatalogPage productCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage = navigateToProductsCatalogPage();
 		
-		productCatalogPage.setProductToUse(tempElement).clickAction(ElementConstants.DELETE);
-		productCatalogPage.clickYes();
+		productsCatalogPage.setProductToUse(tempElement).clickAction(ElementConstants.DELETE);
+		productsCatalogPage.clickYes();
 		
 		assertTrue(hasNoError());
 		

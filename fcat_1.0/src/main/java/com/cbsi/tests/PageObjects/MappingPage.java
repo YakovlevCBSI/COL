@@ -7,9 +7,12 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
 public class MappingPage extends BasePage{
 	public MappingPage(WebDriver driver) {
@@ -55,15 +58,27 @@ public class MappingPage extends BasePage{
 			//System.out.println("dropdownselections size: " + dropdownSelections.size());
 			boolean matchIsFound = false;
 			
-			
+			int yAxis =200;
 			for(WebElement matchingElement: dropdownSelections){
 				if(matchingElement.isDisplayed()){
 					WebElement aElement = matchingElement.findElement(By.xpath("a"));
 					if(aElement.getText().toLowerCase().equals(selectThisOption)){
 						//System.out.println(selectThisOption);
-						aElement.click();
+						try{
+							aElement.click();
+						}catch(WebDriverException ew){
+							System.out.println("element failed to click:" + selectThisOption);
+							System.out.println("scrolling x-axis to gain view.");
+							
+							js.executeScript("scrollTo(500," + yAxis +");");
+							forceWait(500);
+							
+							dropdown.click();
+							customWait(5);
+							aElement.click();
+						}
+						
 						matchIsFound = true;
-
 						//System.out.println(aElement.getText() + " was clicked.");
 						//System.out.println(50*scrollCount);
 						
@@ -71,8 +86,7 @@ public class MappingPage extends BasePage{
 						
 					}
 				}
-				
-				
+				yAxis+=200;
 			}
 			if(!matchIsFound){
 					dropdown.click();
@@ -97,7 +111,7 @@ public class MappingPage extends BasePage{
 	
 	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number", "pn"};
 	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer", "mfpn"};
-	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer", "mfn"};
+	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer", "mfn", "mfrname"};
 	private static String[] cnetSkuId={"cnet sku id", "cnetSkuId", "cnetproductid"}; 
 	private static String[] upcean = {"upc/ean", "upcean", "upc", "ean"};
 	private static String[] msrp = {"msrp", "msr"};
@@ -115,6 +129,7 @@ public class MappingPage extends BasePage{
 			for(String s:sArray){
 				if(clientHeader.toLowerCase().equals(s)){
 					matchword = sArray[0];
+					hasMatch=true;
 				}
 			}
 		}
@@ -129,6 +144,7 @@ public class MappingPage extends BasePage{
 				
 				if((numOfMatch/(double)sArray.length) >= 0.5){
 					matchword = sArray[0];
+					hasMatch=true;
 				}
 			//	System.out.println(sArray[0] + " / " + numOfMatch);
 			}

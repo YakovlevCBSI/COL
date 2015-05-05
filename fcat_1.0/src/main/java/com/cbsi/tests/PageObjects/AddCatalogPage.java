@@ -19,12 +19,10 @@ public class AddCatalogPage extends BasePage {
 	
 	@Override
 	public void waitForPageToLoad(){
-		try{
-			waitForElementToBeVisible(By.cssSelector("form#editCatalogForm"));
-			waitForElementToBeVisible(By.cssSelector("a.x-open-schedule"));
-		}catch(TimeoutException e){
-			System.out.println("redirect to AddCatalogPage");
-		}
+		waitForPageToLoad(By.cssSelector("#editCatalogForm > div.content.catalog > div.clearfix > div:nth-child(2) > div:nth-child(2)"));
+//		customWait(10);
+//		waitForElementToBeVisible(By.cssSelector("div.editor-field-indent input"));
+//		waitForElementToBeVisible(By.cssSelector("a.x-open-schedule"));
 	}
 
 	@FindBy(css="div.logo.en-us a.logo-url")

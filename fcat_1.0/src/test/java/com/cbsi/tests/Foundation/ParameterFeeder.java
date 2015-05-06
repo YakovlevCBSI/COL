@@ -23,6 +23,7 @@ public class ParameterFeeder {
 		}
 		isDevTest = isDevTesting();
 		isProdTest = isProdTesting();
+		System.out.println("<------------DEVorPROD: " + isDevTest +" / " + isProdTest +"--------->");
 	}
 	
 	public boolean isDevTesting(){
@@ -178,9 +179,6 @@ public class ParameterFeeder {
 					GlobalVar.devServer
 			};
 			URLFinal = URLsDev;
-		}
-		else{
-		
 		}
 		
 		return URLFinal;

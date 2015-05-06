@@ -19,13 +19,11 @@ def add_string():
     for line in lines:
         if '<excludes>' in line:
             startOfIncludes=True
-              
+            
         elif '</excludes>' in line:
             endOfIncludes=True
-            line='<excludes><exclude>' + testToExclude +'</exclude></excludes>'
+            line=line+'<exclude>' + testToExclude +'</exclude>\n</excludes>'
         
-        if startOfIncludes==True and endOfIncludes==False:
-            line =""
         new_lines += line
             
     lines= new_lines
@@ -48,3 +46,4 @@ for arg in sys.argv:
         print('modifying ' + arg)
         print('textToExclude:'+testToExclude)
         main()
+

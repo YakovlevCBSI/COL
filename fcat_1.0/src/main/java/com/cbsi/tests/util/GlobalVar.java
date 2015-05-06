@@ -11,7 +11,8 @@ public class GlobalVar {
 	
 	public static String stageServer = "",
 			   devServer = "",
-			   BFPServer = ""; //need to login using their credentials.
+			   BFPServer = "", //need to login using their credentials.
+			   prodServer = "";
 
 	public static String embedPath ="manageCatalog/embed-test";
 	
@@ -64,6 +65,10 @@ public class GlobalVar {
 	
 	public void setBFPServer(String BFPServer){
 		this.BFPServer = BFPServer;
+	}
+	
+	public void setProdServer(String prodServer){
+		this.prodServer = prodServer;
 	}
 	
 	public void setBSId(String BSId){

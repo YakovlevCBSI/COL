@@ -9,7 +9,9 @@ import com.cbsi.tests.util.ReadFile;
 
 public class ParameterFeeder {
 	public static boolean isDevTest = false;
-	//private boolean isDevTest = true;
+//	public static boolean isProdTest = false;
+//	private boolean isDevTest = true;
+	public static boolean isProdTest = false;
 
 	public ParameterFeeder(){
 		
@@ -20,13 +22,24 @@ public class ParameterFeeder {
 			e.printStackTrace();
 		}
 		isDevTest = isDevTesting();
+		isProdTest = isProdTesting();
 	}
 	
 	public boolean isDevTesting(){
-	
-		if(System.getProperty("environment").equals("true")) return true;
+		String system="";
+		if((system = System.getProperty("environment")) != null){
+			if(system.equals("dev")) return true;
+		}
 	
 		return false;
+	}
+	
+	public boolean isProdTesting(){
+		String system="";
+		if((system = System.getProperty("environment")) != null){
+			if(system.equals("prod")) return true;
+		}
+		 return false;
 	}
 	
 	public Object[][] configureTestParams(String whichURLArray){
@@ -89,8 +102,8 @@ public class ParameterFeeder {
 	}
 
 	public String[] getAllURL(){
-		String[] URLFinal;
-		if(!isDevTest){
+		String[] URLFinal = null;
+		if(!isDevTest && !isProdTest){
 			String[] URLs = {
 					GlobalVar.stageServer,
 					GlobalVar.stageServer + GlobalVar.embedPath,
@@ -100,7 +113,7 @@ public class ParameterFeeder {
 			};
 			URLFinal = URLs;
 		}
-		else{
+		else if (isDevTest){
 			String[] URLsDev = {
 				GlobalVar.devServer,
 				GlobalVar.devServer + GlobalVar.embedPath
@@ -108,12 +121,19 @@ public class ParameterFeeder {
 			URLFinal = URLsDev;
 
 		}
+		else{
+			String[] URLsProd = {
+					GlobalVar.prodServer + GlobalVar.embedPath
+			};
+			
+			URLFinal = URLsProd;
+		}
 		return URLFinal;
 	}
 	
 	public String[] getEmbedURL(){
-		String[] URLFinal;
-		if(!isDevTest){
+		String[] URLFinal = null;
+		if(!isDevTest && !isProdTest){
 			String[] URLs = {
 				//	GlobalVar.stageServer,
 					GlobalVar.stageServer + GlobalVar.embedPath,
@@ -124,20 +144,26 @@ public class ParameterFeeder {
 			};
 			URLFinal = URLs;
 		}
-		else{
+		else if (isDevTest){
 			String[] URLsDev = {
 					GlobalVar.devServer + GlobalVar.embedPath
 			};
 			
 			URLFinal = URLsDev;
 		}
-		
+		else{
+			String[] URLsProd = {
+					GlobalVar.prodServer + GlobalVar.embedPath
+			};
+			
+			URLFinal = URLsProd;
+		}	
 		return URLFinal;
 	}
 	
 	public String[] getFormURL(){
-		String[] URLFinal;
-		if(!isDevTest){
+		String[] URLFinal = null;
+		if(!isDevTest && !isProdTest){
 			String[] URLs = {
 					GlobalVar.stageServer,
 					//GlobalVar.stageServer + GlobalVar.embedPath,
@@ -145,14 +171,17 @@ public class ParameterFeeder {
 				//--------->GlobalVar.devServer,
 					//GlobalVar.devServer + GlobalVar.embedPath
 			};
-			URLFinal = URLs;	
-		}else{
+			URLFinal = URLs;
+		}
+		else if (isDevTest){
 			String[] URLsDev = {
 					GlobalVar.devServer
 			};
 			URLFinal = URLsDev;
 		}
-	
+		else{
+		
+		}
 		
 		return URLFinal;
 	}

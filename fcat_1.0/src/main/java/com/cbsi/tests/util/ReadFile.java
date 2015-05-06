@@ -44,18 +44,19 @@ public class ReadFile {
 		GlobalVar.stageServer = (tempVar[4]);
 		GlobalVar.devServer = (tempVar[5]);
 		GlobalVar.BFPServer = tempVar[6];
-		GlobalVar.BSId= tempVar[7];
-		GlobalVar.BSAccessKey= tempVar[8];
-		GlobalVar.dbURL=tempVar[9];
-		GlobalVar.dbUserName=tempVar[10];
-		GlobalVar.dbPassword=tempVar[11];
-		GlobalVar.ftpURL=tempVar[12];
-		GlobalVar.ftpUserName=tempVar[13];
-		GlobalVar.ftpPassword=tempVar[14];
+		GlobalVar.prodServer = tempVar[7];
+		GlobalVar.BSId= tempVar[8];
+		GlobalVar.BSAccessKey= tempVar[9];
+		GlobalVar.dbURL=tempVar[10];
+		GlobalVar.dbUserName=tempVar[11];
+		GlobalVar.dbPassword=tempVar[12];
+		GlobalVar.ftpURL=tempVar[13];
+		GlobalVar.ftpUserName=tempVar[14];
+		GlobalVar.ftpPassword=tempVar[15];
 		
-		GlobalVar.MongoHost=tempVar[15];
-		GlobalVar.MongoUsername=tempVar[16];
-		GlobalVar.MongoPassword= tempVar[17];
+		GlobalVar.MongoHost=tempVar[16];
+		GlobalVar.MongoUsername=tempVar[17];
+		GlobalVar.MongoPassword= tempVar[18];
 	}
 	
 	//For debug.

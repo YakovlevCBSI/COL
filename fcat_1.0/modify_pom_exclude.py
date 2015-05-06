@@ -1,4 +1,4 @@
-import sys
+¢import sys
 import os
 
 testToExclude=''
@@ -6,7 +6,7 @@ lines=''
 
 def read_file(pathToPom=""):
     global lines
-    with open("pom 2.xml") as f:
+    with open("pom.xml") as f:
         lines=f.readlines()
 
 def add_string():

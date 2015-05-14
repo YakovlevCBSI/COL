@@ -24,7 +24,14 @@ public class ReadFile {
 			
 			//System.out.println(lines);
 			
-			return StringUtils.substringsBetween(lines, "\"", "\"");
+//			return StringUtils.substringsBetween(lines, "\"", "\"");
+			String[] subs= StringUtils.substringsBetween(lines, "\"", "\"");
+			int count=0;
+			for (String s: subs){
+				System.out.println(count + ": " + s);
+				count++;
+			}
+			return subs;
 	}
 	
 	public static void setGlobalVars() throws IOException{
@@ -56,6 +63,7 @@ public class ReadFile {
 		
 		GlobalVar.MongoHost=tempVar[16];
 		GlobalVar.MongoUsername=tempVar[17];
+		System.out.println(GlobalVar.MongoUsername);
 		GlobalVar.MongoPassword= tempVar[18];
 	}
 	
@@ -71,6 +79,7 @@ public class ReadFile {
 		
 		
 		System.out.println(GlobalVar.dbURL + "\n" + GlobalVar.dbUserName + "\n" + GlobalVar.dbPassword);
+		System.out.println(GlobalVar.prodServer);
 	}
 	
 	

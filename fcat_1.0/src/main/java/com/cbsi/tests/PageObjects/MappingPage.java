@@ -36,7 +36,6 @@ public class MappingPage extends BasePage{
 	public DetailsPage automap(boolean isUpcEanMappingOnly){
 		forceWait(1500);
 		List<WebElement> headers = collectHeaders();
-		JavascriptExecutor js= (JavascriptExecutor)driver;
 		int scrollCount = 1;
 		for(WebElement e: headers){
 			//System.out.println("header: " + e.getText());
@@ -70,10 +69,9 @@ public class MappingPage extends BasePage{
 							System.out.println("element failed to click:" + selectThisOption);
 							System.out.println("scrolling x-axis to gain view.");
 							
-							js.executeScript("scrollTo(400," + yAxis +");");
-							forceWait(500);
-							
+							scrollToView(dropdown);
 							dropdown.click();
+							forceWait(500);
 							customWait(5);
 							aElement.click();
 						}
@@ -90,10 +88,7 @@ public class MappingPage extends BasePage{
 			}
 			if(!matchIsFound){
 					dropdown.click();
-				}	
-			
-			js.executeScript("scroll(0," + (50*scrollCount) +")");
-			scrollCount++;		
+				}		
 		}
 		
 		clickSave();

@@ -22,6 +22,7 @@ def add_string():
             
         elif '</excludes>' in line:
             endOfIncludes=True
+            line=line.replace('</excludes>','')
             line=line+'<exclude>' + testToExclude +'</exclude>\n</excludes>'
         
         new_lines += line

@@ -24,14 +24,7 @@ public class ReadFile {
 			
 			//System.out.println(lines);
 			
-//			return StringUtils.substringsBetween(lines, "\"", "\"");
-			String[] subs= StringUtils.substringsBetween(lines, "\"", "\"");
-			int count=0;
-			for (String s: subs){
-				System.out.println(count + ": " + s);
-				count++;
-			}
-			return subs;
+		return StringUtils.substringsBetween(lines, "\"", "\"");
 	}
 	
 	public static void setGlobalVars() throws IOException{

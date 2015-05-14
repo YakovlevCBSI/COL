@@ -20,14 +20,14 @@
         <version>2.18</version>
          <configuration>
                <systemPropertyVariables>
-             		<environment>${env.DEV}</environment>
+             		<environment>${env}</environment>
                </systemPropertyVariables>
                <excludes>
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
-               	<exclude>**/DBTest.java</exclude>    
-             	
-             	<!-- temporarily disabled these tests due to a large work exec flow
+               	<exclude>**/DBTest.java</exclude>       	
+               </excludes>
+                         	<!-- temporarily disabled these tests due to a large work exec flow
              	
              	<exclude>*CatalogsPageTest/RegressionTest.java</exclude>     	
                	<exclude>**/DBTest.java</exclude>    
@@ -36,9 +36,7 @@
              	-->
                	<!-- @Ignored propertiespagetest.sanitytest.upload**-->
                	 	   	
-             	   	
-               </excludes>
-            
+             	
              <!-- for some odd reason, jenkins fails to run with executor error in jenkins log. 
              <parallel>methods</parallel>
              <threadCount>2</threadCount>
@@ -106,6 +104,11 @@
         <artifactId>jackson-mapper-asl</artifactId>
         <version>${jackson-version}</version>
     </dependency>
+    <dependency>
+    <groupId>xml-apis</groupId>
+    <artifactId>xml-apis</artifactId>
+    <version>1.4.01</version>
+</dependency>
   </dependencies>
   
   <repositories>

@@ -84,6 +84,7 @@ public class AddCatalogPage extends BasePage {
 	private WebElement Automatic;
 	
 	public AddCatalogPage switchToAutomatic(){
+		scrollToView(Automatic);
 		Automatic.click();
 		return this;
 	}

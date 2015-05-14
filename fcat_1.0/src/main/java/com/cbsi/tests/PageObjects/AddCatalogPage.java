@@ -1,6 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ public class AddCatalogPage extends BasePage {
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+		System.out.println("Done loading addCatalogs page.");
 	}
 	
 	@Override
@@ -114,6 +116,7 @@ public class AddCatalogPage extends BasePage {
 	private WebElement SetSchedule;
 	
 	public SchedulePopup clickSetSchedule(){
+		scrollToView(SetSchedule);
 		SetSchedule.click();
 		return PageFactory.initElements(driver, SchedulePopup.class);
 	}
@@ -145,9 +148,12 @@ public class AddCatalogPage extends BasePage {
 	private WebElement Default;
 	
 	public AddCatalogPage clickSetAsDefault(){
+		System.out.println("Before condition check.");
 		if(!Default.getAttribute("class").contains("checked")){
+			System.out.println("Not checked...");
 			Default.click();
 		}
+		System.out.println("out of loop.");
 		
 		return this;
 	}

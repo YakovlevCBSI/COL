@@ -3,6 +3,7 @@ package com.cbsi.tests.PageObjects;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -45,7 +46,7 @@ public class BasePage {
 	}
 	
 	public void waitForElementToBeVisible(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(by));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 	
 	public void waitForElementToBeVisible(String path){
@@ -53,7 +54,7 @@ public class BasePage {
 	}
 	
 	public void waitForElementToBeInvisible(By by){
-		new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(by));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
 	public WebElement refreshStaleElement(By by){
@@ -85,5 +86,12 @@ public class BasePage {
 	
 	public String getRandomNum(){
 		return getTempFileName();
+	}
+	
+	public void scrollToView(WebElement element){
+			int elementPosition = element.getLocation().getY();
+		   String js = String.format("window.scroll(0, %s)", elementPosition);
+		   ((JavascriptExecutor)driver).executeScript(js);
+		   forceWait(500);
 	}
 }

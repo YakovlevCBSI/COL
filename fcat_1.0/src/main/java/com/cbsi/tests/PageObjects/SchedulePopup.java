@@ -150,6 +150,7 @@ public class SchedulePopup extends BasePage {
 		List<WebElement> checkedBoxes = driver.findElements(By.cssSelector("label[for^='ScheduleSetting_SelectedWeekDays_']"));
 		for(WebElement e: checkedBoxes){
 			if(e.getAttribute("class").contains("checked")){
+				scrollToView(e);
 				e.click();
 			}
 		}

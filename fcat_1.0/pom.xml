@@ -20,7 +20,7 @@
         <version>2.18</version>
          <configuration>
                <systemPropertyVariables>
-             		<environment>${env}</environment>
+             		<environment>${env.DEV}</environment>
                </systemPropertyVariables>
                <excludes>
                <exclude>**/*Base.java</exclude>

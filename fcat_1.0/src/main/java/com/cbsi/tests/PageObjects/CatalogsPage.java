@@ -3,10 +3,10 @@ package com.cbsi.tests.PageObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -74,11 +74,7 @@ public class CatalogsPage extends BasePage{
 	 */
 	@Override
 	public void waitForPageToLoad(){
-		try{
-			waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
-		}catch(TimeoutException e){
-			System.out.println("Checking if this is addCatalogsPage");
-		}
+		waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
 	}
 	
 	@FindBy(css="a.link-button.navy")
@@ -202,12 +198,12 @@ public class CatalogsPage extends BasePage{
 		for (WebElement e: tempElements){
 			if(e.getText().equals(fileToDelete)){
 				tempElement = e;
-				System.out.println("ELEMENT FOUND>");
+				System.out.println("tempElement: " + tempElement.getText());
 				break;
 			}
 		}
 		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));
-		customWait(5);
+//		waitForElementToClickable(By.xpath("../../td[6]/a[4]"));
 		tempElementDeleteButton.click();
 		
 		WebElement Yes = driver.findElement(By.linkText("Yes"));
@@ -263,6 +259,26 @@ public class CatalogsPage extends BasePage{
 		return defaultText.toLowerCase().contains("(default)");
 	}
 	
+	public List<String> getCatalogNames(){
+		List<String> catalogNamesToString = new ArrayList<String>();
+		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
+		for(WebElement catalogName: catalogNames){
+			catalogNamesToString.add(catalogName.getText());
+		}
+		
+		return catalogNamesToString;
+	}
 	
+	public CatalogsPage cleanUpLeftOverCatalogs(){
+		List<String> catalogNamesToString= getCatalogNames();
+		for(String catalog: catalogNamesToString){
+			if(StringUtils.isNumeric(catalog)){
+				deleteTempFile(catalog);
+			}
+		
+		}
+		
+		return this;
+	}
 
 }

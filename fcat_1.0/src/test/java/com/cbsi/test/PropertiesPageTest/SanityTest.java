@@ -5,10 +5,12 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 
@@ -33,6 +35,7 @@ public class SanityTest extends AllBaseTest{
 	@After
 	public void cleanUp(){
 		super.cleanUpThenDeleteTemp();
+		//cleanUpAfterClass();
 
 	}
 	
@@ -74,6 +77,7 @@ public class SanityTest extends AllBaseTest{
 	//@Ignore("oleg")
 	@Test
 	public void UploadFullFileAutomaticFromScratch(){
+//		driver.manage().window().setSize(new Dimension(570, 500));
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
@@ -102,8 +106,10 @@ public class SanityTest extends AllBaseTest{
 	
 	//----------------------------com methods---------------//
 	
-
-	
+	public void cleanUpAfterClass(){
+		CatalogsPage catalogPageF = PageFactory.initElements(driver, CatalogsPage.class);
+		catalogPageF.cleanUpLeftOverCatalogs();
+	}
 
 	
 	

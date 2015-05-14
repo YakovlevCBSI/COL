@@ -1,6 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,7 +47,10 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public String getCatalogCode(){
-		return CatalogCode.getText();
+//		return CatalogCode.getText();
+		String text = driver.findElement(By.xpath("//div[@class='editor-field-indent'][3]/label")).getText();
+		System.out.println(text);
+		return text;
 	}
 	
 	public String getUpdateMethod(){
@@ -63,7 +67,7 @@ public class DetailsPage extends BasePage{
 	
 	@Override
 	public void waitForPageToLoad(){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("table.processing-queue thead")));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("table.table")));
 	}
 	
 	@FindBy(xpath="//tbody/tr[1]")
@@ -71,7 +75,14 @@ public class DetailsPage extends BasePage{
 	
 	private static String uploadStatus = "";
 	public String getStatus(){
-		WebElement status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
+		WebElement status=null;
+		try{
+			status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
+		}catch(StaleElementReferenceException e){
+			FirstProcessingRow = refreshStaleElement(By.xpath("//td[contains(@class,'status')]/span"));
+			status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
+		}
+		scrollToView(status);
 		while(status.getText().equals("In progress")){
 			System.out.println("waiting for deatils progress toc complete.");
 			refresh();

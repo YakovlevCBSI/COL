@@ -205,7 +205,7 @@ public class CatalogsPage extends BasePage{
 		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));
 //		waitForElementToClickable(By.xpath("../../td[6]/a[4]"));
 		tempElementDeleteButton.click();
-		
+		customWait(5);
 		WebElement Yes = driver.findElement(By.linkText("Yes"));
 		customWait(5);
 		Yes.click();

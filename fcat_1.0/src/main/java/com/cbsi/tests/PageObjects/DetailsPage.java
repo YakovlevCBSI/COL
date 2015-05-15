@@ -67,7 +67,7 @@ public class DetailsPage extends BasePage{
 	
 	@Override
 	public void waitForPageToLoad(){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("table.table")));
+		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.editor-field-indent")));
 	}
 	
 	@FindBy(xpath="//tbody/tr[1]")

@@ -34,6 +34,7 @@ public class SanityTest extends AllBaseTest{
 	
 	@After
 	public void cleanUp(){
+		super.cleanUp();
 		super.cleanUpThenDeleteTemp();
 		//cleanUpAfterClass();
 
@@ -99,11 +100,18 @@ public class SanityTest extends AllBaseTest{
 	@Test
 	public void UploadFullFileManualFromScratchUpcEanOnly() throws InterruptedException {
 		MappingPage mappingPage = UploadFullFile();
-		DetailsPage detailsPage = mappingPage.automap(true);
+		DetailsPage detailsPage = mappingPage.automap(true, false);
 		
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	@Test
+	public void UploadFullFilManualFromScratchSkuIdOnly() throws InterruptedException{
+		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap(false, true);
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
 	//----------------------------com methods---------------//
 	
 	public void cleanUpAfterClass(){

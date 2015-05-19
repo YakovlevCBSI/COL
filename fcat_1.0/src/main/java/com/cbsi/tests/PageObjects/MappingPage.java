@@ -29,11 +29,11 @@ public class MappingPage extends BasePage{
 	//---------------------Define mapping dropdown ---------------//
 	
 	public DetailsPage automap(){
-		return automap(false);
+		return automap(false, false);
 	}
 	
 	//---------------------Automap w/ multi params=-------//
-	public DetailsPage automap(boolean isUpcEanMappingOnly){
+	public DetailsPage automap(boolean isUpcEanMappingOnly, boolean isSkuIdMappingOnly){
 		forceWait(1500);
 		List<WebElement> headers = collectHeaders();
 		int scrollCount = 1;
@@ -41,7 +41,7 @@ public class MappingPage extends BasePage{
 			//System.out.println("header: " + e.getText());
 			String selectThisOption ="";
 			try {
-				selectThisOption = getMatchingCNETFields(e.getText().trim(), isUpcEanMappingOnly);
+				selectThisOption = getMatchingCNETFields(e.getText().trim(), isUpcEanMappingOnly, isSkuIdMappingOnly);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				//System.out.println("auto map failed at automap method...");
@@ -116,7 +116,7 @@ public class MappingPage extends BasePage{
 	
 	static List<String[]> headerMap = new ArrayList<String[]>(Arrays.asList(id, mfpn, mf, cnetSkuId, upcean, msrp, price, inventory/*, productURL*/));
 	
-	public static String getMatchingCNETFields(String clientHeader, boolean isUpcEanMappingOnly) throws Exception{
+	public static String getMatchingCNETFields(String clientHeader, boolean isUpcEanMappingOnly, boolean isSkuMappingOnly) throws Exception{
 		boolean hasMatch = false;
 		String matchword ="";
 		
@@ -150,7 +150,12 @@ public class MappingPage extends BasePage{
 		}
 		
 		if(isUpcEanMappingOnly){
-			if(!matchword.isEmpty() && (matchword.equals(mfpn[0]) || matchword.equals(mf[0]))){
+			if(!matchword.isEmpty() && (matchword.equals(mfpn[0]) || matchword.equals(mf[0]) || matchword.equals(cnetSkuId[0]))){
+				matchword="";
+			}
+		}
+		if(isSkuMappingOnly){
+			if(!matchword.isEmpty() && (matchword.equals(mfpn[0]) || matchword.equals(mf[0]) || matchword.equals(upcean[0]))){
 				matchword="";
 			}
 		}
@@ -162,7 +167,7 @@ public class MappingPage extends BasePage{
 		
 		String match="";
 		try {
-			 match = getMatchingCNETFields("cnetproductid", false);
+			 match = getMatchingCNETFields("cnetproductid", false, false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

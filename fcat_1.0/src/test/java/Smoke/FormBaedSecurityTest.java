@@ -63,4 +63,12 @@ public class FormBaedSecurityTest extends FormBaseTest{
 		FCatLoginPage fcatLoginPage = homePage.logOut();
 		assertTrue(fcatLoginPage.isBeforeLoginPage());
 	}
+	
+	public static final String directUrlToProductsPage="http://fcat-engine.cloudapp.net:6600/fcat/fcatCatalog/catalogs#catalogProducts_catalogId=14724";
+	@Test
+	public void DoNotAccessCatalogPageWIthoutLogin(){
+		driver.get(directUrlToProductsPage);
+		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
+		
+	}
 }

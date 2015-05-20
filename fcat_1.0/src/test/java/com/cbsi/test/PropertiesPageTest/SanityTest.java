@@ -29,13 +29,17 @@ public class SanityTest extends AllBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 	
+	private boolean needsCleanUp=true;
+	
 	@Rule 
 	public Timeout globalTimeout = new Timeout(350000);
 	
 	@After
 	public void cleanUp(){
-		super.cleanUp();
-		super.cleanUpThenDeleteTemp();
+		if(needsCleanUp) {
+			super.cleanUp();
+			super.cleanUpThenDeleteTemp();
+		}
 		//cleanUpAfterClass();
 
 	}
@@ -111,6 +115,23 @@ public class SanityTest extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap(false, true);
 		
 		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void dataValidationMessageShowsForEmptyFields(){
+		needsCleanUp=false;
+		
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.clickNextFail();
+		
+		assertTrue(addCatalogPage.displaysCatalogNameError());
+		assertTrue(addCatalogPage.displaysCatalogCodeError());
+		assertTrue(addCatalogPage.displaysFtpLocationError());
+		assertTrue(addCatalogPage.displaysFtpUserNameError());
+		assertTrue(addCatalogPage.displaysFtpPasswordError());
+
+		
+		
 	}
 	//----------------------------com methods---------------//
 	

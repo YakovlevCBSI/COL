@@ -43,6 +43,11 @@ public class AddCatalogPage extends BasePage {
 
 	}
 	
+	public AddCatalogPage clickNextFail(){
+		Next.click();
+		return this;
+	}
+	
 	public UploadPopupPage fillInName(){
 		System.out.println("filling out catalog name. Next...");
 		//customWait(20);
@@ -150,7 +155,8 @@ public class AddCatalogPage extends BasePage {
 	
 	public AddCatalogPage clickSetAsDefault(){
 		System.out.println("Before condition check.");
-		if(!Default.getAttribute("class").contains("checked")){
+		WebElement tempDefault = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/form/div[1]/div[1]/div[1]/div[9]/div[1]/label[1]"));
+		if(!tempDefault.getAttribute("class").contains("checked")){
 			System.out.println("Not checked...");
 			Default.click();
 		}
@@ -174,6 +180,33 @@ public class AddCatalogPage extends BasePage {
 		return this;
 	}
 	
+	@FindBy(css="span[data-valmsg-for='Name'][class^='field-validation'] span")
+	private WebElement CatalogNameIsRequired;
+	public boolean displaysCatalogNameError(){
+		return CatalogNameIsRequired.isDisplayed();
+	}
+	
+	@FindBy(css="span[data-valmsg-for='Code'][class^='field-validation'] span")
+	private WebElement CatalogCodeIsRequired;
+	public boolean displaysCatalogCodeError(){
+		return CatalogCodeIsRequired.isDisplayed();
+	}
+	
+	@FindBy(css="span[data-valmsg-for='FileLocationFileUrl'][class^='field-validation'] span")
+	private WebElement FtpLocationIsRequired;
+	public boolean displaysFtpLocationError(){
+		return FtpLocationIsRequired.isDisplayed();
+	}
 
-
+	@FindBy(css="span[data-valmsg-for='FileLocationLogin'][class^='field-validation'] span")
+	private WebElement FtpUserNameIsRequired;
+	public boolean displaysFtpUserNameError(){
+		return FtpUserNameIsRequired.isDisplayed();
+	}
+	
+	@FindBy(css="span[data-valmsg-for='FileLocationPassword'][class^='field-validation'] span")
+	private WebElement FtpPasswordIsRequired;
+	public boolean displaysFtpPasswordError(){
+		return FtpPasswordIsRequired.isDisplayed();
+	}
 }

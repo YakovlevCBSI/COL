@@ -154,9 +154,11 @@ public class AddCatalogPage extends BasePage {
 	private WebElement Default;
 	
 	public AddCatalogPage clickSetAsDefault(){
+		forceWait(300);
 		System.out.println("Before condition check.");
-		WebElement tempDefault = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/form/div[1]/div[1]/div[1]/div[9]/div[1]/label[1]"));
-		if(!tempDefault.getAttribute("class").contains("checked")){
+		//WebElement tempDefault = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/form/div[1]/div[1]/div[1]/div[9]/div[1]/label[1]"));
+		scrollToView(Default);
+		if(!Default.getAttribute("class").contains("checked")){
 			System.out.println("Not checked...");
 			Default.click();
 		}

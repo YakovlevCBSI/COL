@@ -44,6 +44,7 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage clickNextFail(){
+		forceWait(500);
 		Next.click();
 		return this;
 	}

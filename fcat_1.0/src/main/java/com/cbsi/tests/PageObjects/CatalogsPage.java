@@ -74,7 +74,7 @@ public class CatalogsPage extends BasePage{
 	 */
 	@Override
 	public void waitForPageToLoad(){
-		waitForElementToBeVisible(By.cssSelector("div.panel div.catalogs-index"));
+//		waitForElementToBeVisible(By.cssSelector("div.panel div.header"));
 	}
 	
 	@FindBy(css="a.link-button.navy")
@@ -209,6 +209,7 @@ public class CatalogsPage extends BasePage{
 		WebElement Yes = driver.findElement(By.linkText("Yes"));
 		customWait(5);
 		Yes.click();
+		waitForElementToBeInvisible(By.cssSelector("div.overlay-header.splash"));
 		return this;
 		
 	}

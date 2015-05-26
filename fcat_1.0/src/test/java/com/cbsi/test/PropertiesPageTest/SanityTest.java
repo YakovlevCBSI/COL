@@ -37,12 +37,14 @@ public class SanityTest extends AllBaseTest{
 	@After
 	public void cleanUp(){
 		if(needsCleanUp) {
-			super.cleanUp();
 			super.cleanUpThenDeleteTemp();
 		}
+		CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
+		catalogsPageDirty.cleanUpLeftOverCatalogs();
 		//cleanUpAfterClass();
 
 	}
+	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
 	private String USERNAME = GlobalVar.ftpUserName;

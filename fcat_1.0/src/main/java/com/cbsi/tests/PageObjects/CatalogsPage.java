@@ -74,7 +74,7 @@ public class CatalogsPage extends BasePage{
 	 */
 	@Override
 	public void waitForPageToLoad(){
-//		waitForElementToBeVisible(By.cssSelector("div.panel div.header"));
+		waitForElementToBeVisible(By.cssSelector("div.catalogs-index"));
 	}
 	
 	@FindBy(css="a.link-button.navy")

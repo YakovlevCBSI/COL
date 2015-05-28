@@ -38,9 +38,11 @@ public class SanityTest extends AllBaseTest{
 	public void cleanUp(){
 		if(needsCleanUp) {
 			super.cleanUpThenDeleteTemp();
+			
+			CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
+			catalogsPageDirty.cleanUpLeftOverCatalogs();
 		}
-		CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
-		catalogsPageDirty.cleanUpLeftOverCatalogs();
+	
 		//cleanUpAfterClass();
 
 	}

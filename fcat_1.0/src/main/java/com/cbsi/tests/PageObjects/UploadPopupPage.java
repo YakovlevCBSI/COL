@@ -203,6 +203,27 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
+	public UploadPopupPage uploadLocalFileFromResource(String fileName) throws InterruptedException{
+		Thread.sleep(1500);
+		WebElement fileInput = null;
+		try{
+			fileInput = driver.findElement(By.cssSelector("input[type='file']"));
+			System.out.println("found input type file");
+		}catch(NoSuchElementException e){
+			System.out.println("didn't find input type file");
+		}
+		
+		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
+		
+		
+		System.out.println(pathToFile);
+		fileInput.sendKeys(pathToFile);
+		
+		//fileInput.sendKeys(Keys.RETURN);
+		
+		return this;
+	}
+	
 	public UploadPopupPage uploadLocalFileFromFinder(String BigOrSmall) throws InterruptedException{
 		Thread.sleep(1500);
 		WebElement fileInput = null;

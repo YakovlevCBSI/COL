@@ -47,6 +47,7 @@ public class SanityTest extends AllBaseTest{
 	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
+	private String ExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 
@@ -115,6 +116,26 @@ public class SanityTest extends AllBaseTest{
 	public void UploadFullFilManualFromScratchSkuIdOnly() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();
 		DetailsPage detailsPage = mappingPage.automap(false, true);
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadfullFileExcelManual(){
+		MappingPage mappingPage = UploadFullFile("Excel.xlsx");
+		DetailsPage detailsPage = mappingPage.automap(false, false);
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+
+	}
+	
+	@Test
+	public void uploadFullFileExcelAutomaticFromScratch(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
 	}

@@ -21,6 +21,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.rules.Timeout;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -71,7 +72,7 @@ public class BaseTest {
 	
 	//Need Time out rule here
 	@Rule 
-	public Timeout globalTimeout = new Timeout(240000);
+	public Timeout globalTimeout = new Timeout(180000);
 	
 	/**
 	@BeforeClass
@@ -95,7 +96,8 @@ public class BaseTest {
 		driver = configureDrivers();
 		//driver.manage().window().setPosition(new Point(1200, 0));
 		navigateToHomePage();
-		maximizeWindow();
+//		maximizeWindow();
+		setDisplayToVm();
 	}
 	
 	public void startUpWithoutLogin(){
@@ -269,6 +271,10 @@ public class BaseTest {
 	
 	public void maximizeWindow(){
 		driver.manage().window().maximize();
+	}
+	
+	public void setDisplayToVm(){
+		driver.manage().window().setSize(new Dimension(1024, 768));
 	}
 	
 	public void EasyLoginToLocal(){
@@ -543,6 +549,26 @@ public class BaseTest {
 		return uploadPopupPage;
 	}
 	
+	public UploadPopupPage uploadLocalFileOSSpecific(UploadPopupPage uploadPopupPage, String fileName){
+		if(getBrowser().contains("chrome") || getBrowser().contains("firefox")){
+			try {
+				uploadPopupPage.uploadLocalFileFromResource(fileName);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				uploadPopupPage.uploadLocalFileFromFinder("C:\\Users\\hello\\Documents\\documents\\text-sample1.txt");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return uploadPopupPage;
+	}
+	
+	
 	public  UploadPopupPage UploadFile(){
 		CatalogsPage catalogPage= PageFactory.initElements(driver, CatalogsPage.class);
 		catalogPage.setMyCatalogToManualCatalog();
@@ -556,6 +582,7 @@ public class BaseTest {
 		return uploadPopupPage;
 	}
 	
+
 	public ProductsCatalogPage navigateToProductsCatalogPage(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30);
@@ -578,6 +605,15 @@ public class BaseTest {
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
+		
+		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
+		return mappingPage;
+	}
+	
+	public MappingPage UploadFullFile(String filename){
+		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
+		uploadPopupPage.clickUploadFile();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage, filename).clickNext();
 		
 		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
 		return mappingPage;

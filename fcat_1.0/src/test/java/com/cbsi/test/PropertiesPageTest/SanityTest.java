@@ -124,8 +124,8 @@ public class SanityTest extends AllBaseTest{
 	
 	@Test
 	public void uploadfullFileExcelManual(){
-		MappingPage mappingPage = UploadFullFile("Excel.xlsx");
-		DetailsPage detailsPage = mappingPage.automap(false, false);
+		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "Excel");
+		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
 
@@ -143,6 +143,34 @@ public class SanityTest extends AllBaseTest{
 	}
 	
 	@Test
+	public void DelimiterMismatchManualTxtToExcel(){
+		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void DelimiterMismatchAutomaticTxtToExcel(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		uploadPopupPage.selectDropBoxOption("TXT");
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void DelimiterMismatchTxtToCsvManual(){
+		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
 	public void dataValidationMessageShowsForEmptyFields(){
 		needsCleanUp=false;
 		
@@ -154,10 +182,8 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(addCatalogPage.displaysFtpLocationError());
 		assertTrue(addCatalogPage.displaysFtpUserNameError());
 		assertTrue(addCatalogPage.displaysFtpPasswordError());
-
-		
-		
 	}
+
 	//----------------------------com methods---------------//
 	
 	public void cleanUpAfterClass(){

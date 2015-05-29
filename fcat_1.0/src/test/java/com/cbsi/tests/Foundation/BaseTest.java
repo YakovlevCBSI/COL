@@ -611,7 +611,12 @@ public class BaseTest {
 	}
 	
 	public MappingPage UploadFullFile(String filename){
+		return UploadFullFile("TXT", filename);
+	}
+	
+	public MappingPage UploadFullFile(String filename, String selectOption){
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
+		uploadPopupPage.selectDropBoxOption(selectOption);
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage, filename).clickNext();
 		

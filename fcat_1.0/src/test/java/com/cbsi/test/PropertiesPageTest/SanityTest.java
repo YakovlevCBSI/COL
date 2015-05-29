@@ -171,6 +171,13 @@ public class SanityTest extends AllBaseTest{
 	}
 	
 	@Test
+	public void uploadFileWithCpnMfUpcFails(){
+		MappingPage mappingPage = UploadFullFile("CCSQS1604.txt", "TXT");
+		DetailsPage detailsPage = mappingPage.automap(false, false);
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
 	public void dataValidationMessageShowsForEmptyFields(){
 		needsCleanUp=false;
 		

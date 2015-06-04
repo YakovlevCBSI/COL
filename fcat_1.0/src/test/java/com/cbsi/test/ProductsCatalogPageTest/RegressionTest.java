@@ -170,10 +170,10 @@ public class RegressionTest extends AllBaseTest{
 		String tempElement = productsCatalogPage.getRowThatWasMapped(); // get text id here then use theid to clic.
 		productsCatalogPage.clickReturnToList();
 		
-		productsCatalogPage = navigateToProductsCatalogPage();
+		ProductsCatalogPage productsCatalogPage_after = navigateToProductsCatalogPage();
 		
-		productsCatalogPage.setProductToUse(tempElement).clickAction(ElementConstants.DELETE);
-		productsCatalogPage.clickYes();
+		productsCatalogPage_after.setProductToUse(tempElement).clickAction(ElementConstants.DELETE);
+		productsCatalogPage_after.clickYes();
 		
 		assertTrue(hasNoError());
 		
@@ -244,7 +244,8 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	public static final String mfn= "SONY";
-	public static final String  mfpn= "paltov";
+	public static String  mfpn= "paltov";
+	public static String mfpn2 = "DL32S3000U";
 	@Test
 	public void AutomapAfterEditRefreshesMapIcon() throws InterruptedException{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
@@ -258,14 +259,11 @@ public class RegressionTest extends AllBaseTest{
 		
 		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
 		editProduct.setData();
+
+		editProduct.setManufacturerName(mfn);
 		
-		String s = editProduct.getManufacturerName().toUpperCase();
-		String mfnModified=mfn;
-		if(s.equals(mfn)){
-			mfnModified = mfnModified + " ";
-		}
+		mfpn = editProduct.getManufacturerPartNumber().toLowerCase().contains(mfpn)? mfpn2:mfpn;
 		
-		editProduct.setManufacturerName(mfnModified);
 		editProduct.setManufacturerPartNumber(mfpn);
 		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();
 		productsCatalogPageFinal.setProductToUse(rowMapped);
@@ -278,7 +276,8 @@ public class RegressionTest extends AllBaseTest{
 	}
 	
 	//samsung s20c200b monitor
-	public static final String upcEan= "0000000057042";
+	public static String upcEan= "0000000057042";
+	public static String upcEan2 = "0000000081351";
 	
 	@Test
 	public void mapUpcEanWhenMfnameAndMfparnumberAreNotPresent() throws InterruptedException{
@@ -293,20 +292,50 @@ public class RegressionTest extends AllBaseTest{
 		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
 		editProduct.setData();
 		
-		String s = editProduct.getManufacturerName().toUpperCase();
-		String upcEanToAdd=upcEan;
-		if(s.equals(upcEanToAdd)){
-			upcEanToAdd = upcEanToAdd + " ";
-		}
+		upcEan = editProduct.getUpcEan().contains(upcEan)? upcEan2:upcEan;
 		
 		editProduct.setManufacturerName("blah");
 		editProduct.setManufacturerPartNumber("blah");
-		editProduct.setUpcEan(upcEanToAdd);
+		editProduct.setUpcEan(upcEan);
 	
 		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();	
 		productsCatalogPageFinal.setProductToUse(rowMapped);
 
 		assertTrue(productsCatalogPageFinal.isProductRowMapped());
+		
+	}
+	
+	
+	@Test
+	public void mapUpcEanWhenMfPnIsUpcEan(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		MapProductsDialog mapDialog =productsCatalogPage.clickNotMappedOrMappedIcon();
+		
+		String rowMapped = productsCatalogPage.getRowThatWasMapped();
+		System.out.println(rowMapped);
+		ProductsCatalogPage productsCatalogPageNew= ifMappedUnmapItem(mapDialog);
+		productsCatalogPageNew.setProductToUse(rowMapped);
+		
+		EditProductPopupPage editProduct = (EditProductPopupPage)productsCatalogPageNew.setProductToUse(rowMapped).clickAction(ElementConstants.EDIT);
+		editProduct.setData();
+		
+		upcEan = editProduct.getManufacturerPartNumber().contains(upcEan)? upcEan2:upcEan;
+
+		
+		editProduct.setManufacturerName("blah");
+		editProduct.setManufacturerPartNumber(upcEan);
+	
+		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();	
+		productsCatalogPageFinal.setProductToUse(rowMapped);
+
+		assertTrue(productsCatalogPageFinal.isProductRowMapped());
+	}
+	
+	public void mapCountIsCorrect(){
+		
+	}
+	
+	public void searchPid(){
 		
 	}
 	
@@ -325,6 +354,8 @@ public class RegressionTest extends AllBaseTest{
 		return productsCatalogPageNew;
 	
 	}
+	
+	
 	
 
 

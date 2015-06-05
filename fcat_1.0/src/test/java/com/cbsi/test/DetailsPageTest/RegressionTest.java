@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
@@ -101,7 +102,7 @@ public class RegressionTest extends AllBaseTest{
 	public ExpectedException exception = ExpectedException.none();
 
 	public DetailsPage navigateToDetailsPage(boolean isAutomatic){
-		maximizeWindow();
+//		maximizeWindow();
 		if(isAutomatic){
 			catalogsPage.setMyCatalogToAutomaticCatalog();
 		}
@@ -109,6 +110,7 @@ public class RegressionTest extends AllBaseTest{
 			catalogsPage.setMyCatalogToManualCatalog();
 		}
 		
-		return catalogsPage.clickDetails();
+		DetailsPage dp = catalogsPage.clickDetails();
+		return dp;
 	}
 }

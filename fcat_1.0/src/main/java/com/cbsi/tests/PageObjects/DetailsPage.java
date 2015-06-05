@@ -14,7 +14,7 @@ import com.cbsi.tests.util.ElementConstants;
 public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
-//		waitForPageToLoad();
+		waitForPageToLoad();
 	}
 	
 	public static final String AUTOMATIC= "Automatic";
@@ -47,10 +47,7 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public String getCatalogCode(){
-//		return CatalogCode.getText();
-		String text = driver.findElement(By.xpath("//div[@class='editor-field-indent'][3]/label")).getText();
-		System.out.println(text);
-		return text;
+		return CatalogCode.getText();
 	}
 	
 	public String getUpdateMethod(){

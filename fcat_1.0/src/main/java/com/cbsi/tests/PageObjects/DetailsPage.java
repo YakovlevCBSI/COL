@@ -14,28 +14,28 @@ import com.cbsi.tests.util.ElementConstants;
 public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad();
+//		waitForPageToLoad();
 	}
 	
 	public static final String AUTOMATIC= "Automatic";
 	public static final String MANUAL= "Manual Upload";
 	
-	@FindBy(css=".catalog-properties-left div:nth-child(2) label")
+	@FindBy(xpath="//div[@class='catalog-properties-left']/div[2]/label")
 	private WebElement Name;
 	
-	@FindBy(css=".catalog-properties-left div:nth-child(4) label")
+	@FindBy(xpath="//div[@class='catalog-properties-left']/div[4]/label")
 	private WebElement Market;
 	
-	@FindBy(css=".catalog-properties-left div:nth-child(6) label")
+	@FindBy(xpath="//div[@class='catalog-properties-left']/div[6]/label")
 	private WebElement CatalogCode;
 	
-	@FindBy(css=".catalog-properties-right div:nth-child(2) label")
+	@FindBy(xpath="//div[@class='catalog-properties-right']/div[2]/label")
 	private WebElement UpdateMethod;
 	
-	@FindBy(css=".catalog-properties-right div:nth-child(4) label")
+	@FindBy(xpath="//div[@class='catalog-properties-right']/div[4]/label")
 	private WebElement FileLocation;
 	
-	@FindBy(css=".catalog-properties-right > label")
+	@FindBy(xpath="//div[@class='catalog-properties-right']/label")
 	private WebElement Schedule;
 	
 	public String getName(){

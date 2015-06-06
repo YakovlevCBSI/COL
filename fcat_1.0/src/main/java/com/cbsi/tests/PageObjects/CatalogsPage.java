@@ -250,6 +250,21 @@ public class CatalogsPage extends BasePage{
 	@FindBy(id="topbar-party-search")
 	private WebElement searchParty;
 	
+	@FindBy(linkText="Security")
+	private WebElement Security;
+	
+	@FindBy(linkText="Metadata")
+	private WebElement Metadata;
+	
+	@FindBy(linkText="Manage Catalogs")
+	private WebElement ManageCatalogs;
+	
+	@FindBy(linkText="Catalog Integration Flows")
+	private WebElement CatalogIntegrationFlows;
+	
+	@FindBy(css="#topbar-back-click")
+	private WebElement Back;
+	
 	public PartyPopupPage clickSearchParty(){
 		searchParty.click();
 		return PageFactory.initElements(driver, PartyPopupPage.class);
@@ -270,6 +285,16 @@ public class CatalogsPage extends BasePage{
 		return catalogNamesToString;
 	}
 	
+	public CatalogsPage goToManageCatalogs(){
+		ManageCatalogs.click();
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
+	public FCatHomePage goBack(){
+		Back.click();
+		return PageFactory.initElements(driver, FCatHomePage.class);
+	}
+	
 	public CatalogsPage cleanUpLeftOverCatalogs(){
 		List<String> catalogNamesToString= getCatalogNames();
 		for(String catalog: catalogNamesToString){
@@ -280,6 +305,18 @@ public class CatalogsPage extends BasePage{
 		}
 		
 		return this;
+	}
+	
+	@FindBy(css="div#topbar-profile div")
+	private WebElement userName;
+	
+	@FindBy(css="a#topbar-logout")
+	private WebElement Logout;
+	
+	public FCatLoginPage goToLogout(){
+		userName.click();
+		Logout.click();
+		return PageFactory.initElements(driver, FCatLoginPage.class);
 	}
 
 }

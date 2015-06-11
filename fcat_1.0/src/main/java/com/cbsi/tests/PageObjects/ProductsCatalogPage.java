@@ -224,6 +224,11 @@ public class ProductsCatalogPage extends BasePage{
 		return map;
 	}
 	
+	public Map<String, String> getProductValue(int nLine){
+		WebElement nRow = getDataRows().get(nLine-1);
+		return dataRowToProductObject(nRow);
+	}
+	
 	public EditProductPopupPage clickEdit(){
 		Edit.click();
 		return PageFactory.initElements(driver, EditProductPopupPage.class);

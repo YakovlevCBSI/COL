@@ -269,10 +269,6 @@ public class RegressionTest extends AllBaseTest{
 		productsCatalogPageFinal.setProductToUse(rowMapped);
 
 		assertTrue(productsCatalogPageFinal.isProductRowMapped());
-		
-		
-		
-		
 	}
 	
 	//samsung s20c200b monitor
@@ -331,6 +327,21 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(productsCatalogPageFinal.isProductRowMapped());
 	}
 	
+	@Test
+	public void errorShowsForDuplicateCpn(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		String cpn = productsCatalogPage.getProductValue(1).get("product id");
+		
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(cpn);
+		addProductPopup.setMf("junk");
+		addProductPopup.setMfpn("junk");
+		
+		String errorMessage = addProductPopup.clickSaveFail();
+		
+		assertEquals("The product already exists", errorMessage);
+	}
+	
 	public void mapCountIsCorrect(){
 		
 	}
@@ -352,14 +363,5 @@ public class RegressionTest extends AllBaseTest{
 		}
 		
 		return productsCatalogPageNew;
-	
 	}
-	
-	
-	
-
-
-
-
-	
 }

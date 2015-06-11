@@ -3,11 +3,8 @@ package com.cbsi.test.UploadPopupPage;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
-import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 
@@ -30,10 +27,9 @@ public class RegressionTest extends AllBaseTest{
 	public void isTopbaDisplayedFromCatatlogsPage(){
 		catalogsPage.setMyCatalog();
 		UploadPopupPage uploadPopupPage = catalogsPage.clickUpload();
-		boolean displayed = driver.findElement(By.cssSelector("div.overlay-header-close-button div")).isDisplayed();
 
 		assertTrue(uploadPopupPage.isCrossDisplayed());
-		assertTrue(	uploadPopupPage.isTitleDisplayed());
+		assertTrue(uploadPopupPage.isTitleDisplayed());
 		
 	}
 	
@@ -44,7 +40,7 @@ public class RegressionTest extends AllBaseTest{
 		UploadPopupPage uploadPopupPage = productsCatalogsPage.clickUploadFile();
 		
 		assertTrue(uploadPopupPage.isCrossDisplayed());
-		assertTrue(	uploadPopupPage.isTitleDisplayed());
+		assertTrue(uploadPopupPage.isTitleDisplayed());
 	}
 
 	

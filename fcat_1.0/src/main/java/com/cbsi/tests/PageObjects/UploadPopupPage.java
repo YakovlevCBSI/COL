@@ -23,7 +23,6 @@ public class UploadPopupPage extends BasePage{
 		//new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.fileinput-button")));
 		new WebDriverWait(driver, 40).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("p.link-button-bar")));
 		customWait(5);
-
 	}
 	
 	@FindBy(css="label#lb_ChangeImportSettings")
@@ -45,6 +44,35 @@ public class UploadPopupPage extends BasePage{
 	
 	@FindBy(linkText="Cancel")
 	private WebElement Cancel;
+
+	private WebElement Title;
+
+	private WebElement Cross;
+	
+	private static boolean topbarIsConfigured = false;
+	
+	public boolean isTitleDisplayed(){
+		if(!topbarIsConfigured){
+			WebElement dialogBody = driver.findElement(By.cssSelector("overlay-upload-catalog-body.dialog"));
+			Cross = dialogBody.findElement(By.xpath("../div[contains(@class, 'header-close-button')]"));
+			Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));
+			
+			topbarIsConfigured = true;
+		}
+		
+		return Title.isDisplayed() && !Title.getText().isEmpty();
+	}
+	
+	public boolean isCrossDisplayed(){
+		if(!topbarIsConfigured){
+			WebElement dialogBody = driver.findElement(By.cssSelector("div.overlay-upload-catalog-body.dialog"));
+			Cross = dialogBody.findElement(By.xpath("../div[contains(@class, 'header-close-button')]"));
+			Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));
+			
+			topbarIsConfigured = true;
+		}
+		return Cross.isDisplayed();
+	}
 	
 	public UploadPopupPage clickUploadFile(){
 		waitForElementToClickable("input[data-val-required^='Please choose']");

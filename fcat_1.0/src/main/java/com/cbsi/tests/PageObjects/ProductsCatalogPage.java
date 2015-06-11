@@ -61,10 +61,10 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div.page-button-bar div.link-button-bar a")
 	private WebElement ReturnToList;
 	
-	public CatalogsPage clickReturnToList(){
+	public void clickReturnToList(){
 		//waitForElementToClickable("a.link-button.gray");
 		ReturnToList.click();
-		return PageFactory.initElements(driver, CatalogsPage.class);
+		//return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 	
 	@FindBy(css="div[title='Not mapped']")
@@ -227,6 +227,11 @@ public class ProductsCatalogPage extends BasePage{
 	public EditProductPopupPage clickEdit(){
 		Edit.click();
 		return PageFactory.initElements(driver, EditProductPopupPage.class);
+	}
+	
+	public UploadPopupPage clickUploadFile(){
+		UploadIcon.click();
+		return PageFactory.initElements(driver, UploadPopupPage.class);
 	}
 	
 	public ProductsCatalogPage clickDownload(){

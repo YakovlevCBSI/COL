@@ -68,6 +68,13 @@ public class AddProductPopup extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
+	public String clickSaveFail(){
+		Save.click();
+		forceWait(1000);
+		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        return alert.getText();
+	}
 	
 	@FindBy(linkText="Cancel")
 	private WebElement Cancel;

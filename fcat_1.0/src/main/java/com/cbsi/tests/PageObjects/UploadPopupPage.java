@@ -17,6 +17,7 @@ public class UploadPopupPage extends BasePage{
 	public UploadPopupPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+		forceWait(500);
 	}
 	
 	public void waitForPageToLoad(){

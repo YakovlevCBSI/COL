@@ -33,10 +33,16 @@ public class NonAdminUserTest extends FormBaseTest{
 	
 	private FCatHomePage homePage;
 	@Test
-	public void AdminSpecificUiNotDisplayed(){
+	public void AdminSpecificUiNotDisplayedOnCatalogsPage(){
 		assertFalse(homePage.isSecurityDisplayed());
 		assertFalse(homePage.isItemMetadataDisplayed());
 		assertFalse(homePage.isWorkflowsDisplayed());
+	}
+	
+	@Test
+	public void AdminSpecificUiNotDisplayedOnProductsPage(){
+		CatalogsPage catalogsPage = homePage.goToCatalogs();
+		assertFalse(catalogsPage.isWorkflowDashboardDisplayed());
 	}
 	
 	public void loginAsNonAdmin() {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -262,8 +263,22 @@ public class CatalogsPage extends BasePage{
 	@FindBy(linkText="Catalog Integration Flows")
 	private WebElement CatalogIntegrationFlows;
 	
+	@FindBy(linkText="Workflow Dashboard")
+	private WebElement WorkflowDashboard;
+	
 	@FindBy(css="#topbar-back-click")
 	private WebElement Back;
+	
+	
+	public boolean isWorkflowDashboardDisplayed(){
+		try{ 
+			WorkflowDashboard.isDisplayed();
+		}catch(NoSuchElementException e){
+			return false;
+		}
+		
+		return true;
+	}
 	
 	public PartyPopupPage clickSearchParty(){
 		searchParty.click();

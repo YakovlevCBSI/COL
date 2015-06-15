@@ -1,6 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,5 +57,44 @@ public class FCatHomePage extends BasePage{
 	public boolean isSideBarPresent(){
 		return sideBar.isDisplayed();
 	}
+	
+	@FindBy(css="[id*='_security']")
+	private WebElement Security;
+	
+	@FindBy(css="[id*='_itemmetadata']")
+	private WebElement ItemMetadata;
+	
+	@FindBy(css="[id*='_workflows']")
+	private WebElement Workflows;
+	
+	public boolean isSecurityDisplayed(){
+		try{
+			Security.isDisplayed();
+		}catch(NoSuchElementException e){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean isItemMetadataDisplayed(){
+		try{
+			ItemMetadata.isDisplayed();
+		}catch(NoSuchElementException e){
+			return false;
+		}
+	
+		return true;
+	}
+	
+	public boolean isWorkflowsDisplayed(){
+		try{
+			Workflows.isDisplayed();
+		}catch(NoSuchElementException e){
+			return false;
+		}
+		
+		return true;
+		}
 
 }

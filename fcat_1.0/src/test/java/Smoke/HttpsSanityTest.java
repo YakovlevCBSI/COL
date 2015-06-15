@@ -18,9 +18,9 @@ import com.cbsi.tests.PageObjects.CatalogsPage;
  *
  */
 @RunWith(Parameterized.class)
-public class HttpsSanity extends BaseTest{
+public class HttpsSanityTest extends BaseTest{
 
-	public HttpsSanity(String URL, String browser) {
+	public HttpsSanityTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}

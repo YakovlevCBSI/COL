@@ -22,7 +22,10 @@ public class ParameterFeeder {
 			e.printStackTrace();
 		}
 		isDevTest = isDevTesting();
+//		isDevTest=true;
 		isProdTest = isProdTesting();
+//		isProdTest = true;
+
 		System.out.println("<------------DEVorPROD: " + isDevTest +" / " + isProdTest +"--------->");
 	}
 	
@@ -57,6 +60,9 @@ public class ParameterFeeder {
 		}
 		else if(whichURLArray.equals("stage")){
 			URLs = getStageURL();
+		}
+		else if(whichURLArray.equals("secure")){
+			URLs = getSecureURL();
 		}
 		
 		int dataLength = 2;
@@ -184,6 +190,16 @@ public class ParameterFeeder {
 		return URLFinal;
 	}
 	
+	/**
+	 * getSecureUrl()
+	 * @return
+	 */
+	
+	public String[] getSecureURL(){
+		String[] URLs= {toHttps(GlobalVar.BFPServer)};
+		return URLs;
+	}
+	
 	public String[] getStageURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,
@@ -215,6 +231,10 @@ public class ParameterFeeder {
 				System.out.println(objects[i][j]);
 			}
 		}
+	}
+	
+	public String toHttps(String url){
+		return url.replace("http://", "https://");
 	}
 	
 }

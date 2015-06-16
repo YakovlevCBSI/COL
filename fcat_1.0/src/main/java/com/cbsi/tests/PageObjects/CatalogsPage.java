@@ -248,7 +248,7 @@ public class CatalogsPage extends BasePage{
 	
 	}
 	
-	@FindBy(id="topbar-party-search")
+	@FindBy(id="topbar-party-search-click")
 	private WebElement searchParty;
 	
 	@FindBy(linkText="Security")

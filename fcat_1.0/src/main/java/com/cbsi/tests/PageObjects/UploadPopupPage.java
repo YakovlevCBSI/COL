@@ -54,7 +54,7 @@ public class UploadPopupPage extends BasePage{
 	
 	public boolean isTitleDisplayed(){
 		if(!topbarIsConfigured){
-			WebElement dialogBody = driver.findElement(By.cssSelector("overlay-upload-catalog-body.dialog"));
+			WebElement dialogBody = driver.findElement(By.cssSelector("div.overlay-upload-catalog-body.dialog"));
 			Cross = dialogBody.findElement(By.xpath("../div[contains(@class, 'header-close-button')]"));
 			Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));
 			
@@ -66,7 +66,7 @@ public class UploadPopupPage extends BasePage{
 	
 	public boolean isCrossDisplayed(){
 		if(!topbarIsConfigured){
-			WebElement dialogBody = driver.findElement(By.cssSelector("div.overlay-upload-catalog-body.dialog"));
+			WebElement dialogBody = driver.findElement(By.cssSelector("div.dialog.overlay-upload-catalog-body"));
 			Cross = dialogBody.findElement(By.xpath("../div[contains(@class, 'header-close-button')]"));
 			Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));
 			

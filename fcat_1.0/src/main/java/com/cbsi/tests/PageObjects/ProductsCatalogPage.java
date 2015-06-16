@@ -147,7 +147,7 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div.page-rows-selector a span.selectBox-label")
 	public WebElement pageSelector;
 	
-	@FindBy(css="div.page-number-container")
+	@FindBy(css="div#page-number-container-up.page-number-container")
 	public WebElement pageNumber;
 	
 	

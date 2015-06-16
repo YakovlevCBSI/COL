@@ -4,7 +4,7 @@ ACME124	Hewlett-Packard	BL036US#ABA	S7695813	Systems	Desktops & Servers	6006 PRO
 ACME125	Hewlett-Packard	BL037US#ABA	S7695814	Systems	Desktops & Servers	6007 PRO SFF ATH X2 B22 2.8G		154	150,00	140,00	1234567892	http://www.site.com/product/acme125
 ACME126	Hewlett-Packard	BL038US#ABA	S7695815	Systems	Desktops & Servers	6008 PRO SFF ATH X2 B22 2.8G		56	80,00	70,00	1234567893	http://www.site.com/product/acme126
 BCD123	SONY	PALTOV	None	NONE	NONE	NONE	NONE	NONE	NONE	NONE	NONE	WWW.SONY.COM
-123ZYX	#12345	Park Inc.		Null	Null	Null	Null	Null	Null	Null	Null	http://www.parkinc.com
+123ZYX	#12345	Park Inc.	None	Null	Null	Null	Null	Null	Null	Null	Null	http://www.parkinc.com
 !@#$%	</table>	CBSI	123123	Media	Software	None	n/a	empty	$0	$25.12	000000	http://www.cbsi.com	
 
 

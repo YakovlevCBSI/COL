@@ -143,6 +143,7 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	@Ignore("waiting for fix")
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){
 		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
@@ -151,6 +152,7 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	@Ignore("waiting for fix")
 	@Test
 	public void DelimiterMismatchAutomaticTxtToExcel(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -163,6 +165,7 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	@Ignore("waiting for fix")
 	@Test
 	public void DelimiterMismatchTxtToCsvManual(){
 		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.

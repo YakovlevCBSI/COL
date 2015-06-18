@@ -6,14 +6,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePage {
+public abstract class BasePage {
 	protected WebDriver driver = null;
+	protected Actions action;
 	public BasePage(WebDriver driver){
 		this.driver = driver;
+	}
+	
+	public Actions getActions(){
+		if(action ==null){
+			action = new Actions(driver);
+		}
+		return action;
 	}
 	
 	public FCatHomePage goToHomePage(){

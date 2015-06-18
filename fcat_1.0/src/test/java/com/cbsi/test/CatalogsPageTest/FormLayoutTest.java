@@ -3,6 +3,8 @@ package com.cbsi.test.CatalogsPageTest;
 import org.junit.Test;
 
 import com.cbsi.tests.Foundation.FormBaseTest;
+import com.cbsi.tests.PageObjects.FCatHomePage;
+import com.cbsi.tests.PageObjects.PartyPopupPage;
 
 public class FormLayoutTest extends FormBaseTest {
 
@@ -29,5 +31,18 @@ public class FormLayoutTest extends FormBaseTest {
 	@Test
 	public void LogoutWorks(){
 		catalogsPage.goToLogout();
+	}
+	
+	@Test
+	public void clickBackImageFires() throws InterruptedException{
+		FCatHomePage fcatHomePage = catalogsPage.clickBackIcon();
+		Thread.sleep(5000);
+	}
+	
+	@Test
+	public void clickPartyChooserImageFires() throws InterruptedException{
+		PartyPopupPage partyPopup= catalogsPage.clickPartyChooserIcon();
+		Thread.sleep(5000);
+
 	}
 }

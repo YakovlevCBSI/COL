@@ -1,5 +1,6 @@
 package com.cbsi.tests.PageObjects;
 
+import java.awt.Desktop.Action;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -269,6 +271,19 @@ public class CatalogsPage extends BasePage{
 	@FindBy(css="#topbar-back-click")
 	private WebElement Back;
 	
+	public FCatHomePage clickBackIcon(){
+		action = getActions();
+		action.moveToElement(Back, 12, 10).click();
+		action.build().perform();
+		return PageFactory.initElements(driver, FCatHomePage.class);
+	}
+	
+	public PartyPopupPage clickPartyChooserIcon(){		
+		action = getActions();
+		action.moveToElement(searchParty, 12, 10).click();
+		action.build().perform();
+		return PageFactory.initElements(driver, PartyPopupPage.class);
+	}
 	
 	public boolean isWorkflowDashboardDisplayed(){
 		try{ 

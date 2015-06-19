@@ -26,11 +26,8 @@
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
                	<exclude>**/DBTest.java</exclude>
-               	<exclude>**/RegressionTest.java</exclude>       	
                </excludes>
-               <includes>
-               	<include>**/SanityTest.java</include>
-               </includes>
+
                          	<!-- temporarily disabled these tests due to a large work exec flow
              	
              	<exclude>*CatalogsPageTest/RegressionTest.java</exclude>     	

@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
@@ -13,8 +15,10 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
+import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 
+@NotThreadSafe
 public class RegressionTest extends AllBaseTest{
 
 	public RegressionTest(String URL, String browser) {
@@ -58,6 +62,7 @@ public class RegressionTest extends AllBaseTest{
 		assertTrue(time.contains(localTime));
 	}
 	
+
 	
 	//-------------------------------------------  Helper Method --------------------------------------------//
 	

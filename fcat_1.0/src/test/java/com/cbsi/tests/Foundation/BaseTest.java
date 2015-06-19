@@ -57,6 +57,8 @@ public class BaseTest {
 	private String browser;
 	private String URL;
 	
+	private double chromeDriverVersion = 2.16;
+	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
@@ -191,7 +193,6 @@ public class BaseTest {
 
 
 	//private String pathToChromeDriver = "/Users/alpark/Documents/workspace/fcat_1.0/src/test/resources/Drivers/chromedriver";
-	private double chromeDriverVersion = 2.12;
 
 	public WebDriver getChromeDriver(){
 		String pathToChromeDriver = System.getProperty("user.dir") + "/src/test/resources/Drivers/Chrome/" + chromeDriverVersion +"/";

@@ -26,7 +26,7 @@
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
                	<exclude>**/DBTest.java</exclude>
-               	<exclude>**/*.java</exclude>       	
+               	<exclude>**/RegressionTest.java</exclude>       	
                </excludes>
                <includes>
                	<include>**/SanityTest.java</include>

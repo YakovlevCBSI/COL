@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Ignore;
@@ -22,6 +24,7 @@ import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
+@NotThreadSafe
 public class SanityTest extends AllBaseTest{
 
 	public SanityTest(String URL, String browser) {
@@ -37,13 +40,13 @@ public class SanityTest extends AllBaseTest{
 	@After
 	public void cleanUp(){
 		if(needsCleanUp) {
+			driver.close();
 			super.cleanUpThenDeleteTemp();
 			
 			CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
 			catalogsPageDirty.cleanUpLeftOverCatalogs();
 		}
-	
-		//cleanUpAfterClass();
+
 
 	}
 	

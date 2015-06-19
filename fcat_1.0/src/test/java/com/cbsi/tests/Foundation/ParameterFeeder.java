@@ -3,6 +3,8 @@ package com.cbsi.tests.Foundation;
 import java.io.IOException;
 import java.util.Collection;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.cbsi.tests.util.GlobalVar;
 import com.cbsi.tests.util.ReadFile;
 
@@ -12,6 +14,7 @@ public class ParameterFeeder {
 //	public static boolean isProdTest = false;
 //	private boolean isDevTest = true;
 	public static boolean isProdTest = false;
+	private boolean includeHttps = true;
 
 	public ParameterFeeder(){
 		
@@ -61,9 +64,8 @@ public class ParameterFeeder {
 		else if(whichURLArray.equals("stage")){
 			URLs = getStageURL();
 		}
-		else if(whichURLArray.equals("secure")){
-			URLs = getSecureURL();
-		}
+		
+		if(includeHttps) URLs = doubleArrayUrlWithHttps(URLs); // adding https test case.
 		
 		int dataLength = 2;
 		int numBrowser = getBrowsers().length;
@@ -196,7 +198,7 @@ public class ParameterFeeder {
 	 */
 	
 	public String[] getSecureURL(){
-		String[] URLs= {toHttps(GlobalVar.BFPServer)};
+		String[] URLs= {getHttps(GlobalVar.BFPServer)};
 		return URLs;
 	}
 	
@@ -233,8 +235,32 @@ public class ParameterFeeder {
 		}
 	}
 	
-	public String toHttps(String url){
-		return url.replace("http://", "https://");
+	public String getHttps(String url){
+		String secureUrl =  url.replace("http://", "");
+		if(secureUrl.contains(":")){
+			String[] serverAndPort = secureUrl.split(":");
+			String portNumber = serverAndPort[1].split("/")[0];
+			secureUrl = secureUrl.replace(":"+portNumber, "");
+		}
+		return "https://" + secureUrl;
+		
+	}
+	
+	public String[] doubleArrayUrlWithHttps(String[] insecureUrls){
+		String[] insecureUrlsToKeep = new String[insecureUrls.length];
+		for(int i=0; i< insecureUrlsToKeep.length; i++){
+			insecureUrlsToKeep[i] = insecureUrls[i];
+		}
+		
+		for(int i=0; i<insecureUrls.length; i++){
+			insecureUrls[i] = getHttps(insecureUrls[i]);
+		}
+		
+		return ArrayUtils.addAll(insecureUrlsToKeep, insecureUrls);
+	}
+	
+	public static void main(String[] args){
+		pritnParams();
 	}
 	
 }

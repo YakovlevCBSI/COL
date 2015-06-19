@@ -153,7 +153,7 @@ public class BaseTest {
 			//do nothing
 			catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		}
-		else if (getURL().contains(BFP)){
+		else if (getURL().contains(BFP) || getURL().contains(BFP.replace("http://", ""))){
 			EasyLoginToBFP();
 		}
 		else{

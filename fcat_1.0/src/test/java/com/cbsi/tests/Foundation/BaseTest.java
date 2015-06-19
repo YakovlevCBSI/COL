@@ -451,29 +451,9 @@ public class BaseTest {
 	
 		@Override
 		protected void finished(Description description){
-			//System.out.println("finished ovverride");
-
-				//System.out.println("driver clean up");
-				try{
-					driver.quit();
-				}catch(Exception e){
-					System.out.println("driver was null.. skip clean up in innerclass.");
-				}
-				//kill any remaining drivers on console.
-				
-				if(username.equals("jenkins") || username.contains("slave")){
-					try {
-						Runtime.getRuntime().exec("pkill -f firefox");
-						Runtime.getRuntime().exec("pkill -f chromedriver");
-						Runtime.getRuntime().exec("pkill -f chrome");
-	
-						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-		
+			if(driver != null){
+				driver.quit();
+			}	
 		}
 	}
 

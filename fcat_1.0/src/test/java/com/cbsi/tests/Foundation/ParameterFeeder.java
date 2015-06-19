@@ -191,17 +191,7 @@ public class ParameterFeeder {
 		
 		return URLFinal;
 	}
-	
-	/**
-	 * getSecureUrl()
-	 * @return
-	 */
-	
-	public String[] getSecureURL(){
-		String[] URLs= {getHttps(GlobalVar.BFPServer)};
-		return URLs;
-	}
-	
+
 	public String[] getStageURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,

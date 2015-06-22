@@ -38,10 +38,10 @@
                	<!-- @Ignored propertiespagetest.sanitytest.upload**-->
                	 	   	
              	
-             <!-- for some odd reason, jenkins fails to run with executor error in jenkins log.  
+             <!-- for some odd reason, jenkins fails to run with executor error in jenkins log.  -->
              <parallel>methods</parallel>
-             <threadCount>2</threadCount>
-           -->
+             <threadCount>3</threadCount>
+           
          </configuration> 
       </plugin>
       

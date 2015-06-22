@@ -1,0 +1,1 @@
+java -jar selenium-server-standalone-2.46.0.jar -role node -hub http://aparkmbpx9:4444/grid/register -browser browserName=firefox,version=38,platform=LINUX,maxInstances=2 -browser browserName=chrome,version=43,platform=LINUX -Dwebdriver.chrome.driver=chromedriver 

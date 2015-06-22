@@ -21,9 +21,11 @@ import org.junit.rules.TestWatcher;
 import org.junit.rules.Timeout;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -58,6 +60,7 @@ public class BaseTest {
 	private String URL;
 	
 	private double chromeDriverVersion = 2.16;
+	private boolean isGrid= true;
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
@@ -118,26 +121,40 @@ public class BaseTest {
 	public WebDriver configureDrivers(){
 		WebDriver emptyDriver = null;
 		System.out.println("staring conditions");
-		if(getBrowser().contains("chrome")){
-			System.out.println("in chromecondition");
-			emptyDriver = getChromeDriver();
-		}else if(getBrowser().contains("internet explorer")){
-			System.out.println("in ie condition");
-			emptyDriver = getIEDriver();
+		if(!isGrid){
+			if(getBrowser().contains("chrome")){
+				System.out.println("in chromecondition");
+				emptyDriver = getChromeDriver();
+			}else if(getBrowser().contains("internet explorer")){
+				System.out.println("in ie condition");
+				emptyDriver = getIEDriver();
+			}
+			else{
+				System.out.println("in firefox conditions");
+				try{
+					FirefoxProfile profile = new FirefoxProfile();
+					//profile.setPreference("permissions.default.stylesheet", 2);
+					//profile.setPreference("permissions.default.image", 2);
+					//profile.setPreference("javascript.enabled", 2);
+				emptyDriver = new FirefoxDriver(profile);
+				}catch(Exception e){
+					System.out.println("Failed to create a firefox driver");
+					e.printStackTrace();
+				}
+				
+			}
 		}
 		else{
-			System.out.println("in firefox conditions");
-			try{
-				FirefoxProfile profile = new FirefoxProfile();
-				//profile.setPreference("permissions.default.stylesheet", 2);
-				//profile.setPreference("permissions.default.image", 2);
-				//profile.setPreference("javascript.enabled", 2);
-			emptyDriver = new FirefoxDriver(profile);
-			}catch(Exception e){
-				System.out.println("Failed to create a firefox driver");
+			try {
+				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
+//				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getFirefoxCapability());
+//				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getChromeCapability());
+
+			
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 
 		return emptyDriver;
@@ -219,6 +236,26 @@ public class BaseTest {
 		
 		//Capabilities caps = DesiredCapabilities.chrome();
 		//return new RemoteWebDriver(caps);
+	}
+	
+	public Capabilities getChromeCapability(){
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		caps.setBrowserName("chrome");
+//		caps.setPlatform(Platform.LINUX);
+		caps.setCapability("platform", Platform.LINUX);
+		caps.setVersion("43");
+		
+		System.err.println("getting chrome caps..");
+		return caps;
+	}
+	
+	public Capabilities getFirefoxCapability(){
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		caps.setBrowserName("firefox");
+		caps.setPlatform(Platform.LINUX);
+		caps.setVersion("38");
+		
+		return caps;
 	}
 	
 	public String browserStackHub = "http://" + GlobalVar.BSId + ":" + GlobalVar.BSAccessKey + "@hub.browserstack.com/wd/hub";

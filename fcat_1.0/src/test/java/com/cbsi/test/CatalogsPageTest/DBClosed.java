@@ -28,9 +28,9 @@ import com.cbsi.tests.PageObjects.PartyPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
 
-public class DBTest extends StageBaseTest{
+public class DBClosed extends StageBaseTest{
 
-	public DBTest(String URL, String browser) {
+	public DBClosed(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}

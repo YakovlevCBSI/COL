@@ -25,10 +25,7 @@
                <excludes>
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
-               	<exclude>**/DBTest.java</exclude>
-               	<exclude>**/RegressionTest.java</exclude>
-               	<exclude>*CatalogsPageTest/*Test.java</exclude>
-              
+               	<exclude>**/DBTest.java</exclude>       
                </excludes>
             
 

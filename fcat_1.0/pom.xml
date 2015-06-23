@@ -26,15 +26,9 @@
                <exclude>**/*Base.java</exclude>
              	<exclude>**/*Base*.java</exclude>
                	<exclude>**/DBTest.java</exclude>
-               	<exclude>*CoverageReportTest/*Test.java</exclude>
+               	<exclude>**/RegressionTest.java</exclude>
                	<exclude>*CatalogsPageTest/*Test.java</exclude>
-               	<exclude>*DetailsPageTest/*Test.java</exclude>
-               	<exclude>*LoginPageTest/*Test.java</exclude>
-               	<exclude>*PropertiesPageTest/*Test.java</exclude>
-               	<exclude>*SchedulePopupTest/*Test.java</exclude>
-               	<exclude>*UploadPopupPage/*Test.java</exclude>
-               	<exclude>*MappingPageTest/*Test.java</exclude>
-               	<exclude>*Smoke/*Test.java</exclude>
+              
                </excludes>
             
 

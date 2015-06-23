@@ -40,7 +40,7 @@
              	
              <!-- for some odd reason, jenkins fails to run with executor error in jenkins log.  -->
              <parallel>methods</parallel>
-             <threadCount>3</threadCount>
+             <threadCount>5</threadCount>
            
          </configuration> 
       </plugin>

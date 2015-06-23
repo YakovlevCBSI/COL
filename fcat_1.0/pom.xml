@@ -36,9 +36,7 @@
                	<exclude>*MappingPageTest/*Test.java</exclude>
                	<exclude>*Smoke/*Test.java</exclude>
                </excludes>
-               <includes>
-               	<include>*ProductsCatalogPageTest/SanityTest.java</include>
-               </includes>
+            
 
                          	<!-- temporarily disabled these tests due to a large work exec flow
              	

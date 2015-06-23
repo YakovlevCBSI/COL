@@ -65,7 +65,7 @@ public class ParameterFeeder {
 			URLs = getStageURL();
 		}
 		
-		if(includeHttps) URLs = doubleArrayUrlWithHttps(URLs); // adding https test case.
+//		if(includeHttps) URLs = doubleArrayUrlWithHttps(URLs); // adding https test case.
 		
 		int dataLength = 2;
 		int numBrowser = getBrowsers().length;
@@ -117,6 +117,7 @@ public class ParameterFeeder {
 					GlobalVar.stageServer,
 					GlobalVar.stageServer + GlobalVar.embedPath,
 					GlobalVar.BFPServer, // BFP only embed.
+					doubleArrayUrlWithHttps(GlobalVar.BFPServer)[0] //<---adding only portal due to too many parameters dragging test time.
 					
 					
 			};
@@ -209,7 +210,6 @@ public class ParameterFeeder {
 				"chrome 39",
 				"firefox 34",
 				//"internet explorer 11",
-				//safari
 		};
 		
 		return browsers;
@@ -236,7 +236,7 @@ public class ParameterFeeder {
 		
 	}
 	
-	public String[] doubleArrayUrlWithHttps(String[] insecureUrls){
+	public String[] doubleArrayUrlWithHttps(String... insecureUrls){
 		String[] insecureUrlsToKeep = new String[insecureUrls.length];
 		for(int i=0; i< insecureUrlsToKeep.length; i++){
 			insecureUrlsToKeep[i] = insecureUrls[i];

@@ -117,7 +117,6 @@ public class ParameterFeeder {
 					GlobalVar.stageServer,
 					GlobalVar.stageServer + GlobalVar.embedPath,
 					GlobalVar.BFPServer, // BFP only embed.
-					getHttps(GlobalVar.BFPServer) //<---adding only portal due to too many parameters dragging test time.
 					
 					
 			};

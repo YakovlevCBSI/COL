@@ -60,7 +60,7 @@ public class BaseTest {
 	private String URL;
 	
 	private double chromeDriverVersion = 2.16;
-	private boolean isGrid= true;
+	private boolean isGrid= false;
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;

@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.cbsi.tests.Foundation.BaseTest;
 import com.cbsi.tests.util.ImageNavigation;
 
 public class UploadPopupPage extends BasePage{
@@ -225,8 +224,7 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
-		File file  = new File(pathToFile);
-		if(BaseTest.isGrid){
+		if(isGrid){
 			pathToFile = "/home/slave/Documents/Catalogs/London.csv";
 		}
 		
@@ -250,8 +248,7 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
-		File file  = new File(pathToFile);
-		if(BaseTest.isGrid){
+		if(isGrid){
 			pathToFile = "/home/slave/Documents/Catalogs/" + fileName;
 		}
 		
@@ -276,15 +273,13 @@ public class UploadPopupPage extends BasePage{
 		String pathToFile ="";
 		if(BigOrSmall.equals("small")){
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/smallLondon.csv";
-			File file  = new File(pathToFile);
-			if(BaseTest.isGrid){
+			if(isGrid){
 				pathToFile = "/home/slave/Documents/Catalogs/smallLondon.csv";
 			}
 
 		}else{
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
-			File file  = new File(pathToFile);
-			if(BaseTest.isGrid){
+			if(isGrid){
 				pathToFile = "/home/slave/Documents/Catalogs/London.csv";
 			}
 		}

@@ -11,9 +11,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.cbsi.tests.util.GlobalVar;
+
 public abstract class BasePage {
 	protected WebDriver driver = null;
 	protected Actions action;
+	protected boolean isGrid = GlobalVar.isGrid;
 	public BasePage(WebDriver driver){
 		this.driver = driver;
 	}

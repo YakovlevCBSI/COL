@@ -61,7 +61,7 @@ public class BaseTest {
 	private String URL;
 	
 	private double chromeDriverVersion = 2.16;
-	public static boolean isGrid= false;
+	public boolean isGrid = GlobalVar.isGrid;
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;

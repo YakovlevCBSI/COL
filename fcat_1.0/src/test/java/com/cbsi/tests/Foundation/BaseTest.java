@@ -35,6 +35,7 @@ import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -60,7 +61,7 @@ public class BaseTest {
 	private String URL;
 	
 	private double chromeDriverVersion = 2.16;
-	private boolean isGrid= false;
+	private boolean isGrid= true;
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
@@ -136,7 +137,9 @@ public class BaseTest {
 					//profile.setPreference("permissions.default.stylesheet", 2);
 					//profile.setPreference("permissions.default.image", 2);
 					//profile.setPreference("javascript.enabled", 2);
-				emptyDriver = new FirefoxDriver(profile);
+					emptyDriver = new FirefoxDriver(profile);
+//					emptyDriver = new FirefoxDriver();
+
 				}catch(Exception e){
 					System.out.println("Failed to create a firefox driver");
 					e.printStackTrace();
@@ -422,7 +425,10 @@ public class BaseTest {
 		String methodName = testInfo.getMethodName();
 		String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_") + "." + getBrowser()+ ".png";
 
+//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		driver = new Augmenter().augment(driver);
 		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
 		try {
 			FileUtils.copyFile(srcFile, new File(filename));
 		} catch (IOException e) {

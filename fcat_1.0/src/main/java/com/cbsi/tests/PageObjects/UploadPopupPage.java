@@ -1,5 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
+import java.io.File;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.cbsi.tests.Foundation.BaseTest;
 import com.cbsi.tests.util.ImageNavigation;
 
 public class UploadPopupPage extends BasePage{
@@ -66,7 +69,7 @@ public class UploadPopupPage extends BasePage{
 	
 	public boolean isCrossDisplayed(){
 		if(!topbarIsConfigured){
-			WebElement dialogBody = driver.findElement(By.cssSelector("div.dialog.overlay-upload-catalog-body"));
+			WebElement dialogBody = driver.findElement(By.cssSelector("div.overlay-upload-catalog-body"));
 			Cross = dialogBody.findElement(By.xpath("../div[contains(@class, 'header-close-button')]"));
 			Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));
 			
@@ -222,6 +225,10 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
+		File file  = new File(pathToFile);
+		if(BaseTest.isGrid){
+			pathToFile = "/home/slave/Documents/Catalogs/London.csv";
+		}
 		
 		
 		System.out.println(pathToFile);
@@ -243,7 +250,10 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
-		
+		File file  = new File(pathToFile);
+		if(BaseTest.isGrid){
+			pathToFile = "/home/slave/Documents/Catalogs/" + fileName;
+		}
 		
 		System.out.println(pathToFile);
 		fileInput.sendKeys(pathToFile);
@@ -266,9 +276,17 @@ public class UploadPopupPage extends BasePage{
 		String pathToFile ="";
 		if(BigOrSmall.equals("small")){
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/smallLondon.csv";
+			File file  = new File(pathToFile);
+			if(BaseTest.isGrid){
+				pathToFile = "/home/slave/Documents/Catalogs/smallLondon.csv";
+			}
 
 		}else{
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
+			File file  = new File(pathToFile);
+			if(BaseTest.isGrid){
+				pathToFile = "/home/slave/Documents/Catalogs/London.csv";
+			}
 		}
 		
 		

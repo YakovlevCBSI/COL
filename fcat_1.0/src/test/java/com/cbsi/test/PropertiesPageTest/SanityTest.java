@@ -24,7 +24,6 @@ import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.util.GlobalVar;
 
-@NotThreadSafe
 public class SanityTest extends AllBaseTest{
 
 	public SanityTest(String URL, String browser) {

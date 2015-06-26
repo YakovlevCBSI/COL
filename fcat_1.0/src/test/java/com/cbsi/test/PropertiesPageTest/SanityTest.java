@@ -55,7 +55,6 @@ public class SanityTest extends AllBaseTest{
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 
-	//@Ignore("pending dev")
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -85,8 +84,7 @@ public class SanityTest extends AllBaseTest{
 		
 		assertTrue(hasNoError());
 	}
-	
-	//@Ignore("oleg")
+
 	@Test
 	public void UploadFullFileAutomaticFromScratch(){
 //		driver.manage().window().setSize(new Dimension(570, 500));
@@ -99,7 +97,6 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 		
-	//@Ignore("oleg")
 	@Test
 	public void UploadFullFileManualFromScracth() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();
@@ -144,8 +141,7 @@ public class SanityTest extends AllBaseTest{
 		
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
-	
-	@Ignore("waiting for fix")
+
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){
 		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
@@ -154,7 +150,6 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
-	@Ignore("waiting for fix")
 	@Test
 	public void DelimiterMismatchAutomaticTxtToExcel(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -167,7 +162,6 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
-	@Ignore("waiting for fix")
 	@Test
 	public void DelimiterMismatchTxtToCsvManual(){
 		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.

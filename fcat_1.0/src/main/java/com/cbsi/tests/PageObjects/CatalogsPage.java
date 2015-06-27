@@ -328,7 +328,7 @@ public class CatalogsPage extends BasePage{
 	
 	public CatalogsPage cleanUpLeftOverCatalogs(){
 		List<String> catalogNamesToString= getCatalogNames();
-		while((catalogNamesToString = getCatalogNames()).isEmpty())
+		while(!(catalogNamesToString = getCatalogNames()).isEmpty())
 			for(String catalog: catalogNamesToString){
 				if(StringUtils.isNumeric(catalog)){
 					deleteTempFile(catalog);

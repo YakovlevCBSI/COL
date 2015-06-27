@@ -307,6 +307,7 @@ public class CatalogsPage extends BasePage{
 	
 	public List<String> getCatalogNames(){
 		List<String> catalogNamesToString = new ArrayList<String>();
+		refresh();
 		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
 		for(WebElement catalogName: catalogNames){
 			catalogNamesToString.add(catalogName.getText());
@@ -327,12 +328,13 @@ public class CatalogsPage extends BasePage{
 	
 	public CatalogsPage cleanUpLeftOverCatalogs(){
 		List<String> catalogNamesToString= getCatalogNames();
-		for(String catalog: catalogNamesToString){
-			if(StringUtils.isNumeric(catalog)){
-				deleteTempFile(catalog);
+		while((catalogNamesToString = getCatalogNames()).isEmpty())
+			for(String catalog: catalogNamesToString){
+				if(StringUtils.isNumeric(catalog)){
+					deleteTempFile(catalog);
+				}
+			
 			}
-		
-		}
 		
 		return this;
 	}

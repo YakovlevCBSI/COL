@@ -32,7 +32,7 @@ public class CatalogsPage extends BasePage{
 		
 		outerLoop:
 			for(WebElement e: myCatalogs){
-				if(!e.getText().toLowerCase().contains("ftp")  && !e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().equals("0")){
+				if(!e.getText().toLowerCase().contains("ftp")  && !e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().equals("0")&& e.getText().toLowerCase().contains("manual")){
 					this.myCatalog = e;
 					System.out.println(e.getText());
 					break outerLoop;

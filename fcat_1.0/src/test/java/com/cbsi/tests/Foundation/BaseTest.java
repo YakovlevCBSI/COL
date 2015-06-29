@@ -352,7 +352,7 @@ public class BaseTest {
 	public void cleanUpThenDeleteTemp(){
 		for(String tempFile: tempFiles){
 			System.out.println(tempFile.length());
-			if(!tempFiles.isEmpty() || tempFiles == null){
+			if(!tempFiles.isEmpty() || tempFiles != null){
 				System.out.println();
 				System.out.println("Delete Temp in Actions");
 				System.out.println("----------------------------");
@@ -373,7 +373,7 @@ public class BaseTest {
 	}
 	
 	public void cleanUpThenDeleteTemp(List<String> tempFiles){
-		if(!tempFiles.isEmpty() || tempFiles == null){
+		if(!tempFiles.isEmpty() || tempFiles != null){
 			for(String tempFile: tempFiles){
 					System.out.println();
 					System.out.println("Delete Temp in Actions");

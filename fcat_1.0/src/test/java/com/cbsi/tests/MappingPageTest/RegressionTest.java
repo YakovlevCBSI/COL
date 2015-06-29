@@ -38,6 +38,7 @@ public class RegressionTest extends AllBaseTest{
 
 	@After
 	public void cleanUp(){
+		driver.close();
 		super.cleanUpThenDeleteTemp();
 	}
 	

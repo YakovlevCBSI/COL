@@ -42,7 +42,7 @@
              <!-- for some odd reason, jenkins fails to run with executor error in jenkins log. 
              <parallel>methods</parallel>
              <threadCount>4</threadCount>
-            -->
+           -->
          </configuration> 
       </plugin>
       
@@ -117,13 +117,6 @@
 		<version>1.0</version>
 	</dependency>
   </dependencies>
-  
-  <repositories>
-    <repository>
-        <id>codehaus</id>
-        <url>http://repository.codehaus.org/org/codehaus</url>
-    </repository>
-  </repositories>
   
    <reporting>
     <plugins>

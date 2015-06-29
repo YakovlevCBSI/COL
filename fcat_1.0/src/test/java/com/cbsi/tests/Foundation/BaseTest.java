@@ -102,8 +102,8 @@ public class BaseTest {
 		driver = configureDrivers();
 		//driver.manage().window().setPosition(new Point(1200, 0));
 		navigateToHomePage();
-//		maximizeWindow();
-		setDisplayToVm();
+		maximizeWindow();
+//		setDisplayToVm();
 	}
 	
 	public void startUpWithoutLogin(){

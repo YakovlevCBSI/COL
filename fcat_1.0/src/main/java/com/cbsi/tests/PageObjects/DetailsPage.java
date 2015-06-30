@@ -138,6 +138,7 @@ public class DetailsPage extends BasePage{
 	@FindBy(linkText="Return to List")
 	private WebElement ReturnToList;
 	public CatalogsPage clickReturnToList(){
+		waitForElementToClickable(By.linkText("Return to List"));
 		ReturnToList.click();
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}

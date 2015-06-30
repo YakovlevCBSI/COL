@@ -3,7 +3,9 @@ package com.cbsi.test.CoverageReportTest;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
@@ -19,6 +21,9 @@ public class SmokeTest extends FormBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 	public CoverageReportPage coverageReport;
+	
+	@Rule 
+	public Timeout globalTimeout = new Timeout(300000);
 	
 	@After
 	public void tearDown(){

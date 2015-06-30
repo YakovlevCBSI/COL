@@ -221,9 +221,11 @@ public class CatalogsPage extends BasePage{
 		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
 		WebElement elementToUse =null;
 		for(WebElement e: productNumbers){
-			if(Integer.parseInt(e.getText().trim()) > num ){
-				elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-				break;
+			if(Integer.parseInt(e.getText().trim()) > num){
+				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains("albert")){
+					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+					break;
+				}
 			}
 		}
 		elementToUse.click();
@@ -239,9 +241,11 @@ public class CatalogsPage extends BasePage{
 		for(WebElement e: productNumbers){
 			//System.out.println(e.getText());
 			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
-				elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-				System.out.println(elementToUse.getText());
-				break;
+				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains("albert")){
+					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+					System.out.println(elementToUse.getText());
+					break;
+				}
 			}
 		}
 		elementToUse.click();

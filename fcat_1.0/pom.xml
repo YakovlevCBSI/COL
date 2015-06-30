@@ -10,6 +10,8 @@
     <junit-version>4.11</junit-version>
     <sikuli-version>1.1.0</sikuli-version>
     <jackson-version>1.9.13</jackson-version>
+    <useGrid>false</useGrid>
+    <thread>1</thread>
   </properties>
 
    <build>
@@ -41,7 +43,7 @@
              	
              <!-- for some odd reason, jenkins fails to run with executor error in jenkins log. -->
              <parallel>methods</parallel>
-             <threadCount>4</threadCount>
+             <threadCount>${thread}</threadCount>
            
          </configuration> 
       </plugin>

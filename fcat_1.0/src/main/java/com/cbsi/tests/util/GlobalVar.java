@@ -2,7 +2,7 @@ package com.cbsi.tests.util;
 
 public class GlobalVar {
 	public static final String JENKINS = "jenkins";
-	public static final boolean isGrid = true;
+	public static final boolean isGrid = System.getProperty("useGrid").equals("true");
 	
 	public static String BFPId = "";
 	public static String BFPPw= "";

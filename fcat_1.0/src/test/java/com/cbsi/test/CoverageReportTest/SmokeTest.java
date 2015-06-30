@@ -2,12 +2,15 @@ package com.cbsi.test.CoverageReportTest;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
 import com.cbsi.tests.Foundation.FormBaseTest;
+import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.CoverageReportPage;
+import com.cbsi.tests.PageObjects.MappingPage;
 
 public class SmokeTest extends FormBaseTest{
 
@@ -17,33 +20,52 @@ public class SmokeTest extends FormBaseTest{
 	}
 	public CoverageReportPage coverageReport;
 	
+	@After
+	public void tearDown(){
+		driver.close();
+		super.cleanUpThenDeleteTemp();
+	}
 	@Test
-	public void generateCoverageReportWithoutError(){
+	public void generateCoverageReportWithoutError() throws InterruptedException{
+		uploadFullFileThenReturnToCatalogsPage();
 		navigateToCR();
 		coverageReport.generateCoverageReport();
-		assertTrue(isCoverageNotificationDisplayed());
+		while(isCoverageNotificationDisplayed()){
+			Thread.sleep(1000);
+		}
+		
+		navigateToCR();
+		coverageReport.generateCoverageReport();
+		
+		
 		assertTrue(hasNoError());
 	}
 	
 	@Test
-	public void downloadCoverageReportWithoutError(){
+	public void downloadCoverageReportWithoutError() throws InterruptedException{
+		uploadFullFileThenReturnToCatalogsPage();
 		navigateToCR();
 		coverageReport.downloadReport();
 		
 		assertTrue(hasNoError());
 	}
 
+	
 	public void navigateToCR(){
-		if(getBrowser().contains("firefox")){
-			catalogsPage.setMyCatalogToAutomaticCatalog();
-		}else{
-			catalogsPage.setMyCatalogToManualCatalog();
-		}
+		catalogsPage.setMyCatalog(tempFiles.get(0));
+
 		
 		this.coverageReport= catalogsPage.clickCoverageReport();
 		this.coverageReport.resizeCoverageWindow(600);
 		coverageReport.forceWait(3000);
 	}
+	
+	public void uploadFullFileThenReturnToCatalogsPage() throws InterruptedException{
+		MappingPage mappingPage = UploadFullFile("sampleFile.txt");
+		DetailsPage detailsPage = mappingPage.automap();
+		catalogsPage = detailsPage.clickReturnToList();
+	}
+	
 	
 	public boolean isCoverageNotificationDisplayed(){
 		String h2Message="";

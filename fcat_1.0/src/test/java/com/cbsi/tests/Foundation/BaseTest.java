@@ -425,9 +425,9 @@ public class BaseTest {
 		String methodName = testInfo.getMethodName();
 		String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_") + "." + getBrowser()+ ".png";
 
-//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		driver = new Augmenter().augment(driver);
 		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//		driver = new Augmenter().augment(driver);
+//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 
 		try {
 			FileUtils.copyFile(srcFile, new File(filename));
@@ -635,7 +635,7 @@ public class BaseTest {
 	}
 	
 	public MappingPage UploadFullFile(String filename){
-		return UploadFullFile("TXT", filename);
+		return UploadFullFile(filename,"TXT");
 	}
 	
 	public MappingPage UploadFullFile(String filename, String selectOption){

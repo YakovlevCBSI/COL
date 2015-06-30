@@ -145,9 +145,8 @@ public class SanityTest extends AllBaseTest{
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){
 		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
-		DetailsPage detailsPage = mappingPage.automap();
+	
 		
-		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
 	@Test
@@ -157,17 +156,14 @@ public class SanityTest extends AllBaseTest{
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.selectDropBoxOption("TXT");
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
-		DetailsPage detailsPage = mappingPage.automap();
 		
-		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
 	@Test
 	public void DelimiterMismatchTxtToCsvManual(){
 		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.
-		DetailsPage detailsPage = mappingPage.automap();
 		
-		assertTrue(detailsPage.FileUploadIsDone());
+	
 	}
 	
 	@Test

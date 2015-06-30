@@ -96,11 +96,8 @@ public class BaseTest {
 	
 	@Before
 	public void startUp(){
-		//System.out.println("super before method is starting");
-		//Test page header goes here
 		insertHeader();
 		driver = configureDrivers();
-		//driver.manage().window().setPosition(new Point(1200, 0));
 		navigateToHomePage();
 		maximizeWindow();
 //		setDisplayToVm();
@@ -109,7 +106,6 @@ public class BaseTest {
 	public void startUpWithoutLogin(){
 		insertHeader();
 		driver = configureDrivers();
-		//navigateToLoginPage();
 	}
 	
 	public void insertHeader(){
@@ -134,12 +130,7 @@ public class BaseTest {
 				System.out.println("in firefox conditions");
 				try{
 					FirefoxProfile profile = new FirefoxProfile();
-					//profile.setPreference("permissions.default.stylesheet", 2);
-					//profile.setPreference("permissions.default.image", 2);
-					//profile.setPreference("javascript.enabled", 2);
 					emptyDriver = new FirefoxDriver(profile);
-//					emptyDriver = new FirefoxDriver();
-
 				}catch(Exception e){
 					System.out.println("Failed to create a firefox driver");
 					e.printStackTrace();
@@ -441,7 +432,7 @@ public class BaseTest {
 	//rerun failed test for false-positive cases.
 	@Rule
 	public Retry retry = new Retry(username.equals("jenkins") || username.contains("slave") ?2:1);
-	
+
 	@Rule
 	public ScreenshotRule screenshotRule = new ScreenshotRule();
 	
@@ -473,6 +464,9 @@ public class BaseTest {
                             caughtThrowable = t;
                             //takeScreenshot();
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
+                            if(driver!=null){
+                            	driver.quit();
+                            }
                         }
                     }
                     System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
@@ -489,6 +483,9 @@ public class BaseTest {
 		protected void failed(Throwable e, Description description){
 			takeScreenshot();
 			System.out.println("Took a screenshot");
+			if(driver != null){
+				driver.quit();
+			}
 			//System.out.println(driver == null);
 			
 		}

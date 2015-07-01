@@ -432,6 +432,7 @@ public class BaseTest {
 	//rerun failed test for false-positive cases.
 	@Rule
 	public Retry retry = new Retry(username.equals("jenkins") || username.contains("slave") ?2:1);
+//	public Retry retry = new Retry(2);
 
 	@Rule
 	public ScreenshotRule screenshotRule = new ScreenshotRule();
@@ -462,10 +463,10 @@ public class BaseTest {
                             return;
                         } catch (Throwable t) {
                             caughtThrowable = t;
-                            //takeScreenshot();
+                            takeScreenshot();
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
                             if(driver!=null){
-                            	driver.close();
+                            	driver.quit();
                             }
                         }
                     }
@@ -481,7 +482,7 @@ public class BaseTest {
 	class ScreenshotRule extends TestWatcher{
 		@Override
 		protected void failed(Throwable e, Description description){
-			takeScreenshot();
+//			takeScreenshot();
 			System.out.println("Took a screenshot");
 			if(driver != null){
 				driver.quit();

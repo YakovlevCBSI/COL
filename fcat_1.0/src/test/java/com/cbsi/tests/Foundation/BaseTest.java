@@ -465,7 +465,7 @@ public class BaseTest {
                             //takeScreenshot();
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
                             if(driver!=null){
-                            	driver.quit();
+                            	driver.close();
                             }
                         }
                     }

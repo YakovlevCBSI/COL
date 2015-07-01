@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -57,7 +58,7 @@ public class DBTest extends StageBaseTest{
 	}
 	
 	private static String thisTempFile = "";
-	
+	@Ignore
 	@Test
 	public void a_addACatalog() throws InterruptedException{
 	
@@ -88,7 +89,7 @@ public class DBTest extends StageBaseTest{
 	
 	private static String catalogId = "";
 	private static String partyId = "";
-	
+	@Ignore
 	@Test             
 	public void b_runQueryonMysql(){
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
@@ -106,7 +107,7 @@ public class DBTest extends StageBaseTest{
 	}
 	
 	private static List<Product> productsFromMongo;
-	
+	@Ignore
 	@Test
 	public void c_runQueryOnMongo(){
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
@@ -119,7 +120,7 @@ public class DBTest extends StageBaseTest{
 	}
 	
 	private static List<Product> productsFromFile;
-	
+	@Ignore
 	@Test
 	public void d_fileMatchesMongo() throws Exception{
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
@@ -134,7 +135,7 @@ public class DBTest extends StageBaseTest{
 		
 		assertTrue(twoListsAreEqual(cleanFieldsNotFoundInFile(productsFromMongo), (productsFromFile)));
 	}
-	
+	@Ignore
 	@Test
 	public void e_mongoMatchesProductsOnFront() throws Exception{
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
@@ -153,7 +154,7 @@ public class DBTest extends StageBaseTest{
 		
 		assertTrue(twoListsAreEqual(cleanFiledsNotFoundInWebView(productsFromMongo), productsFromWeb));
 	}
-	
+	@Ignore
 	@Test
 	public void f_mongoMatchesContentsAttributesOnFront() throws InterruptedException{
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");
@@ -193,7 +194,7 @@ public class DBTest extends StageBaseTest{
 		}
 		assertTrue(twoListsAreEqual(cleanFiledsNotFoundInEditPopup(productsFromMongo), productsFromFront));
 	}
-	
+	@Ignore
 	@Test
 	public void g_deleteTemp(){
 		if(!pass) Assert.fail("a_addCatalog Failed. Rest tests are aborted.");

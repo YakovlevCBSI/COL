@@ -60,8 +60,10 @@ public class BaseTest {
 	private String browser;
 	private String URL;
 	
-	private double chromeDriverVersion = 2.16;
-	public boolean isGrid = GlobalVar.isGrid;
+	private String chromeDriverVersion = System.getProperty("chromedriver-version");
+	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+	private String username = System.getProperty("user.name");
+
 	
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
@@ -427,8 +429,7 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
-	
-	private String username = System.getProperty("user.name");
+
 	//rerun failed test for false-positive cases.
 	@Rule
 	public Retry retry = new Retry(username.equals("jenkins") || username.contains("slave") ?2:1);
@@ -483,7 +484,6 @@ public class BaseTest {
 		@Override
 		protected void failed(Throwable e, Description description){
 //			takeScreenshot();
-			System.out.println("Took a screenshot");
 			if(driver != null){
 				driver.quit();
 			}
@@ -495,10 +495,26 @@ public class BaseTest {
 		protected void finished(Description description){
 			if(driver != null){
 				driver.quit();
-			}	
+			}
+			if(username.equals("jenkins") || username.contains("slave")){
+				runCommand("killall firefox");
+				runCommand("killall chrome");
+			}
 		}
 	}
 
+	public void runCommand(String command){
+		Process process=null;
+		try {
+			process = Runtime.getRuntime().exec(command);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			process.destroy();
+		}
+	}
 	
 	//------------------------------------------common methods-----------------------------------//
 	

@@ -41,6 +41,7 @@ public class SanityTest extends AllBaseTest{
 	
 	@After
 	public void cleanUp(){
+		takeScreenshot();
 		if(needsCleanUp) {
 			driver.close();
 			super.cleanUpThenDeleteTemp();

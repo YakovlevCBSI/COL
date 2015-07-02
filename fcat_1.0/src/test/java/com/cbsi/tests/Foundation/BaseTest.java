@@ -63,6 +63,7 @@ public class BaseTest {
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.16");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
 	private String username = System.getProperty("user.name");
+	public boolean screenShotCreated = false;
 
 	
 	public BaseTest(String URL, String browser){
@@ -414,19 +415,22 @@ public class BaseTest {
 	}
 */
 	public void takeScreenshot(){
-		String testName= this.getClass().getName();
-		String methodName = testInfo.getMethodName();
-		String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_") + "." + getBrowser()+ ".png";
-
-		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-//		driver = new Augmenter().augment(driver);
-//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-
-		try {
-			FileUtils.copyFile(srcFile, new File(filename));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block 
-			e.printStackTrace();
+		if(!screenShotCreated){
+			String testName= this.getClass().getName();
+			String methodName = testInfo.getMethodName();
+			String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getURL().replace("/", "_") + "." + getBrowser()+ ".png";
+	
+			File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	//		driver = new Augmenter().augment(driver);
+	//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	
+			try {
+				FileUtils.copyFile(srcFile, new File(filename));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block 
+				e.printStackTrace();
+			}
+			screenShotCreated = true;
 		}
 	}
 

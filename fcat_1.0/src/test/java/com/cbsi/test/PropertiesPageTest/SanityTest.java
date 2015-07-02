@@ -1,5 +1,6 @@
 package com.cbsi.test.PropertiesPageTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +23,8 @@ import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
+import com.cbsi.tests.PageObjects.DetailsPage.InfoType;
+import com.cbsi.tests.PageObjects.DetailsPage.ProcessingQueue;
 import com.cbsi.tests.util.GlobalVar;
 
 public class SanityTest extends AllBaseTest{
@@ -186,6 +189,27 @@ public class SanityTest extends AllBaseTest{
 		assertTrue(addCatalogPage.displaysFtpUserNameError());
 		assertTrue(addCatalogPage.displaysFtpPasswordError());
 	}
+	
+	
+	@Test
+	public void validateProcessingQueueMessageExists() throws InterruptedException{
+		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap();
+		detailsPage.FileUploadIsDone();
+		detailsPage.expandDetails();
+
+		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.STORE, InfoType.MESSAGE)),"7");
+		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.MAP, InfoType.MESSAGE)),"7");
+		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.DIFFERENCE, InfoType.MESSAGE)),"0");
+		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE)),"7");
+		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE)),"1");	
+	}
+
+	public String getProcessedNumber(String queueMessage){
+		String numInString = queueMessage.split(": ")[1].replace(".", "");
+		return numInString;
+	}
+	
 
 	//----------------------------com methods---------------//
 	

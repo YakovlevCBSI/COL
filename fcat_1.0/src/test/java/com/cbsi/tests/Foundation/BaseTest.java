@@ -60,7 +60,7 @@ public class BaseTest {
 	private String browser;
 	private String URL;
 	
-	private String chromeDriverVersion = System.getProperty("chromedriver-version");
+	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.16");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
 	private String username = System.getProperty("user.name");
 

@@ -108,23 +108,25 @@ public class DetailsPage extends BasePage{
 		return this;
 	}
 	
+	public static Boolean storeAndMapExists;
+	
 	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
-//		WebElement firstRow = FirstProcessingRow.findElement(By.xpath("../tr[1]"));
 		WebElement whichDetailedMessageRow = null;
-		System.out.println(FirstProcessingRow.getTagName());
-		System.out.println(FirstProcessingRow.getAttribute("name"));
 		String rowNum="";
 		
 		if(!FirstProcessingRow.getTagName().equals("tr"))
-			FirstProcessingRow = FirstProcessingRow.findElement(By.xpath("../.."));
+			FirstProcessingRow = FirstProcessingRow.findElement(By.xpath("../../../tr[1]"));
 		
-		rowNum = FirstProcessingRow.getAttribute("name").split("-")[1];
+		rowNum = FirstProcessingRow.getAttribute("name").split("-")[1].trim();
 	
-		
-		boolean storeAndMapExists = false;
-		List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("td[contains(@name,'status-row-for-" + rowNum+"')]"));
-		if(statusList.size() >4){
-			storeAndMapExists = true;
+		//check if this is full or upload catalog by counting status columns.
+		if(storeAndMapExists == null){
+			List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
+			if(statusList.size() ==5){
+				storeAndMapExists = true;
+			}else{
+				storeAndMapExists= false;
+			}
 		}
 
 		String details ="";

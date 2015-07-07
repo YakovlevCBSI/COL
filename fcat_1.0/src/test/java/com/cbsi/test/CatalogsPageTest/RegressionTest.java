@@ -10,16 +10,14 @@ import net.jcip.annotations.NotThreadSafe;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.tests.Foundation.AllBaseTest;
+import com.cbsi.tests.Foundation.AllAndSecureBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
-import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 
 @NotThreadSafe
-public class RegressionTest extends AllBaseTest{
+public class RegressionTest extends AllAndSecureBaseTest{
 
 	public RegressionTest(String URL, String browser) {
 		super(URL, browser);

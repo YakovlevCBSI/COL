@@ -10,7 +10,7 @@ import com.cbsi.tests.util.ReadFile;
 
 
 public class ParameterFeeder {
-	public static boolean isDevTest = false;
+	public static boolean isDevTest = true;
 //	public static boolean isProdTest = false;
 //	private boolean isDevTest = true;
 	public static boolean isProdTest = false;
@@ -63,6 +63,9 @@ public class ParameterFeeder {
 		}
 		else if(whichURLArray.equals("stage")){
 			URLs = getStageURL();
+		}
+		else if(whichURLArray.equals("allAndSecure")){
+			URLs = doubleArrayUrlWithHttps(getAllURL());
 		}
 		
 //		if(includeHttps) URLs = doubleArrayUrlWithHttps(URLs); // adding https test case.
@@ -216,11 +219,13 @@ public class ParameterFeeder {
 	}
 	
 	public static void pritnParams(){
-		Object[][] objects =  new ParameterFeeder().configureTestParams("all");
+		Object[][] objects =  new ParameterFeeder().configureTestParams("allAndSecure");
+		int count=0;
 		for(int i= 0; i< objects.length; i++){
-			for (int j=0; j<objects[i].length; j++){
-				System.out.println(objects[i][j]);
-			}
+//			for (int j=0; j<objects[i].length; j++){
+				System.out.println(count + ") " + objects[i][0]);
+				count++;
+//			}
 		}
 	}
 	

@@ -73,7 +73,9 @@ public class AddProductPopup extends BasePage{
 		forceWait(1000);
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
-        return alert.getText();
+        String alertText=  alert.getText();
+        alert.accept();
+        return alertText;
 	}
 	
 	@FindBy(linkText="Cancel")

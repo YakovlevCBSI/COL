@@ -436,7 +436,7 @@ public class BaseTest {
 
 	//rerun failed test for false-positive cases.
 	@Rule
-	public Retry retry = new Retry(username.equals("jenkins") || username.contains("slave") ?2:1);
+	public Retry retry = new Retry(isAutoRun()?2:1);
 //	public Retry retry = new Retry(2);
 
 	@Rule
@@ -500,7 +500,7 @@ public class BaseTest {
 			if(driver != null){
 				driver.quit();
 			}
-			if(username.equals("jenkins") || username.contains("slave")){
+			if(isAutoRun()){
 				runCommand("killall firefox");
 				runCommand("killall chrome");
 			}
@@ -520,6 +520,10 @@ public class BaseTest {
 		}
 	}
 	
+	public boolean isAutoRun(){
+		if(username.equals("jenkins") || username.contains("slave")) return true;
+		return false;
+	}
 	//------------------------------------------common methods-----------------------------------//
 	
 	/**

@@ -439,8 +439,8 @@ public class BaseTest {
 	public Retry retry = new Retry(isAutoRun()?2:1);
 //	public Retry retry = new Retry(2);
 
-	@Rule
-	public ScreenshotRule screenshotRule = new ScreenshotRule();
+//	@Rule
+//	public ScreenshotRule screenshotRule = new ScreenshotRule();
 	
 	//----------------------------Innerclass Rule for fail-try---------------------/
 	
@@ -468,13 +468,25 @@ public class BaseTest {
                             return;
                         } catch (Throwable t) {
                             caughtThrowable = t;
-                            takeScreenshot();
                             System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
-                            if(driver!=null){
-                            	driver.quit();
+                            
+                            //second try failed. Take a screenshot.
+                            if(i+1 ==2){
+                            	System.err.println("Taking a screenshot");
+                            	takeScreenshot();
                             }
+                        } finally{
+                        	 if(driver!=null){
+                        		 System.out.println("quit the driver");
+                             	driver.quit();
+                             }  
                         }
                     }
+                    if(isAutoRun()){
+                    	System.out.println("killed all driver instances");
+        				runCommand("killall firefox");
+        				runCommand("killall chrome");
+        			}
                     System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
                     throw caughtThrowable;
                 }

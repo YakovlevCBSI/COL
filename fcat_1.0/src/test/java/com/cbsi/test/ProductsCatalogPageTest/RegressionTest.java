@@ -208,7 +208,8 @@ public class RegressionTest extends AllBaseTest{
 		addProductPopup.setMfpn("some Text");
 		
 		ProductsCatalogPage productsCatalogPageNew = addProductPopup.clickSave();
-		productsCatalogPageNew.setProductToUse(escapeHtml(htmlText)).clickAction(ElementConstants.DELETE);
+		
+		productsCatalogPageNew.setProductToUse(htmlText).clickAction(ElementConstants.DELETE);
 		
 		productsCatalogPageNew.clickYes();
 		
@@ -341,6 +342,7 @@ public class RegressionTest extends AllBaseTest{
 		
 		assertEquals("The product already exists", errorMessage);
 	}
+
 	
 	public void mapCountIsCorrect(){
 		

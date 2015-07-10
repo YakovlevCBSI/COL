@@ -106,4 +106,8 @@ public abstract class BasePage {
 		   ((JavascriptExecutor)driver).executeScript(js);
 		   forceWait(500);
 	}
+	
+	public String escapeHtml(String text){
+		return text.replace("<", "&lt;").replace(">","&gt;");
+	}
 }

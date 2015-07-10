@@ -61,10 +61,10 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="div.page-button-bar div.link-button-bar a")
 	private WebElement ReturnToList;
 	
-	public void clickReturnToList(){
-		//waitForElementToClickable("a.link-button.gray");
+	public CatalogsPage clickReturnToList(){
+		waitForElementToClickable("a.link-button.gray");
 		ReturnToList.click();
-		//return PageFactory.initElements(driver, CatalogsPage.class);
+		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 	
 	@FindBy(css="div[title='Not mapped']")
@@ -81,7 +81,8 @@ public class ProductsCatalogPage extends BasePage{
 	
 	private WebElement productRow;
 	public ProductsCatalogPage setProductToUse(String productName){
-		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + productName + "']"));
+		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + escapeHtml(productName.toUpperCase()) + "']"));
+		
 		return this;
 	}
 	

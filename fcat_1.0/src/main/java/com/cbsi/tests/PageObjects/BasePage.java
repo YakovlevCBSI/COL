@@ -66,9 +66,12 @@ public abstract class BasePage {
 	}
 	
 	public void waitForElementToBeInvisible(By by){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(by));
+		waitForElementToBeInvisible(by, 30000);
 	}
 	
+	public void waitForElementToBeInvisible(By by, long timeInMilli){
+		new WebDriverWait(driver, timeInMilli).until(ExpectedConditions.invisibilityOfElementLocated(by));
+	}
 	public WebElement refreshStaleElement(By by){
 		waitForElementToBeVisible(by);
 		return driver.findElement(by);

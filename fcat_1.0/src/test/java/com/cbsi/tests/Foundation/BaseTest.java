@@ -749,10 +749,6 @@ public class BaseTest {
 		return true;
 	}
 	
-	public String escapeHtml(String text){
-		return text.replace("<", "&lt;").replace(">","&gt;");
-	}
-	
 	public void skipFirefox(){
 		if(getBrowser().toLowerCase().contains("firefox")) return;
 	}

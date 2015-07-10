@@ -191,7 +191,7 @@ public class RegressionTest extends AllBaseTest{
 	public void SpecialCharacterInSearchCausesError_CCSQS1267(){
 		String searchText = "() {} []";
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
-		productsCatalogPage.searchFor("Product ID", searchText);
+		productsCatalogPage.searchFor("pid", searchText);
 		
 		assertTrue(hasNoError());
 	}
@@ -348,8 +348,56 @@ public class RegressionTest extends AllBaseTest{
 		
 	}
 	
-	public void searchPid(){
+	@Test
+	public void searchPidTest() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("pid", "abc");
+		productsCatalogPage.waitForSearch();
+
+		//some wait needed for search loading.
+		assertTrue(hasNoError());	
+	}
+	
+	@Test
+	public void searchPidMfTest() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("pid", "abc");
+		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.waitForSearch();
 		
+		//some wait needed for search loading.
+		assertTrue(hasNoError());	
+	}
+	
+	@Test
+	public void searchMfTest() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.waitForSearch(25000);
+		
+		//some wait needed for search loading.
+		assertTrue(hasNoError());	
+	}
+	
+	@Test
+	public void searchMfpnTest() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("mfPn", "abc");
+		productsCatalogPage.waitForSearch(25000);
+		
+		//some wait needed for search loading.
+		assertTrue(hasNoError());	
+	}
+	
+	@Test
+	public void searchPidMfpnTest() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("pid", "abc");
+		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.waitForSearch();
+		
+		//some wait needed for search loading.
+		assertTrue(hasNoError());	
 	}
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){

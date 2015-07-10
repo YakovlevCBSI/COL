@@ -144,6 +144,9 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="input#manufacturer-pn")
 	public WebElement ManufacturerParNumberInput;
 	
+	@FindBy(css="input#upcean")
+	public WebElement UpcEanInput;
+	
 	
 	@FindBy(css="div.page-rows-selector a span.selectBox-label")
 	public WebElement pageSelector;
@@ -193,17 +196,44 @@ public class ProductsCatalogPage extends BasePage{
 	//---------------------Search fields-----------------------------//
 
 	public ProductsCatalogPage searchFor(String whichType, String searchText){
-		if(whichType.toLowerCase().equals("product id")){
+		if(whichType.toLowerCase().equals("pid")){
 			ProductIDInput.sendKeys(searchText);
 		}
-		else if(whichType.toLowerCase().equals("manufacturer name")){
+		else if(whichType.toLowerCase().equals("mf")){
 			ManufacturerNameInput.sendKeys(searchText);
 		}
-		else{
+		else if(whichType.toLowerCase().equals("mfpn")){
 			ManufacturerParNumberInput.sendKeys(searchText);
+		}
+		else{
+			UpcEanInput.sendKeys(searchText);
 		}
 		
 		return this;
+	}
+	
+	public void waitForSearch() throws Exception{
+		waitForSearch(15000);
+	}
+	
+	public void waitForSearch(long timeInMilli) throws Exception{
+		By splashImage = By.cssSelector("div.splash-image");
+		
+		long start = System.currentTimeMillis();
+		waitForElementToBeVisible(splashImage);
+		
+		while((System.currentTimeMillis() - start) <= 15000){
+			waitForElementToBeInvisible(splashImage, 1000);
+			
+			if(!driver.findElement(splashImage).isDisplayed()) 
+				break;
+		}
+		
+		if(driver.findElement(splashImage).isDisplayed()){
+			throw new Exception("Search time is taking too long");
+		}
+		
+		return;
 	}
 	
 	///---------------------Table row to object---------------------//

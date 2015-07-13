@@ -104,6 +104,7 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public DetailsPage expandDetails(){
+		FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
 		FirstProcessingRow.click();
 		return this;
 	}

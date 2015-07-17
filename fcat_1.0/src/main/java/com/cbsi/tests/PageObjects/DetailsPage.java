@@ -91,6 +91,13 @@ public class DetailsPage extends BasePage{
 		return uploadStatus;
 	}
 	
+	@FindBy(css="span.text.current")
+	private WebElement Modified;
+	
+	public String getModified(){
+		return Modified.getText();
+	}
+	
 	public boolean FileUploadIsDone(){
 		while(uploadStatus.equals(ElementConstants.INPROGRESS)){		
 			refresh();

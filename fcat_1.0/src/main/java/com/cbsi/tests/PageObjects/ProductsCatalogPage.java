@@ -73,7 +73,7 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="a#download-catalog span")
 	private WebElement Download;
 	
-	@FindBy(css="a.icon.info")
+	@FindBy(css="a#show-details")
 	private WebElement ShowDetails;
 	
 	@FindBy(css="div.edit")

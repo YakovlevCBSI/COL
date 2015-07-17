@@ -19,15 +19,17 @@ public class PartyPopupPage extends BasePage{
 
 	@Override
 	public void waitForPageToLoad(){
+		forceWait(500);
 		waitForElementToBeVisible(By.cssSelector("tbody#party-chooser-table-body"));
 	}
 	
 	@FindBy(css="input#party-name")
 	private WebElement partyNameField;
 	
-	private String text;
+	private String searchText;
+	private String searchCode;
 	public PartyPopupPage searchParty(String text){
-		this.text = text;
+		searchText = text;
 		partyNameField.sendKeys(text);
 		try {
 			Thread.sleep(1500);
@@ -39,6 +41,20 @@ public class PartyPopupPage extends BasePage{
 		return this;
 	}
 	
+	@FindBy(css="input#party-code")
+	private WebElement partyCodeField;
+	public PartyPopupPage searchCode(String code){
+		searchCode = code;
+		partyCodeField.sendKeys(code);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		waitForPageToLoad();
+		return this;
+	}
 	@FindBy(linkText="Cancel")
 	private WebElement Cancel;
 	
@@ -90,24 +106,35 @@ public class PartyPopupPage extends BasePage{
 	}
 	
 	public CatalogsPage pickFromResult(){
-		List<WebElement> list = driver.findElements(By.cssSelector("tr td.party-name-column"));
-		outerLoop:
+		
+		List<WebElement> list = null;
+		if(searchText != null){
+			list = driver.findElements(By.cssSelector("tr td.party-name-column"));
 			for(WebElement e: list){
-				if(e.getText().toLowerCase().equals(this.text.toLowerCase())){
+				if(e.getText().toLowerCase().equals(this.searchText.toLowerCase())){
 					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
 					plusIcon.click();
-					break outerLoop;
+					break;
 				}
 			}
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		else if(searchCode != null){
+			list = driver.findElements(By.cssSelector("tr td.party-code-column"));
+			for(WebElement e: list){
+				if(e.getText().toLowerCase().equals(this.searchCode.toLowerCase()) ){
+					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
+					plusIcon.click();
+					break;
+				}
+			}	
+		}
+
+		forceWait(3000);
 		
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
+	
+	
 	
 
 }

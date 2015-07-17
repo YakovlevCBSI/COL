@@ -23,13 +23,20 @@ import com.cbsi.tests.util.ElementConstants;
 
 public class RegressionTest extends AllBaseTest{
 
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	public ProductsCatalogPage  productsCatalogPage = null;
+	protected static final String mf = "ATI Technologies";
+	protected static final String mfPn = "0030620R";
+	protected static final String sku = "11694840";
+	
+
 	public RegressionTest(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ProductsCatalogPage  productsCatalogPage = null;
-
+	
 	@Test
 	public void TableRenderIssue_CCSQ1246(){
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
@@ -74,9 +81,7 @@ public class RegressionTest extends AllBaseTest{
 	public void Error500OnWhenNoChangesAreMadeOnMappingDialog_CCSQS1256(){
 		ProductsCatalogPage prodcutsCatalogPage = navigateToProductsCatalogPage();
 		prodcutsCatalogPage.exitWithoutSaveOnMapppingDialog();
-		
-	
-		
+
 		assertTrue(hasNoError());
 	}
 	
@@ -87,11 +92,7 @@ public class RegressionTest extends AllBaseTest{
 		eppp.clickSave();
 		
 		assertTrue(hasNoError());
-		
 	}
-	
-	 @Rule
-	 public ExpectedException exception = ExpectedException.none();
 	 
 	@Test
 	public void addProductWithNoIdValue(){
@@ -137,9 +138,9 @@ public class RegressionTest extends AllBaseTest{
 		tempId = getRandomNumber();
 		addProductPopup.setId(tempId);
 		addProductPopup.setUpcEan(getRandomNumber());
-		ProductsCatalogPage productsPage = addProductPopup.clickSave();
+		productsCatalogPage = addProductPopup.clickSave();
 		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
-		productsPage.clickYes();		
+		productsCatalogPage.clickYes();		
 	}
 	
 	@Test
@@ -151,9 +152,9 @@ public class RegressionTest extends AllBaseTest{
 		addProductPopup.setId(tempId);
 		addProductPopup.setMf(getRandomNumber());
 		addProductPopup.setMfpn(getRandomNumber());
-		ProductsCatalogPage productsPage = addProductPopup.clickSave();
+		productsCatalogPage = addProductPopup.clickSave();
 		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
-		productsPage.clickYes();		
+		productsCatalogPage.clickYes();		
 	}
 	
 /**	
@@ -392,13 +393,65 @@ public class RegressionTest extends AllBaseTest{
 	@Test
 	public void searchPidMfpnTest() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("pid", "abc");
+		productsCatalogPage.searchFor("pid", "00");
 		productsCatalogPage.searchFor("mf", "abc");
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.
 		assertTrue(hasNoError());	
 	}
+	
+	@Test
+	public void mapMfPnWithoutLeadingZero(){
+		String tempId = getRandomNumber();
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(tempId);
+		addProductPopup.setMf(mf);
+		addProductPopup.setMfpn(mfPn.replaceFirst("00",""));
+		
+		productsCatalogPage = addProductPopup.clickSave();
+		productsCatalogPage.setProductToUse(tempId);
+		assertTrue(productsCatalogPage.isProductRowMapped());
+		
+		productsCatalogPage.clickAction(ElementConstants.DELETE);	
+		productsCatalogPage.clickYes();
+	}
+	
+	@Test
+	public void mapMfMfpn(){
+		String tempId = getRandomNumber();
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(tempId);
+		addProductPopup.setMf(mf);
+		addProductPopup.setMfpn(mfPn);
+		
+		productsCatalogPage = addProductPopup.clickSave();
+		productsCatalogPage.setProductToUse(tempId);
+		assertTrue(productsCatalogPage.isProductRowMapped());
+		
+		productsCatalogPage.clickAction(ElementConstants.DELETE);
+		productsCatalogPage.clickYes();
+	}
+	
+	@Ignore("unable to map by skuId due to mongo bug")
+	@Test
+	public void mapSkuId(){
+		String tempId = getRandomNumber();
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPageManual();
+		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
+		addProductPopup.setId(tempId);
+		addProductPopup.setSkuId(sku);
+		
+		productsCatalogPage = addProductPopup.clickSave();
+		productsCatalogPage.setProductToUse(tempId);
+		assertTrue(productsCatalogPage.isProductRowMapped());
+		
+		productsCatalogPage.clickAction(ElementConstants.DELETE);
+		productsCatalogPage.clickYes();
+	}
+	
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
 		ProductsCatalogPage productsCatalogPageNew= null;
@@ -414,4 +467,5 @@ public class RegressionTest extends AllBaseTest{
 		
 		return productsCatalogPageNew;
 	}
+	
 }

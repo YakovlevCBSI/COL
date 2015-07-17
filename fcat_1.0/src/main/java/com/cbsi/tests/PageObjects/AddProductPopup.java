@@ -31,7 +31,9 @@ public class AddProductPopup extends BasePage{
 	@FindBy(css="table.fcat-tbl tbody tr td input[name='upcEan']")
 	private WebElement upcEan;
 	
+	@FindBy(css="table.fcat-tbl tbody tr td input[name='skuId']")
 	private WebElement cnetSkuId;
+	
 	private WebElement inventory;
 	private WebElement price;
 	private WebElement productUrl;
@@ -50,6 +52,10 @@ public class AddProductPopup extends BasePage{
 	
 	public void setUpcEan(String text){
 		upcEan.sendKeys(text);
+	}
+	
+	public void setSkuId(String text){
+		cnetSkuId.sendKeys(text);
 	}
 	
 	@FindBy(linkText="Save")

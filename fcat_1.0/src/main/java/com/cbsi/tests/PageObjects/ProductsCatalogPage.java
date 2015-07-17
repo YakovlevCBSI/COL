@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -12,8 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cbsi.tests.util.ElementConstants;
 
@@ -76,8 +73,16 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(css="a#download-catalog span")
 	private WebElement Download;
 	
+	@FindBy(css="a.icon.info")
+	private WebElement ShowDetails;
+	
 	@FindBy(css="div.edit")
 	private WebElement Edit;
+	
+	public DetailsPage clickShowDetails(){
+		ShowDetails.click();
+		return PageFactory.initElements(driver, DetailsPage.class);
+	}
 	
 	private WebElement productRow;
 	public ProductsCatalogPage setProductToUse(String productName){

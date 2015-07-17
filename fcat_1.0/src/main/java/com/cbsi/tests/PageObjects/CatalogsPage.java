@@ -1,16 +1,13 @@
 package com.cbsi.tests.PageObjects;
 
-import java.awt.Desktop.Action;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -228,6 +225,16 @@ public class CatalogsPage extends BasePage{
 				}
 			}
 		}
+		
+		if(elementToUse == null){
+			for(WebElement e: productNumbers){
+				if(Integer.parseInt(e.getText().trim()) > num){
+					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+					break;
+				}
+			}
+		}
+		
 		elementToUse.click();
 		
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);

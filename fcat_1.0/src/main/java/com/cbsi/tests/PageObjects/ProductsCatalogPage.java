@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -225,7 +226,13 @@ public class ProductsCatalogPage extends BasePage{
 		By splashImage = By.cssSelector("div.splash-image");
 		
 		long start = System.currentTimeMillis();
-		waitForElementToBeVisible(splashImage);
+		
+		//incase the search is quick, and splash image never comes up.
+		try{
+			waitForElementToBeVisible(splashImage);
+		}catch(TimeoutException e){
+			
+		}
 		
 		while((System.currentTimeMillis() - start) <= 15000){
 			waitForElementToBeInvisible(splashImage, 1000);

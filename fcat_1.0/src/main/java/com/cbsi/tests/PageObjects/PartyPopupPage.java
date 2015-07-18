@@ -19,7 +19,7 @@ public class PartyPopupPage extends BasePage{
 
 	@Override
 	public void waitForPageToLoad(){
-		forceWait(500);
+		forceWait(1500);
 		waitForElementToBeVisible(By.cssSelector("tbody#party-chooser-table-body"));
 	}
 	
@@ -31,12 +31,7 @@ public class PartyPopupPage extends BasePage{
 	public PartyPopupPage searchParty(String text){
 		searchText = text;
 		partyNameField.sendKeys(text);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		forceWait(1500);
 		waitForPageToLoad();
 		return this;
 	}
@@ -46,12 +41,7 @@ public class PartyPopupPage extends BasePage{
 	public PartyPopupPage searchCode(String code){
 		searchCode = code;
 		partyCodeField.sendKeys(code);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		forceWait(1500);
 		waitForPageToLoad();
 		return this;
 	}
@@ -68,12 +58,7 @@ public class PartyPopupPage extends BasePage{
 	
 	public PartyPopupPage clickNext(){
 		next.click();
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		forceWait(1500);
 		waitForPageToLoad();
 		next = refreshStaleElement(By.cssSelector("a#nav-button-next-lower-mapping"));
 		return this;

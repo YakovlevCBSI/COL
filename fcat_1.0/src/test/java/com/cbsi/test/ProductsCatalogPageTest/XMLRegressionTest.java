@@ -26,6 +26,7 @@ import com.cbsi.tests.Foundation.FormBaseTest;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
+import com.cbsi.tests.util.ElementConstants;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -98,7 +99,7 @@ public class XMLRegressionTest extends FormBaseTest{
 			int todayToInt = Integer.parseInt(today) -1;
 			String yesterday = todayToInt+"";
 	
-			assertEquals("DONE", status);
+			assertEquals(ElementConstants.DONE, status);
 			System.out.println(modifiedDate);
 			System.out.println(today);
 			//Check both today and yesterday, incase of the time this test is being ran;

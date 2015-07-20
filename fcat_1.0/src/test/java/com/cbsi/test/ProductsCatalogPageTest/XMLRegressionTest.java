@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -23,6 +24,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.cbsi.tests.Foundation.FormBaseTest;
+import com.cbsi.tests.Foundation.ParameterFeeder;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
@@ -43,6 +45,13 @@ public class XMLRegressionTest extends FormBaseTest{
 		super(URL, browser);
 	}
 	
+	@Override
+	@Before
+	public void startUp(){
+		super.startUp();
+		Assume.assumeTrue(!isProdTest());
+		
+	}
 	@Test
 	public void xmltest1_getLenovoFtpFiles() throws InterruptedException{
 		Assume.assumeTrue(getBrowser().contains("chrome"));

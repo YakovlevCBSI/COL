@@ -65,7 +65,7 @@ public class XMLRegressionTest extends FormBaseTest{
 		for(int i=0; i<partyCodes.size()/5; i++){
 			System.out.println("filename under test: " + partyCodes.get(i));
 			ProductsCatalogPage xmlProductCatalogPage = navigateToXmlCatalog(partyCodes.get(i));
-			xmlProductCatalogPage.clickEdit().clickSave();
+			xmlProductCatalogPage.clickEdit().clickCancel();
 			
 			assertTrue(hasNoError());
 			catalogsPage = xmlProductCatalogPage.clickReturnToList();

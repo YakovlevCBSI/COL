@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assume;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -43,6 +44,7 @@ public class XMLRegressionTest extends FormBaseTest{
 	
 	@Test
 	public void xmltest1_getLenovoFtpFiles() throws InterruptedException{
+		Assume.assumeTrue(getBrowser().contains("chrome"));
 		driver.get(ftpUrl);
 		
 		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h1#header")));
@@ -93,11 +95,14 @@ public class XMLRegressionTest extends FormBaseTest{
 			String status = detailsPage.getStatus();
 			String modifiedDate = detailsPage.getModified().split("\\s+")[0].replaceAll("‑", "");
 			String today =  new SimpleDateFormat("yyyyMMdd").format(new Date());
+			int todayToInt = Integer.parseInt(today) -1;
+			String yesterday = todayToInt+"";
 	
 			assertEquals("DONE", status);
 			System.out.println(modifiedDate);
 			System.out.println(today);
-			assertEquals(modifiedDate + " / " + today, today, modifiedDate);
+			//Check both today and yesterday, incase of the time this test is being ran;
+			assertTrue(modifiedDate + " / " + today, today == modifiedDate || yesterday == modifiedDate);
 			
 			catalogsPage = detailsPage.clickReturnToList();
 		}

@@ -1,4 +1,4 @@
-package com.cbsi.test.ProductsCatalogPageTest;
+package Smoke;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -45,13 +45,6 @@ public class XMLRegressionTest extends FormBaseTest{
 		super(URL, browser);
 	}
 	
-	@Override
-	@Before
-	public void startUp(){
-		super.startUp();
-		Assume.assumeTrue(!isProdTest());
-		
-	}
 	@Test
 	public void xmltest1_getLenovoFtpFiles() throws InterruptedException{
 		Assume.assumeTrue(getBrowser().contains("chrome"));

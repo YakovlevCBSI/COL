@@ -94,11 +94,7 @@ public class BaseTest {
 		}
 	}
 	*/
-	
-	public boolean isProdTest(){
-		return getURL().contains(GlobalVar.prodServer);
-	}
-	
+
 	protected CatalogsPage catalogsPage;
 	
 	@Before

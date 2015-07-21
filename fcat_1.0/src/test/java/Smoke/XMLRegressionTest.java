@@ -113,7 +113,7 @@ public class XMLRegressionTest extends FormBaseTest{
 	
 	public ProductsCatalogPage navigateToXmlCatalog(String partyCode){
 		CatalogsPage catalogsPageLenovo = catalogsPage.clickPartyChooserIcon().searchCode(partyCode).pickFromResult();
-		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.setMyCatalog("Lenovo").goToCatalogWithSomeNumberOfProducts(1);
+		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.setMyCatalog("Lenovo").goToProductsCatalogPage();
 		
 		return xmlProductCatalogPage;
 	}

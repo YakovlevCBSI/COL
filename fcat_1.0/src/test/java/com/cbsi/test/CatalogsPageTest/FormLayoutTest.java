@@ -1,5 +1,7 @@
 package com.cbsi.test.CatalogsPageTest;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openqa.selenium.Dimension;
 
@@ -46,6 +48,14 @@ public class FormLayoutTest extends FormBaseTest {
 		PartyPopupPage partyPopup= catalogsPage.clickPartyChooserIcon();
 		Thread.sleep(5000);
 
+	}
+	
+	@Test
+	public void partyChooserNotDisplayDeletedParty(){
+		PartyPopupPage partyPopup = catalogsPage.clickPartyChooserIcon();
+		int resultNum = partyPopup.searchCode("Deleted_").getResultNumber();
+		
+		assertTrue(resultNum==0);
 	}
 
 }

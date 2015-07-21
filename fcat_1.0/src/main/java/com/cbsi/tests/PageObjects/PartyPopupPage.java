@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,9 +78,21 @@ public class PartyPopupPage extends BasePage{
 	private WebElement tbody;
 	
 	public List<WebElement> getSearchResult(){
-		tbody = refreshStaleElement(By.cssSelector("tbody#party-chooser-table-body"));
+		try{
+			tbody = refreshStaleElement(By.cssSelector("tbody#party-chooser-table-body"));
+		}catch(TimeoutException e){
+			//this means result is zero.
+			return null;
+		}
 		List<WebElement> searchElementsText = tbody.findElements(By.xpath("tr/td[@class='party-name-column'][1]"));
 		return searchElementsText;
+	}
+	
+	public int getResultNumber(){
+		if(getSearchResult() == null){
+			return 0;
+		}
+		return getSearchResult().size();
 	}
 	
 	public List<String> searchResultToText(){

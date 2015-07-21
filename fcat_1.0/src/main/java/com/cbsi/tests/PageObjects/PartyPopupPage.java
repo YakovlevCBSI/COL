@@ -43,7 +43,11 @@ public class PartyPopupPage extends BasePage{
 		searchCode = code;
 		partyCodeField.sendKeys(code);
 		forceWait(1500);
-		waitForPageToLoad();
+		try{
+			waitForPageToLoad();
+		}catch(TimeoutException e){
+			//in case search result is null.
+		}
 		return this;
 	}
 	@FindBy(linkText="Cancel")

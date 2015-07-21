@@ -1,6 +1,7 @@
 package com.cbsi.test.CatalogsPageTest;
 
 import org.junit.Test;
+import org.openqa.selenium.Dimension;
 
 import com.cbsi.tests.Foundation.FormBaseTest;
 import com.cbsi.tests.PageObjects.FCatHomePage;
@@ -22,7 +23,7 @@ public class FormLayoutTest extends FormBaseTest {
 	public void managecatalogLinkWork(){
 		catalogsPage.goToManageCatalogs();
 	}
-	
+
 	@Test
 	public void BackLinkWorks(){
 		catalogsPage.goBack();
@@ -30,6 +31,7 @@ public class FormLayoutTest extends FormBaseTest {
 	
 	@Test
 	public void LogoutWorks(){
+//		driver.manage().window().setSize(new Dimension(800, 600));
 		catalogsPage.goToLogout();
 	}
 	
@@ -45,4 +47,5 @@ public class FormLayoutTest extends FormBaseTest {
 		Thread.sleep(5000);
 
 	}
+
 }

@@ -69,7 +69,7 @@ public class XMLRegressionTest extends FormBaseTest{
 		//shuffle filenames
 		Collections.shuffle(partyCodes, new Random(System.nanoTime()));
 	}
-	
+
 	@Test
 	public void xmltest2_EditTest(){
 		for(int i=0; i<partyCodes.size()/5; i++){
@@ -94,23 +94,21 @@ public class XMLRegressionTest extends FormBaseTest{
 		}
 	}
 	
-	
+
 	@Test
 	public void xmltest4_DetailsPageStatusSucessToday(){
 		for(int i=0; i<partyCodes.size()/5; i++){
 			ProductsCatalogPage xmlProductCatalogPage = navigateToXmlCatalog(partyCodes.get(i));
 			DetailsPage detailsPage = xmlProductCatalogPage.clickShowDetails();
 			String status = detailsPage.getStatus();
+			
 			String modifiedDate = detailsPage.getModified().split("\\s+")[0].replaceAll("‑", "");
-			String today =  new SimpleDateFormat("yyyyMMdd").format(new Date());
-			int todayToInt = Integer.parseInt(today) -1;
-			String yesterday = todayToInt+"";
+			String todayDate =  new SimpleDateFormat("yyyyMMdd").format(new Date());
+			String yesterdayDate = (Integer.parseInt(todayDate) -1) + "";
 	
 			assertEquals(ElementConstants.DONE, status);
-			System.out.println(modifiedDate);
-			System.out.println(today);
 			//Check both today and yesterday, incase of the time this test is being ran;
-			assertTrue(modifiedDate + " / " + today, today.equals(modifiedDate) || yesterday.equals(modifiedDate));
+			assertTrue(modifiedDate + " / " + todayDate, todayDate.equals(modifiedDate) || yesterdayDate.equals(modifiedDate));
 			
 			catalogsPage = detailsPage.clickReturnToList();
 		}
@@ -118,7 +116,7 @@ public class XMLRegressionTest extends FormBaseTest{
 	
 	public ProductsCatalogPage navigateToXmlCatalog(String partyCode){
 		CatalogsPage catalogsPageLenovo = catalogsPage.clickPartyChooserIcon().searchCode(partyCode).pickFromResult();
-		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.goToCatalogWithSomeNumberOfProducts(10);
+		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.gotoCatalogByNameAndSomeNumberOfProducts("Lenovo", 10);
 		
 		return xmlProductCatalogPage;
 	}

@@ -49,6 +49,7 @@ public class CatalogsPage extends BasePage{
 		
 		return this;
 	}
+
 	
 	public void setMyCatalog(){
 		System.out.println("looking for mycatralog eleemtn to use");
@@ -66,8 +67,6 @@ public class CatalogsPage extends BasePage{
 			count++;
 		}
 		myCatalog = elementToUse;
-
-		
 	}
 	/**
 	 * switched the css path due to catalogs 
@@ -216,49 +215,57 @@ public class CatalogsPage extends BasePage{
 	
 	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num){
 		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
-		WebElement elementToUse =null;
-		for(WebElement e: productNumbers){
-			if(Integer.parseInt(e.getText().trim()) > num){
-				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains("albert")){
-					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-					break;
-				}
-			}
-		}
+		WebElement elementToUse =getCatalogByNameAndProductNumber("albert");
 		
-		if(elementToUse == null){
-			for(WebElement e: productNumbers){
-				if(Integer.parseInt(e.getText().trim()) > num){
-					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-					break;
-				}
-			}
-		}
+		if(elementToUse == null)
+			elementToUse = getCatalogByNameAndProductNumber("", num);
 		
 		elementToUse.click();
 		
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
-	
 	}
 	
 	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num1, int num2){
 		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
 		
-		WebElement elementToUse =null;
-		for(WebElement e: productNumbers){
-			//System.out.println(e.getText());
-			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
-				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains("albert")){
-					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-					System.out.println(elementToUse.getText());
-					break;
-				}
-			}
-		}
+		WebElement elementToUse =getCatalogByNameAndProductNumber("albert");
 		elementToUse.click();
 		
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	}
 	
+	public ProductsCatalogPage gotoCatalogByNameAndSomeNumberOfProducts(String catalogPartialText, int productNum){
+		getCatalogByNameAndProductNumber(catalogPartialText, productNum).click();
+		
+		return PageFactory.initElements(driver, ProductsCatalogPage.class); 
+	}
+	
+	public WebElement getCatalogByNameAndProductNumber(){
+		return getCatalogByNameAndProductNumber("");
+	}
+	
+	public WebElement getCatalogByNameAndProductNumber(String catalogParitalText){
+		return getCatalogByNameAndProductNumber(catalogParitalText, 0);
+	}
+	
+	public WebElement getCatalogByNameAndProductNumber(String catalogParitalText, int num1){
+		return getCatalogByNameAndProductNumber(catalogParitalText, num1, 99999999);
+	}
+	
+	public WebElement getCatalogByNameAndProductNumber(String catalogParitalText, int num1, int num2){
+		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
+		
+		WebElement elementToUse =null;
+		for(WebElement e: productNumbers){
+			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
+				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains(catalogParitalText)){
+					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
+					System.out.println("my catalog: " + elementToUse.getText());
+					return elementToUse;
+				}
+			}
+		}
+		return null;
 	}
 	
 	@FindBy(id="topbar-party-search-click")

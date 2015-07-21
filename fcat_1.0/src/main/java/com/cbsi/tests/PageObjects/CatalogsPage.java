@@ -354,7 +354,7 @@ public class CatalogsPage extends BasePage{
 	private WebElement Logout;
 	
 	public FCatLoginPage goToLogout(){
-		userName.click();
+		getActions().moveToElement(userName).build().perform();
 		Logout.click();
 		return PageFactory.initElements(driver, FCatLoginPage.class);
 	}

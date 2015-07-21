@@ -45,9 +45,15 @@ public class XMLRegressionTest extends FormBaseTest{
 		super(URL, browser);
 	}
 	
+	@Before
+	public void startUp(){
+		super.startUp();
+		Assume.assumeTrue(getBrowser().contains("chrome"));
+
+	}
+	
 	@Test
 	public void xmltest1_getLenovoFtpFiles() throws InterruptedException{
-		Assume.assumeTrue(getBrowser().contains("chrome"));
 		driver.get(ftpUrl);
 		
 		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h1#header")));
@@ -66,7 +72,6 @@ public class XMLRegressionTest extends FormBaseTest{
 	
 	@Test
 	public void xmltest2_EditTest(){
-		 
 		for(int i=0; i<partyCodes.size()/5; i++){
 			System.out.println("filename under test: " + partyCodes.get(i));
 			ProductsCatalogPage xmlProductCatalogPage = navigateToXmlCatalog(partyCodes.get(i));
@@ -113,7 +118,7 @@ public class XMLRegressionTest extends FormBaseTest{
 	
 	public ProductsCatalogPage navigateToXmlCatalog(String partyCode){
 		CatalogsPage catalogsPageLenovo = catalogsPage.clickPartyChooserIcon().searchCode(partyCode).pickFromResult();
-		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.setMyCatalog("Lenovo").goToProductsCatalogPage();
+		ProductsCatalogPage xmlProductCatalogPage = catalogsPageLenovo.goToCatalogWithSomeNumberOfProducts(10);
 		
 		return xmlProductCatalogPage;
 	}

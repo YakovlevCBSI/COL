@@ -354,13 +354,14 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	@FindBy(css="div#topbar-profile div")
+	@FindBy(css="div#topbar-profile div.x-welcome-text")
 	private WebElement userName;
 	
 	@FindBy(css="a#topbar-logout")
 	private WebElement Logout;
 	
 	public FCatLoginPage goToLogout(){
+		waitForElementToClickable(By.cssSelector("div#topbar-profile div.x-welcome-text"));
 		getActions().moveToElement(userName).build().perform();
 		Logout.click();
 		return PageFactory.initElements(driver, FCatLoginPage.class);

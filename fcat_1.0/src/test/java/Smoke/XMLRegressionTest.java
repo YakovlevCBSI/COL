@@ -105,7 +105,7 @@ public class XMLRegressionTest extends FormBaseTest{
 			System.out.println(modifiedDate);
 			System.out.println(today);
 			//Check both today and yesterday, incase of the time this test is being ran;
-			assertTrue(modifiedDate + " / " + today, today == modifiedDate || yesterday == modifiedDate);
+			assertTrue(modifiedDate + " / " + today, today.equals(modifiedDate) || yesterday.equals(modifiedDate));
 			
 			catalogsPage = detailsPage.clickReturnToList();
 		}

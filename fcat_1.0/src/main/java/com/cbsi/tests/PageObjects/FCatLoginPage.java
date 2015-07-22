@@ -35,11 +35,10 @@ public class FCatLoginPage extends BasePage{
 			
 ;	public FCatHomePage loginToHomePage(){
 	
-		customWait(5);
+		customWait(10);
 		LoginLink.click();
 		
-		customWait(20);
-		//usernameField.click();
+		waitForElementToBeVisible(By.cssSelector("#j_username"));
 		usernameField.sendKeys(adminU);
 		
 		customWait(20);

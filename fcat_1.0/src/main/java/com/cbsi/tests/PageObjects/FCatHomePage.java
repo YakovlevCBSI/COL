@@ -35,6 +35,16 @@ public class FCatHomePage extends BasePage{
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 	
+	@FindBy(css="li#i_workflow_dashboard a")
+	private WebElement Dashboards;
+	
+	public DashboardPage goToDashboard(){
+		Dashboards.click();
+		customWait(20);
+		
+		return PageFactory.initElements(driver, DashboardPage.class);
+	}
+	
 	@FindBy(css="li#i_master a")
 	private WebElement Master;
 	

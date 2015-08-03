@@ -82,8 +82,7 @@ public class DashboardPage extends BasePage{
 		return dateFormat.format(date);
 	}
 	public void printStatus(String id){
-		WebElement expandButton = driver.findElement(By.cssSelector("tr[id='" + id + "'] td a"));
-		expandButton.click();
+		clickExpandButton(id);
 		
 		waitForElementToBeVisible(By.cssSelector("table#maingrid_" + id + "_t"));
 		List<String> errorMessage = new ArrayList<String>();
@@ -101,6 +100,7 @@ public class DashboardPage extends BasePage{
 			for(String error: errorMessage){
 				System.out.println("MESSAGE: " + error);
 			}
+		clickExpandButton(id);
 	}
 	
 	public void printDetailsMessage(){
@@ -109,6 +109,10 @@ public class DashboardPage extends BasePage{
 		}
 	}
 	
+	public void clickExpandButton(String id){
+		WebElement expandButton = driver.findElement(By.cssSelector("tr[id='" + id + "'] td a"));
+		expandButton.click();
+	}
 	public enum STATUS{
 		Pending, 
 		Completed, 

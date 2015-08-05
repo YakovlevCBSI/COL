@@ -9,8 +9,8 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
-import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){

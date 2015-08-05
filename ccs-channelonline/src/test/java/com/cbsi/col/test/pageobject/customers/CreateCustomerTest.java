@@ -12,9 +12,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.HomePage;
 import com.cbsi.col.pageobject.LoginPage;
+import com.cbsi.col.pageobject.customers.AccountsPage;
+import com.cbsi.col.pageobject.customers.CreateAccountPage;
+import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.test.foundation.ColBaseTest;
-import com.cbsi.col.test.pageobject.customers.CreateAccountPage;
-import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CreateCustomerTest extends ColBaseTest{

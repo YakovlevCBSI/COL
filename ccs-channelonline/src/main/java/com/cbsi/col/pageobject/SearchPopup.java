@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.test.pageobject.customers.AccountsPage;
+import com.cbsi.col.pageobject.customers.AccountsPage;
 
 public class SearchPopup extends ColBasePage{
 	public SearchPopup(WebDriver driver){

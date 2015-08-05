@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import com.cbsi.col.pageobject.ProductsPage;
 import com.cbsi.col.pageobject.ProductsPage.Action;
+import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.test.foundation.ColBaseTest;

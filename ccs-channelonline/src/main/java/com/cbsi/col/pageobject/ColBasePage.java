@@ -12,8 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cbsi.col.pageobject.SearchPopup.QueryOption;
+import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
-import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 public class ColBasePage {
 	protected WebDriver driver;

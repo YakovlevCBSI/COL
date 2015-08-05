@@ -8,11 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.test.pageobject.customers.CustomersPage;
+import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 public class SearchPopup extends ColBasePage{
 	public SearchPopup(WebDriver driver){
 		super(driver);
+		System.out.println("passed");
 		clickDropDown();
 		waitForPageToLoad(By.cssSelector("#search-query-settings"));
 	}
@@ -24,7 +25,7 @@ public class SearchPopup extends ColBasePage{
 	private WebElement searchField;
 	
 	public SearchPopup clickDropDown(){
-		//Need to call this in consturctor. Find Element by ussing findElement method.
+		//Need to call this in constructor. Find Element by using findElement method.
 		dropdown = driver.findElement(By.cssSelector("li[id*='item-search'] div a.header-search-toggle span"));
 		dropdown.click();
 		return this;
@@ -56,7 +57,7 @@ public class SearchPopup extends ColBasePage{
 			Search.click();
 			waitForElementToBeInvisible(By.cssSelector("div.dropdown-menu-content"));
 
-			return PageFactory.initElements(driver, CustomersPage.class);
+			return PageFactory.initElements(driver, AccountsPage.class);
 		}
 		
 		return null;

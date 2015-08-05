@@ -1,5 +1,7 @@
 package com.cbsi.col.test.foundation;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -23,6 +25,13 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.PageFactory;
+
+import com.cbsi.col.pageobject.HomePage;
+import com.cbsi.col.pageobject.LoginPage;
+import com.cbsi.col.test.pageobject.customers.CreateAccountPage;
+import com.cbsi.col.test.pageobject.customers.AccountsPage;
+import com.cbsi.col.test.pageobject.customers.RecentAccountsTab;
 
 @RunWith(Parameterized.class)
 public class ColBaseTest {
@@ -67,7 +76,8 @@ public class ColBaseTest {
 				new ParameterFeeder().configureTestParams()
 				);
 	}
-		
+	
+	@Before
 	public void startUp(){
 		insertHeader();
 		driver = configureDrivers();
@@ -182,5 +192,34 @@ public class ColBaseTest {
 	
 	
 	//******* common methods ******///
+	protected AccountsPage customersPage;
 	
+	public void navigateToCustomersPage(){
+		HomePage homePage = navigatetoLoginPage();
+		customersPage = homePage.goToAccountsPage();
+	}
+	
+	public HomePage navigatetoLoginPage(){
+		HomePage homePage = null;
+		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+		return loginPage.loginToHomePage();
+	}
+	
+	public static final String companyName = "QaCustomer_ " +System.currentTimeMillis();
+	public static final String address = "444 Oceancrest Dr";
+	public static final String city = "Irvine";
+	public static final String zip = "90019";
+	
+	public RecentAccountsTab createAccount(){
+		System.out.println(companyName);
+		CreateAccountPage createNewCustomerPage = customersPage.clickCreateNewCustomer("customer");
+		createNewCustomerPage.setCompanyName(companyName);
+		createNewCustomerPage.setAddress(address);
+		createNewCustomerPage.setCity(city);
+		createNewCustomerPage.setZip(zip);
+		createNewCustomerPage.clickFinish();
+		
+		RecentAccountsTab recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
+		return recentCustomersPage;
+	}
 }

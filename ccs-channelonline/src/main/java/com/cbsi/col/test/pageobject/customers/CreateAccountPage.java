@@ -8,8 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.ColBasePage;
 
-public class CreateNewCustomerPage extends ColBasePage{
-	public CreateNewCustomerPage(WebDriver driver){
+public class CreateAccountPage extends ColBasePage{
+	public CreateAccountPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
 	}
@@ -39,51 +39,51 @@ public class CreateNewCustomerPage extends ColBasePage{
 	@FindBy(linkText="Previous")
 	private WebElement Previous;
 	
-	public CreateNewCustomerPage setCompanyName(String companyName){
+	public CreateAccountPage setCompanyName(String companyName){
 		CompanyName.sendKeys(companyName);
 		return this;
 	}
 	
-	public CreateNewCustomerPage setAddress(String address){
+	public CreateAccountPage setAddress(String address){
 		Address.sendKeys(address);
 		return this;
 	}
 	
-	public CreateNewCustomerPage setCity(String city){
+	public CreateAccountPage setCity(String city){
 		City.sendKeys(city);
 		return this;
 	}
 	
-	public CreateNewCustomerPage setZip(String zip){
+	public CreateAccountPage setZip(String zip){
 		Zip.sendKeys(zip);
 		return this;
 	}
 	
-	public CreateNewCustomerPage clickNext(){
+	public CreateAccountPage clickNext(){
 		Next.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, CreateNewCustomerPage.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
-	public CreateNewCustomerPage clickFinish(){
+	public CreateAccountPage clickFinish(){
 		Next.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, CreateNewCustomerPage.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
-	public CreateNewCustomerPage clickCancel(){
+	public CreateAccountPage clickCancel(){
 		Next.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, CreateNewCustomerPage.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
-	public CreateNewCustomerPage clickPrevious(){
+	public CreateAccountPage clickPrevious(){
 		Previous.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, CreateNewCustomerPage.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 }

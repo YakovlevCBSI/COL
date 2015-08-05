@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cbsi.col.pageobject.SearchPopup.QueryOption;
-import com.cbsi.col.test.pageobject.customers.CustomersPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 public class ColBasePage {
 	protected WebDriver driver;
@@ -32,7 +34,11 @@ public class ColBasePage {
 	}
 	
 	public void waitForPageToLoad(By by){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(by));
+		waitForPageToLoad(by, 30);
+	}
+	
+	public void waitForPageToLoad(By by, int seconds){
+		new WebDriverWait(driver, seconds).until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 	
 	public void waitForElementToBeClickable(String path){
@@ -69,6 +75,13 @@ public class ColBasePage {
 		driver.navigate().refresh();
 	}
 	
+	public void scrollToView(WebElement element){
+		int elementPosition = element.getLocation().getY();
+	   String js = String.format("window.scroll(0, %s)", elementPosition);
+	   ((JavascriptExecutor)driver).executeScript(js);
+	   forceWait(500);
+	}
+	
 	public void forceWait(long time){
 		try {
 			Thread.sleep(time);
@@ -77,24 +90,48 @@ public class ColBasePage {
 			e.printStackTrace();
 		}
 	}
+	//------------------ navigate to main tabs-----------------------//
+	public AccountsPage goToAccountsPage(){
+		return goToHomePage().goToAccountsPage();
+	}
+	
+	public ProductsPage goToProductsPage(){
+		return goToHomePage().goToProductsPage();
+	}
+	
+	public ServicesPage goToServicesPage(){
+		return goToHomePage().goToServicesPage();
+	}
+	
+	public DocumentsPage goToDocumentsPage(){
+		return goToHomePage().goToDocumentsPage();
+	}
+	
+	public SuppliersPage goToSuppliersPage(){
+		return goToHomePage().goToSuppliersPage();
+	}
+	
+	public PurchaseOrdersPage goToPurchaseOrdersPage(){
+		return goToHomePage().goToPurchaseOrdersPage();
+	}
 	
 	//------------------ common navigation methods-----------------------//
-    
 	@FindBy(css="a#tab-home")
 	private WebElement Home;
-	
 	public HomePage goToHomePage(){
+		scrollToView(Home);
+		Home = refreshStaleElement(By.cssSelector("a#tab-home"));
 		Home.click();		
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	
 	//------------top bar-----------//
-	public CustomersPage searchCustomer(String searchText){;
+	public AccountsPage searchCustomer(String searchText){;
 		return searchCustomer(searchText, false);
 	}
 	
-	public CustomersPage searchCustomer(String searchText, boolean contains){
+	public AccountsPage searchCustomer(String searchText, boolean contains){
 		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
-		return (CustomersPage) searchPopup.searchFor(QueryOption.Customers, contains, searchText);
+		return (AccountsPage) searchPopup.searchFor(QueryOption.Customers, contains, searchText);
 	}
 }

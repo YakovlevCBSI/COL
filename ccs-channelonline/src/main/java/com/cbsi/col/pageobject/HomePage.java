@@ -9,7 +9,8 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.test.pageobject.customers.CustomersPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.test.pageobject.customers.AccountsPage;
 
 public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){
@@ -32,7 +33,7 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="#crm-controlpaneaccordionlink-customers")
 	private WebElement RecentCustomers;
 	
-	public CustomersPage goToRecentCustomer(String customerName){
+	public AccountsPage goToRecentCustomer(String customerName){
 		Recent.click();
 		RecentCustomers.click();
 		
@@ -47,13 +48,13 @@ public class HomePage extends ColBasePage{
 		
 		customerNameFound.click();
 	
-		return PageFactory.initElements(driver, CustomersPage.class);
+		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 
 	//------------------------------- access tabs-------------------------------//
 	
 	@FindBy(css="a#tab-customers")
-	private WebElement Customers;	
+	private WebElement Accounts;	
 	
 	@FindBy(css="a#tab-products")
 	private WebElement Products;
@@ -70,9 +71,9 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="a#tab-po")
 	private WebElement PurhcaseOrders;
 	
-	public  CustomersPage goToCustomersPage(){
-		Customers.click();
-		return PageFactory.initElements(driver, CustomersPage.class);
+	public  AccountsPage goToAccountsPage(){
+		Accounts.click();
+		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 
 	public ProductsPage goToProductsPage(){
@@ -81,23 +82,26 @@ public class HomePage extends ColBasePage{
 	}
 	
 	public ServicesPage goToServicesPage(){
-		Products.click();
+		Services.click();
 		return PageFactory.initElements(driver, ServicesPage.class);
 	}
 	
 	public DocumentsPage goToDocumentsPage(){
-		Products.click();
+		Documents.click();
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
 	public SuppliersPage goToSuppliersPage(){
-		Products.click();
+		Suppliers.click();
 		return PageFactory.initElements(driver, SuppliersPage.class);
 	}
 	
-	public PurchaseOrdersPage gotoPurchaseOrdersPage(){
-		Products.click();
+	public PurchaseOrdersPage goToPurchaseOrdersPage(){
+		PurhcaseOrders.click();
 		return PageFactory.initElements(driver, PurchaseOrdersPage.class);
 	}
 	
+	//------------------------------- side tabs-------------------------------//
+	
+
 }

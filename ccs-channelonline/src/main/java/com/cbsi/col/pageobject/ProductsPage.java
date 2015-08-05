@@ -8,6 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.QuotePage;
+
 public class ProductsPage extends ColBasePage{
 	public ProductsPage(WebDriver driver){
 		super(driver);
@@ -46,4 +49,45 @@ public class ProductsPage extends ColBasePage{
 		return foundTitles;
 	}
 	
+	@FindBy(css="select#action")
+	private WebElement SelectOne;
+	
+	@FindBy(css="option[value='compare']")
+	private WebElement CompareOption;
+	
+	@FindBy(css="option[value='add_to_doc']")
+	private WebElement AddToQuoteOption;
+	
+	@FindBy(css="option[value='add_to_catalog']")
+	private WebElement AddToCatalogOption;
+	
+	@FindBy(css="option[value='add_to_fav']")
+	private WebElement AddToFavoritesOption;
+	
+	@FindBy(css="input[name='Go']")
+	private WebElement Go;
+	
+	public QuotePage selectAction(Action action){
+		SelectOne.click();
+		
+		if(action == Action.Compare)
+			CompareOption.click();
+		else if(action == Action.AddToQuote)
+			AddToQuoteOption.click();
+		else if(action == Action.AddToCatalogs)
+			AddToCatalogOption.click();
+		else if(action == Action.AddToFavorites)
+			AddToFavoritesOption.click();
+		
+		Go.click();
+		
+		return PageFactory.initElements(driver, QuotePage.class);
+	}
+	
+	public enum Action{
+		Compare,
+		AddToQuote,
+		AddToCatalogs,
+		AddToFavorites
+	}
 }

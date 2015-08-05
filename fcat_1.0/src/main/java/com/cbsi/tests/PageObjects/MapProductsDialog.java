@@ -33,7 +33,7 @@ public class MapProductsDialog extends BasePage{
 	private WebElement Save;
 	public ProductsCatalogPage clickSave(){
 		Save.click();
-		waitForElementToBeInvisible(By.cssSelector("div.button a[onclick*='save']"));
+		waitForElementToBeInvisible(By.cssSelector("div#mappingDialog div.content.catalog"));
 		forceWait(500);
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
@@ -43,7 +43,8 @@ public class MapProductsDialog extends BasePage{
 	
 	public ProductsCatalogPage clickCancel(){
 		Cancel.click();
-		waitForElementToBeInvisible(By.cssSelector("div.buttons a[onclick*='closeMapping']"));
+		waitForElementToBeInvisible(By.cssSelector("div#mappingDialog div.content.catalog"));
+		forceWait(500);
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 		
 	}

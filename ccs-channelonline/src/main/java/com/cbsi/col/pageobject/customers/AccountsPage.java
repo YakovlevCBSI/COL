@@ -1,4 +1,4 @@
-package com.cbsi.col.test.pageobject.customers;
+package com.cbsi.col.pageobject.customers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

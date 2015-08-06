@@ -11,7 +11,8 @@ import com.cbsi.col.pageobject.ColBasePage;
 public class CreateAccountPage extends ColBasePage{
 	public CreateAccountPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
+//		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
+		waitForTextToBeVisible("Create New Customer");
 	}
 	
 	@FindBy(css="#company")

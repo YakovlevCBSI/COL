@@ -64,17 +64,9 @@ public class AccountsPage extends ColBasePage{
 		return PageFactory.initElements(driver, RecentAccountsTab.class);
 	}
 	
-	@FindBy(css="td a[href*='createQuote?']")
-	private WebElement CreateQuote;
-	
+	//-----------------------------------------------------------------//
 	@FindBy(linkText="Create Account")
 	private WebElement CreateNewCustomer;
-	
-	public QuotePage ClickCreateQuote(){
-		CreateQuote.click();
-		forceWait(500);
-		return PageFactory.initElements(driver, QuotePage.class);
-	}
 	
 	public CreateAccountPage clickCreateNewCustomer(String accountType){
 //		waitForElementToBeClickable(By.cssSelector("a[href='https://ccs.stage.channelonline.com/acme/home/Customers/create']"));
@@ -85,7 +77,7 @@ public class AccountsPage extends ColBasePage{
 //		forceWait(3000);
 		CreateNewCustomer.click();
 
-		forceWait(5000);
+		waitForTextToBeVisible("Create Account");
 		CreateAccountPopup createAccountPopup = PageFactory.initElements(driver, CreateAccountPopup.class);
 		return createAccountPopup.pickAccountType(accountType);
 	}
@@ -170,6 +162,7 @@ public class AccountsPage extends ColBasePage{
 			this.accountType = accountType.toLowerCase();
 			
 			if(this.accountType.equals("customer")){
+				System.out.println("clicked customer");
 				Customer.click();
 			}else if(this.accountType.equals("lead")){
 				Lead.click();
@@ -182,7 +175,8 @@ public class AccountsPage extends ColBasePage{
 			}else if(this.accountType.equals("generic")){
 				Generic.click();
 			}
-			forceWait(500);
+//			waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"));
+//			OK.click();
 			OK.click();
 			return PageFactory.initElements(driver, CreateAccountPage.class);
 		}	

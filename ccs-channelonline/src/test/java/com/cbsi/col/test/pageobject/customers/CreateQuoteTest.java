@@ -41,8 +41,8 @@ public class CreateQuoteTest extends ColBaseTest{
 	
 	@Test
 	public void test1_createQuote(){
-		recentCustomersPage = recentCustomersPage.goToAccountsPage().goToRecentCustomersTab();
-		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer("QaCustomer_ ");
+//		recentCustomersPage = recentCustomersPage.goToAccountsPage().goToRecentCustomersTab();
+		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
 		
 		QuotePage quotePage = currentAccountPage.ClickCreateQuote();
 		quoteNumber = quotePage.getQuoteNumber();

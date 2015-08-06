@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.ColBasePage;
+import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 
 public class DocumentsPage extends ColBasePage{
 	public DocumentsPage(WebDriver driver){
@@ -39,4 +40,43 @@ public class DocumentsPage extends ColBasePage{
 		}
 		return false;
 	}
+	
+	public QuotePage goToQuote(int quoteNumber){
+		WebElement docLink = findDataRowByName(quoteNumber);
+		docLink.click();
+		
+		return PageFactory.initElements(driver, QuotePage.class);
+	}
+	
+	private List<WebElement> dataColumns;
+	private WebElement ViewQuote;
+	
+	public WebElement findDataRowByName(int quoteNumber){
+		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2) a"));
+		for(WebElement dataColumn: dataColumns){
+			if(dataColumn.getText().contains(quoteNumber+"")){
+				return dataColumn;
+			}
+		}
+		return null;		
+	}
+	
+	public QuotePage clickViewQuote(int quoteNumber){
+		WebElement dataRow = findDataRowByName(quoteNumber);
+		ViewQuote = dataRow.findElement(By.xpath("../td[2]/a"));
+		ViewQuote.click();
+		
+		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
+		return PageFactory.initElements(driver, QuotePage.class);
+	}
+	
+	public SalesOrderPage clickSalesOrder(int orderNumber){
+		WebElement dataRow = findDataRowByName(orderNumber);
+		ViewQuote = dataRow.findElement(By.xpath("../td[2]/a"));
+		ViewQuote.click();
+		
+		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
+		return PageFactory.initElements(driver, SalesOrderPage.class);
+	}
+	
 }

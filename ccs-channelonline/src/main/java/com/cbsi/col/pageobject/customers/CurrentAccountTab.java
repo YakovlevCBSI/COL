@@ -21,7 +21,8 @@ public class CurrentAccountTab extends AccountsPage{
 	@FindBy(css="td a[href*='Docs/createQuote?']")
 	private WebElement CreateQuote;
 	
-	@FindBy(css="div a[href*='Proposals/create?']")
+//	@FindBy(css="#createProposalFrame")
+	@FindBy(linkText="Create Proposal")
 	private WebElement CreateProposal;
 	
 	@FindBy(css="div a[href*='Rmas/createSales?']")
@@ -31,8 +32,10 @@ public class CurrentAccountTab extends AccountsPage{
 	private WebElement Recyclebin;
 	
 	public QuotePage ClickCreateQuote(){
+		switchFrame();
 		CreateQuote.click();
 		forceWait(500);
+		switchBack();
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
@@ -41,13 +44,19 @@ public class CurrentAccountTab extends AccountsPage{
 	}
 	
 	public ProposalPage clickCreateProposal(boolean full){
+		switchFrame();
+//		waitForElementToBeVisible(By.cssSelector("#createProposalFrame"));
+//		scrollToView(CreateProposal);
+//		waitForTextToBeVisible("Create Proposal", "a");
+//		driver.findElement(By.cssSelector("#createProposalFrame")).click();
+		forceWait(3000);
 		CreateProposal.click();
-		forceWait(500);
 		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
 		
 		if(full) proposalPopup.selectFull();
 		else proposalPopup.selectQuick();
 		
+		switchBack();
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	
@@ -55,6 +64,7 @@ public class CurrentAccountTab extends AccountsPage{
 	
 		public ProposalPopup(WebDriver driver) {
 			super(driver);
+			waitForTextToBeVisible("Admiral", "h3");
 			// TODO Auto-generated constructor stub
 		}
 
@@ -86,4 +96,12 @@ public class CurrentAccountTab extends AccountsPage{
 		}
 	}
 	
+	public void switchFrame(){
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[src*='DocList?']")));
+	}
+	
+	public void switchBack(){
+		driver.switchTo().defaultContent();
+	}
 }

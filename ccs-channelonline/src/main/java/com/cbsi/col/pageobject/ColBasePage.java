@@ -80,7 +80,7 @@ public class ColBasePage {
 			for(String tag: tagNames){
 				List<WebElement> header1s = driver.findElements(By.cssSelector(tag));
 				
-				if(tagNames.length >=2 && headers != null) headers = ListUtils.union(headers, header1s);
+				if(tags.length >=2 && headers != null) headers = ListUtils.union(headers, header1s);
 				else headers =header1s;
 			}
 			

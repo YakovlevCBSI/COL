@@ -28,6 +28,7 @@ public class CreateProposalTest extends ColBaseTest{
 	@Test
 	public void createProposal(){
 		CurrentAccountTab currentAccountPage= recentCustomersPage.clickViewCustomer(companyName);
+		currentAccountPage.clickCreateProposal();
 //		currentAccountPage.click
 	}
 

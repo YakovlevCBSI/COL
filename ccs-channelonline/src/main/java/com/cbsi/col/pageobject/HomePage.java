@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){
@@ -101,7 +102,23 @@ public class HomePage extends ColBasePage{
 		return PageFactory.initElements(driver, PurchaseOrdersPage.class);
 	}
 	
-	//------------------------------- side tabs-------------------------------//
+	//********************** side bar ********************//
 	
+	public <T> T  navigateToSideBar(Admin page, Class<?> clazz){
+		Admin.click();
+		By by = null;
+		by = getLinkText(page.toString());		
+		driver.findElement(by).click();
+		return (T) PageFactory.initElements(driver, clazz);
+	}
+	
+	public enum Admin{
+		Account_Services,
+		Document_Templates
+	}
+	
+	public By getLinkText(String text){
+		return By.linkText(text.replace("_", " "));
+	}
 
 }

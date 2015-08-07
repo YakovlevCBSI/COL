@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import org.junit.After;
@@ -15,9 +16,11 @@ import org.junit.rules.TestName;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -25,6 +28,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.HomePage;
@@ -82,6 +86,7 @@ public class ColBaseTest {
 		insertHeader();
 		driver = configureDrivers();
 		driver.get(url);
+		navigatetoLoginPage();
 	}
 	
 	@After
@@ -193,16 +198,17 @@ public class ColBaseTest {
 	
 	//******* common methods ******///
 	protected AccountsPage customersPage;
+	protected HomePage homePage;
 	
 	public void navigateToCustomersPage(){
-		HomePage homePage = navigatetoLoginPage();
+		navigatetoLoginPage();
 		customersPage = homePage.goToAccountsPage();
 	}
 	
-	public HomePage navigatetoLoginPage(){
-		HomePage homePage = null;
+	public void navigatetoLoginPage(){
 		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-		return loginPage.loginToHomePage();
+		homePage =  loginPage.loginToHomePage();
+		return;
 	}
 	
 	public static final String companyName = "QaCustomer_ " +System.currentTimeMillis();
@@ -222,4 +228,7 @@ public class ColBaseTest {
 		RecentAccountsTab recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		return recentCustomersPage;
 	}
+	
+
+	
 }

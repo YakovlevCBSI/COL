@@ -55,12 +55,43 @@ public class QuotePage extends ColBasePage{
 	
 	public QuotePage clickCopyToNewQuote(){
 		CopyToNewQuote.click();
-		return this;
+		CopyToNewQuotePage copyToNewQuotePage = PageFactory.initElements(driver, CopyToNewQuotePage.class);
+		return copyToNewQuotePage.clickCreate();
 	}
 	
 	public SalesOrderPage clickConvertToOrder(){
 
 		ConvertToOrder.click();
 		return PageFactory.initElements(driver, SalesOrderPage.class);
+	}
+	
+	//----------------------- inner page object: copy to new quote  -----------------------//
+	public static class CopyToNewQuotePage extends ColBasePage{
+
+		public CopyToNewQuotePage(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			waitForTextToBeVisible("Copy to New Quote", "h3");
+		}
+		
+		@FindBy(css="input[name='refresh']")
+		private WebElement Refresh;
+		
+		@FindBy(css="input#open_newcb")
+		private WebElement CopyAndOpenTheNewQuote;
+		
+		@FindBy(css="input#open_old")
+		private WebElement CopyAndRemainInTheOldQuote;
+		
+		@FindBy(css="a[href*='submit_page']")
+		private WebElement Create;
+		
+		@FindBy(css="a[href*='java_close']")
+		private WebElement Cancel;
+		
+		public QuotePage clickCreate(){
+			Create.click();
+			return PageFactory.initElements(driver, QuotePage.class);
+		}
 	}
 }

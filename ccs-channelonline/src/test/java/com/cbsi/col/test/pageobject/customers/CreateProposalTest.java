@@ -47,7 +47,7 @@ public class CreateProposalTest extends ColBaseTest{
 		docNumber = proposalPage.getQuoteNumber();
 		
 		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
-		assertTrue(documentPage.hasQuote(docNumber));		
+		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 	
 	@Test

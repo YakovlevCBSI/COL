@@ -128,7 +128,7 @@ public class DocumentsPage extends ColBasePage{
 
 	@FindBy(css="select#time_limit")
 	private WebElement TimeDropDown;
-	public DocumentsPage setDate(Time days){
+	public DocumentsPage filterByDate(Time days){
 		TimeDropDown.click();
 		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
 		

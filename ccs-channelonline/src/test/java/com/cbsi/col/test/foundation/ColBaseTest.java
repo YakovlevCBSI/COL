@@ -97,6 +97,7 @@ public class ColBaseTest {
 		insertHeader();
 		driver = configureDrivers();
 		driver.get(url);
+		driver.manage().window().maximize();
 		navigatetoLoginPage();
 	}
 	

@@ -56,6 +56,7 @@ public class QuotePage extends ColBasePage{
 	public QuotePage clickCopyToNewQuote(){
 		CopyToNewQuote.click();
 		CopyToNewQuotePage copyToNewQuotePage = PageFactory.initElements(driver, CopyToNewQuotePage.class);
+
 		return copyToNewQuotePage.clickCreate();
 	}
 	
@@ -71,6 +72,8 @@ public class QuotePage extends ColBasePage{
 		public CopyToNewQuotePage(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
+			waitForElementToBeVisible(By.cssSelector("iframe"));
+			switchFrame();
 			waitForTextToBeVisible("Copy to New Quote", "h3");
 		}
 		
@@ -91,7 +94,15 @@ public class QuotePage extends ColBasePage{
 		
 		public QuotePage clickCreate(){
 			Create.click();
+			switchBack();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}
+		public void switchFrame(){
+			System.out.println("starting frame switch...");
+			switchFrame(By.cssSelector("iframe#modal-iframe"));
+		}
 	}
+	
+
+
 }

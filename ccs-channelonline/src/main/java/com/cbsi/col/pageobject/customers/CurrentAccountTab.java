@@ -18,7 +18,7 @@ public class CurrentAccountTab extends AccountsPage{
 		waitForPageToLoad(By.cssSelector("li.active a[href*='Customers/view']"));
 	}
 	
-	@FindBy(css="td a[href*='Docs/createQuote?']")
+	@FindBy(css="div a[href*='Docs/createQuote?']")
 	private WebElement CreateQuote;
 	
 //	@FindBy(css="#createProposalFrame")
@@ -103,11 +103,6 @@ public class CurrentAccountTab extends AccountsPage{
 	}
 	
 	public void switchFrame(){
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[src*='DocList?']")));
-	}
-	
-	public void switchBack(){
-		driver.switchTo().defaultContent();
+		switchFrame(By.cssSelector("iframe[src*='DocList?']"));
 	}
 }

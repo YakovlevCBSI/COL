@@ -81,7 +81,6 @@ public class TemplatesPageTest extends ColBaseTest{
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);		
 	}
 	
-	@Test
 	public DocumentTemplatesPage createQuoteTemplateSetup(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
 		System.out.println(testVar);

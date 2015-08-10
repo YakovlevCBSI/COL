@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -132,7 +133,12 @@ public class DocumentsPage extends ColBasePage{
 		TimeDropDown.click();
 		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
 		
-		waitForElementToBeInvisible(By.cssSelector("select#time_limit"));
+		try{
+			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
+		}catch(TimeoutException e){
+			
+		}
+		
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	

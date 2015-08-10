@@ -31,6 +31,7 @@ public class QuoteTest extends ColBaseTest{
 	@Before
 	public void startUp(){
 		super.startUp();
+		navigateToCustomersPage();
 		recentCustomersPage = createAccount();
 	}
 	

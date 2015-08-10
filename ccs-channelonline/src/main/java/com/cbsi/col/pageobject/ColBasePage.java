@@ -61,7 +61,11 @@ public class ColBasePage {
 	}
 	
 	public void waitForElementToBeInvisible(By by){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(by));
+		waitForElementToBeInvisible(by, 30);
+	}
+	
+	public void waitForElementToBeInvisible(By by, long time){
+		new WebDriverWait(driver, time).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
 	public void waitForTextToBeVisible(String text){
@@ -177,4 +181,15 @@ public class ColBasePage {
 		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
 		return (AccountsPage) searchPopup.searchFor(QueryOption.Customers, contains, searchText);
 	}
+	
+	//----------frame switch--------//
+	public void switchFrame(By by){
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(by));
+	}
+	
+	public void switchBack(){
+		driver.switchTo().defaultContent();
+	}
+	
 }

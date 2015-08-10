@@ -11,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
-import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){

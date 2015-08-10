@@ -17,10 +17,11 @@ public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad(By.cssSelector("#tab-home"));
+		waitForTextToBeVisible("My Channel", "a");
 	}
 	
 	@CacheLookup
-	@FindBy(css="#crm-controlpanesectionlink-admin")
+	@FindBy(css="a#crm-controlpanesectionlink-admin")
 	private WebElement Admin;
 	
 	@CacheLookup
@@ -104,8 +105,11 @@ public class HomePage extends ColBasePage{
 	
 	//********************** side bar ********************//
 	
+	@SuppressWarnings("unchecked")
 	public <T> T  navigateToSideBar(Admin page, Class<?> clazz){
-		Admin.click();
+		if(!Admin.findElement(By.xpath("../../div[2]")).getAttribute("class").contains("in")) 
+			Admin.click();
+
 		By by = null;
 		by = getLinkText(page.toString());		
 		driver.findElement(by).click();
@@ -114,7 +118,24 @@ public class HomePage extends ColBasePage{
 	
 	public enum Admin{
 		Account_Services,
-		Document_Templates
+		Catalog_Admin,
+		Company_Settings,
+		CPAS_Settings,
+		Document_Templates,
+		Favorites_Admin,
+		Image_Gallery,
+		Import_Export,
+		Integration,
+		Items_Admin,
+		Marketing,
+		Payment_Options,
+		Personnel,
+		Price_Profiles,
+		PunchOut_Settings,
+		StoreSite_Admin,
+		Suppliers,
+		System_Emails,
+		Tax_Profile
 	}
 	
 	public By getLinkText(String text){

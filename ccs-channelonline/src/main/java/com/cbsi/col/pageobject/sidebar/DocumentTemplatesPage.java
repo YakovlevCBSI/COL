@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.sidebar;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,18 +28,6 @@ public class DocumentTemplatesPage extends ColBasePage{
 	@FindBy(linkText="Proposals")
 	private WebElement Proposals;
 	
-	public DocumentTemplatesPage clickQuotes(){
-		Quotes.click();
-//		waitForActive(By.linkText("Quotes"));
-		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
-	}
-	
-	public DocumentTemplatesPage clickProposals(){
-		Proposals.click();
-//		waitForActive(By.linkText("Proposals"));
-		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
-	}
-	
 	public DocumentTemplateDesignerPage createNewProposalTemplate(String name){
 		return createNewProposalTemplate(name, "");
 	}
@@ -56,27 +45,91 @@ public class DocumentTemplatesPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
 	}
 	
-// work in progress....
-//	public DocumentTemplateDesignerPage createNewQuoteTemplate(){
-//		Quotes.click();
-//		CreateNewTemplate.click();
-//	}
+	public DocumentTemplateDesignerPage createNewQuoteTemplate(String name){
+		return createNewQuoteTemplate(name, "");
+	}
+	
+	public DocumentTemplateDesignerPage createNewQuoteTemplate(String name, String desc){
+		driver.findElement(By.linkText("Quotes")).click();
+		waitForElementToBeInvisible(By.linkText("Quotes"));
+		waitForElementToBeVisible(By.linkText("Quotes"));
+		CreateNewTemplate.click();
+		CreateTemplatePopup ctp = PageFactory.initElements(driver, CreateTemplatePopup.class);
+		ctp.setName(name);
+		ctp.setDescription(desc);
+		ctp.clickOK();
+		
+		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
+	}
+	
+
+	
 	public boolean hasProposalTemplate(String templateName){
+		Proposals.click();
+		waitForActive(By.linkText("Proposals"));
 		return findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public boolean hasQuoteTemplate(String templateName){
+		Quotes.click();
+		waitForActive(By.linkText("Quotes"));
 		return findDataRowByName(templateName)==null? false:true;
 	}
 	
-	List<WebElement> dataColumns;
+	public DocumentTemplatesPage deleteTemplateByName(String templateName){
+		WebElement Delete = findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
+		Delete.click();
+		
+		forceWait(500);
+		driver.switchTo().alert().accept();
+		driver.switchTo().defaultContent();
+		forceWait(500);
+
+		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
+		
+	}
+	
+	public DocumentTemplateDesignerPage editTemplateByName(String templateName){
+		WebElement edit = findDataRowByName(templateName).findElement(By.xpath("../td/a[@title='Update Page']"));
+		edit.click();		
+		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);		
+	}
+	
+	public DocumentTemplateDesignerPage copyTemplateByName(String templateName){
+		WebElement copy = findDataRowByName(templateName).findElement(By.xpath("../td/a[@title='Copy Page']"));
+		copy.click();
+		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
+	}
+	
+	private static List<WebElement> dataColumns;
+	static int currentPage=0;
 	public WebElement findDataRowByName(String templateName){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2)"));
 		for(WebElement dataColumn: dataColumns){
+//			System.out.println("what i see: " + dataColumn.getText());
 			if(dataColumn.getText().contains(templateName)){
 				return dataColumn;
 			}
 		}
+		
+		//navigate to next page if data not found.
+		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+		if(currentPage-1 >=0){
+			int removePage = currentPage;
+			while(removePage >0){
+				removePage--;
+				pageList.remove(removePage);
+			}
+		}
+		if(pageList.size() >=1){
+			currentPage++;
+			pageList.get(0).click();
+			waitForTextToBeVisible("Document Templates");
+			dataColumns=null;
+			findDataRowByName(templateName);
+			
+		}
+		
 		return null;		
 	}
 	
@@ -117,15 +170,21 @@ public class DocumentTemplatesPage extends ColBasePage{
 		}
 	}
 	
-//	public void waitForActive(By by){
-//		String elementState = "";
-//		long start = System.currentTimeMillis();
-//		while(System.currentTimeMillis() - start <= 5000){
-//			elementState = driver.findElement(by).findElement(By.xpath("../")).getAttribute("class");
-//			if(elementState.equals("active"))
-//				break;
-//		}
-//		return;	
-//	}
+	public void waitForActive(By by){
+		String elementState = "";
+		waitForElementToBeVisible(by);
+		long start = System.currentTimeMillis();
+		while(System.currentTimeMillis() - start <= 10000){
+			try{
+			elementState = driver.findElement(by).findElement(By.xpath("..")).getAttribute("class");
+			if(elementState.equals("active"))
+				break;
+			}catch(StaleElementReferenceException e){
+				
+			}
+			forceWait(300);
+		}
+		return;	
+	}
 
 }

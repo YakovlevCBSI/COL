@@ -96,7 +96,7 @@ public class QuoteTest extends ColBaseTest{
 	
 //	@Test
 //	public void cleanUpCompanies(){
-//		recentCustomersPage = customersPage.goToHomePage().goToAccountsPage().goToRecentCustomersTab();
+//		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
 //		AccountsPage customersPage1 = null;
 //		while(true){
 //			customersPage1 = recentCustomersPage.deleteCompany("Qa");

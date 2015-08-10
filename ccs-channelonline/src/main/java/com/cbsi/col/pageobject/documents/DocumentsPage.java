@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,14 +32,23 @@ public class DocumentsPage extends ColBasePage{
 	public void searchQuote(){
 		
 	}
+//	public boolean hasQuote(int docNumber){
+//		List<WebElement> docNumbers = driver.findElements(By.xpath("//td[2]/a"));
+//		for(WebElement singleDoc: docNumbers){
+//			if(singleDoc.getText().equals(docNumber+"")){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+	
 	public boolean hasQuote(int docNumber){
-		List<WebElement> docNumbers = driver.findElements(By.xpath("//td[2]/a"));
-		for(WebElement singleDoc: docNumbers){
-			if(singleDoc.getText().equals(docNumber+"")){
-				return true;
-			}
-		}
-		return false;
+		return findDataRowByName(docNumber)==null? false:true;
+	}
+	
+	public boolean hasProposal(int docNumber){
+		return findDataRowByName(docNumber, false)==null? false:true;
+
 	}
 	
 	public QuotePage goToQuote(int quoteNumber){
@@ -48,16 +58,45 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
-	private List<WebElement> dataColumns;
 	private WebElement ViewQuote;
 	
+	static int currentPage=0;
+	private static List<WebElement> dataColumns;
+	
 	public WebElement findDataRowByName(int quoteNumber){
-		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2) a"));
+		return findDataRowByName(quoteNumber, true);
+	}
+	
+	public WebElement findDataRowByName(int quoteNumber, boolean docNumberSecondcolumn){
+		if(docNumberSecondcolumn){
+			dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2) a"));
+		}else{
+			dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(1) a"));
+		}
+		
 		for(WebElement dataColumn: dataColumns){
+//			System.out.println(dataColumn.getText());
 			if(dataColumn.getText().contains(quoteNumber+"")){
 				return dataColumn;
 			}
 		}
+		
+		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+		if(currentPage-1 >=0){
+			int removePage = currentPage;
+			while(removePage >0){
+				removePage--;
+				pageList.remove(removePage);
+			}
+		}
+		if(pageList.size() >=1){
+			currentPage++;
+			pageList.get(0).click();
+			waitForTextToBeVisible("Documents", "h1");
+			dataColumns=null;
+			findDataRowByName(quoteNumber, docNumberSecondcolumn);
+		}
+		
 		return null;		
 	}
 	
@@ -77,6 +116,40 @@ public class DocumentsPage extends ColBasePage{
 		
 		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
 		return PageFactory.initElements(driver, SalesOrderPage.class);
+	}
+	
+	public DocumentsPage switchToTab(DocumentTabs tab){
+		driver.findElement(By.linkText(WordUtils.capitalizeFully(tab.toString()))).click();
+		waitForElementToBeInvisible(By.cssSelector("select#time_limit"));
+		
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+
+	@FindBy(css="select#time_limit")
+	private WebElement TimeDropDown;
+	public DocumentsPage setDate(Time days){
+		TimeDropDown.click();
+		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
+		
+		waitForElementToBeInvisible(By.cssSelector("select#time_limit"));
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+	public enum Time{
+		ALL,
+		TODAY,
+		LAST7,
+		LAST30
+	}
+	
+	public enum DocumentTabs{
+		ALLQUOTESANDORDERS,
+		QUOTES,
+		PROPOSALS,
+		ORDERS,
+		INVOICES,
+		RMAS
 	}
 	
 }

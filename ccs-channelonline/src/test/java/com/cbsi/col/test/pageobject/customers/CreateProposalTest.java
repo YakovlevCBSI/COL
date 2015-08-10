@@ -1,11 +1,17 @@
 package com.cbsi.col.test.pageobject.customers;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.ProposalPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.documents.DocumentsPage.Time;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class CreateProposalTest extends ColBaseTest{
@@ -24,12 +30,35 @@ public class CreateProposalTest extends ColBaseTest{
 		recentCustomersPage = createAccount();
 	}
 	
+	@After
+	public void cleanUp(){
+		RecentAccountsTab recentCusotmersPage = documentPage.goToHomePage().goToAccountsPage().goToRecentAccountsTab();
+		recentCusotmersPage.deleteCompany(companyName);
+		super.cleanUp();
+		
+	}
+	
 	//currently error creating a proposal.
 	@Test
-	public void createProposal(){
+	public void createProposalFull(){
+		int docNumber;
 		CurrentAccountTab currentAccountPage= recentCustomersPage.clickViewCustomer(companyName);
-		currentAccountPage.clickCreateProposal();
-//		currentAccountPage.click
+		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
+		docNumber = proposalPage.getQuoteNumber();
+		
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+		assertTrue(documentPage.hasQuote(docNumber));		
+	}
+	
+	@Test
+	public void createProposalQuick(){
+		int docNumber;
+		CurrentAccountTab currentAccountPage= recentCustomersPage.clickViewCustomer(companyName);
+		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
+		docNumber = proposalPage.getQuoteNumber();
+		
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 
 }

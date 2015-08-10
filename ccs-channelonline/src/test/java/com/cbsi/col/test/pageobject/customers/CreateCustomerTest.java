@@ -30,19 +30,18 @@ public class CreateCustomerTest extends ColBaseTest{
 	public void startUp(){
 		super.startUp();
 		navigateToCustomersPage();
+		System.out.println("companyName: " + companyName);
 		
 	}
 
 	@Test
 	public void test1_createCustomer(){		
-		System.out.println(companyName);
 		RecentAccountsTab recentCustomersPage = createAccount();
 		assertTrue(recentCustomersPage.hasCompany(companyName));
 	}
 	
 	@Test
-	public void test2_searchCustomer() throws InterruptedException{
-		System.out.println(companyName);
+	public void test2_searchCustomer() throws InterruptedException{;
 		AccountsPage customersSeachPage = customersPage.searchCustomer(companyName, true);
 		assertTrue(customersSeachPage.hasCompany(companyName));
 	}

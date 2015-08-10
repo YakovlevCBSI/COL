@@ -16,8 +16,14 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForTextToBeVisible("Document Template Designer:", "span");
+		System.out.println("Passed visible method.");
+		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
+
+		
 	}
-	
+	public void waitForLoad(){
+		
+	}
 	@FindBy(css="button[title='Save']")
 	private WebElement Save;
 	
@@ -39,7 +45,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 	@FindBy(css="a#addcomponentbtn-r3c1")
 	private WebElement midComponentLong;
 	
-	@FindBy(css="a#addcomponentbtn-r3c1")
+	@FindBy(css="a#addcomponentbtn-r4c1")
 	private WebElement bottomComponent;
 	
 	public AddComponentPopup addComponentTop(){
@@ -86,6 +92,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 			super(driver);
 			// TODO Auto-generated constructor stub
 			waitForTextToBeVisible("Add Components", "h3");
+			forceWait(300);
 		}
 		
 		@FindBy(css="span.btn-save")
@@ -103,8 +110,8 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 		@FindBy(linkText="Order")
 		private WebElement OrderTab;
 		
-		@FindBy(linkText="Proposal")
-		private WebElement ProposalTab;
+		@FindBy(linkText="Invoice")
+		private WebElement InvoiceTab;
 		
 		@FindBy(css="div.tbl-head div input")
 		private WebElement checkAll;
@@ -129,8 +136,8 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 			return this;
 		}
 		
-		public AddComponentPopup fromProposal(){
-			ProposalTab.click();
+		public AddComponentPopup fromInvoice(){
+			InvoiceTab.click();
 			return this;
 		}
 		
@@ -142,15 +149,20 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 			if(options[0].toLowerCase().equals("all")){
 				List<WebElement> checkBoxAlls= driver.findElements(By.cssSelector("div.tbl-head div input"));
 				for(WebElement checkBoxAll: checkBoxAlls){
-					if(checkBoxAll.isDisplayed()) checkBoxAll.click();
-					break;
+					if(checkBoxAll.isDisplayed()) {
+						checkBoxAll.click();
+						break;
+					}
+						
 				}
 			}else{
 				for(String s: options){
+					outerLoop:
 					for (WebElement span:spans){
 						if(s.toLowerCase().equals(span.getText().toLowerCase())){
 							WebElement checkBox = span.findElement(By.xpath("../../div/input"));
 							checkBox.click();
+							break outerLoop;
 						}
 					}
 				}

@@ -51,12 +51,15 @@ public class CurrentAccountTab extends AccountsPage{
 //		driver.findElement(By.cssSelector("#createProposalFrame")).click();
 		forceWait(3000);
 		CreateProposal.click();
+		switchBack();
 		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
 		
 		if(full) proposalPopup.selectFull();
 		else proposalPopup.selectQuick();
 		
-		switchBack();
+		waitForElementToBeVisible(By.cssSelector("div#loading-modal"));
+		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
+		
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	
@@ -64,7 +67,7 @@ public class CurrentAccountTab extends AccountsPage{
 	
 		public ProposalPopup(WebDriver driver) {
 			super(driver);
-			waitForTextToBeVisible("Admiral", "h3");
+			waitForTextToBeVisible("Create Proposal", "h3");
 			// TODO Auto-generated constructor stub
 		}
 
@@ -85,12 +88,15 @@ public class CurrentAccountTab extends AccountsPage{
 		
 		public void selectFull(){
 			TemplateDropdown.click();
+			forceWait(300);
 			ProposalFull.click();
+			forceWait(1000);
 			OK.click();
 		}
 		
 		public void selectQuick(){
 			TemplateDropdown.click();
+			forceWait(300);
 			ProposalQuick.click();
 			OK.click();
 		}

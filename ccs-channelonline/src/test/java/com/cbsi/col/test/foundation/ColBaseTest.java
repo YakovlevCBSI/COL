@@ -2,23 +2,31 @@ package com.cbsi.col.test.foundation;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -43,7 +51,7 @@ public class ColBaseTest {
 	
 	private String url;
 	private String browser;
-	
+	private String username = System.getProperty("user.name");	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.16");
 
 	
@@ -73,6 +81,9 @@ public class ColBaseTest {
 	
 	@Rule
 	public TestName testInfo = new TestName();
+	
+	@Rule
+	public Retry retry = new Retry(isAutoRun()?2:1);
 	
 	@Parameterized.Parameters
 	public static Collection testParam(){
@@ -195,13 +206,103 @@ public class ColBaseTest {
 		System.out.println(separator + "\n" + headerText + "\n" + separator);
 	}
 	
+	//************************************** inner retry class *****************************************//
+	public boolean screenShotCreated = false;
 	
-	//******* common methods ******///
+	class Retry implements TestRule {
+        private int retryCount;
+        
+        public Retry(int retryCount) {
+            this.retryCount = retryCount;
+        }
+
+        public Statement apply(Statement base, Description description) {
+            return statement(base, description);
+        }
+
+        private Statement statement(final Statement base, final Description description) {
+            return new Statement() {
+                @Override
+                public void evaluate() throws Throwable {
+                    Throwable caughtThrowable = null;
+
+                    // implement retry logic here
+                    for (int i = 0; i < retryCount; i++) {
+                        try {
+                            base.evaluate();
+                            return;
+                        } catch (Throwable t) {
+                            caughtThrowable = t;
+                            System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
+                            
+                            //second try failed. Take a screenshot.
+                            if(i+1 ==2){
+                            	System.err.println("Taking a screenshot");
+                            	takeScreenshot();
+                            }
+                        } finally{
+                        	 if(driver!=null){
+                        		 System.out.println("quit the driver");
+                             	driver.quit();
+                             }  
+                        }
+                    }
+                    if(isAutoRun()){
+                    	System.out.println("killed all driver instances");
+        				runCommand("killall firefox");
+        				runCommand("killall chrome");
+        			}
+                    System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
+                    throw caughtThrowable;
+                }
+            };
+        }
+	}
+	
+	public boolean isAutoRun(){
+		if(username.equals("jenkins") || username.contains("slave")) return true;
+		return false;
+	}
+	
+	public void takeScreenshot(){
+		if(!screenShotCreated){
+			String testName= this.getClass().getName();
+			String methodName = testInfo.getMethodName();
+			String filename = "target/surefire-reports/"+testName+"/" + methodName +"." + getUrl().replace("/", "_") + "." + getBrowser()+ ".png";
+	
+			File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	//		driver = new Augmenter().augment(driver);
+	//		File srcFile= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	
+			try {
+				FileUtils.copyFile(srcFile, new File(filename));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block 
+				e.printStackTrace();
+			}
+			screenShotCreated = true;
+		}
+	}
+	
+	public void runCommand(String command){
+		Process process=null;
+		try {
+			process = Runtime.getRuntime().exec(command);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			process.destroy();
+		}
+	}
+	
+	//************************************** common methods ************************************///
 	protected AccountsPage customersPage;
 	protected HomePage homePage;
 	
 	public void navigateToCustomersPage(){
-		navigatetoLoginPage();
+//		navigatetoLoginPage();
 		customersPage = homePage.goToAccountsPage();
 	}
 	

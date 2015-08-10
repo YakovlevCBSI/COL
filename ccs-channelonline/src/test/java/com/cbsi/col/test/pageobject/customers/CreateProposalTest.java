@@ -46,7 +46,7 @@ public class CreateProposalTest extends ColBaseTest{
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
-		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).filterByDate(Time.TODAY);
 		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 	
@@ -57,7 +57,7 @@ public class CreateProposalTest extends ColBaseTest{
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		
-		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).filterByDate(Time.TODAY);
 		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 

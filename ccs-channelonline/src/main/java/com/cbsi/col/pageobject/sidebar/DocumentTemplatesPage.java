@@ -63,18 +63,24 @@ public class DocumentTemplatesPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
 	}
 	
-
-	
-	public boolean hasProposalTemplate(String templateName){
+	public DocumentTemplatesPage clickProposalsTab(){
 		Proposals.click();
 		waitForActive(By.linkText("Proposals"));
-		return findDataRowByName(templateName)==null? false:true;
+		return this;
+	}
+	
+	public DocumentTemplatesPage clickQuotesTab(){
+		Quotes.click();
+		waitForActive(By.linkText("Quotes"));
+		return this;
+	}
+	
+	public boolean hasProposalTemplate(String templateName){
+		return clickProposalsTab().findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public boolean hasQuoteTemplate(String templateName){
-		Quotes.click();
-		waitForActive(By.linkText("Quotes"));
-		return findDataRowByName(templateName)==null? false:true;
+		return clickQuotesTab().findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public DocumentTemplatesPage deleteTemplateByName(String templateName){

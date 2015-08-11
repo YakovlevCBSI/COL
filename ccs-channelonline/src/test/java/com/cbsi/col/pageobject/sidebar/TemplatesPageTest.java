@@ -27,6 +27,9 @@ public class TemplatesPageTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
+		super.cleanUp();
+		super.startUp();
+		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		if(testVarCopy!= null){
 			System.out.println("TRYING TO DELETE " + testVarCopy);
 			dtp.sortByLastModified().deleteTemplateByName(testVarCopy);
@@ -63,19 +66,19 @@ public class TemplatesPageTest extends ColBaseTest{
 	@Test
 	public void copyQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
-		DocumentTemplateDesignerPage dtdp = dtp.copyTemplateByName(testVar);
+		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().copyTemplateByName(testVar);
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
-		assertTrue(dtp.hasQuoteTemplate(getCopyOfTestVar()));		
+		assertTrue(dtp.sortByLastModified().hasQuoteTemplate(getCopyOfTestVar()));		
 	}
 	
 	@Test
 	public void editQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
-		DocumentTemplateDesignerPage dtdp = dtp.editTemplateByName(testVar);
+		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().editTemplateByName(testVar);
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
-		assertTrue(dtp.hasQuoteTemplate(testVar));
+		assertTrue(dtp.sortByLastModified().hasQuoteTemplate(testVar));
 	}
 	
 	@Test

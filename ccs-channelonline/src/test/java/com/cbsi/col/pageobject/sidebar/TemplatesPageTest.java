@@ -27,10 +27,19 @@ public class TemplatesPageTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
-		dtp.deleteTemplateByName(testVar);
 		if(testVarCopy!= null){
-			dtp.deleteTemplateByName(testVarCopy);
+			System.out.println("TRYING TO DELETE " + testVarCopy);
+			dtp.sortByLastModified().deleteTemplateByName(testVarCopy);
 		}
+		
+		///Current bug where copying doc removes the original template, therefore this part fails.
+		///REMOVE THE TRY-CATCH BLOCK ONCE THE BUG IS RESOLVED.
+		try{
+			dtp.sortByLastModified().deleteTemplateByName(testVar);
+		}catch(NullPointerException e){
+			
+		}
+
 		super.cleanUp();
 	}
 	

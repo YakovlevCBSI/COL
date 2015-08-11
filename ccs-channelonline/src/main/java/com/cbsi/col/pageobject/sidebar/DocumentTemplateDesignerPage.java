@@ -95,7 +95,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 			forceWait(300);
 		}
 		
-		@FindBy(css="span.btn-save")
+		@FindBy(linkText="Save")
 		private WebElement Save;
 		
 		@FindBy(linkText="Company")

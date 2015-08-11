@@ -186,5 +186,19 @@ public class DocumentTemplatesPage extends ColBasePage{
 		}
 		return;	
 	}
+	
+	
+	//----------------------------------------------- sort table---------------------------------------------//
+	@FindBy(linkText="Last Modified")
+	private WebElement LastModified;
+	
+	public DocumentTemplatesPage sortByLastModified(){
+		LastModified.click();
+		waitForElementToBeInvisible(By.linkText("Last Modified"));
+		waitForElementToBeVisible(By.linkText("Last Modified"));
+		
+		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
+
+	}
 
 }

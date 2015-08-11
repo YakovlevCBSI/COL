@@ -700,54 +700,54 @@ public class BaseTest {
 		return addCatalogsPage;
 	}
 	
-//	public <T> boolean twoListsAreEqual(List<T> list1, List<T> list2){
-//		//System.out.println("is it equal " + list1.equals(list2));
-//		if(!list1.equals(list2)){ 
-//			Collection subtractedList1 = CollectionUtils.subtract(list1, list2);
-//			Collection subtractedList2 = CollectionUtils.subtract(list2, list1);
-//			
-//			if(subtractedList1.size() >= 1){
-//				System.out.println();
-//				System.out.println("list1: ");
-//				for(Object c: subtractedList1){
-//					if(c instanceof Catalog){
-//						System.out.println("===comparing catalogs object list===");
-//						Catalog convertC= (Catalog)c;
-//						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
-//					}
-//					else if(c instanceof Product){
-//						System.out.println("===comparing Products object list===");
-//						Product convertP = (Product)c;
-//						System.out.println(convertP.toString());
-//					}
-//					else{
-//						System.out.println(c.toString());
-//					}
-//				}
-//				return false;
-//			}
-//			
-//			if(subtractedList2.size() >= 1){
-//				System.out.println();
-//				System.out.println("list2: ");
-//				for(Object c: subtractedList2){
-//					if(c instanceof Catalog){
-//						Catalog convertC= (Catalog)c;
-//						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
-//					}
-//					else if(c instanceof Product){
-//						Product convertP = (Product)c;
-//						System.out.println(convertP.toString());
-//					}
-//					else{
-//						System.out.println(c.toString());
-//					}
-//				}
-//				return false;
-//			}	
-//		}	
-//		return true;
-//	}
+	public <T> boolean twoListsAreEqual(List<T> list1, List<T> list2){
+		//System.out.println("is it equal " + list1.equals(list2));
+		if(!list1.equals(list2)){ 
+			Collection subtractedList1 = CollectionUtils.subtract(list1, list2);
+			Collection subtractedList2 = CollectionUtils.subtract(list2, list1);
+			
+			if(subtractedList1.size() >= 1){
+				System.out.println();
+				System.out.println("list1: ");
+				for(Object c: subtractedList1){
+					if(c instanceof Catalog){
+						System.out.println("===comparing catalogs object list===");
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModified_by() + "/ " + convertC.getParty());
+					}
+					else if(c instanceof Product){
+						System.out.println("===comparing Products object list===");
+						Product convertP = (Product)c;
+						System.out.println(convertP.toString());
+					}
+					else{
+						System.out.println(c.toString());
+					}
+				}
+				return false;
+			}
+			
+			if(subtractedList2.size() >= 1){
+				System.out.println();
+				System.out.println("list2: ");
+				for(Object c: subtractedList2){
+					if(c instanceof Catalog){
+						Catalog convertC= (Catalog)c;
+						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModified_by() + "/ " + convertC.getParty());
+					}
+					else if(c instanceof Product){
+						Product convertP = (Product)c;
+						System.out.println(convertP.toString());
+					}
+					else{
+						System.out.println(c.toString());
+					}
+				}
+				return false;
+			}	
+		}	
+		return true;
+	}
 	
 	public void skipFirefox(){
 		if(getBrowser().toLowerCase().contains("firefox")) return;

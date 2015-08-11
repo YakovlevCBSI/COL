@@ -121,7 +121,8 @@ public class DocumentsPage extends ColBasePage{
 	
 	public DocumentsPage switchToTab(DocumentTabs tab){
 		driver.findElement(By.linkText(WordUtils.capitalizeFully(tab.toString()))).click();
-		waitForElementToBeInvisible(By.cssSelector("select#time_limit"));
+		forceWait(500);
+		waitForElementToBeVisible(By.cssSelector("select#time_limit"));
 		
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}

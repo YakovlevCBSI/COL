@@ -1,7 +1,9 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.collections.ListUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -75,6 +77,47 @@ public abstract class BasePage {
 	public WebElement refreshStaleElement(By by){
 		waitForElementToBeVisible(by);
 		return driver.findElement(by);
+	}
+	
+	public void waitForTextToBeVisible(String text){
+		waitForTextToBeVisible(text, "h1", "h2", "h3");
+	}
+	
+	public void waitForTextToBeVisible(String text, String...tagNames){
+		String[] tags = tagNames;
+		WebElement headerOnWait= null;
+		long start = System.currentTimeMillis();
+	
+		while(headerOnWait== null && (System.currentTimeMillis() - start < 10000)){
+			
+			List<WebElement> headers  = null;
+			
+			for(String tag: tagNames){
+				List<WebElement> header1s = driver.findElements(By.cssSelector(tag));
+				
+				if(tags.length >=2 && headers != null) headers = ListUtils.union(headers, header1s);
+				else headers =header1s;
+			}
+			
+			for(WebElement h: headers){
+				try{
+					if(h.getText().contains(text)){
+						headerOnWait = h;
+						break;
+					}
+				}catch(Exception e){
+					
+				}
+			}
+			
+			forceWait(300);
+		}
+		
+		while(!headerOnWait.isDisplayed() && (System.currentTimeMillis() - start < 10000)){
+			forceWait(300);	
+		}
+		
+		return;
 	}
 	
 	public String getCurrentURL(){

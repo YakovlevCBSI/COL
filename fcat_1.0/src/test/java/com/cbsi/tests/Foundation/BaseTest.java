@@ -42,7 +42,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.FCatMongoObject.Product;
-import com.cbsi.tests.FCatSqlObject.Catalog;
+import com.cbsi.tests.FCatSqlObject.Catalog_Old;
 import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.BFPLoginPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
@@ -80,8 +80,8 @@ public class BaseTest {
 	public String getURL() { return URL; }
 	
 	//Need Time out rule here
-	@Rule 
-	public Timeout globalTimeout = new Timeout(180000);
+//	@Rule 
+//	public Timeout globalTimeout = new Timeout(180000);
 	
 	/**
 	@BeforeClass
@@ -317,7 +317,6 @@ public class BaseTest {
 		FCatHomePage homePage = loginPage.loginToHomePage();
 		catalogsPage = homePage.goToCatalogs();
 		return;
-
 	}
 	
 	public FCatHomePage EasyLoginToLoginPage(){
@@ -710,9 +709,9 @@ public class BaseTest {
 				System.out.println();
 				System.out.println("list1: ");
 				for(Object c: subtractedList1){
-					if(c instanceof Catalog){
+					if(c instanceof Catalog_Old){
 						System.out.println("===comparing catalogs object list===");
-						Catalog convertC= (Catalog)c;
+						Catalog_Old convertC= (Catalog_Old)c;
 						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
 					}
 					else if(c instanceof Product){
@@ -731,8 +730,8 @@ public class BaseTest {
 				System.out.println();
 				System.out.println("list2: ");
 				for(Object c: subtractedList2){
-					if(c instanceof Catalog){
-						Catalog convertC= (Catalog)c;
+					if(c instanceof Catalog_Old){
+						Catalog_Old convertC= (Catalog_Old)c;
 						System.out.println(convertC.getCatalog_name() + "/ " + convertC.getModifiedBy() + "/ " + convertC.getParty());
 					}
 					else if(c instanceof Product){

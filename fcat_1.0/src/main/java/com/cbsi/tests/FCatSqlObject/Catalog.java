@@ -1,87 +1,115 @@
 package com.cbsi.tests.FCatSqlObject;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Catalog {
-	public Catalog(){
-		
-	}
-	
+
+	private long id;
+	private int active;
 	private String catalog_name;
 	private Date created;
-	private BigDecimal party;
-	private BigDecimal itemCount;
-	private String modifiedBy;
-	private String id;
+	private String description;
+	private long item_count;
+	private Date last_modified;
+	private int version;
+	private long catalog_import_type;
+	private long catalog_type;
+	private long content_type;
+	private long party;
+	private String code;
+	private long mapped_count;
+	private String modified_by;
 	
-	public String getCatalog_name(){
-		return catalog_name;
-	}
-	
-	public void setCatalog_name(String catalog_name){
-		this.catalog_name = catalog_name;
-	}
-	
-	public Date getCreated(){
-		return created;
-	}
-	
-	public void setCreated(Date date){
-		this.created = date;
-	}
-	
-	public BigDecimal getParty(){
-		return party;
-	}
-	
-	public void setParty(BigDecimal party){
-		this.party = party;
-	}
-	
-	public BigDecimal getItemCount(){
-		return itemCount;
-	}
-	
-	public void setItemCount(BigDecimal bigDecimal){
-		this.itemCount = bigDecimal;
-	}
-	
-	public String getModifiedBy(){
-		return modifiedBy;
-	}
-	public void setModifiedBy(String modifiedBy){
-		this.modifiedBy = modifiedBy;
-	}
-	
-	public String getId(){
+	public long getId() {
 		return id;
 	}
-	
-	public void setId(String id){
+	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@Override
-	public boolean equals(Object other){
-		if(!(other instanceof Catalog)) return false;
-		
-		Catalog that= (Catalog) other;
-		
-		//System.out.println("using custome equal method");
-		
-		return (this.catalog_name==null?this.catalog_name==that.catalog_name:this.catalog_name.equals(that.catalog_name))
-				&& (this.created==null?this.created==that.created:this.created.equals(that.created))
-				&& (this.itemCount==null?this.itemCount==that.itemCount: this.itemCount.equals(that.itemCount))
-				&& (this.modifiedBy==null?this.modifiedBy==that.modifiedBy: this.modifiedBy.equals(that.modifiedBy))
-				&& (this.party==null?this.party==that.party: this.party.equals(that.party));
-		
+	public int getActive() {
+		return active;
 	}
-	
-	@Override 
-	public String toString(){
-		return "name: " + getCatalog_name() + "\t modified: " + getModifiedBy() + "\tparty: " + getParty() 
-				+ "\titemCount: " + getItemCount() + "\tcatalog_id: " + getId();
+	public void setActive(int active) {
+		this.active = active;
 	}
+	public String getCatalog_name() {
+		return catalog_name;
+	}
+	public void setCatalog_name(String catalog_name) {
+		this.catalog_name = catalog_name;
+	}
+	public Date getCreated() {
+		return created;
+	}
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public long getItem_count() {
+		return item_count;
+	}
+	public void setItem_count(long item_count) {
+		this.item_count = item_count;
+	}
+	public Date getLast_modified() {
+		return last_modified;
+	}
+	public void setLast_modified(Date last_modified) {
+		this.last_modified = last_modified;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public long getCatalog_import_type() {
+		return catalog_import_type;
+	}
+	public void setCatalog_import_type(long catalog_import_type) {
+		this.catalog_import_type = catalog_import_type;
+	}
+	public long getCatalog_type() {
+		return catalog_type;
+	}
+	public void setCatalog_type(long catalog_type) {
+		this.catalog_type = catalog_type;
+	}
+	public long getContent_type() {
+		return content_type;
+	}
+	public void setContent_type(long content_type) {
+		this.content_type = content_type;
+	}
+	public long getParty() {
+		return party;
+	}
+	public void setParty(long party) {
+		this.party = party;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public long getMapped_count() {
+		return mapped_count;
+	}
+	public void setMapped_count(long mapped_count) {
+		this.mapped_count = mapped_count;
+	}
+	public String getModified_by() {
+		return modified_by;
+	}
+	public void setModified_by(String modified_by) {
+		this.modified_by = modified_by;
+	}
+
 	
 }

@@ -51,7 +51,8 @@ public class DocumentTemplatesPage extends ColBasePage{
 	
 	public DocumentTemplateDesignerPage createNewQuoteTemplate(String name, String desc){
 		driver.findElement(By.linkText("Quotes")).click();
-		waitForElementToBeInvisible(By.linkText("Quotes"));
+//		waitForElementToBeInvisible(By.linkText("Quotes"));
+		forceWait(500);
 		waitForElementToBeVisible(By.linkText("Quotes"));
 		CreateNewTemplate.click();
 		CreateTemplatePopup ctp = PageFactory.initElements(driver, CreateTemplatePopup.class);

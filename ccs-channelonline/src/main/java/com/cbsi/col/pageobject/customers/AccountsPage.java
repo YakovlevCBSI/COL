@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.customers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -96,8 +97,9 @@ public class AccountsPage extends ColBasePage{
 		WebElement deleteButton = dataRow.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
 		deleteButton.click();
 		
-		waitForElementToBeVisible(By.cssSelector("button#delete-customer-btn"));
-		DeleteInPopup.click();
+		acceptAlert();
+//		waitForElementToBeVisible(By.cssSelector("button#delete-customer-btn"));	
+//		DeleteInPopup.click();
 		
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}

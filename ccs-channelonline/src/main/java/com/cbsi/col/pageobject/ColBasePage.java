@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.ListUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -136,6 +137,12 @@ public class ColBasePage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void acceptAlert(){
+		forceWait(500);
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
 	}
 	//------------------ navigate to main tabs-----------------------//
 	public AccountsPage goToAccountsPage(){

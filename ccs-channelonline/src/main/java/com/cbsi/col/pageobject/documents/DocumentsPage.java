@@ -121,7 +121,11 @@ public class DocumentsPage extends ColBasePage{
 	
 	public DocumentsPage switchToTab(DocumentTabs tab){
 		driver.findElement(By.linkText(WordUtils.capitalizeFully(tab.toString()))).click();
-		forceWait(500);
+		try{
+			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
+		}catch(TimeoutException e){
+			
+		}
 		waitForElementToBeVisible(By.cssSelector("select#time_limit"));
 		
 		return PageFactory.initElements(driver, DocumentsPage.class);
@@ -129,9 +133,9 @@ public class DocumentsPage extends ColBasePage{
 	
 
 	@FindBy(css="select#time_limit")
-	private WebElement TimeDropDown;
+	private WebElement TimeDropdown;
 	public DocumentsPage filterByDate(Time days){
-		TimeDropDown.click();
+		TimeDropdown.click();
 		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
 		
 		try{
@@ -143,12 +147,68 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
+	@FindBy(css="select#status")
+	private WebElement StatusDrpdown;
+	public DocumentsPage filterByStatus(Status status){
+		StatusDrpdown.click();
+		driver.findElement(By.cssSelector("option[value='" + status.toString().toLowerCase().replace("_", "|") + "'")).click();
+		try{
+			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
+		}catch(TimeoutException e){
+			
+		}
+		
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+	@FindBy(css="select#saved_by_id")
+	private WebElement ModifiedBy;
+	public DocumentsPage filterByModifiedBy(String person){
+		WebElement userOption = null;
+		ModifiedBy.click();
+		List<WebElement> persons = ModifiedBy.findElements(By.xpath("option"));
+		
+		for(WebElement p: persons){
+			if(p.getText().toLowerCase().replaceAll(",", "").contains(person.toLowerCase().replaceAll(",", ""))){
+				userOption = p;
+				break;
+			}
+			if(p.getText().replaceAll(",", "").contains(person.toLowerCase().replaceAll(",", "").split("\\s+")[0])){
+				userOption = p;
+				break;
+			}
+		}
+		if(userOption != null)
+			userOption.click();
+		else
+			System.err.println("\"" + person + "\" is not found in Modified dropdown" );
+		
+		try{
+			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
+		}catch(TimeoutException e){
+			
+		}
+		
+		return PageFactory.initElements(driver, DocumentsPage.class);
+		
+	}
+	
 	public enum Time{
 		ALL,
 		TODAY,
 		LAST7,
 		LAST30
 	}
+	
+	public enum Status{
+		ALL,
+		QUOTES_ALL,
+		QUOTES_OPEN,
+		QUOTES_LOST,
+		QUOTES_HOLD,
+		QUOTES_WON,
+		
+	}	
 	
 	public enum DocumentTabs{
 		ALLQUOTESANDORDERS,

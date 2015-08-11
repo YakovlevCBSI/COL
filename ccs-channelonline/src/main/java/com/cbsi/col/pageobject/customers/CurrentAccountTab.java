@@ -45,21 +45,16 @@ public class CurrentAccountTab extends AccountsPage{
 	
 	public ProposalPage clickCreateProposal(boolean full){
 		switchFrame();
-//		waitForElementToBeVisible(By.cssSelector("#createProposalFrame"));
-//		scrollToView(CreateProposal);
-//		waitForTextToBeVisible("Create Proposal", "a");
-//		driver.findElement(By.cssSelector("#createProposalFrame")).click();
-		forceWait(3000);
 		CreateProposal.click();
 		switchBack();
-		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
+
+		waitForQuickLoad();
 		
+		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
 		if(full) proposalPopup.selectFull();
 		else proposalPopup.selectQuick();
 		
-		waitForElementToBeVisible(By.cssSelector("div#loading-modal"));
-		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
-		
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	

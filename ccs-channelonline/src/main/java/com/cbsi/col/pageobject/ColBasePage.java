@@ -7,6 +7,7 @@ import org.apache.commons.collections.ListUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -54,7 +55,11 @@ public class ColBasePage {
 	}
 	
 	public void waitForElementToBeVisible(By by){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(by));
+		waitForElementToBeVisible(by, 30);
+	}
+	
+	public void waitForElementToBeVisible(By by, long timeInSeconds){
+		new WebDriverWait(driver, timeInSeconds).until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 	
 	public void waitForElementToBeVisible(String path){
@@ -197,6 +202,15 @@ public class ColBasePage {
 	
 	public void switchBack(){
 		driver.switchTo().defaultContent();
+	}
+	
+	public void waitForQuickLoad(){
+		try{
+			waitForElementToBeVisible(By.cssSelector("div#loading-modal"), 5);
+		}catch(TimeoutException e){
+			
+		}
+		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
 	}
 	
 }

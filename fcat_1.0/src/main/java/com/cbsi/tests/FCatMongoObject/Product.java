@@ -5,8 +5,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 
-import com.cbsi.tests.FCatSqlObject.Catalog;
-
 /**
  * Uses Jackson lib to parse Json data from mongo.
  * @author alpark

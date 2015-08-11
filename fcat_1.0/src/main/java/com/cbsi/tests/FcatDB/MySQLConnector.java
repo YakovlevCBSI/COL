@@ -10,19 +10,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
 import com.cbsi.tests.FCatSqlObject.Catalog;
 import com.cbsi.tests.util.GlobalVar;
 
 public class MySQLConnector {
 	
 	//ALL CREDITINAL SHOULD GO ON FCATCredit.txt
-	static String dbURL = GlobalVar.dbURL;
-	static String userName = GlobalVar.dbUserName;
-	static String password = GlobalVar.dbPassword;
+//	static String dbURL = GlobalVar.dbURL;
+//	static String userName = GlobalVar.dbUserName;
+//	static String password = GlobalVar.dbPassword;
+	
+	static String dbURL = "jdbc:mysql://fcat-engine.cloudapp.net:3306";
+	static String userName = "greenbox";
+	static String password = "greenbox";
 	
 	//#####################################################################//
 	
@@ -59,23 +59,23 @@ public class MySQLConnector {
 			
 			while(result.next()){
 				T inst = c1.newInstance();
-				if(inst instanceof Catalog){
-					Catalog catalog = new Catalog();
-					catalog.setCatalog_name(result.getString("catalog_name"));
-					//catalog.setCreated(result.getDate("created"));
-					//catalog.setParty(result.getBigDecimal("party"));
-					catalog.setItemCount(result.getBigDecimal("item_count"));
-					catalog.setModifiedBy(result.getString("modified_by"));
-					
-					//This will also set catId and partyID;
-					if(mongoInUse){
-						catalog.setId(result.getBigDecimal("id")+"");
-						catalog.setParty(result.getBigDecimal("party"));
-					}
-					
-					objectList.add((T) catalog);
-				}
-				
+//				if(inst instanceof Catalog){
+//					Catalog catalog = new Catalog();
+//					catalog.setCatalog_name(result.getString("catalog_name"));
+//					//catalog.setCreated(result.getDate("created"));
+//					//catalog.setParty(result.getBigDecimal("party"));
+//					catalog.setItemCount(result.getBigDecimal("item_count"));
+//					catalog.setModifiedBy(result.getString("modified_by"));
+//					
+//					//This will also set catId and partyID;
+//					if(mongoInUse){
+//						catalog.setId(result.getBigDecimal("id")+"");
+//						catalog.setParty(result.getBigDecimal("party"));
+//					}
+//					
+//					objectList.add((T) catalog);
+//				}
+//				result.get
 			}
 			
 		}

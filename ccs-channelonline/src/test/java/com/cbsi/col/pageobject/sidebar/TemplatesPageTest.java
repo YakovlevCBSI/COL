@@ -18,6 +18,8 @@ public class TemplatesPageTest extends ColBaseTest{
 	public DocumentTemplatesPage dtp;
 	public String testVarCopy;
 	public String testVar = this.getClass().getSimpleName() + "_" + System.currentTimeMillis();
+	private boolean isProposalTest= false;
+	
 	@Before
 	public void startUp(){
 		super.startUp();
@@ -32,22 +34,26 @@ public class TemplatesPageTest extends ColBaseTest{
 		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		if(testVarCopy!= null){
 			System.out.println("TRYING TO DELETE " + testVarCopy);
-			dtp.sortByLastModified().deleteTemplateByName(testVarCopy);
+			if(!isProposalTest)
+				dtp.deleteQuoteTemplateByName(testVarCopy);
+			else
+				dtp.deleteProposalTemplateByName(testVarCopy);
 		}
 		
 		///Current bug where copying doc removes the original template, therefore this part fails.
 		///REMOVE THE TRY-CATCH BLOCK ONCE THE BUG IS RESOLVED.
-		try{
-			dtp.sortByLastModified().deleteTemplateByName(testVar);
-		}catch(NullPointerException e){
-			
-		}
+		if(!isProposalTest)
+			dtp.deleteQuoteTemplateByName(testVar);
+		else
+			dtp.deleteProposalTemplateByName(testVar);
 
 		super.cleanUp();
 	}
 	
 	@Test
 	public void createProposalTemplate(){
+		isProposalTest = true;
+		
 		DocumentTemplateDesignerPage dtdp = dtp.createNewProposalTemplate(testVar);
 		System.out.println(testVar);
 		dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
@@ -69,7 +75,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().copyTemplateByName(testVar);
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
-		assertTrue(dtp.sortByLastModified().hasQuoteTemplate(getCopyOfTestVar()));		
+		assertTrue(dtp.hasQuoteTemplate(getCopyOfTestVar()));		
 	}
 	
 	@Test
@@ -78,7 +84,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().editTemplateByName(testVar);
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
-		assertTrue(dtp.sortByLastModified().hasQuoteTemplate(testVar));
+		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
 	
 	@Test

@@ -313,7 +313,7 @@ public class ColBaseTest {
 		return;
 	}
 	
-	public static final String companyName = "QaCustomer_ " +System.currentTimeMillis();
+	public static final String companyName = "Qa_customer_"+System.currentTimeMillis();
 	public static final String address = "444 Oceancrest Dr";
 	public static final String city = "Irvine";
 	public static final String zip = "90019";

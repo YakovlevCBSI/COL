@@ -76,15 +76,28 @@ public class DocumentTemplatesPage extends ColBasePage{
 	}
 	
 	public boolean hasProposalTemplate(String templateName){
-		return clickProposalsTab().findDataRowByName(templateName)==null? false:true;
+		return clickProposalsTab().sortByLastModified().findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public boolean hasQuoteTemplate(String templateName){
-		return clickQuotesTab().findDataRowByName(templateName)==null? false:true;
+		return clickQuotesTab().sortByLastModified().findDataRowByName(templateName)==null? false:true;
 	}
 	
-	public DocumentTemplatesPage deleteTemplateByName(String templateName){
-		WebElement Delete = findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
+	public DocumentTemplatesPage deleteQuoteTemplateByName(String templateName){
+		WebElement Delete = clickQuotesTab().sortByLastModified().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
+		Delete.click();
+		
+		forceWait(500);
+		driver.switchTo().alert().accept();
+		driver.switchTo().defaultContent();
+		forceWait(500);
+
+		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
+		
+	}
+	
+	public DocumentTemplatesPage deleteProposalTemplateByName(String templateName){
+		WebElement Delete = clickProposalsTab().sortByLastModified().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
 		Delete.click();
 		
 		forceWait(500);
@@ -110,11 +123,41 @@ public class DocumentTemplatesPage extends ColBasePage{
 	
 	private static List<WebElement> dataColumns;
 	static int currentPage=0;
+//	public WebElement findDataRowByName(String templateName){
+//		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2)"));
+//		for(WebElement dataColumn: dataColumns){
+////			System.out.println("what i see: " + dataColumn.getText());
+//			if(dataColumn.getText().contains(templateName)){
+//				return dataColumn;
+//			}
+//		}
+//		
+//		//navigate to next page if data not found.
+//		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+//		if(currentPage-1 >=0){
+//			int removePage = currentPage;
+//			while(removePage >0){
+//				removePage--;
+//				pageList.remove(removePage);
+//			}
+//		}
+//		if(pageList.size() >=1){
+//			currentPage++;
+//			pageList.get(0).click();
+//			waitForTextToBeVisible("Document Templates");
+//			dataColumns=null;
+//			findDataRowByName(templateName);
+//			
+//		}
+//		
+//		return null;		
+//	}
 	public WebElement findDataRowByName(String templateName){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2)"));
 		for(WebElement dataColumn: dataColumns){
 //			System.out.println("what i see: " + dataColumn.getText());
 			if(dataColumn.getText().contains(templateName)){
+				currentPage = 0;
 				return dataColumn;
 			}
 		}
@@ -137,9 +180,9 @@ public class DocumentTemplatesPage extends ColBasePage{
 			
 		}
 		
+		currentPage = 0;
 		return null;		
 	}
-	
 	
 	public static class CreateTemplatePopup extends ColBasePage{
 
@@ -203,6 +246,15 @@ public class DocumentTemplatesPage extends ColBasePage{
 		LastModified.click();
 		waitForElementToBeInvisible(By.linkText("Last Modified"));
 		waitForElementToBeVisible(By.linkText("Last Modified"));
+		
+		//----  temporary workaround for wrong pagination issue--//
+		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+		if(pageList.size() >=1){
+			pageList.get(1).click();
+			forceWait(1000);
+			List<WebElement> pageListNew = driver.findElements(By.cssSelector("tr.footer td a"));
+			pageListNew.get(0).click();
+		}
 		
 		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
 

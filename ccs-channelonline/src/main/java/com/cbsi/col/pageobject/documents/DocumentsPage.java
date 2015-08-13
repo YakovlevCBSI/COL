@@ -59,6 +59,30 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
+	public DocumentsPage deleteQuotesByCompnayName(String companyName){
+//		WebElement docLink = findDataRowByName(quoteNumber);
+		forceWait(300);
+		List<WebElement> companyList = driver.findElements(By.cssSelector("table td:nth-child(3) a"));
+		WebElement singleCompany = null;
+		for(WebElement company: companyList){
+			if(company.getText().toLowerCase().contains(companyName.toLowerCase()) && company.isDisplayed()) {
+				singleCompany = company;
+				break;
+			}
+			
+		}
+		System.out.println("deleting " + singleCompany.getText());
+		singleCompany.findElement(By.xpath("../../td/input[contains(@id,'delete')]")).click();
+	
+//		acceptAlert();
+		
+		forceWait(1000);
+		driver.findElement(By.cssSelector("#delete-doc-btn")).click();
+	
+		forceWait(700);
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
 	private WebElement ViewQuote;
 	
 	static int currentPage=0;

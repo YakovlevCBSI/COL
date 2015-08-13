@@ -16,7 +16,6 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForTextToBeVisible("Document Template Designer:", "span");
-		System.out.println("Passed visible method.");
 		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
 
 		

@@ -33,7 +33,6 @@ public class TemplatesPageTest extends ColBaseTest{
 		super.startUp();
 		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		if(testVarCopy!= null){
-			System.out.println("TRYING TO DELETE " + testVarCopy);
 			if(!isProposalTest)
 				dtp.deleteQuoteTemplateByName(testVarCopy);
 			else
@@ -55,7 +54,6 @@ public class TemplatesPageTest extends ColBaseTest{
 		isProposalTest = true;
 		
 		DocumentTemplateDesignerPage dtdp = dtp.createNewProposalTemplate(testVar);
-		System.out.println(testVar);
 		dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
@@ -72,23 +70,23 @@ public class TemplatesPageTest extends ColBaseTest{
 	@Test
 	public void copyQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
-		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().copyTemplateByName(testVar);
-		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
+		dtp = dtp.copyTemplateByName(testVar);
 		
-		assertTrue(dtp.hasQuoteTemplate(getCopyOfTestVar()));		
+		assertTrue(dtp.hasQuoteTemplate(getCopyOfTestVar()));
+		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
 	
 	@Test
 	public void editQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
-		DocumentTemplateDesignerPage dtdp = dtp.sortByLastModified().editTemplateByName(testVar);
+		DocumentTemplateDesignerPage dtdp = dtp.editTemplateByName(testVar);
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
 		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
 	
 	@Test
-	public void addComponents(){
+	public void addComponentsOnQuoteTemplate(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
 		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("Company Info").clickSave();
 		dtdp = dtdp.addComponentMidShort(1).fromCustomer().pickComponents("all").clickSave();
@@ -96,12 +94,13 @@ public class TemplatesPageTest extends ColBaseTest{
 		dtdp = dtdp.addComponentMidLong().fromOrder().pickComponents("all").clickSave();
 		dtdp = dtdp.addComponentBottom().fromInvoice().pickComponents("all").clickSave();
 		dtdp.clickSave();
-		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);		
+		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);	
+		
+		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
 	
 	public DocumentTemplatesPage createQuoteTemplateSetup(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
-		System.out.println(testVar);
 		dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		return dtp;
@@ -110,5 +109,12 @@ public class TemplatesPageTest extends ColBaseTest{
 		testVarCopy = "Copy of " + testVar;
 		return testVarCopy;
 	}
+	
+//	@Test
+//	public void deleteTestTemplates(){
+////		dtp = dtp.clickProposalsTab();
+//		while(true)
+//		dtp = dtp.deleteQuoteTemplateByName("_");
+//	}
 
 }

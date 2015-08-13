@@ -76,15 +76,15 @@ public class DocumentTemplatesPage extends ColBasePage{
 	}
 	
 	public boolean hasProposalTemplate(String templateName){
-		return clickProposalsTab().sortByLastModified().findDataRowByName(templateName)==null? false:true;
+		return clickProposalsTab().findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public boolean hasQuoteTemplate(String templateName){
-		return clickQuotesTab().sortByLastModified().findDataRowByName(templateName)==null? false:true;
+		return clickQuotesTab().findDataRowByName(templateName)==null? false:true;
 	}
 	
 	public DocumentTemplatesPage deleteQuoteTemplateByName(String templateName){
-		WebElement Delete = clickQuotesTab().sortByLastModified().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
+		WebElement Delete = clickQuotesTab().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
 		Delete.click();
 		
 		forceWait(500);
@@ -97,7 +97,7 @@ public class DocumentTemplatesPage extends ColBasePage{
 	}
 	
 	public DocumentTemplatesPage deleteProposalTemplateByName(String templateName){
-		WebElement Delete = clickProposalsTab().sortByLastModified().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
+		WebElement Delete = clickProposalsTab().findDataRowByName(templateName).findElement(By.xpath("../td/input[contains(@id, 'delete')]"));
 		Delete.click();
 		
 		forceWait(500);
@@ -105,8 +105,7 @@ public class DocumentTemplatesPage extends ColBasePage{
 		driver.switchTo().defaultContent();
 		forceWait(500);
 
-		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
-		
+		return PageFactory.initElements(driver, DocumentTemplatesPage.class);		
 	}
 	
 	public DocumentTemplateDesignerPage editTemplateByName(String templateName){
@@ -115,10 +114,11 @@ public class DocumentTemplatesPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);		
 	}
 	
-	public DocumentTemplateDesignerPage copyTemplateByName(String templateName){
-		WebElement copy = findDataRowByName(templateName).findElement(By.xpath("../td/a[@title='Copy Page']"));
+	public DocumentTemplatesPage copyTemplateByName(String templateName){
+		WebElement copy = findDataRowByName(templateName).findElement(By.xpath("../td/input[@title='Copy Schema']"));
 		copy.click();
-		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
+		forceWait(800);
+		return PageFactory.initElements(driver, DocumentTemplatesPage.class);
 	}
 	
 	private static List<WebElement> dataColumns;

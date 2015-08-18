@@ -75,15 +75,23 @@ public class ColBasePage {
 	}
 	
 	public void waitForTextToBeVisible(String text){
-		waitForTextToBeVisible(text, "h1", "h2", "h3");
+		waitForTextToBeVisible(10000, text, "h1", "h2", "h3");
+	}
+	
+	public void waitForTextToBeVisilbe(long milliSeconds, String text){
+		waitForTextToBeVisible(milliSeconds, text, "h1", "h2", "h3");
 	}
 	
 	public void waitForTextToBeVisible(String text, String...tagNames){
+		waitForTextToBeVisible(10000, text, tagNames);
+	}
+	
+	public void waitForTextToBeVisible(long milliSeconds, String text, String...tagNames){
 		String[] tags = tagNames;
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
 	
-		while(headerOnWait== null && (System.currentTimeMillis() - start < 10000)){
+		while(headerOnWait== null && (System.currentTimeMillis() - start < milliSeconds)){
 			
 			List<WebElement> headers  = null;
 			
@@ -108,7 +116,7 @@ public class ColBasePage {
 			forceWait(300);
 		}
 		
-		while(!headerOnWait.isDisplayed() && (System.currentTimeMillis() - start < 10000)){
+		while(!headerOnWait.isDisplayed() && (System.currentTimeMillis() - start < milliSeconds)){
 			forceWait(300);	
 		}
 		
@@ -175,7 +183,8 @@ public class ColBasePage {
 	}
 	
 	//------------------ common navigation methods-----------------------//
-	@FindBy(css="a#tab-home span")
+//	@FindBy(css="a#tab-home span")
+	@FindBy(css="a#tab-home")
 	private WebElement Home;
 	public HomePage goToHomePage(){
 		scrollToView(Home);

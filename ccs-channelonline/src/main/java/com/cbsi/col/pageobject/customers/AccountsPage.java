@@ -177,7 +177,7 @@ public class AccountsPage extends ColBasePage{
 			}else if(this.accountType.equals("generic")){
 				Generic.click();
 			}
-//			waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"));
+			waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"));
 //			OK.click();
 			OK.click();
 			return PageFactory.initElements(driver, CreateAccountPage.class);

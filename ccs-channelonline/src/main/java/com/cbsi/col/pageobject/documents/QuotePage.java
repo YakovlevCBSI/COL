@@ -15,7 +15,7 @@ public class QuotePage extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForPageToLoad(By.cssSelector("div h1"));
-		waitForTextToBeVisible("Quote (Open)", "span");
+		waitForTextToBeVisible(15000, "Quote (Open)", "span");
 	}
 	
 	@FindBy(css="input#addProductKeyword")

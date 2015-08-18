@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import com.cbsi.col.pageobject.ProductsPage;
 import com.cbsi.col.pageobject.ProductsPage.Action;
@@ -15,6 +16,7 @@ import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class QuoteTest extends ColBaseTest{
@@ -37,8 +39,10 @@ public class QuoteTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
-		recentCustomersPage = documentPage.goToHomePage().goToAccountsPage().goToRecentCustomersTab();
-		recentCustomersPage.deleteCompany(companyName);
+		super.cleanUp();
+		super.startUp();
+		navigateToCustomersPage();
+		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
 		super.cleanUp();
 	}
 	
@@ -95,13 +99,27 @@ public class QuoteTest extends ColBaseTest{
 		assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
 	}
 	
+	@Test
+	public void cleanUpCompanies(){
+		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
+		AccountsPage customersPage1 = null;
+		while(true){
+			customersPage1 = recentCustomersPage.deleteCompany("Qa");
+			customersPage1= customersPage1.goToAccountsPage();
+			
+		}
+	}
+	
 //	@Test
-//	public void cleanUpCompanies(){
-//		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
-//		AccountsPage customersPage1 = null;
+//	public void cleanUpDocuments(){
+//		DocumentsPage docPage  = homePage.goToDocumentsPage();
 //		while(true){
-//			customersPage1 = recentCustomersPage.deleteCompany("Qa");
-//			customersPage1= customersPage1.goToAccountsPage();
+//			try{
+//			docPage = docPage.deleteQuotesByCompnayName("qacustomer_");
+//			}catch(NullPointerException e){
+//				driver.findElement(By.linkText("Modified By")).click();
+//
+//			}
 //			
 //		}
 //	}

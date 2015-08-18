@@ -98,6 +98,6 @@ public class CurrentAccountTab extends AccountsPage{
 	}
 	
 	public void switchFrame(){
-		switchFrame(By.cssSelector("iframe[src*='DocList?']"));
+		switchFrame(By.cssSelector("iframe#jframe"));
 	}
 }

@@ -52,7 +52,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		isProposalTest = true;
 		
 		DocumentTemplateDesignerPage dtdp = dtp.createNewProposalTemplate(testVar);
-		dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
+		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		
 		assertTrue(dtp.hasProposalTemplate(testVar));

@@ -85,7 +85,7 @@ public class QuoteTest extends ColBaseTest{
 	public void createQuote(){
 		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
 		
-		QuotePage quotePage = currentAccountPage.ClickCreateQuote();
+		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quoteNumber = quotePage.getQuoteNumber();
 		
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");

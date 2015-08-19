@@ -113,11 +113,12 @@ public class ColBasePage {
 				}
 			}
 			
-			forceWait(300);
+			forceWait(100);
 		}
 		
+		System.out.println("Wait for: " + headerOnWait.getText());
 		while(!headerOnWait.isDisplayed() && (System.currentTimeMillis() - start < milliSeconds)){
-			forceWait(300);	
+			forceWait(100);	
 		}
 		
 		return;

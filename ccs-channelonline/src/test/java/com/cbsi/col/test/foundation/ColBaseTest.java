@@ -77,7 +77,7 @@ public class ColBaseTest {
 	}
 	
 	@Rule
-	public Timeout globalTimeout = new Timeout(180000);
+	public Timeout globalTimeout = new Timeout(220000);
 	
 	@Rule
 	public TestName testInfo = new TestName();

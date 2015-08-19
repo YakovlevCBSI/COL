@@ -15,7 +15,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 	public DocumentTemplateDesignerPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Document Template Designer:", "span");
+		waitForTextToBeVisible(15000, "Document Template Designer:", "span");
 		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
 
 		
@@ -52,6 +52,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 	
 	public DocumentTemplateDesignerPage clickSave(){
 		Save.click();
+		waitForQuickLoad();
 		return this;
 	}
 	
@@ -141,7 +142,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 
 		
 		public AddComponentPopup pickComponents(String...options){
-			List<WebElement> spans = driver.findElements(By.cssSelector("div span"));
+			List<WebElement> spans = driver.findElements(By.cssSelector("div.tab-pane.active div div div div div[class ^= 'span'] span"));
 
 			if(options[0].toLowerCase().equals("all")){
 				List<WebElement> checkBoxAlls= driver.findElements(By.cssSelector("div.tbl-head div input"));

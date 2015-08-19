@@ -16,7 +16,7 @@ public class DocumentTemplatesPage extends ColBasePage{
 	public DocumentTemplatesPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Document Templates");
+		waitForTextToBeVisible(15000, "Document Templates", "h1");
 	}
 	
 	@FindBy(linkText="Create New Template")
@@ -33,9 +33,12 @@ public class DocumentTemplatesPage extends ColBasePage{
 	}
 	
 	public DocumentTemplateDesignerPage createNewProposalTemplate(String name, String desc){
-		driver.findElement(By.linkText("Proposals")).click();
-		waitForElementToBeInvisible(By.linkText("Proposals"));
-		waitForElementToBeVisible(By.linkText("Proposals"));
+//		driver.findElement(By.linkText("Proposals")).click();
+		if(!Proposals.findElement(By.xpath("../../li[2]")).getAttribute("class").contains("active")){
+			waitForElementToBeInvisible(By.linkText("Proposals"));
+			waitForElementToBeVisible(By.linkText("Proposals"));
+		}
+
 		CreateNewTemplate.click();
 		CreateTemplatePopup ctp = PageFactory.initElements(driver, CreateTemplatePopup.class);
 		ctp.setName(name);
@@ -50,10 +53,15 @@ public class DocumentTemplatesPage extends ColBasePage{
 	}
 	
 	public DocumentTemplateDesignerPage createNewQuoteTemplate(String name, String desc){
-		driver.findElement(By.linkText("Quotes")).click();
-//		waitForElementToBeInvisible(By.linkText("Quotes"));
-		forceWait(500);
-		waitForElementToBeVisible(By.linkText("Quotes"));
+//		driver.findElement(By.linkText("Quotes")).click();
+////		waitForElementToBeInvisible(By.linkText("Quotes"));
+//		forceWait(500);
+//		
+		if(!Quotes.findElement(By.xpath("../../li[1]")).getAttribute("class").contains("active")){
+			Quotes.click();
+			waitForElementToBeVisible(By.linkText("Quotes"));
+		}
+		
 		CreateNewTemplate.click();
 		CreateTemplatePopup ctp = PageFactory.initElements(driver, CreateTemplatePopup.class);
 		ctp.setName(name);

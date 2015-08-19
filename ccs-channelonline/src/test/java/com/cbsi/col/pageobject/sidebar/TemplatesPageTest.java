@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.HomePage.Admin;
@@ -58,13 +59,14 @@ public class TemplatesPageTest extends ColBaseTest{
 		assertTrue(dtp.hasProposalTemplate(testVar));
 	}
 	
+	@Ignore
 	@Test
 	public void createQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
 		
 		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
-	
+	@Ignore
 	@Test
 	public void copyQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
@@ -73,7 +75,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		assertTrue(dtp.hasQuoteTemplate(getCopyOfTestVar()));
 		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
-	
+	@Ignore
 	@Test
 	public void editQuoteTemplate(){
 		DocumentTemplatesPage dtp = createQuoteTemplateSetup();
@@ -82,7 +84,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		
 		assertTrue(dtp.hasQuoteTemplate(testVar));
 	}
-	
+	@Ignore
 	@Test
 	public void addComponentsOnQuoteTemplate(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);

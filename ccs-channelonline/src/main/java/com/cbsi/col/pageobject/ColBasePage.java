@@ -91,7 +91,8 @@ public class ColBasePage {
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
 	
-		while(headerOnWait== null && (System.currentTimeMillis() - start < milliSeconds)){
+		outerLoop:
+		while(System.currentTimeMillis() - start < milliSeconds){
 			
 			List<WebElement> headers  = null;
 			
@@ -106,7 +107,7 @@ public class ColBasePage {
 				try{
 					if(h.getText().contains(text)){
 						headerOnWait = h;
-						break;
+						break outerLoop;
 					}
 				}catch(Exception e){
 					

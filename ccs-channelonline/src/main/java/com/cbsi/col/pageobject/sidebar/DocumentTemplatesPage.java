@@ -35,6 +35,7 @@ public class DocumentTemplatesPage extends ColBasePage{
 	public DocumentTemplateDesignerPage createNewProposalTemplate(String name, String desc){
 //		driver.findElement(By.linkText("Proposals")).click();
 		if(!Proposals.findElement(By.xpath("../../li[2]")).getAttribute("class").contains("active")){
+			Proposals.click();
 			waitForElementToBeInvisible(By.linkText("Proposals"));
 			waitForElementToBeVisible(By.linkText("Proposals"));
 		}

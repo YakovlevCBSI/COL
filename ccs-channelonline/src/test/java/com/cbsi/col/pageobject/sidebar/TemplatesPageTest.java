@@ -45,8 +45,6 @@ public class TemplatesPageTest extends ColBaseTest{
 			dtp.deleteQuoteTemplateByName(testVar);
 		else
 			dtp.deleteProposalTemplateByName(testVar);
-
-		super.cleanUp();
 	}
 	
 	@Test

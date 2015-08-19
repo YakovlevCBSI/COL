@@ -43,7 +43,6 @@ public class QuoteTest extends ColBaseTest{
 		super.startUp();
 		navigateToCustomersPage();
 		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
-		super.cleanUp();
 	}
 	
 	@Test

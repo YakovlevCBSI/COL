@@ -101,7 +101,6 @@ public class ColBaseTest {
 		navigatetoLoginPage();
 	}
 	
-	@After
 	public void cleanUp(){
 		driver.quit();
 	}

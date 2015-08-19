@@ -52,6 +52,11 @@ public class DocumentsPage extends ColBasePage{
 
 	}
 	
+	public boolean hasDoc(int docNumber){
+		return findDataRowByName(docNumber, false)==null? false:true;
+
+	}
+	
 	public QuotePage goToQuote(int quoteNumber){
 		WebElement docLink = findDataRowByName(quoteNumber);
 		docLink.click();

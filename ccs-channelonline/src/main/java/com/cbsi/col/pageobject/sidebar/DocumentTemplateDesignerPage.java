@@ -20,9 +20,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 
 		
 	}
-	public void waitForLoad(){
-		
-	}
+
 	@FindBy(css="button[title='Save']")
 	private WebElement Save;
 	
@@ -167,6 +165,7 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 				}
 			}
 			
+			waitForQuickLoad();
 			return this;
 		}
 		

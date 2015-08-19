@@ -26,7 +26,8 @@ public class QuotePage extends ColBasePage{
 	private WebElement Search;
 	
 	public int getQuoteNumber(){
-		String quoteNumber= driver.findElement(By.cssSelector("input#quoteNumber")).getAttribute("value");
+		String quoteNumber= driver.findElement(By.cssSelector("div.control-column div.readonly-text")).getText();
+		quoteNumber = quoteNumber.split("-")[0].trim();
 		return Integer.parseInt(quoteNumber);
 	}
 	

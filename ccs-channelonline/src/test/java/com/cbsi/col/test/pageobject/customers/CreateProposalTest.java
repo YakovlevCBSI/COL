@@ -32,10 +32,10 @@ public class CreateProposalTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
-		RecentAccountsTab recentCusotmersPage = documentPage.goToHomePage().goToAccountsPage().goToRecentAccountsTab();
-		recentCusotmersPage.deleteCompany(companyName);
 		super.cleanUp();
-		
+		super.startUp();
+		RecentAccountsTab recentCusotmersPage = homePage.goToAccountsPage().goToRecentAccountsTab();
+		recentCusotmersPage.deleteCompany(companyName);		
 	}
 	
 	//currently error creating a proposal.

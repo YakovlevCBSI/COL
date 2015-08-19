@@ -32,7 +32,9 @@ public class ProposalPage extends ColBasePage{
 	}
 	
 	public ProposalPage clickSave(){
+		waitForQuickLoad();
 		Save.click();
+		waitForQuickLoad();
 		return this;
 	}
 	

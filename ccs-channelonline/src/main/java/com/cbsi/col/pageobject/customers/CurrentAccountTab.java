@@ -18,7 +18,7 @@ public class CurrentAccountTab extends AccountsPage{
 		waitForPageToLoad(By.cssSelector("li.active a[href*='Customers/view']"));
 	}
 	
-	@FindBy(css="div a[href*='Docs/createQuote?']")
+	@FindBy(linkText="Create Quote")
 	private WebElement CreateQuote;
 	
 //	@FindBy(css="#createProposalFrame")
@@ -31,7 +31,7 @@ public class CurrentAccountTab extends AccountsPage{
 	@FindBy(css="div a[href*='list?deleted=']")
 	private WebElement Recyclebin;
 	
-	public QuotePage ClickCreateQuote(){
+	public QuotePage clickCreateQuote(){
 		switchFrame();
 		CreateQuote.click();
 		forceWait(500);

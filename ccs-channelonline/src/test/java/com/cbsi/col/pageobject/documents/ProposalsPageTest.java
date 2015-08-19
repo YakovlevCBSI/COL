@@ -1,4 +1,4 @@
-package com.cbsi.col.test.pageobject.customers;
+package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertTrue;
 
@@ -14,11 +14,11 @@ import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.DocumentsPage.Time;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
-public class CreateProposalTest extends ColBaseTest{
+public class ProposalsPageTest extends ColBaseTest{
 	public RecentAccountsTab recentCustomersPage;
 	public DocumentsPage documentPage;
 	
-	public CreateProposalTest(String url, String browser) {
+	public ProposalsPageTest(String url, String browser) {
 		super(url, browser);
 		// TODO Auto-generated constructor stub
 	}

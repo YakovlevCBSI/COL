@@ -1,4 +1,4 @@
-package com.cbsi.col.test.pageobject.customers;
+package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,14 +19,14 @@ import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
-public class QuoteTest extends ColBaseTest{
+public class QuotePageTest extends ColBaseTest{
 
 	public RecentAccountsTab recentCustomersPage;
 	public DocumentsPage documentPage;
 	
 	private int quoteNumber;
 	
-	public QuoteTest(String url, String browser) {
+	public QuotePageTest(String url, String browser) {
 		super(url, browser);
 		// TODO Auto-generated constructor stub
 	}

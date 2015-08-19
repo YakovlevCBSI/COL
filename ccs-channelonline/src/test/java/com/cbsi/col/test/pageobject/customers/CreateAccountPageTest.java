@@ -18,11 +18,11 @@ import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CreateCustomerTest extends ColBaseTest{
+public class CreateAccountPageTest extends ColBaseTest{
 
 	public static boolean isLoggedIn=false;
 
-	public CreateCustomerTest(String url, String browser){
+	public CreateAccountPageTest(String url, String browser){
 		super(url, browser);
 	}
 

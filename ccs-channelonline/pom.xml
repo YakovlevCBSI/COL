@@ -7,13 +7,13 @@
   <packaging>jar</packaging>  
   
   <properties>
-                <java-version>1.8</java-version>
-            <mvn-compiler-plugin-version>2.3.2</mvn-compiler-plugin-version>
-            <mvn-plugin-version>2.18</mvn-plugin-version>
-                <junit-version>4.11</junit-version>
-            <selenium-version>2.45.0</selenium-version>
-                <project-version>0.0.1-SNAPSHOT</project-version>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java-version>1.7</java-version>
+   	 	<mvn-compiler-plugin-version>2.3.2</mvn-compiler-plugin-version>
+    	<mvn-plugin-version>2.18</mvn-plugin-version>
+        <junit-version>4.11</junit-version>
+    	<selenium-version>2.47.1</selenium-version>
+        <project-version>0.0.1-SNAPSHOT</project-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
                 
 	<build>
@@ -42,8 +42,8 @@
                <artifactId>maven-compiler-plugin</artifactId>
                <version>${mvn-compiler-plugin-version}</version>
                <configuration>
-                       <source>1.6</source>
-                       <target>1.6</target>
+                       <source>1.7</source>
+                       <target>1.7</target>
                </configuration>
           </plugin>
         </plugins>

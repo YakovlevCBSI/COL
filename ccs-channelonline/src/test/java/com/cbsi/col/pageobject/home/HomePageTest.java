@@ -17,7 +17,7 @@ public class HomePageTest extends ColBaseTest{
 	public void ChartsAndTableAreDisplayed(){
 		assertTrue(homePage.isSalesChartDisplayed());
 		assertTrue(homePage.isQuoteTableDisplayed());
-		assertTrue(!homePage.isQuotesOnProposalTableDisplayed());
+		assertTrue(homePage.isQuotesOnProposalTableDisplayed());
 		assertTrue(homePage.isSalesOrderTableDisplayed());
 		assertTrue(homePage.isFollowUpDocsDisplayed());
 		assertTrue(homePage.isRmasTableDisplayed());

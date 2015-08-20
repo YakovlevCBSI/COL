@@ -23,6 +23,17 @@ public class HomePageTest extends ColBaseTest{
 		assertTrue(homePage.isRmasTableDisplayed());
 		assertTrue(homePage.isOrganizerNotesTableDisplayed());
 		assertTrue(homePage.isOrganizerTasksTableDisplayed());			
-
+	}
+	
+	@Test
+	public void mainTabsAreDisplayed(){
+		assertTrue(homePage.IsAccountsTabDisplayed());
+		assertTrue(homePage.IsProductsTabDisplayed());
+		assertTrue(homePage.IsServicesTabDisplayed());
+		assertTrue(homePage.IsDocumentsTabDisplayed());
+		assertTrue(homePage.IsSuppliersTabDisplayed());
+		assertTrue(homePage.IsPurchaseOrdersTabDisplayed());
+		assertTrue(homePage.IsCustomerViewTabDisplayed());
+		assertTrue(homePage.isDocumentActiveTabDisplayed());
 	}
 }

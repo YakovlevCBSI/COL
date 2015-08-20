@@ -72,6 +72,12 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="a#tab-po")
 	private WebElement PurhcaseOrders;
 	
+	@FindBy(css="li#li-customer-view a")
+	private WebElement CustomerView;
+	
+	@FindBy(css="li#li-document-active a")
+	private WebElement DocumentActive;
+	
 	public  AccountsPage goToAccountsPage(){
 		Accounts.click();
 		return PageFactory.initElements(driver, AccountsPage.class);
@@ -100,6 +106,38 @@ public class HomePage extends ColBasePage{
 	public PurchaseOrdersPage goToPurchaseOrdersPage(){
 		PurhcaseOrders.click();
 		return PageFactory.initElements(driver, PurchaseOrdersPage.class);
+	}
+	
+	public boolean IsAccountsTabDisplayed(){
+		return Accounts.isDisplayed();
+	}
+	
+	public boolean IsProductsTabDisplayed(){
+		return Products.isDisplayed();
+	}
+	
+	public boolean IsServicesTabDisplayed(){
+		return Services.isDisplayed();
+	}
+	
+	public boolean IsDocumentsTabDisplayed(){
+		return Documents.isDisplayed();
+	}
+	
+	public boolean IsSuppliersTabDisplayed(){
+		return Suppliers.isDisplayed();
+	}
+	
+	public boolean IsPurchaseOrdersTabDisplayed(){
+		return PurhcaseOrders.isDisplayed();
+	}
+	
+	public boolean IsCustomerViewTabDisplayed(){
+		return CustomerView.isDisplayed();
+	}
+	
+	public boolean isDocumentActiveTabDisplayed(){
+		return DocumentActive.isDisplayed();
 	}
 	
 	//********************** side bar ********************//
@@ -212,6 +250,7 @@ public class HomePage extends ColBasePage{
 	public WebElement getTable(String tableName){
 		List<WebElement> tables = driver.findElements(By.cssSelector("table.graph"));
 		for(WebElement table: tables){
+//			System.out.println(table.findElement(By.xpath("tbody/tr/th/h2")).getText());
 			if(table.findElement(By.xpath("tbody/tr/th/h2")).getText().toLowerCase().contains(tableName.toLowerCase())){
 				return table;
 			}
@@ -255,4 +294,5 @@ public class HomePage extends ColBasePage{
 		return By.linkText(text.replace("_", " "));
 	}
 
+	//----------------- main tabs -------------------------//
 }

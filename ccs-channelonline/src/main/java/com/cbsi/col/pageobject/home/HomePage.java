@@ -1,4 +1,4 @@
-package com.cbsi.col.pageobject;
+package com.cbsi.col.pageobject.home;
 
 import java.util.List;
 
@@ -135,6 +135,120 @@ public class HomePage extends ColBasePage{
 		Suppliers,
 		System_Emails,
 		Tax_Profile
+	}
+	
+//	@FindBy(css="div.crm-side-pane div a#crm-toggle-controlpane")
+//	private WebElement ControlPanel;
+	
+	@FindBy(css="div#crm-controlpane-header a")
+	private WebElement ControlPanelArrow;
+	
+	public boolean isControlPaneExpanded(){
+		if(ControlPanelArrow.getAttribute("data-state").contains("expanded")){
+			return true;
+		}
+		
+		return false;
+	}
+	
+
+	public HomePage expandControlPanel(){
+		if(!isControlPaneExpanded()){
+			ControlPanelArrow.click();
+		}
+		
+		while(!isControlPaneExpanded()){
+			forceWait(100);
+		}
+		
+		return this;
+	}
+	
+	public HomePage collapeControlPanel(){
+		if(isControlPaneExpanded()){
+			ControlPanelArrow.click();
+		}
+		
+		while(isControlPaneExpanded()){
+			forceWait(100);
+		}
+		
+		return this;
+	}
+	
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-admin']")
+	private WebElement AdminDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-reports']")
+	private WebElement ReportsDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-selectors']")
+	private WebElement SelectorsDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-storesites']")
+	private WebElement StoreSitesDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-recent']")
+	private WebElement RecentDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-favorites']")
+	private WebElement FavoritesDiv;
+	
+	@FindBy(css="li.accordion-heading.group-section div[id *= '-allcatalogs']")
+	private WebElement AllCatalogsDiv;
+	
+	public boolean areIconsDisplayed(){
+		return AdminDiv.isDisplayed() &&
+				ReportsDiv.isDisplayed() &&
+				SelectorsDiv.isDisplayed() &&
+				RecentDiv.isDisplayed() &&
+				FavoritesDiv.isDisplayed() &&
+				AllCatalogsDiv.isDisplayed();
+	}
+	
+	//********************** Charts Section ********************//
+	
+	public WebElement getTable(String tableName){
+		List<WebElement> tables = driver.findElements(By.cssSelector("table.graph"));
+		for(WebElement table: tables){
+			if(table.findElement(By.xpath("tbody/tr/th/h2")).getText().toLowerCase().contains(tableName.toLowerCase())){
+				return table;
+			}
+		}
+		return null;
+	}
+	
+	public boolean isSalesChartDisplayed(){
+		return getTable("Sales Chart").isDisplayed();
+	}
+	
+	public boolean isQuoteTableDisplayed(){
+		return getTable("Quote").isDisplayed();
+	}
+	
+	public boolean isQuotesOnProposalTableDisplayed(){
+		return getTable("Quotes on Proposal").isDisplayed();
+	}
+	
+	public boolean isSalesOrderTableDisplayed(){
+		return getTable("Sales Order").isDisplayed();
+	}
+	
+	public boolean isFollowUpDocsDisplayed(){
+		return getTable("Follow-up Docs").isDisplayed();
+	}
+	
+	public boolean isRmasTableDisplayed(){
+		return getTable("RMAs").isDisplayed();
+	}
+	
+	public boolean isOrganizerNotesTableDisplayed(){
+		return getTable("Organizer Notes").isDisplayed();
+	}
+	
+	public boolean isOrganizerTasksTableDisplayed(){
+		return getTable("Organizer Tasks").isDisplayed();
 	}
 	
 	public By getLinkText(String text){

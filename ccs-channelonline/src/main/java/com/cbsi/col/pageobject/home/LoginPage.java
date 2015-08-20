@@ -1,4 +1,4 @@
-package com.cbsi.col.pageobject;
+package com.cbsi.col.pageobject.home;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

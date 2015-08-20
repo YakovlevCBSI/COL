@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import com.cbsi.col.pageobject.ProductsPage;
-import com.cbsi.col.pageobject.ProductsPage.Action;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
@@ -17,6 +15,8 @@ import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.home.ProductsPage;
+import com.cbsi.col.pageobject.home.ProductsPage.Action;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class QuotePageTest extends ColBaseTest{

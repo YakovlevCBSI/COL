@@ -10,9 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.pageobject.ColBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
+import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class AccountsPage extends ColBasePage{
 	public AccountsPage(WebDriver driver){

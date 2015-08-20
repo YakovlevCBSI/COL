@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.cbsi.col.pageobject.ColBasePage;
+import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class ProposalPage extends ColBasePage{
 

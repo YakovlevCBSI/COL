@@ -2,7 +2,7 @@ package com.cbsi.col.pageobject.sidebar;
 
 import org.openqa.selenium.WebDriver;
 
-import com.cbsi.col.pageobject.ColBasePage;
+import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class CompanySettingsPage extends ColBasePage{
 

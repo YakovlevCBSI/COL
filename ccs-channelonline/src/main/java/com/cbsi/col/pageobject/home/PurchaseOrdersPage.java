@@ -1,4 +1,4 @@
-package com.cbsi.col.pageobject;
+package com.cbsi.col.pageobject.home;
 
 public class PurchaseOrdersPage {
 

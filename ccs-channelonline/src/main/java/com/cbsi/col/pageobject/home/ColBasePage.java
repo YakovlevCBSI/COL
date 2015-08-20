@@ -1,4 +1,4 @@
-package com.cbsi.col.pageobject;
+package com.cbsi.col.pageobject.home;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,9 +15,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.cbsi.col.pageobject.SearchPopup.QueryOption;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 
 public class ColBasePage {
 	protected WebDriver driver;

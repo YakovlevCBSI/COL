@@ -10,11 +10,11 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.pageobject.HomePage;
-import com.cbsi.col.pageobject.LoginPage;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.home.HomePage;
+import com.cbsi.col.pageobject.home.LoginPage;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

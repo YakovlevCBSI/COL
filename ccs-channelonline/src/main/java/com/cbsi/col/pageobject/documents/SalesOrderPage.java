@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.pageobject.ColBasePage;
+import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class SalesOrderPage extends ColBasePage{
 

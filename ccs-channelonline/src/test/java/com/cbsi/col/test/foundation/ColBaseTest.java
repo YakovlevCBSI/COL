@@ -42,6 +42,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
 
@@ -303,7 +304,9 @@ public class ColBaseTest {
 	
 	public void navigateToCustomersPage(){
 //		navigatetoLoginPage();
+		
 		customersPage = homePage.goToAccountsPage();
+
 	}
 	
 	public void navigatetoLoginPage(){
@@ -318,8 +321,12 @@ public class ColBaseTest {
 	public static final String zip = "90019";
 	
 	public RecentAccountsTab createAccount(){
+		return createAccount(AccountType.CUSTOMER);
+	}
+	
+	public RecentAccountsTab createAccount(AccountType accountType){
 		System.out.println(companyName);
-		CreateAccountPage createNewCustomerPage = customersPage.clickCreateNewCustomer("customer");
+		CreateAccountPage createNewCustomerPage = customersPage.clickCreateNewAccount(accountType);
 		createNewCustomerPage.setCompanyName(companyName);
 		createNewCustomerPage.setAddress(address);
 		createNewCustomerPage.setCity(city);

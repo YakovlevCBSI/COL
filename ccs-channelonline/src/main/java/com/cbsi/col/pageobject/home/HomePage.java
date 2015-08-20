@@ -54,7 +54,7 @@ public class HomePage extends ColBasePage{
 
 	//------------------------------- access tabs-------------------------------//
 	
-	@FindBy(css="a#tab-customers")
+	@FindBy(css=".crm-tab-bar a#tab-customers")
 	private WebElement Accounts;	
 	
 	@FindBy(css="a#tab-products")
@@ -80,6 +80,7 @@ public class HomePage extends ColBasePage{
 	
 	public  AccountsPage goToAccountsPage(){
 		Accounts.click();
+
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 

@@ -12,7 +12,7 @@ public class CreateAccountPage extends ColBasePage{
 	public CreateAccountPage(WebDriver driver){
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
-		waitForTextToBeVisible(15000,"Create New Customer", "h1");
+		waitForTextToBeVisible(15000,"Create", "h1");
 	}
 	
 	@FindBy(css="#company")
@@ -87,4 +87,6 @@ public class CreateAccountPage extends ColBasePage{
 		
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
+	
+
 }

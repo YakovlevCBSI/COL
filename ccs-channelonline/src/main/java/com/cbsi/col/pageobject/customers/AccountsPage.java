@@ -18,6 +18,7 @@ public class AccountsPage extends ColBasePage{
 	public AccountsPage(WebDriver driver){
 		super(driver);
 		try{
+			waitForQuickLoad();
 			waitForPageToLoad(By.cssSelector("form#customerForm h1"), 10);
 		}catch(Exception e){
 			
@@ -67,16 +68,16 @@ public class AccountsPage extends ColBasePage{
 	
 	//-----------------------------------------------------------------//
 	@FindBy(linkText="Create Account")
-	private WebElement CreateNewCustomer;
+	private WebElement CreateAccount;
 	
-	public CreateAccountPage clickCreateNewCustomer(String accountType){
+	public CreateAccountPage clickCreateNewAccount(AccountType accountType){
 //		waitForElementToBeClickable(By.cssSelector("a[href='https://ccs.stage.channelonline.com/acme/home/Customers/create']"));
 		List<WebElement> list = driver.findElements(By.cssSelector("a"));
 //		for(WebElement e: list){
 //			System.out.println(e.getAttribute("href"));
 //		}
 //		forceWait(3000);
-		CreateNewCustomer.click();
+		CreateAccount.click();
 
 		waitForTextToBeVisible("Create Account");
 		CreateAccountPopup createAccountPopup = PageFactory.initElements(driver, CreateAccountPopup.class);
@@ -154,14 +155,14 @@ public class AccountsPage extends ColBasePage{
 		@FindBy(css="input[value='vendor']")
 		private WebElement Vendor;
 		
-		@FindBy(css="input[value='generic']")
+		@FindBy(css="input[value='client']")
 		private WebElement Generic;
 		
 		@FindBy(css="button#save-tpl-btn")
 		private WebElement OK;
 		
-		public CreateAccountPage pickAccountType(String accountType){
-			this.accountType = accountType.toLowerCase();
+		public CreateAccountPage pickAccountType(AccountType accountType){
+			this.accountType = accountType.toString().toLowerCase();
 			
 			if(this.accountType.equals("customer")){
 				System.out.println("clicked customer");
@@ -180,6 +181,7 @@ public class AccountsPage extends ColBasePage{
 			waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"));
 //			OK.click();
 			OK.click();
+			waitForQuickLoad();
 			return PageFactory.initElements(driver, CreateAccountPage.class);
 		}	
 	}
@@ -189,5 +191,18 @@ public class AccountsPage extends ColBasePage{
 	public RecentAccountsTab goToRecentCustomersTab(){
 		RecentCustomers.click();
 		return PageFactory.initElements(driver, RecentAccountsTab.class);
+	}
+	
+	//------------------------ creat account method  --------------------//
+	
+	public enum AccountType{
+		CUSTOMER,
+		LEAD,
+		PROSPECT,
+		PARTNER,
+		VENDOR,
+		GENERIC
+		
+		
 	}
 }

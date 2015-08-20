@@ -2,6 +2,7 @@ package com.cbsi.col.test.pageobject.customers;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -11,13 +12,14 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CreateAccountPageTest extends ColBaseTest{
 
 	public static boolean isLoggedIn=false;
@@ -30,27 +32,51 @@ public class CreateAccountPageTest extends ColBaseTest{
 	public void startUp(){
 		super.startUp();
 		navigateToCustomersPage();
-		System.out.println("companyName: " + companyName);
+		
+	}
+	
+	@After
+	public void cleanUp(){
+		super.cleanUp();
+		super.startUp();
+		homePage.goToAccountsPage().goToRecentAccountsTab().deleteCompany(companyName);
 		
 	}
 
 	@Test
-	public void test1_createCustomer(){		
-		RecentAccountsTab recentCustomersPage = createAccount();
-		assertTrue(recentCustomersPage.hasCompany(companyName));
+	public void createCustomer(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.CUSTOMER);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
+		
 	}
 	
 	@Test
-	public void test2_searchCustomer() throws InterruptedException{;
-		AccountsPage customersSeachPage = customersPage.searchCustomer(companyName, true);
-		assertTrue(customersSeachPage.hasCompany(companyName));
+	public void createLead(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.LEAD);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
 	}
 	
 	@Test
-	public void test3_deleteCustomer(){
-		RecentAccountsTab recentCustomersPage= customersPage.goToRecentCustomersTab();
-		recentCustomersPage.deleteCompany(companyName);
+	public void createProspect(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.PROSPECT);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
 	}
-	
 
+	@Test
+	public void createPartner(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.PARTNER);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
+	}
+	
+	@Test
+	public void createVendor(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.VENDOR);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
+	}
+	
+	@Test
+	public void Generic(){
+		RecentAccountsTab recentAccountsTab = createAccount(AccountType.GENERIC);
+		assertTrue(recentAccountsTab.hasCompany(companyName));
+	}
 }

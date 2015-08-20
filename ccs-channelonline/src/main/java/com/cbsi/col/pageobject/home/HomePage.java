@@ -177,25 +177,25 @@ public class HomePage extends ColBasePage{
 	}
 	
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-admin']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-admin']")
 	private WebElement AdminDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-reports']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-reports']")
 	private WebElement ReportsDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-selectors']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-selectors']")
 	private WebElement SelectorsDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-storesites']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-storesites']")
 	private WebElement StoreSitesDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-recent']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-recent']")
 	private WebElement RecentDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-favorites']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-favorites']")
 	private WebElement FavoritesDiv;
 	
-	@FindBy(css="li.accordion-heading.group-section div[id *= '-allcatalogs']")
+	@FindBy(css="li.accordion-group.group-section div[id *= '-allcatalogs']")
 	private WebElement AllCatalogsDiv;
 	
 	public boolean areIconsDisplayed(){

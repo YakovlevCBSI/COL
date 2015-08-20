@@ -39,11 +39,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.cbsi.col.pageobject.HomePage;
-import com.cbsi.col.pageobject.LoginPage;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.home.HomePage;
+import com.cbsi.col.pageobject.home.LoginPage;
 
 @RunWith(Parameterized.class)
 public class ColBaseTest {
@@ -77,7 +77,7 @@ public class ColBaseTest {
 	}
 	
 	@Rule
-	public Timeout globalTimeout = new Timeout(220000);
+	public Timeout globalTimeout = new Timeout(180000);
 	
 	@Rule
 	public TestName testInfo = new TestName();

@@ -26,12 +26,21 @@ public class CreateAccountPage extends ColBasePage{
 	
 	@FindBy(css="#zip")
 	private WebElement Zip;
+
 	
+	@FindBy(css="input#fname")
+	private WebElement FirstName;
+	
+	@FindBy(css="input#lname")
+	private WebElement LastName;
+	
+	@FindBy(css="input#email")
+	private WebElement Email;
 	
 	@FindBy(linkText="Next")
 	private WebElement Next;
 	
-	@FindBy(linkText="Finish")
+	@FindBy(css="button[title='Save']")
 	private WebElement Finish;
 	
 	@FindBy(linkText="Cancel")
@@ -39,6 +48,9 @@ public class CreateAccountPage extends ColBasePage{
 	
 	@FindBy(linkText="Previous")
 	private WebElement Previous;
+	
+	@FindBy(linkText="Save")
+	private WebElement Save;
 	
 	public CreateAccountPage setCompanyName(String companyName){
 		CompanyName.sendKeys(companyName);
@@ -60,6 +72,21 @@ public class CreateAccountPage extends ColBasePage{
 		return this;
 	}
 	
+	public CreateAccountPage setFirstName(String firstName){
+		FirstName.sendKeys(firstName);
+		return this;
+	}
+	
+	public CreateAccountPage setLastName(String lastName){
+		LastName.sendKeys(lastName);
+		return this;
+	}
+	
+	public CreateAccountPage setEmail(String email){
+		Email.sendKeys(email);
+		return this;
+	}
+	
 	public CreateAccountPage clickNext(){
 		Next.click();
 		forceWait(500);
@@ -68,14 +95,14 @@ public class CreateAccountPage extends ColBasePage{
 	}
 	
 	public CreateAccountPage clickFinish(){
-		Next.click();
-		forceWait(500);
+		Finish.click();
+		forceWait(2000);
 		
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
 	public CreateAccountPage clickCancel(){
-		Next.click();
+		Cancel.click();
 		forceWait(500);
 		
 		return PageFactory.initElements(driver, CreateAccountPage.class);
@@ -86,6 +113,13 @@ public class CreateAccountPage extends ColBasePage{
 		forceWait(500);
 		
 		return PageFactory.initElements(driver, CreateAccountPage.class);
+	}
+	
+	public CurrentAccountTab clickSave(){
+		Save.click();
+		forceWait(500);
+		
+		return PageFactory.initElements(driver, CurrentAccountTab.class);
 	}
 	
 

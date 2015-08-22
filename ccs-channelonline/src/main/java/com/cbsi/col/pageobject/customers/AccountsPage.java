@@ -1,7 +1,10 @@
 package com.cbsi.col.pageobject.customers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -80,6 +83,7 @@ public class AccountsPage extends ColBasePage{
 		CreateAccount.click();
 
 		waitForTextToBeVisible("Create Account");
+		forceWait(500);
 		CreateAccountPopup createAccountPopup = PageFactory.initElements(driver, CreateAccountPopup.class);
 		return createAccountPopup.pickAccountType(accountType);
 	}
@@ -201,8 +205,39 @@ public class AccountsPage extends ColBasePage{
 		PROSPECT,
 		PARTNER,
 		VENDOR,
-		GENERIC
-		
-		
+		GENERIC	
 	}
+	
+	//------------------------ table result from search  --------------------//
+
+	@FindBy(css="table.costandard")
+	WebElement table;
+	
+	public List<HashMap<String, String>> getTableAsMaps(){
+		List<WebElement> headerElements = table.findElements(By.xpath("thead/tr/th/a"));
+		String[] headerColumns = new String[headerElements.size()];
+		for(int i=0; i < headerElements.size(); i++){
+			headerColumns[i] = headerElements.get(i).getText().replaceAll("/", "");
+			System.out.println(headerColumns[i]);
+		}
+		
+		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
+		
+		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
+		System.out.println("trs: " + trs.size());
+		for(WebElement tr: trs){
+			HashMap<String, String> map = new HashMap<String, String>();
+			for(int i=1; i< headerColumns.length; i++){
+				System.out.println("i: " + i);
+				String data = tr.findElement(By.xpath("td[" + i+1 + "]")).getText();
+				System.out.println("data: " + data);
+				map.put(headerColumns[i], data==null?"":data);
+			}
+			
+			maps.add(map);
+		}
+		
+		return maps;
+	}
+	
 }

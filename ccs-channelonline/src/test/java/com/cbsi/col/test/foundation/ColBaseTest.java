@@ -327,11 +327,21 @@ public class ColBaseTest {
 	public RecentAccountsTab createAccount(AccountType accountType){
 		System.out.println(companyName);
 		CreateAccountPage createNewCustomerPage = customersPage.clickCreateNewAccount(accountType);
-		createNewCustomerPage.setCompanyName(companyName);
-		createNewCustomerPage.setAddress(address);
-		createNewCustomerPage.setCity(city);
-		createNewCustomerPage.setZip(zip);
-		createNewCustomerPage.clickFinish();
+		if(accountType != AccountType.LEAD){ 
+			createNewCustomerPage.setCompanyName(companyName);
+			createNewCustomerPage.setAddress(address);
+			createNewCustomerPage.setCity(city);
+			createNewCustomerPage.setZip(zip);
+		}else{
+			createNewCustomerPage.setFirstName(companyName);
+			createNewCustomerPage.setLastName(companyName);
+			createNewCustomerPage.setEmail(companyName+"@email.com");
+		}
+		
+		if(accountType != AccountType.LEAD)
+			createNewCustomerPage.clickSave();
+		else
+			createNewCustomerPage.clickFinish();
 		
 		RecentAccountsTab recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		return recentCustomersPage;

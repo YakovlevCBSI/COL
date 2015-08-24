@@ -14,7 +14,7 @@ public class QuotePage extends ColBasePage{
 	public QuotePage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForPageToLoad(By.cssSelector("div h1"));
+//		waitForPageToLoad(By.cssSelector("div h1"));
 		waitForTextToBeVisible(15000, "Quote (Open)", "span");
 	}
 	

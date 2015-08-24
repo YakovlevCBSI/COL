@@ -339,9 +339,16 @@ public class ColBaseTest {
 		}
 		
 		if(accountType != AccountType.LEAD)
-			createNewCustomerPage.clickSave();
+			createNewCustomerPage = createNewCustomerPage.clickNext();
 		else
-			createNewCustomerPage.clickFinish();
+			createNewCustomerPage = createNewCustomerPage.clickFinish();
+		
+		//---------------------------------------------------------------------------
+		//WORK AROUND FOR IFrame loading error without Contact info #5431
+		createNewCustomerPage.setContactInfo_FirstName(companyName);
+		createNewCustomerPage.setContactInfo_LastName(companyName);
+		createNewCustomerPage = createNewCustomerPage.clickNext();
+		//----------------------------------------------------------------------------
 		
 		RecentAccountsTab recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		return recentCustomersPage;

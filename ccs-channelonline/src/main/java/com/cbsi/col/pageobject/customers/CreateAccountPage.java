@@ -52,6 +52,13 @@ public class CreateAccountPage extends ColBasePage{
 	@FindBy(linkText="Save")
 	private WebElement Save;
 	
+	
+	@FindBy(css="input#firstname")
+	private WebElement ContactInfo_FirstName;
+	
+	@FindBy(css="input#lastname")
+	private WebElement ContactInfo_LastName;
+	
 	public CreateAccountPage setCompanyName(String companyName){
 		CompanyName.sendKeys(companyName);
 		return this;
@@ -79,6 +86,16 @@ public class CreateAccountPage extends ColBasePage{
 	
 	public CreateAccountPage setLastName(String lastName){
 		LastName.sendKeys(lastName);
+		return this;
+	}
+	
+	public CreateAccountPage setContactInfo_FirstName(String firstName){
+		ContactInfo_FirstName.sendKeys(firstName);
+		return this;
+	}
+	
+	public CreateAccountPage setContactInfo_LastName(String lastName){
+		ContactInfo_LastName.sendKeys(lastName);
 		return this;
 	}
 	
@@ -115,11 +132,11 @@ public class CreateAccountPage extends ColBasePage{
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
-	public CurrentAccountTab clickSave(){
+	public CreateAccountPage clickSave(){
 		Save.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, CurrentAccountTab.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
 

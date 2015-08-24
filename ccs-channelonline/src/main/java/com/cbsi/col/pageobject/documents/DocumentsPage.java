@@ -149,7 +149,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public DocumentsPage switchToTab(DocumentTabs tab){
-		driver.findElement(By.linkText(WordUtils.capitalizeFully(tab.toString()))).click();
+		driver.findElement(By.cssSelector("li a[href*='" + WordUtils.capitalizeFully(tab.toString()) + "/list'")).click();
 		try{
 			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
 		}catch(TimeoutException e){

@@ -24,6 +24,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -98,7 +99,8 @@ public class ColBaseTest {
 		insertHeader();
 		driver = configureDrivers();
 		driver.get(url);
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
+		driver.manage().window().setSize(new Dimension(1600, 700));
 		navigatetoLoginPage();
 	}
 	
@@ -345,8 +347,8 @@ public class ColBaseTest {
 		
 		//---------------------------------------------------------------------------
 		//WORK AROUND FOR IFrame loading error without Contact info #5431
-		createNewCustomerPage.setContactInfo_FirstName(companyName);
-		createNewCustomerPage.setContactInfo_LastName(companyName);
+		createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
+		createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
 		createNewCustomerPage = createNewCustomerPage.clickNext();
 		//----------------------------------------------------------------------------
 		

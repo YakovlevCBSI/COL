@@ -88,7 +88,6 @@ public class AccountsPage extends ColBasePage{
 		return createAccountPopup.pickAccountType(accountType);
 	}
 	
-	private List<WebElement> dataColumns;
 	
 	public boolean hasCompany(String companyName){
 		return findDataRowByName(companyName)!=null?true:false;
@@ -109,13 +108,33 @@ public class AccountsPage extends ColBasePage{
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 	
+	private static List<WebElement> dataColumns;
+	int currentPage=0;
 	public WebElement findDataRowByName(String companyName){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
 			if(dataColumn.getText().contains(companyName)){
+				System.out.println("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}
 		}
+		
+		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+		if(currentPage-1 >=0){
+			int removePage = currentPage;
+			while(removePage >0){
+				removePage--;
+				pageList.remove(removePage);
+			}
+		}
+		if(pageList.size() >=1){
+			currentPage++;
+			pageList.get(0).click();
+			waitForTextToBeVisible("Accounts", "h1");
+			dataColumns=null;
+			return findDataRowByName(companyName);
+		}
+		
 		return null;		
 	}
 	

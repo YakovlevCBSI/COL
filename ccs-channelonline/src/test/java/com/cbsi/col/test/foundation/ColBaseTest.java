@@ -42,6 +42,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
+import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.home.HomePage;
@@ -79,7 +80,7 @@ public class ColBaseTest {
 	}
 	
 	@Rule
-	public Timeout globalTimeout = new Timeout(240000);
+	public Timeout globalTimeout = new Timeout(280000);
 	
 	@Rule
 	public TestName testInfo = new TestName();
@@ -328,31 +329,33 @@ public class ColBaseTest {
 	
 	public RecentAccountsTab createAccount(AccountType accountType){
 		System.out.println(companyName);
+		RecentAccountsTab recentCustomersPage = null;
 		CreateAccountPage createNewCustomerPage = customersPage.clickCreateNewAccount(accountType);
 		if(accountType != AccountType.LEAD){ 
 			createNewCustomerPage.setCompanyName(companyName);
 			createNewCustomerPage.setAddress(address);
 			createNewCustomerPage.setCity(city);
 			createNewCustomerPage.setZip(zip);
+			createNewCustomerPage = createNewCustomerPage.clickNext();
+			
+			//---------------------------------------------------------------------------
+			//WORK AROUND FOR IFrame loading error without Contact info #5431
+			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
+			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+			createNewCustomerPage = createNewCustomerPage.clickNext();
+			//----------------------------------------------------------------------------
+			
+			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{
-			createNewCustomerPage.setFirstName(companyName);
-			createNewCustomerPage.setLastName(companyName);
+			createNewCustomerPage.setFirstName(companyName.split("_")[0]);
+			createNewCustomerPage.setLastName(companyName.split("_")[1]);
 			createNewCustomerPage.setEmail(companyName+"@email.com");
+			createNewCustomerPage.setContactInfo_CompanyName(companyName);
+			CurrentAccountTab currentAccountTab = createNewCustomerPage.clickSaveButton();
+
+			recentCustomersPage = currentAccountTab.goToAccountsPage().goToRecentCustomersTab();
 		}
 		
-		if(accountType != AccountType.LEAD)
-			createNewCustomerPage = createNewCustomerPage.clickNext();
-		else
-			createNewCustomerPage = createNewCustomerPage.clickFinish();
-		
-		//---------------------------------------------------------------------------
-		//WORK AROUND FOR IFrame loading error without Contact info #5431
-		createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
-		createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
-		createNewCustomerPage = createNewCustomerPage.clickNext();
-		//----------------------------------------------------------------------------
-		
-		RecentAccountsTab recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		return recentCustomersPage;
 	}
 	

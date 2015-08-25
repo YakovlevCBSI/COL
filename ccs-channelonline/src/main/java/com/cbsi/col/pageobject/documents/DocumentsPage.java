@@ -124,7 +124,7 @@ public class DocumentsPage extends ColBasePage{
 			pageList.get(0).click();
 			waitForTextToBeVisible("Documents", "h1");
 			dataColumns=null;
-			findDataRowByName(quoteNumber, docNumberSecondcolumn);
+			return findDataRowByName(quoteNumber, docNumberSecondcolumn);
 		}
 		
 		return null;		

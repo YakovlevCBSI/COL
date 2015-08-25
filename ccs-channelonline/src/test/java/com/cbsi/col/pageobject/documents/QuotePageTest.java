@@ -98,16 +98,16 @@ public class QuotePageTest extends ColBaseTest{
 		assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
 	}
 	
-	@Test
-	public void cleanUpCompanies(){
-		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
-		AccountsPage customersPage1 = null;
-		while(true){
-			customersPage1 = recentCustomersPage.deleteCompany("Qa");
-			customersPage1= customersPage1.goToAccountsPage();
-			
-		}
-	}
+//	@Test
+//	public void cleanUpCompanies(){
+//		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
+//		AccountsPage customersPage1 = null;
+//		while(true){
+//			customersPage1 = recentCustomersPage.deleteCompany("Qa");
+//			recentCustomersPage= customersPage1.goToAccountsPage().goToRecentAccountsTab();
+//			
+//		}
+//	}
 	
 //	@Test
 //	public void cleanUpDocuments(){

@@ -16,6 +16,7 @@ public class SearchPopup extends ColBasePage{
 		System.out.println("passed");
 		clickDropDown();
 		waitForPageToLoad(By.cssSelector("#search-query-settings"));
+		waitForTextToBeVisible("QUERY SETTINGS", "h3");
 	}
 	
 	@FindBy(css="li[id*='item-search'] div a.header-search-toggle span")
@@ -39,28 +40,38 @@ public class SearchPopup extends ColBasePage{
 	@FindBy(css="input[value='starts_with']")
 	private WebElement startsWith;
 	
-	public ColBasePage searchFor(QueryOption option, String searchText){
-		return searchFor(option, false, searchText);
+	public AccountsPage searchForAccount( String searchText){
+		return searchFor(QueryOption.Customers, false, QueryColumn.Company, searchText,  AccountsPage.class);
 	}
 	
-	public ColBasePage searchFor(QueryOption option, boolean containsText,  String searchText){
-		if(containsText){
-			contains.click();
-		}else{
-			startsWith.click();
-		}
-		
-		if(option == QueryOption.Customers){
-			getQueryOptionElement(QueryOption.Customers.toString()).click();
-			searchField.clear();
-			searchField.sendKeys(searchText);
-			Search.click();
-			waitForElementToBeInvisible(By.cssSelector("div.dropdown-menu-content"));
+	public <T> T  searchFor(QueryOption option, boolean containsText,  QueryColumn column, String searchText, Class clazz){
+		getQueryOptionElement(option.toString()).click();
 
-			return PageFactory.initElements(driver, AccountsPage.class);
+		if(contains.isDisplayed()){
+			if(containsText){
+				System.out.println("in contains condition....");
+				contains.click();
+				
+			}else{
+				startsWith.click();
+			}
+		}
+
+		if(column != QueryColumn.All){
+			driver.findElement(By.cssSelector("select#decor-search-field")).click();
+			driver.findElement(By.cssSelector("option[value='"+column.toString() + "']")).click();
+			forceWait(200); //without wait, FF defaults back due to timing. Do not remove this.
 		}
 		
-		return null;
+		searchField.clear();
+		searchField.sendKeys(searchText);
+		
+		forceWait(3000);
+		Search.click();
+		waitForElementToBeInvisible(By.cssSelector("div.dropdown-menu-content"));
+
+		return (T)PageFactory.initElements(driver, clazz);
+
 	}
 	
 	public enum QueryOption{
@@ -78,9 +89,48 @@ public class SearchPopup extends ColBasePage{
 		ProductNews
 	}
 	
+	public enum QueryColumn{
+		All	{
+			public String toString(){
+			return "all";
+			}
+		},
+		Email{
+			public String toString(){
+				return "email";
+			}
+		},
+		Company{
+			public String toString(){
+				return "name";
+			}
+		},
+		CustomerNumber{
+			public String toString(){
+				return "customerNumber";
+			}
+		},
+		Contact{
+			public String toString(){
+				return "contact";
+			}
+		},
+		City{
+			public String toString(){
+				return "city";
+			}
+		},
+		State{
+			public String toString(){
+				return "state";
+			}
+		}	
+		
+	}
 	public WebElement getQueryOptionElement(String option){
 		return driver.findElement(By.cssSelector("option[id^='ds_" +option.toLowerCase() +  "']"));
 	}
+	
 	
 	
 }

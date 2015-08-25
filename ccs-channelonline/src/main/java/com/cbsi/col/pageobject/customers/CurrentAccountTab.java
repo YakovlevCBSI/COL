@@ -10,12 +10,13 @@ import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
 
-public class CurrentAccountTab extends AccountsPage{
+public class CurrentAccountTab extends ColBasePage{
 
 	public CurrentAccountTab(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForPageToLoad(By.cssSelector("li.active a[href*='Customers/view']"));
+//		waitForPageToLoad(By.cssSelector("li.active a[href*='Customers/view']"));
+		waitForTextToBeVisible("Account View", "span");
 	}
 	
 	@FindBy(linkText="Create Quote")

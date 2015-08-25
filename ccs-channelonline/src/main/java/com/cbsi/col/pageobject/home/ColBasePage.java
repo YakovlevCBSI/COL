@@ -1,5 +1,7 @@
 package com.cbsi.col.pageobject.home;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +19,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
+import com.cbsi.col.test.util.StringUtil;
 
 public class ColBasePage {
 	protected WebDriver driver;
@@ -196,13 +200,14 @@ public class ColBasePage {
 	}
 	
 	//------------top bar-----------//
-	public AccountsPage searchCustomer(String searchText){;
-		return searchCustomer(searchText, false);
+	public AccountsPage searchAccount(String searchText){
+		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
+		return searchPopup.searchAccount(searchText);
 	}
 	
-	public AccountsPage searchCustomer(String searchText, boolean contains){
+	public <T> T  searchFor(QueryOption option, boolean containsText,  QueryColumn column, String searchText, Class clazz){		
 		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
-		return (AccountsPage) searchPopup.searchFor(QueryOption.Customers, contains, searchText);
+		return searchPopup.searchFor(option, containsText,  column, searchText, clazz);
 	}
 	
 	//----------frame switch--------//
@@ -224,4 +229,54 @@ public class ColBasePage {
 		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
 	}
 	
+	
+	//-------------------- parse table such as search results, etc-------------------------------------//
+	public List<HashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){
+		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
+		int count=0;
+		for(WebElement e: headerElements){
+			System.out.println(count + " ; " + e.getText());count++;
+		}
+		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
+		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
+
+		// if no table rows exists, there is no data return empty maps.
+		if(trs.size() ==0 || trs == null){
+			return maps;
+		}
+		if(trs.size() <=1 && trs.get(0).findElement(By.xpath("td")).getText().toLowerCase().contains("no result")){
+			return maps;
+		}
+		
+		if(skipColumnNums != null){
+			for(int i=skipColumnNums.length-1; i >=0; i--){
+				System.out.println(skipColumnNums[i]);
+				headerElements.remove(skipColumnNums[i]);  //remove column (VIEW)
+			}
+		}
+		
+		String[] headerColumns = new String[headerElements.size()];
+		for(int i=0; i < headerElements.size(); i++){
+			if(!headerElements.get(i).getText().isEmpty()){
+				headerColumns[i] = StringUtil.cleanTableKey(headerElements.get(i).getText());
+			}else{
+				headerColumns[i] = StringUtil.cleanTableKey(headerElements.get(i).findElement(By.xpath("a")).getText());
+			}
+//			System.out.println(headerColumns[i]);
+		}
+		
+//		System.out.println("trs: " + trs.size());
+		for(WebElement tr: trs){
+			HashMap<String, String> map = new HashMap<String, String>();
+			for(int i=0; i< headerColumns.length; i++){
+				String data = tr.findElement(By.xpath("td[" + (i+2) + "]")).getText();
+				System.out.print(headerColumns[i] + " : " + data  + " | ");
+				map.put(headerColumns[i], data==null?"":data);
+			}
+			System.out.println();
+			maps.add(map);
+		}
+		
+		return maps;
+	}
 }

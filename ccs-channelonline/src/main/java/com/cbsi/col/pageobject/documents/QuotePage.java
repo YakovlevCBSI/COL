@@ -50,7 +50,7 @@ public class QuotePage extends ColBasePage{
 	
 	public QuotePage clickSave(){
 		Save.click();
-		forceWait(500);
+		waitForQuickLoad();
 		return this;
 	}
 	

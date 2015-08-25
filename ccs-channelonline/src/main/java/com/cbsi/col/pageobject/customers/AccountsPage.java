@@ -16,6 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
+import com.cbsi.col.test.util.StringUtil;
 
 public class AccountsPage extends ColBasePage{
 	public AccountsPage(WebDriver driver){
@@ -233,30 +234,6 @@ public class AccountsPage extends ColBasePage{
 	WebElement table;
 	
 	public List<HashMap<String, String>> getTableAsMaps(){
-		List<WebElement> headerElements = table.findElements(By.xpath("thead/tr/th/a"));
-		String[] headerColumns = new String[headerElements.size()];
-		for(int i=0; i < headerElements.size(); i++){
-			headerColumns[i] = headerElements.get(i).getText().replaceAll("/", "");
-			System.out.println(headerColumns[i]);
-		}
-		
-		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
-		
-		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
-		System.out.println("trs: " + trs.size());
-		for(WebElement tr: trs){
-			HashMap<String, String> map = new HashMap<String, String>();
-			for(int i=1; i< headerColumns.length; i++){
-				System.out.println("i: " + i);
-				String data = tr.findElement(By.xpath("td[" + i+1 + "]")).getText();
-				System.out.println("data: " + data);
-				map.put(headerColumns[i], data==null?"":data);
-			}
-			
-			maps.add(map);
-		}
-		
-		return maps;
+		return getTableAsMaps(table, 0, 11);
 	}
-	
 }

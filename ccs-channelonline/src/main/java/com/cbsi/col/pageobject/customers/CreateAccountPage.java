@@ -1,5 +1,7 @@
 package com.cbsi.col.pageobject.customers;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,12 +54,17 @@ public class CreateAccountPage extends ColBasePage{
 	@FindBy(linkText="Save")
 	private WebElement Save;
 	
+	@FindBy(css="button#update-acct-btn")
+	private WebElement SaveButton;
 	
+	//----------------------Lead-speicifc fields-------------------------//
 	@FindBy(css="input#firstname")
 	private WebElement ContactInfo_FirstName;
 	
 	@FindBy(css="input#lastname")
 	private WebElement ContactInfo_LastName;
+	
+	//--------------------------------------------------------------------//
 	
 	public CreateAccountPage setCompanyName(String companyName){
 		CompanyName.sendKeys(companyName);
@@ -139,5 +146,27 @@ public class CreateAccountPage extends ColBasePage{
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
+	public CurrentAccountTab clickSaveButton(){
+		SaveButton.click();
+		forceWait(500);
+		
+		return PageFactory.initElements(driver, CurrentAccountTab.class);
+	}
+	
+	public CreateAccountPage setContactInfo_CompanyName(String companyName){
+		List<WebElement> companyNameDivs= driver.findElements(By.cssSelector("div.control-group label[for='name']"));
+		WebElement companyNameDiv = null;
+		for(WebElement w: companyNameDivs){
+			if(w.getText().contains("Company Name")){
+				companyNameDiv = w;
+				break;
+			}
+		}
+		
+		WebElement companyInput = companyNameDiv.findElement(By.xpath("../div/input[@id='name']"));
+		companyInput.sendKeys(companyName);
+		
+		return this;
+	}
 
 }

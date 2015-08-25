@@ -32,30 +32,6 @@ public class SearchPopupTest extends ColBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 	
-//	@Test
-//	public void searchProductsAll(){
-//		homePage.searchFor(QueryOption.Products, false, QueryColumn.All, "abc", ProductsPage.class);
-//		
-//	}
-
-//	public static boolean testAccountExists =false;
-//	@Before
-//	public void start(){
-//		super.startUp();
-//		if(!testAccountExists){
-//			navigateToCustomersPage();
-//			recentCustomersPage = createAccount();
-//		}
-//	}
-//	
-//	@After
-//	public void clean(){
-//		super.cleanUp();
-//		super.startUp();
-//		navigateToCustomersPage();
-//		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
-//	}
-	
 	@Test
 	public void searchAccountAllContains(){
 		String keyword = "qa";

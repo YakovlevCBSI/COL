@@ -296,4 +296,9 @@ public class HomePage extends ColBasePage{
 	}
 
 	//----------------- main tabs -------------------------//
+	
+	
+
+
+	
 }

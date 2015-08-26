@@ -13,6 +13,7 @@ import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
+import com.cbsi.col.pageobject.documents.QuotePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.ProductsPage;
@@ -81,6 +82,29 @@ public class QuotePageTest extends ColBaseTest{
 		
 	}
 
+	@Test
+	public void priceCalculatorSum() throws InterruptedException{
+		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
+		
+		QuotePage quotePage = currentAccountPage.clickCreateQuote();
+		quotePage = quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;
+		
+		PriceCalculator priceCalculator = quotePage.getPriceCalculator();
+		
+		priceCalculator.setTaxOn(3.25);
+		
+		assertTrue(priceCalculator.getTaxOn() == 3.25);
+		
+		assertTrue(priceCalculator.getTaxedSubTotal() + " : " + priceCalculator.getExpectedTaxedSubTotal(), 
+					priceCalculator.getTaxedSubTotal() == priceCalculator.getExpectedTaxedSubTotal());
+		assertTrue(priceCalculator.getNonTaxableSubTotal() + " : " + priceCalculator.getExpectedNontaxableSubTotal(),
+					priceCalculator.getNonTaxableSubTotal() == priceCalculator.getExpectedNontaxableSubTotal());
+		assertTrue(priceCalculator.getTotal() + " : " +  priceCalculator.getExpectedTotal(),
+					priceCalculator.getTotal() == priceCalculator.getExpectedTotal());
+		
+		quotePage.clickSave();
+	}
+	
 	public void createQuote(){
 		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
 		

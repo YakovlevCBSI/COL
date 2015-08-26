@@ -9,9 +9,11 @@ import org.apache.commons.collections.ListUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,6 +30,8 @@ public class ColBasePage {
 	public ColBasePage(WebDriver driver){
 		this.driver= driver;
 	}
+	
+	public Actions action;
 	
 	public void customWait(int seconds){
 		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
@@ -162,6 +166,24 @@ public class ColBasePage {
 		forceWait(500);
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
+	}
+	
+	public Actions getActions(){
+		if(action == null){
+			action = new Actions(driver);
+		}
+		
+		return action;
+	}
+	
+	public void cleanInput(WebElement input){
+		String inputText = input.getAttribute("value");
+		int textLength = inputText.length();
+		while(textLength >0){
+			input.sendKeys(Keys.BACK_SPACE);
+			input.sendKeys(Keys.DELETE);
+			textLength --;
+		}
 	}
 	//------------------ navigate to main tabs-----------------------//
 	public AccountsPage goToAccountsPage(){

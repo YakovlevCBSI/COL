@@ -295,10 +295,42 @@ public class HomePage extends ColBasePage{
 		return By.linkText(text.replace("_", " "));
 	}
 
-	//----------------- main tabs -------------------------//
+	//----------------- top bar -------------------------//
 	
+	@FindBy(css="li#crm-item-inbox")
+	private WebElement Inbox;
 	
+	@FindBy(css="li#crm-item-organizer")
+	private WebElement Organizer;
+	
+	@FindBy(css="li#crm-item-user")
+	private WebElement User;
+	
+	@FindBy(css="li.user-info span.username")
+	private WebElement Username;
+	
+	@FindBy(css="li.user-info span.email")
+	private WebElement Email;
+	
+	public boolean isInboxDisplayed(){
+		return Inbox.isDisplayed();
+	}
+	
+	public boolean isOrganizerDisplayed(){
+		return Organizer.isDisplayed();
+	}
+	
+	public boolean isUserDisplayed(){
+		return User.isDisplayed();
+	}
+	
+	public boolean isUserNameDisplayed(){
+		return Username.isDisplayed();
+	}
 
+	public boolean isEmailDisplayed(){
+		return Email.isDisplayed();
+	}
 
 	
 }

@@ -14,7 +14,7 @@ public class HomePageTest extends ColBaseTest{
 	}
 
 	@Test
-	public void ChartsAndTableAreDisplayed(){
+	public void chartsAndTableAreDisplayed(){
 		assertTrue(homePage.isSalesChartDisplayed());
 		assertTrue(homePage.isQuoteTableDisplayed());
 		assertTrue(homePage.isQuotesOnProposalTableDisplayed());
@@ -35,5 +35,14 @@ public class HomePageTest extends ColBaseTest{
 		assertTrue(homePage.IsPurchaseOrdersTabDisplayed());
 		assertTrue(homePage.IsCustomerViewTabDisplayed());
 		assertTrue(homePage.isDocumentActiveTabDisplayed());
+	}
+	
+	@Test
+	public void userIconsDisplayedOnTopBar(){
+		assertTrue(homePage.isInboxDisplayed());
+		assertTrue(homePage.isOrganizerDisplayed());
+		assertTrue(homePage.isUserDisplayed());
+		assertTrue(homePage.isUserNameDisplayed());
+		assertTrue(homePage.isEmailDisplayed());
 	}
 }

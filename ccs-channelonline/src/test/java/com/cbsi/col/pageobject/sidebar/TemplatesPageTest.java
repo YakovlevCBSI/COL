@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.OrdersPageTest;
 import com.cbsi.col.pageobject.home.HomePage.Admin;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
@@ -30,6 +31,7 @@ public class TemplatesPageTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
+		takeScreenshot();
 		super.cleanUp();
 		super.startUp();
 		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
@@ -108,6 +110,7 @@ public class TemplatesPageTest extends ColBaseTest{
 		testVarCopy = "Copy of " + testVar;
 		return testVarCopy;
 	}
+	
 	
 //	@Test
 //	public void deleteTestTemplates(){

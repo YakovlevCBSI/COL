@@ -337,13 +337,13 @@ public class ColBaseTest {
 			createNewCustomerPage.setCity(city);
 			createNewCustomerPage.setZip(zip);
 			createNewCustomerPage = createNewCustomerPage.clickNext();
-			
-			//---------------------------------------------------------------------------
-			//WORK AROUND FOR IFrame loading error without Contact info #5431
-			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
-			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
-			createNewCustomerPage = createNewCustomerPage.clickNext();
-			//----------------------------------------------------------------------------
+//			
+//			//---------------------------------------------------------------------------
+//			//WORK AROUND FOR IFrame loading error without Contact info #5431
+//			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
+//			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+//			createNewCustomerPage = createNewCustomerPage.clickNext();
+//			//----------------------------------------------------------------------------
 			
 			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{

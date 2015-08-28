@@ -234,6 +234,7 @@ public class ColBasePage {
 	
 	//----------frame switch--------//
 	public void switchFrame(By by){
+		waitForElementToBeVisible(By.cssSelector("iframe"));
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(driver.findElement(by));
 	}

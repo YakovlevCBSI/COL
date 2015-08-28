@@ -32,6 +32,7 @@ public class ProposalsPageTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
+		takeScreenshot();
 		super.cleanUp();
 		super.startUp();
 		RecentAccountsTab recentCusotmersPage = homePage.goToAccountsPage().goToRecentAccountsTab();

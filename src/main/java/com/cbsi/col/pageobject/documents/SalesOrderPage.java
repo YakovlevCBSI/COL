@@ -3,6 +3,8 @@ package com.cbsi.col.pageobject.documents;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,13 +12,17 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.home.ColBasePage;
 
-public class SalesOrderPage extends ColBasePage{
+public class SalesOrderPage extends DocumentsBasePage{
 
 	public SalesOrderPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForPageToLoad(By.cssSelector("form div p"));
-		waitForTextToBeVisible("Addresses", "b");
+//		waitForPageToLoad(By.cssSelector("form div p"));
+		try{
+			waitForTextToBeVisible(5000, "Addresses", "b");
+		}catch(Exception e){
+			
+		}
 	}
 	
 	@FindBy(css="#billing_FirstName")
@@ -81,9 +87,13 @@ public class SalesOrderPage extends ColBasePage{
 	//There is an addToOrder(?) page. work on it whenever needed.
 	public SalesOrderPage clickSave(){
 		Save.click();
-		waitForPageToLoad(By.cssSelector("input[name='ponumber']"));
-		return this;
-//		return PageFactory.initElements(driver, AddToQuotePage.class);
+		try{
+			waitForElementToBeVisible(By.cssSelector("input[name='ponumber']"), 10);
+		}catch(TimeoutException e){
+			waitForTextToBeVisible("Sales Order (Submitted)", "span");
+		}
+//		return this;
+		return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 
 	public SalesOrderPage clickCancel(){
@@ -95,19 +105,47 @@ public class SalesOrderPage extends ColBasePage{
 	@FindBy(css="input[name='ponumber']")
 	private WebElement PONumber;
 	
-	@FindBy(css="input[type='radio][value='po']")
+	@FindBy(css="input[type='radio'][value='po']")
 	private WebElement Terms;
 	
-	@FindBy(css="input[type='radio][value='money_order']")
+	@FindBy(css="input[type='radio'][value='money_order']")
 	private WebElement MoneyOrder;
 	
-	@FindBy(css="input[type='radio][value='cod']")
+	@FindBy(css="input[type='radio'][value='cod']")
 	private WebElement COD;
 	
 	@FindBy(css="select[name='delivery']")
 	private WebElement DeliveryMethod;
 //	@FindBy(css="input[type='radio][value='money_order']")
 //	private WebElement Leasing;
+	
+	public SalesOrderPage setPaymentMethod(Payment payment){
+		switch(payment){
+		case Terms:
+			Terms.click();
+			break;
+		case MoneyOrder:
+			MoneyOrder.click();
+			break;
+		case COD:
+			COD.click();
+			break;
+
+		default:
+			break;
+		}
+		return this;
+
+	}
+	
+	public SalesOrderPage setPoNumber(int num){
+		PONumber.sendKeys(num+"");
+		return this;
+	}
+	
+	public SalesOrderPage setPoNumberAndPaymentMethod(int num, Payment payment){
+		return setPoNumber(num).setPaymentMethod(payment);
+	}
 	
 	public SalesOrderPage selectDelieveryMethod(Delivery option){
 		DeliveryMethod.click();
@@ -119,9 +157,49 @@ public class SalesOrderPage extends ColBasePage{
 				break;
 			case UPS2ndDayAir:
 					options.get(1).click();
+					break;
 			default:
 		}
 		return this;
+	}
+	
+	@FindBy(css="button#docActions")
+	private WebElement CreateDoc;
+	public <T> T selectCreateDoc(Doc doc){
+		CreateDoc.click();
+		List<WebElement> docActions = driver.findElements(By.cssSelector("ul.dropdown-menu li a"));
+		for(WebElement e: docActions){
+			if(e.getAttribute("title").replaceAll("[ \\s+ ( )]", "").equals(doc.toString())){
+				e.click();
+			}
+		}
+		
+		waitForQuickLoad();
+		
+		if(doc == Doc.CreatePO || doc == Doc.CreatePOAll) {
+			CreatePoPopup po = PageFactory.initElements(driver, CreatePoPopup.class);
+			PurchaseOrderPage purchaseOrderPage = po.clickCreatePos();
+			return (T)purchaseOrderPage;
+		}
+		else if (doc == Doc.CreateRMA) {
+			CreateRmaPopup crp = PageFactory.initElements(driver, CreateRmaPopup.class);
+			RMAPage rmaPage = crp.clickCreateRMA();
+			return (T)rmaPage;
+		}
+		
+		return null;
+	}
+	
+	public enum Doc{
+		CreatePO,
+		CreatePOAll,
+		CreateRMA
+	}
+	public enum Payment{
+		Terms,
+		MoneyOrder,
+		COD,
+		Leasing
 	}
 	
 	public enum Delivery{
@@ -133,5 +211,41 @@ public class SalesOrderPage extends ColBasePage{
 		UPSNExtDayAirSaver,
 		UPS3DaySelectResidential
 	}
+	
+	public static class CreateRmaPopup extends ColBasePage{
 
+		public CreateRmaPopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			switchFrame(By.cssSelector("iframe"));
+			waitForTextToBeVisible("Create RMA", "h3");
+		}
+		
+		@FindBy(css="span.btn-save")
+		private WebElement CreateRMA;
+		
+		public RMAPage clickCreateRMA(){
+			CreateRMA.click();
+			switchBack();
+			return PageFactory.initElements(driver, RMAPage.class);
+		}
+	}
+	
+	public static class CreatePoPopup extends ColBasePage{
+
+		public CreatePoPopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			switchFrame(By.cssSelector("iframe"));
+			waitForTextToBeVisible("Create POs", "h3");
+		}
+		@FindBy(css="span.btn-save")
+		private WebElement CreatePos;
+		
+		public PurchaseOrderPage clickCreatePos(){
+			CreatePos.click();
+			switchBack();
+			return PageFactory.initElements(driver, PurchaseOrderPage.class);
+		}
+	}
 }

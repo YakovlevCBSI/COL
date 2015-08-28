@@ -44,16 +44,25 @@ public class DocumentsPage extends ColBasePage{
 //	}
 	
 	public boolean hasQuote(int docNumber){
-		return findDataRowByName(docNumber)==null? false:true;
+		return hasDoc(docNumber);
 	}
 	
 	public boolean hasProposal(int docNumber){
-		return findDataRowByName(docNumber, false)==null? false:true;
+		return hasDoc(docNumber);
 
 	}
 	
+	public boolean hasInvoice(int docNumber){
+		System.out.println("Looking for invoice #" + docNumber);
+		return hasDoc(docNumber);
+	}
+
+	public boolean hasSalesOrder(int docNumber){
+		return hasDoc(docNumber);
+	}
+	
 	public boolean hasDoc(int docNumber){
-		return findDataRowByName(docNumber, false)==null? false:true;
+		return findDataRowByName(docNumber, true)==null? false:true;
 
 	}
 	
@@ -62,6 +71,13 @@ public class DocumentsPage extends ColBasePage{
 		docLink.click();
 		
 		return PageFactory.initElements(driver, QuotePage.class);
+	}
+	
+	public SalesOrderPage goToOrder(int quoteNumber){
+		WebElement docLink = findDataRowByName(quoteNumber);
+		docLink.click();
+		
+		return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 	
 	public DocumentsPage deleteQuotesByCompnayName(String companyName){
@@ -149,7 +165,12 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public DocumentsPage switchToTab(DocumentTabs tab){
-		driver.findElement(By.cssSelector("li a[href*='" + WordUtils.capitalizeFully(tab.toString()) + "/list'")).click();
+//		if(tab == DocumentTabs.QUOTES){
+//			driver.findElement(By.cssSelector("li a[href*='" + WordUtils.capitalizeFully(tab.toString()) + "/listQuotes'")).click();
+//		}else{
+			driver.findElement(By.cssSelector("li a[href*='" + (tab.toString()))).click();
+//		}
+		
 		try{
 			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
 		}catch(TimeoutException e){
@@ -241,11 +262,38 @@ public class DocumentsPage extends ColBasePage{
 	
 	public enum DocumentTabs{
 		ALLQUOTESANDORDERS,
-		QUOTES,
-		PROPOSALS,
-		ORDERS,
-		INVOICES,
-		RMAS
+		QUOTES{
+			public String toString(){
+				return "Docs/listQuotes";
+			}
+		},
+		PROPOSALS{
+			public String toString(){
+				return "Proposals/list";
+			}
+		},
+		ORDERS{
+			public String toString(){
+				return "Docs/listOrders";
+			}
+			
+		},
+		INVOICES{
+			public String toString(){
+				return "Docs/listInvoices";
+						
+			}
+		},
+		RMAS{
+			public String toString(){
+				return "Rmas/list";
+			}
+		}
+	}
+	
+	public static void main(String[] args){
+		String s = WordUtils.capitalizeFully("QUOTES");
+		System.out.println(s);
 	}
 	
 }

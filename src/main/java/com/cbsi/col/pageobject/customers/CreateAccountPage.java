@@ -113,7 +113,6 @@ public class CreateAccountPage extends ColBasePage{
 	
 	public CreateAccountPage clickNext(){
 		Next.click();
-		forceWait(500);
 		
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}

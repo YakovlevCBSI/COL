@@ -121,18 +121,18 @@ public class QuotePageTest extends ColBaseTest{
 	
 	@Test
 	public void createRmaFromSalesOrder(){
-		int docNumber;
+		int rmaNumber;
 		convertToSalesOrder();
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
 		RMAPage rmaPage = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreateRMA);
 		
-		docNumber = rmaPage.getDocNumber();
+		rmaNumber = rmaPage.getDocNumber();
 		
 		rmaPage.selectReasonForReturn(Reasons.Dead_On_Arrival);
 		rmaPage.clickSave();
 		
 		documentPage = rmaPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
-		assertTrue(documentPage.hasDoc(docNumber));	
+		assertTrue(documentPage.hasRma(rmaNumber));	
 	}
 	
 	@Test

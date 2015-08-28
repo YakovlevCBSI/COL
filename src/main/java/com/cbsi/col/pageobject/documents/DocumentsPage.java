@@ -61,6 +61,10 @@ public class DocumentsPage extends ColBasePage{
 		return hasDoc(docNumber);
 	}
 	
+	public boolean hasRma(int docNumber){
+		return hasDoc(docNumber);
+	}
+	
 	public boolean hasDoc(int docNumber){
 		return findDataRowByName(docNumber, true)==null? false:true;
 

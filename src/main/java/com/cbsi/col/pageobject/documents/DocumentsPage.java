@@ -48,7 +48,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public boolean hasProposal(int docNumber){
-		return hasDoc(docNumber);
+		return hasDoc(docNumber, false);
 
 	}
 	
@@ -63,6 +63,11 @@ public class DocumentsPage extends ColBasePage{
 	
 	public boolean hasDoc(int docNumber){
 		return findDataRowByName(docNumber, true)==null? false:true;
+
+	}
+	
+	public boolean hasDoc(int docNumber, boolean secondColumn){
+		return findDataRowByName(docNumber, secondColumn)==null? false:true;
 
 	}
 	

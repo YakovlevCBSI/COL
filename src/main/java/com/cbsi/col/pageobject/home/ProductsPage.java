@@ -68,8 +68,9 @@ public class ProductsPage extends ColBasePage{
 	private WebElement Go;
 	
 	public QuotePage selectAction(Action action){
+		forceWait(500);
 		SelectOne.click();
-		
+		forceWait(500);
 		if(action == Action.Compare)
 			CompareOption.click();
 		else if(action == Action.AddToQuote)

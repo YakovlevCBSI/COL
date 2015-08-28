@@ -51,7 +51,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="div.btn-group.dropup button#next-action_cancelOrder")
 		private WebElement CancelThisOrder;
 		
-		@FindBy(css="li a[id *= '_convertToInvoice']")
+		@FindBy(css="div button[id *= '_convertToInvoice']")
 		private WebElement ConvertToInvoice;
 		
 		@FindBy(css="li a[id *= '_completeInvoice']")
@@ -82,7 +82,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 
 		public InvoicePage clickConvertToInvoice(){
-			CancelThisOrder.findElement(By.xpath("../button[@id='ld-nextaction-caret']")).click();
+//			CancelThisOrder.findElement(By.xpath("../button[@id='ld-nextaction-caret']")).click();
 			ConvertToInvoice.click();
 			return PageFactory.initElements(driver, InvoicePage.class);
 			

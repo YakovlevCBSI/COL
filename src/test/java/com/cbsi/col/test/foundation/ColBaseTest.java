@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +39,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -111,23 +114,31 @@ public class ColBaseTest {
 	
 	public WebDriver configureDrivers(){
 		WebDriver emptyDriver = null;
-		System.out.println("staring conditions");
+//		System.out.println("staring conditions");
+//
+//		if(getBrowser().contains("chrome")){
+//			emptyDriver = getChromeDriver();
+//		}else if(getBrowser().contains("internet explorer")){
+//			emptyDriver = getIEDriver();
+//		}
+//		else{
+//			try{
+//				FirefoxProfile profile = new FirefoxProfile();
+//				emptyDriver = new FirefoxDriver(profile);
+//			}catch(Exception e){
+//				System.out.println("Failed to create a firefox driver");
+//				e.printStackTrace();
+//			}
+//			
+//		}
+		
+		try {
+			emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		if(getBrowser().contains("chrome")){
-			emptyDriver = getChromeDriver();
-		}else if(getBrowser().contains("internet explorer")){
-			emptyDriver = getIEDriver();
-		}
-		else{
-			try{
-				FirefoxProfile profile = new FirefoxProfile();
-				emptyDriver = new FirefoxDriver(profile);
-			}catch(Exception e){
-				System.out.println("Failed to create a firefox driver");
-				e.printStackTrace();
-			}
-			
-		}
 
 		return emptyDriver;
 	}
@@ -170,7 +181,16 @@ public class ColBaseTest {
 		
 		return caps;
 	}
-	
+	public Capabilities getChromeCapability(){
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		caps.setBrowserName("chrome");
+//		caps.setPlatform(Platform.LINUX);
+		caps.setCapability("platform", Platform.LINUX);
+		caps.setVersion("43");
+		
+		System.err.println("getting chrome caps..");
+		return caps;
+	}
 	public WebDriver getIEDriver(){
 		DesiredCapabilities caps = new DesiredCapabilities();
 		caps.setCapability("browser", "IE");
@@ -264,7 +284,7 @@ public class ColBaseTest {
 	}
 	
 	public boolean isAutoRun(){
-		if(username.equals("jenkins") || username.contains("slave")) return true;
+		if(username.equals("jenkins") || username.contains("slave") || username.contains("qe")) return true;
 		return false;
 	}
 	

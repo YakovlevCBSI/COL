@@ -55,7 +55,7 @@ public class ColBaseTest {
 	private String url;
 	private String browser;
 	private String username = System.getProperty("user.name");	
-	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.16");
+	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
 
 	
 	public ColBaseTest(String url, String browser){

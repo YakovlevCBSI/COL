@@ -68,9 +68,11 @@ public class ProductsPage extends ColBasePage{
 	private WebElement Go;
 	
 	public QuotePage selectAction(Action action){
-		forceWait(500);
+
 		SelectOne.click();
-		forceWait(500);
+//		Cheeck if dropdown is open. If not, open it again.
+		if(!CompareOption.isDisplayed()) SelectOne.click();
+		
 		if(action == Action.Compare)
 			CompareOption.click();
 		else if(action == Action.AddToQuote)

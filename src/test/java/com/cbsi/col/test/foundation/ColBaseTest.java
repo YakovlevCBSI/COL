@@ -114,30 +114,30 @@ public class ColBaseTest {
 	
 	public WebDriver configureDrivers(){
 		WebDriver emptyDriver = null;
-//		System.out.println("staring conditions");
-//
-//		if(getBrowser().contains("chrome")){
-//			emptyDriver = getChromeDriver();
-//		}else if(getBrowser().contains("internet explorer")){
-//			emptyDriver = getIEDriver();
-//		}
-//		else{
-//			try{
-//				FirefoxProfile profile = new FirefoxProfile();
-//				emptyDriver = new FirefoxDriver(profile);
-//			}catch(Exception e){
-//				System.out.println("Failed to create a firefox driver");
-//				e.printStackTrace();
-//			}
-//			
-//		}
-		
-		try {
-			emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println("staring conditions");
+
+		if(getBrowser().contains("chrome")){
+			emptyDriver = getChromeDriver();
+		}else if(getBrowser().contains("internet explorer")){
+			emptyDriver = getIEDriver();
 		}
+		else{
+			try{
+				FirefoxProfile profile = new FirefoxProfile();
+				emptyDriver = new FirefoxDriver(profile);
+			}catch(Exception e){
+				System.out.println("Failed to create a firefox driver");
+				e.printStackTrace();
+			}
+			
+		}
+		
+//		try {
+//			emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 
 		return emptyDriver;

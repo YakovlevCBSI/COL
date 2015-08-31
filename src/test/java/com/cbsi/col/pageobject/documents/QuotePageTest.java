@@ -41,21 +41,27 @@ public class QuotePageTest extends ColBaseTest{
 	public void startUp(){
 		super.startUp();
 		navigateToCustomersPage();
-		recentCustomersPage = createAccount();
+//		recentCustomersPage = createAccount();
+//		recentCustomersPage = pickRandomAccount();
 	}
 	
-	@After
-	public void cleanUp(){
-		takeScreenshot();
-		super.cleanUp();
-		super.startUp();
-		navigateToCustomersPage();
-		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
-	}
+//	
+//	private RecentAccountsTab pickRandomAccount() {
+//		// TODO Auto-generated method stub
+//		return customersPage.clickViewCustomer("Qa_");
+//	}
+//	@After
+//	public void cleanUp(){
+//		takeScreenshot();
+//		super.cleanUp();
+//		super.startUp();
+//		navigateToCustomersPage();
+//		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
+//	}
 	
 	@Test
 	public void createQuote(){
-		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
+		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa_");
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quoteNumber = quotePage.getQuoteNumber();

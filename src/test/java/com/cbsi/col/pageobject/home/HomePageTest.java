@@ -25,24 +25,24 @@ public class HomePageTest extends ColBaseTest{
 		assertTrue(homePage.isOrganizerTasksTableDisplayed());			
 	}
 	
-//	@Test
-//	public void mainTabsAreDisplayed(){
-//		assertTrue(homePage.IsAccountsTabDisplayed());
-//		assertTrue(homePage.IsProductsTabDisplayed());
-//		assertTrue(homePage.IsServicesTabDisplayed());
-//		assertTrue(homePage.IsDocumentsTabDisplayed());
-//		assertTrue(homePage.IsSuppliersTabDisplayed());
-//		assertTrue(homePage.IsPurchaseOrdersTabDisplayed());
-//		assertTrue(homePage.IsCustomerViewTabDisplayed());
-//		assertTrue(homePage.isDocumentActiveTabDisplayed());
-//	}
-//	
-//	@Test
-//	public void userIconsDisplayedOnTopBar(){
-//		assertTrue(homePage.isInboxDisplayed());
-//		assertTrue(homePage.isOrganizerDisplayed());
-//		assertTrue(homePage.isUserDisplayed());
-//		assertTrue(homePage.isUserNameDisplayed());
-//		assertTrue(homePage.isEmailDisplayed());
-//	}
+	@Test
+	public void mainTabsAreDisplayed(){
+		assertTrue(homePage.IsAccountsTabDisplayed());
+		assertTrue(homePage.IsProductsTabDisplayed());
+		assertTrue(homePage.IsServicesTabDisplayed());
+		assertTrue(homePage.IsDocumentsTabDisplayed());
+		assertTrue(homePage.IsSuppliersTabDisplayed());
+		assertTrue(homePage.IsPurchaseOrdersTabDisplayed());
+		assertTrue(homePage.IsCustomerViewTabDisplayed());
+		assertTrue(homePage.isDocumentActiveTabDisplayed());
+	}
+	
+	@Test
+	public void userIconsDisplayedOnTopBar(){
+		assertTrue(homePage.isInboxDisplayed());
+		assertTrue(homePage.isOrganizerDisplayed());
+		assertTrue(homePage.isUserDisplayed());
+		assertTrue(homePage.isUserNameDisplayed());
+		assertTrue(homePage.isEmailDisplayed());
+	}
 }

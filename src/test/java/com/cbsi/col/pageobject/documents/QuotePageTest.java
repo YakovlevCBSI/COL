@@ -153,7 +153,7 @@ public class QuotePageTest extends ColBaseTest{
 
 	@Test
 	public void priceCalculatorSum() throws InterruptedException{
-		CurrentAccountTab currentAccountPage=  recentCustomersPage.clickViewCustomer(companyName);
+		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa_");
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quotePage = quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;

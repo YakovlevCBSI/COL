@@ -27,23 +27,23 @@ public class ProposalsPageTest extends ColBaseTest{
 	public void startUp(){
 		super.startUp();
 		navigateToCustomersPage();
-		recentCustomersPage = createAccount();
+//		recentCustomersPage = createAccount();
 	}
 	
-	@After
-	public void cleanUp(){
-		takeScreenshot();
-		super.cleanUp();
-		super.startUp();
-		RecentAccountsTab recentCusotmersPage = homePage.goToAccountsPage().goToRecentAccountsTab();
-		recentCusotmersPage.deleteCompany(companyName);		
-	}
+//	@After
+//	public void cleanUp(){
+//		takeScreenshot();
+//		super.cleanUp();
+//		super.startUp();
+//		RecentAccountsTab recentCusotmersPage = homePage.goToAccountsPage().goToRecentAccountsTab();
+//		recentCusotmersPage.deleteCompany(companyName);		
+//	}
 	
 	//currently error creating a proposal.
 	@Test
 	public void createProposalFull(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= recentCustomersPage.clickViewCustomer(companyName);
+		CurrentAccountTab currentAccountPage= customersPage.clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
@@ -54,7 +54,7 @@ public class ProposalsPageTest extends ColBaseTest{
 	@Test
 	public void createProposalQuick(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= recentCustomersPage.clickViewCustomer(companyName);
+		CurrentAccountTab currentAccountPage= customersPage.clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		

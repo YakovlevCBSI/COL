@@ -70,13 +70,15 @@ public class ProductsPage extends ColBasePage{
 	public QuotePage selectAction(Action action){
 
 		SelectOne.click();
-//		Cheeck if dropdown is open. If not, open it again.
-		if(!CompareOption.isDisplayed()) SelectOne.click();
-		
+		forceWait(500);
+//		Cheeck if dropdown is open. If not, open it again.		
 		if(action == Action.Compare)
 			CompareOption.click();
-		else if(action == Action.AddToQuote)
-			AddToQuoteOption.click();
+		else if(action == Action.AddToQuote){
+//			AddToQuoteOption.click();
+//			AddToQuoteOption.click();
+			getActions().moveToElement(AddToQuoteOption).click().build().perform();
+		}
 		else if(action == Action.AddToCatalogs)
 			AddToCatalogOption.click();
 		else if(action == Action.AddToFavorites)

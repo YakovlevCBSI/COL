@@ -101,7 +101,7 @@ public class TemplatesPageTest extends ColBaseTest{
 	
 	public DocumentTemplatesPage createQuoteTemplateSetup(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
-		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("Certifications", "Company Info", "Disclaimer").clickSave().clickSave();	
+		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("All").clickSave().clickSave();	
 		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 		return dtp;
 	}

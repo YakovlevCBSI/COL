@@ -74,22 +74,17 @@ public class ProductsPage extends ColBasePage{
 //		Cheeck if dropdown is open. If not, open it again.		
 		if(action == Action.Compare){
 			CompareOption.click();
-			SelectOne.click();
-			getActions().moveToElement(CompareOption).click().build().perform();
 		}
 		else if(action == Action.AddToQuote){
 			AddToQuoteOption.click();
 		}
 		else if(action == Action.AddToCatalogs){
 			AddToCatalogOption.click();
-			SelectOne.click();
-			getActions().moveToElement(AddToCatalogOption).click().build().perform();
-			forceWait(500);
+
 		}
 		else if(action == Action.AddToFavorites){
 			AddToFavoritesOption.click();
-			SelectOne.click();
-			getActions().moveToElement(AddToFavoritesOption).click().build().perform();
+
 		}
 		
 		forceWait(800); //clicking Go too fast, does not register the dropdown selection.

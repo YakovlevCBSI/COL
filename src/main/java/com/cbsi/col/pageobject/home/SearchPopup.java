@@ -47,6 +47,15 @@ public class SearchPopup extends ColBasePage{
 	public <T> T  searchFor(QueryOption option, boolean containsText,  QueryColumn column, String searchText, Class clazz){
 		getQueryOptionElement(option.toString()).click();
 
+
+
+		if(column != QueryColumn.All){
+			driver.findElement(By.cssSelector("select#decor-search-field")).click();
+			forceWait(500);
+			driver.findElement(By.cssSelector("option[value='"+column.toString() + "']")).click();
+			forceWait(500); //without wait, FF defaults back due to timing. Do not remove this.
+		}
+		
 		if(contains.isDisplayed()){
 			if(containsText){
 				System.out.println("in contains condition....");
@@ -56,13 +65,6 @@ public class SearchPopup extends ColBasePage{
 				startsWith.click();
 			}
 		}
-
-		if(column != QueryColumn.All){
-			driver.findElement(By.cssSelector("select#decor-search-field")).click();
-			driver.findElement(By.cssSelector("option[value='"+column.toString() + "']")).click();
-			forceWait(200); //without wait, FF defaults back due to timing. Do not remove this.
-		}
-		
 		searchField.clear();
 		searchField.sendKeys(searchText);
 		

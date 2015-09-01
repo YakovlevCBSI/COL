@@ -70,7 +70,7 @@ public class ProductsPage extends ColBasePage{
 	public QuotePage selectAction(Action action){
 
 		SelectOne.click();
-		forceWait(500);
+		forceWait(1000);
 //		Cheeck if dropdown is open. If not, open it again.		
 		if(action == Action.Compare){
 			CompareOption.click();
@@ -87,7 +87,7 @@ public class ProductsPage extends ColBasePage{
 
 		}
 		
-		forceWait(800); //clicking Go too fast, does not register the dropdown selection.
+		forceWait(1000); //clicking Go too fast, does not register the dropdown selection.
 		
 		Go.click();
 		

@@ -101,5 +101,6 @@ public class CurrentAccountTab extends ColBasePage{
 	public void switchFrame(){
 		waitForElementToBeVisible(By.cssSelector("iframe"));
 		switchFrame(By.cssSelector("iframe#jframe"));
+		waitForElementToBeVisible(By.linkText("Create Proposal"));
 	}
 }

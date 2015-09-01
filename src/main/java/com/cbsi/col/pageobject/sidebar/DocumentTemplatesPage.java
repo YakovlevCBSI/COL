@@ -119,6 +119,7 @@ public class DocumentTemplatesPage extends ColBasePage{
 	public DocumentTemplateDesignerPage editTemplateByName(String templateName){
 		WebElement edit = findDataRowByName(templateName).findElement(By.xpath("../td/a[@title='Update Page']"));
 		edit.click();		
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);		
 	}
 	

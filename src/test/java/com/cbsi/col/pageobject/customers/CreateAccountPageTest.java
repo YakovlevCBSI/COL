@@ -37,6 +37,7 @@ public class CreateAccountPageTest extends ColBaseTest{
 	
 	@After
 	public void cleanUp(){
+		takeScreenshot();
 		super.cleanUp();
 		super.startUp();
 		homePage.goToAccountsPage().goToRecentAccountsTab().deleteCompany(companyName);

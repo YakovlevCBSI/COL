@@ -44,7 +44,7 @@ public class ParameterFeeder {
 	public String[] getBrowsers(){
 		String[] browsers = {
 				"chrome",
-				"firefox"
+//				"firefox"
 //				"internet explorer"
 		};
 		

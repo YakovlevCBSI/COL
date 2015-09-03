@@ -10,7 +10,7 @@ public class StringUtil {
 	}
 	
 	public static String cleanCurrency(String text){
-		return text.replaceAll("[,]", "");
+		return text.replaceAll("[, $]", "");
 	}
 	
 	public static String cleanElementName(String text){

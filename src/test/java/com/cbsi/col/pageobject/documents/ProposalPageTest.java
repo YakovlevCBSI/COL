@@ -14,11 +14,11 @@ import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.DocumentsPage.Time;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
-public class ProposalsPageTest extends ColBaseTest{
+public class ProposalPageTest extends ColBaseTest{
 	public RecentAccountsTab recentCustomersPage;
 	public DocumentsPage documentPage;
 	
-	public ProposalsPageTest(String url, String browser) {
+	public ProposalPageTest(String url, String browser) {
 		super(url, browser);
 		// TODO Auto-generated constructor stub
 	}
@@ -27,19 +27,8 @@ public class ProposalsPageTest extends ColBaseTest{
 	public void startUp(){
 		super.startUp();
 		navigateToCustomersPage();
-//		recentCustomersPage = createAccount();
 	}
 	
-//	@After
-//	public void cleanUp(){
-//		takeScreenshot();
-//		super.cleanUp();
-//		super.startUp();
-//		RecentAccountsTab recentCusotmersPage = homePage.goToAccountsPage().goToRecentAccountsTab();
-//		recentCusotmersPage.deleteCompany(companyName);		
-//	}
-	
-	//currently error creating a proposal.
 	@Test
 	public void createProposalFull(){
 		int docNumber;

@@ -232,7 +232,13 @@ public class ColBasePage {
 		return searchPopup.searchFor(option, containsText,  column, searchText, clazz);
 	}
 	
-	//----------frame switch--------//
+	//--------------------------frame switch----------------------------//
+	public void switchFrame(){
+		waitForElementToBeVisible(By.cssSelector("iframe"));
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.cssSelector("iframe")));
+	}
+	
 	public void switchFrame(By by){
 		waitForElementToBeVisible(By.cssSelector("iframe"));
 		driver.switchTo().defaultContent();
@@ -252,6 +258,36 @@ public class ColBasePage {
 		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
 	}
 	
+	
+	//--------------------------window switch----------------------------//
+	
+	protected String oldWindow;
+	
+	public void switchToNewWindow(){
+		oldWindow = driver.getWindowHandle();
+		
+		while(driver.getWindowHandles().size() <=1){
+			forceWait(300);
+			System.out.println("waiting for new window...");
+		}
+		
+		for(String winHandle: driver.getWindowHandles()){
+			System.out.println(winHandle);
+		}
+		
+		for(String winHandle: driver.getWindowHandles()){
+			driver.switchTo().window(winHandle);
+		}
+	}
+	
+	public void closeCurrentWindow(){
+		driver.close();
+	}
+	
+	public void switchToOldWindow(){
+		closeCurrentWindow();
+		driver.switchTo().window(oldWindow);
+	}
 	
 	//-------------------- parse table such as search results, etc-------------------------------------//
 	public List<HashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){

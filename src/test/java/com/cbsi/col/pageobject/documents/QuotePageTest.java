@@ -1,84 +1,54 @@
 package com.cbsi.col.pageobject.documents;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
+import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebElement;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
-import com.cbsi.col.pageobject.customers.RecentAccountsTab;
-import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
-import com.cbsi.col.pageobject.documents.SalesOrderPage;
-import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
-import com.cbsi.col.pageobject.documents.RMAPage.Reasons;
-import com.cbsi.col.pageobject.documents.SalesOrderPage.Doc;
-import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
-import com.cbsi.col.pageobject.home.ProductsPage;
 import com.cbsi.col.pageobject.home.ProductsPage.Action;
-import com.cbsi.col.test.foundation.ColBaseTest;
 
-public class QuotePageTest extends ColBaseTest{
 
-	public RecentAccountsTab recentCustomersPage;
-	public DocumentsPage documentPage;
-	
-	private int quoteNumber;
-	private int orderNumber;
-	private int invoiceNumber;
-	
+public class QuotePageTest extends DocumentsBasePageTest{
+
 	public QuotePageTest(String url, String browser) {
 		super(url, browser);
 		// TODO Auto-generated constructor stub
 	}
-	@Before
-	public void startUp(){
-		super.startUp();
-		navigateToCustomersPage();
-//		recentCustomersPage = createAccount();
-//		recentCustomersPage = pickRandomAccount();
-	}
-	
-//	
-//	private RecentAccountsTab pickRandomAccount() {
-//		// TODO Auto-generated method stub
-//		return customersPage.clickViewCustomer("Qa_");
-//	}
-//	@After
-//	public void cleanUp(){
-//		takeScreenshot();
-//		super.cleanUp();
-//		super.startUp();
-//		navigateToCustomersPage();
-//		customersPage.goToRecentAccountsTab().deleteCompany(companyName);
-//	}
 	
 	@Test
 	public void createQuote(){
-		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa_");
-		
-		QuotePage quotePage = currentAccountPage.clickCreateQuote();
-		quoteNumber = quotePage.getQuoteNumber();
-		System.out.println("Looking for quote#:  " + quoteNumber );
-		ProductsPage productPage = quotePage.searchProduct("Lenovo");
-		productPage.checkCompareBoxes(1,2,3);
-		
-		QuotePage quotePageNew = productPage.selectAction(Action.AddToQuote);
-		quotePageNew.clickSave();
-		
-		documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		
-		
-		assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
+		super.createQuote();
 	}
 	
 	@Test
-	public void copyToNewQuote(){
+	public void createBundleInQuote(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage)quotePage.selectFromLineActions(LineActions.Convert_to_Bundle);
+		quotePage.setBundleHeader("test1");
+		quotePage.setBundleDesc("test description");
+		quotePage = (QuotePage)quotePage.clickSaveBundle();
+		
+		assertEquals("test1",quotePage.getBundleHeader());
+		assertEquals("test description", quotePage.getBundleDesc());
+	}
+	
+	@Test
+	public void copyToNewQuoteInDocumentsTable(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		int oldQuote = quotePage.getQuoteNumber();
@@ -86,71 +56,93 @@ public class QuotePageTest extends ColBaseTest{
 		QuotePage quotePageNew = quotePage.clickCopyToNewQuote();
 		int newQuote = quotePageNew.getQuoteNumber();
 		
-		assertFalse(oldQuote + " : " + newQuote, oldQuote == newQuote);
-		
-		
+		assertFalse(oldQuote + " : " + newQuote, oldQuote == newQuote);	
 	}
 	
 	@Test
-	public void convertToSalesOrder(){
+	public void copyToNewQuoteInQuote(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = quotePage.clickCopyToNewQuote();
+		int newQuoteNumber = quotePage.getQuoteNumber();
 		
-		SalesOrderPage orderPageAdress = quotePage.clickConvertToOrder();
-		orderPageAdress.setFirstName("Quality");
-		orderPageAdress.setLastName("Assurance");
-		orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
-		orderPageAdress.setAddress(address);
-		orderPageAdress.setCity(city);
-		orderPageAdress.setZip(zip);
-		
-		SalesOrderPage salesOrderPagePayment = orderPageAdress.clickSave();
-		SalesOrderPage salesOrderPage = salesOrderPagePayment.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave();
-		orderNumber = salesOrderPage.getDocNumber();
-		
-		documentPage = salesOrderPage.goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.ORDERS);
-		assertTrue(documentPage.hasSalesOrder(orderNumber));
-		
+		assertFalse(quoteNumber == newQuoteNumber);
 	}
 	
 	@Test
-	public void convertToInvoice(){
-		convertToSalesOrder();
-//		DocumentsPage recentDocumentsPage = PageFactory.initElements(driver, DocumentsPage.class);
-		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
-		InvoicePage invoicePage = salesOrderPage.clickConvertToInvoice();
-		invoiceNumber = invoicePage.getInvoiceNumber();
-		invoicePage.clickSave();
-		documentPage = invoicePage.goToDocumentsPage().switchToTab(DocumentTabs.INVOICES);
-		assertTrue(documentPage.hasInvoice(invoiceNumber));
+	public void deleteProductFromQuote(){
+		String mfPn = "";
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
+		
+		mfPn = quotePage.getMfPnsFromTable(1).get(0).toString();	
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Delete);
+		
+		System.out.println(mfPn);
+		System.out.println(quotePage.getMfPnsFromTable(1).get(0).toString());
+		
+		assertFalse(mfPn.equals( quotePage.getMfPnsFromTable(1).get(0).toString()));
 	}
 	
 	@Test
-	public void createRmaFromSalesOrder(){
-		int rmaNumber;
-		convertToSalesOrder();
-		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
-		RMAPage rmaPage = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreateRMA);
+	public void sendQuoteToPrint(){
+		createQuote();
 		
-		rmaNumber = rmaPage.getDocNumber();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		SendPage sendPage = quotePage.clickSend();
+		sendPage.clickPrint();
 		
-		rmaPage.selectReasonForReturn(Reasons.Dead_On_Arrival);
-		rmaPage.clickSave();
-		
-		documentPage = rmaPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
-		assertTrue(documentPage.hasRma(rmaNumber));	
-	}
-	
-	@Test
-	public void createPurchaseOrder(){
-		int docNumber;
-		convertToSalesOrder();
-		
-		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
-		PurchaseOrderPage purchaseOrderPage = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
-
+		assertTrue(sendPage.isPrintPrviewOpen());
 	}
 
+	@Test
+	public void sendQuoteViaEmail(){
+	createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		SendPage sendPage = quotePage.clickSend();
+		sendPage.clickEmail();
+		
+		assertTrue(sendPage.isEmailBoxOpen());
+		
+	}
+	
+	@Ignore("Not yet ready... needs file io logic")
+	@Test
+	public void sendQuoteAsPDF(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		SendPage sendPage = quotePage.clickSend();
+		sendPage.clickPDF();
+		
+		assertTrue(sendPage.isFileDownloaded());
+		
+	}
+	
+	@Test
+	public void productComparisonInQuote(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1,2);
+		ComparisonPage comPage = (ComparisonPage)quotePage.selectFromLineActions(LineActions.Compare);
+	}
+	
+	@Test
+	public void quantityChangeUpdatesPrice(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.setQtyInTable(1, 5);
+		double unitPriceFirstRow = quotePage.getUnitPriceFromTable(1);
+
+		assertTrue("expected: " +  unitPriceFirstRow * 5 + " / actual: " + quotePage.getTotalPriceFromTable(1),
+				unitPriceFirstRow * 5 == quotePage.getTotalPriceFromTable(1));
+	}
+	
 	@Test
 	public void priceCalculatorSum() throws InterruptedException{
 		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa_");
@@ -164,9 +156,6 @@ public class QuotePageTest extends ColBaseTest{
 		
 		assertTrue(priceCalculator.getTaxOn() == 3.25);
 		
-		System.out.println("WAITING FOR FINAL>..");
-		Thread.sleep(20000);
-		
 		assertTrue(priceCalculator.getTaxedSubTotal() + " : " + priceCalculator.getExpectedTaxedSubTotal(), 
 					priceCalculator.getTaxedSubTotal() == priceCalculator.getExpectedTaxedSubTotal());
 		assertTrue(priceCalculator.getNonTaxableSubTotal() + " : " + priceCalculator.getExpectedNontaxableSubTotal(),
@@ -176,19 +165,28 @@ public class QuotePageTest extends ColBaseTest{
 		
 		quotePage.clickSave();
 	}
-	
-
-	
+//	
 //	@Test
-//	public void cleanUpCompanies(){
-//		recentCustomersPage = homePage.goToAccountsPage().goToRecentCustomersTab();
-//		AccountsPage customersPage1 = null;
+//	public void cleanUpCompanies() throws Exception{
+//		AccountsPage accountPage = homePage.goToAccountsPage();
 //		while(true){
-//			customersPage1 = recentCustomersPage.deleteCompany("Qa");
-//			recentCustomersPage= customersPage1.goToAccountsPage().goToRecentAccountsTab();
-//			
+//			List<WebElement> deleteCustomers = driver.findElements(By.cssSelector("tr td"));
+//			for(WebElement e: deleteCustomers){
+//				if(e.getText().toLowerCase().startsWith("qa_customer")){
+//					WebElement delete = e.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
+//					delete.click();
+//					Thread.sleep(500);
+//					Alert alert = driver.switchTo().alert();
+//					alert.accept();
+//					break;
+//				}
+//			}
+//			Thread.sleep(500);
 //		}
 //	}
+//	
+//	
+
 	
 //	@Test
 //	public void cleanUpDocuments(){

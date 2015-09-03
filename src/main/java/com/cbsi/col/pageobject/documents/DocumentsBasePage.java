@@ -2,6 +2,8 @@ package com.cbsi.col.pageobject.documents;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -77,9 +79,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return PageFactory.initElements(driver, SalesOrderPage.class);
 	}	
 	
-	public T clickSend(){
+	public SendPage clickSend(){
 		Send.click();
-		return (T)this;
+		return PageFactory.initElements(driver, SendPage.class);
 	}
 
 	public InvoicePage clickConvertToInvoice(){
@@ -209,6 +211,78 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		    return bd.doubleValue();
 		}
 	}
+	
+	//----------------------- inner page object: sendPage  -----------------------//
+	
+	public static class SendPage extends ColBasePage{
+
+		public SendPage(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			waitForTextToBeVisible("Select a view", "label");
+			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"));
+			switchBack();
+		}
+		
+		@FindBy(css="button#print-btn")
+		private WebElement Print;
+		
+		@FindBy(css="button#email-btn")
+		private WebElement Email;
+		
+		@FindBy(css="button#save-btn")
+		private WebElement PDF;
+		
+		public void clickPrint(){
+			Print.click();
+			switchToNewWindow();			
+		}
+		
+		@FindBy(css="html#print-preview")
+		private WebElement printWindow;
+		public boolean isPrintPrviewOpen(){
+			waitForPageToLoad(By.cssSelector("html#print-preview"));
+			return driver.findElements(By.cssSelector("html#print-preview")).size()>=1 ? true:false;
+		}
+		
+		public SendPage clickEmail(){
+			Email.click();
+			return this;
+		}
+		
+		public boolean isEmailBoxOpen(){
+			waitForTextToBeVisible("Email", "i");
+			return true;
+		}
+		
+		public SendPage clickPDF(){
+			PDF.click();
+			return this;
+		}
+		
+		public boolean isFileDownloaded(){
+			//do some io stuff here to cehck file. Then remove the file after.
+			return true;
+		}
+			//--------------EmailBox component-------------//
+			
+			@FindBy(css="a#submitEmail")
+			private WebElement SendEmail;
+			
+			@FindBy(css="a#cancel-email-btn")
+			private WebElement Cancel;
+		
+			@FindBy(css="a#add-attachment-btn")
+			private WebElement AddAttachment;
+			
+			public void clickCancel(){
+				Cancel.click();
+			}
+		
+		
+	}
+	
+	
 	//-------------------------------- email page-----------------------------------//
 	public static class EmailPopup{
 		
@@ -233,27 +307,80 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	private WebElement productTable;
 	public T selectProductFromTable(int...n){
 		for(int nth: n){
-			productTable.findElement(By.xpath("tbody/tr[" + nth + "]/td/label/input")).click();
+			productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input")).click();
 		}
 		return (T)this;
 	}
 	
+	public List<String> getProductNamesFromTable(int...n){
+		List<String> products = new ArrayList<String>();	
+		for(int nth: n){
+			WebElement productNames = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div[contains(@id,'lineDescriptionOne-')]"));
+			String productName = productNames.getText();
+			products.add(productName);
+		}
+		return products;
+	}
+	
+	public List<String> getMfPnsFromTable(int...n){
+		List<String> products = new ArrayList<String>();	
+		
+		for(int nth: n){
+			WebElement mfPns = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td[6]"));
+			String mfPn = mfPns.getText();
+			products.add(mfPn);
+		}
+		
+		return products;
+	}
+	
+	
+	public double getUnitPriceFromTable(int nth){
+		WebElement unitPrice = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div/div/input[contains(@id, 'customerPrice')]"));
+		return Double.parseDouble(StringUtil.cleanCurrency(unitPrice.getAttribute("value")));
+	}
+	
+	public void setUnitPriceInTable(int nth, double price){
+		WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div/div/input[contains(@id, 'customerPrice-')]"));
+		input.clear();
+		input.sendKeys(price+"");
+		input.sendKeys(Keys.TAB);
+		forceWait(500);
+	}
+	
+	public void setQtyInTable(int nth, int qty){
+		WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div/div/input[contains(@id, 'quantity')]"));
+		input.clear();
+		input.sendKeys(qty+"");
+		input.sendKeys(Keys.TAB);
+		forceWait(500);
+	}
+
+	public double getTotalPriceFromTable(int nth){
+		WebElement unitPrice = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td[contains(@id,'extendedPrice-')]"));
+		return Double.parseDouble(StringUtil.cleanCurrency(unitPrice.getText()));
+	}
+	
 	@FindBy(css="div#rma-operations-toolbar div div button#lineActions")
-	private WebElement LineActions;
+	private WebElement LineActionsDropdown;
 	
 	public T selectFromLineActions(LineActions lAction){
-		LineActions.click();
+		LineActionsDropdown.click();
 		
 		
 		try{
-		LineActions.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()) + "']")).click();
+			LineActionsDropdown.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()) + "']")).click();
 		}catch(NoSuchElementException e){
-			LineActions.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()).toLowerCase() + "']")).click();
+			LineActionsDropdown.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()).toLowerCase() + "']")).click();
 		}
 		
+		waitForQuickLoad();
 		
+		if(lAction == LineActions.Compare){
+			return (T) PageFactory.initElements(driver, ComparisonPage.class);
+		}
 		
-		return (T)this;
+		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
 	public enum LineActions{
@@ -261,9 +388,48 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Compare,
 		Price_History,
 		Add_to_Catalogs,
+		Convert_to_Bundle {public String toString(){
+								return "Convert to bundle";
+							}
+						},
 		Unbundle,
 		Insert_Header,
 		Insert_Subtotal
+	}
+	
+	WebElement bundleHeader;
+	public T setBundleHeader(String header){
+//		bundleHeader = productTable.findElement(By.xpath("tbody/tr/td/div/div/input[contains(@id,'lineDescriptionOne-')][contains(@class,'valid')]"));
+		bundleHeader = productTable.findElement(By.xpath("tbody/tr/td/div/div/input[contains(@id,'lineDescriptionOne-')]"));
+
+		bundleHeader.sendKeys(header);
+		return (T)this;
+	}
+	
+	public T setBundleDesc(String desc){
+		WebElement bundleDesc = bundleHeader.findElement(By.xpath("../../../div/div/textarea[contains(@id,'lineDescriptionTwo-')]"));
+		bundleDesc.sendKeys(desc);		
+		return (T)this;
+	}
+	
+	WebElement literaHeaderText ;
+	public String getBundleHeader(){
+		literaHeaderText = productTable.findElement(By.xpath("tbody/tr/td/span[@class='edit-document-lineitem-inline']"));
+		WebElement headerSpan = literaHeaderText.findElement(By.xpath("../b/span"));
+		return headerSpan.getText();
+	}
+	
+	public String getBundleDesc(){
+		WebElement descSpan = literaHeaderText.findElement(By.xpath("../span[contains(@class, 'description-two-not-product')]"));
+		return descSpan.getText();
+	}
+	
+	public T clickSaveBundle(){
+		WebElement save = bundleHeader.findElement(By.xpath("../../../../td/a[@title='Done']"));
+		save.click();
+		waitForQuickLoad();
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
 }

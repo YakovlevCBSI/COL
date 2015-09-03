@@ -22,9 +22,9 @@ public class InvoicePage extends DocumentsBasePage{
 		return Integer.parseInt(InvoiceNumber.getAttribute("value").trim());
 	}
 	
-	public DocSendPopup clickSend(){
+	public SendPage clickSend(){
 		super.clickSend();
-		return PageFactory.initElements(driver, DocSendPopup.class);
+		return PageFactory.initElements(driver, SendPage.class);
 	}
 	
 	@FindBy(css="input#paymentDueDate")

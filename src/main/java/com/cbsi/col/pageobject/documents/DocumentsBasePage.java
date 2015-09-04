@@ -8,6 +8,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -234,14 +235,23 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		private WebElement PDF;
 		
 		public void clickPrint(){
+
 			Print.click();
-			switchToNewWindow();			
+		
+			switchToNextWindow();			
 		}
 		
 		@FindBy(css="html#print-preview")
 		private WebElement printWindow;
 		public boolean isPrintPrviewOpen(){
-			waitForPageToLoad(By.cssSelector("html#print-preview"));
+			try{
+				waitForPageToLoad(By.cssSelector("html#print-preview"), 10);
+			}catch(TimeoutException e){
+				
+			}
+			if(driver.findElements(By.cssSelector("html#print-preview")).size()==0){
+				switchToNextWindow();
+			}
 			return driver.findElements(By.cssSelector("html#print-preview")).size()>=1 ? true:false;
 		}
 		
@@ -251,7 +261,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 		
 		public boolean isEmailBoxOpen(){
-			waitForTextToBeVisible("Email", "i");
+			waitForTextToBeVisible("Attachment Format", "legend");
 			return true;
 		}
 		

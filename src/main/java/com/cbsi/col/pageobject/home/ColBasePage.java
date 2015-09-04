@@ -23,6 +23,7 @@ import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
+import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 import com.cbsi.col.test.util.StringUtil;
 
 public class ColBasePage {
@@ -278,6 +279,17 @@ public class ColBasePage {
 		for(String winHandle: driver.getWindowHandles()){
 			driver.switchTo().window(winHandle);
 		}
+	}
+	
+	private static int i=1;
+	public void switchToNextWindow(){
+		while(driver.getWindowHandles().size() <=1){
+			forceWait(300);
+			System.out.println("waiting for new window...");
+		}
+		System.out.println(new ArrayList<String>(driver.getWindowHandles()).get(i));
+		driver.switchTo().window(new ArrayList<String>(driver.getWindowHandles()).get(i));
+		i++;
 	}
 	
 	public void closeCurrentWindow(){

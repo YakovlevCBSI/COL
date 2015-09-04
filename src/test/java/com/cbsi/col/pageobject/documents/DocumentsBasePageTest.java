@@ -6,6 +6,7 @@ import org.junit.Before;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
 import com.cbsi.col.pageobject.home.ProductsPage;
@@ -35,7 +36,14 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	}
 	
 	public void createQuote(){
-		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage = null;
+		try{
+			currentAccountPage=  customersPage.clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+		}catch(NullPointerException e){
+			recentCustomersPage = createAccount(AccountType.CUSTOMER);
+			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_");
+			
+		}
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quoteNumber = quotePage.getQuoteNumber();

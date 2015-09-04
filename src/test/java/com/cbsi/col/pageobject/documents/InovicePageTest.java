@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class InovicePageTest extends DocumentsBasePageTest{
 

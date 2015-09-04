@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.RMAPage.Reasons;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Doc;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class RMAPageTest extends DocumentsBasePageTest{
 

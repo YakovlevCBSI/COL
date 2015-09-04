@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class SalesOrderPageTest extends DocumentsBasePageTest{
 

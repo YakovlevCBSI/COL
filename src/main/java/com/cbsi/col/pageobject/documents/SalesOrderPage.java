@@ -5,6 +5,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -86,11 +87,14 @@ public class SalesOrderPage extends DocumentsBasePage{
 	
 	//There is an addToOrder(?) page. work on it whenever needed.
 	public SalesOrderPage clickSave(){
-		Save.click();
+		
 		try{
+			Save.click();
 			waitForElementToBeVisible(By.cssSelector("input[name='ponumber']"), 10);
 		}catch(TimeoutException e){
 			waitForTextToBeVisible("Sales Order (Submitted)", "span");
+		}catch(UnhandledAlertException e){
+			acceptAlert();
 		}
 //		return this;
 		return PageFactory.initElements(driver, SalesOrderPage.class);

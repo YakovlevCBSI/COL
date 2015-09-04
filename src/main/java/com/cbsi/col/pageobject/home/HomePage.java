@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersPage;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 
 public class HomePage extends ColBasePage{

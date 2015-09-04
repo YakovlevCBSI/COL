@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Doc;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 
@@ -18,5 +19,13 @@ public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 		
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
 		PurchaseOrderPage purchaseOrderPage = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
+	}
+	
+	@Test
+	public void createRMAFromPurchaseOrder(){
+		int docNumber;
+		convertToSalesOrder();
+		
+		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
 	}
 }

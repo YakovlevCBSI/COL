@@ -19,6 +19,7 @@ import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.home.ProductsPage.Action;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 
 public class QuotePageTest extends DocumentsBasePageTest{
@@ -165,7 +166,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		quotePage.clickSave();
 	}
-//	
+	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
 //		AccountsPage accountPage = homePage.goToAccountsPage();
@@ -184,7 +185,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 //			Thread.sleep(500);
 //		}
 //	}
-//	
+	
 //	
 
 	

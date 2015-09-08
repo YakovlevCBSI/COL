@@ -1,5 +1,6 @@
 package com.cbsi.col.pageobject.purchaseorders;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,7 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForTextToBeVisible("Purchase Order", "h1");
+		waitForPageToLoad(By.cssSelector("div#crm-footer div div[class^='sticky-accordion']"));
 	}
 	
 	@FindBy(css="input#is_autofulfill_manual")
@@ -27,11 +29,18 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 	@FindBy(css="a[title='Create RMA']")
 	private WebElement CreateRma;
 	
-	@FindBy(css="a[href*='save]")
+	@FindBy(css="td a[href*='submit_page(\"save\")']")
 	private WebElement Save;
 	
-	@FindBy(css="a#submitPOButton")
+	@FindBy(css="td a#submitPOButton")
 	private WebElement ConvertToSubmittedPo;
+	
+	@FindBy(css= "span#StatusSpan")
+	private WebElement PoStatus;
+	
+	public String getPoStatus(){
+		return PoStatus.getText();
+	}
 	
 	public PurchaseOrderPage setPoType(PoType manualOrAuto){
 		if(manualOrAuto == PoType.Manual){
@@ -45,6 +54,7 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 
 	public PurchaseOrderPage clickConvertToSubmittedPo(){
 		ConvertToSubmittedPo.click();
+		acceptAlert();
 		waitForTextToBeVisible("Purchase Order (Submitted)", "h1");
 		return PageFactory.initElements(driver, PurchaseOrderPage.class);
 	}

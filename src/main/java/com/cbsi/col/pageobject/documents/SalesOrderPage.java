@@ -21,7 +21,7 @@ public class SalesOrderPage extends DocumentsBasePage{
 		// TODO Auto-generated constructor stub
 //		waitForPageToLoad(By.cssSelector("form div p"));
 		try{
-			waitForTextToBeVisible(5000, "Addresses", "b");
+			waitForTextToBeVisible(10000, "Addresses", "b");
 		}catch(Exception e){
 			
 		}
@@ -54,6 +54,7 @@ public class SalesOrderPage extends DocumentsBasePage{
 	}
 
 	public void setEmail(String email) {
+		Email.clear();
 		Email.sendKeys(email);
 	}
 

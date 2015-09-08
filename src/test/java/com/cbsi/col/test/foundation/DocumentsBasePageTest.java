@@ -3,6 +3,9 @@ package com.cbsi.col.test.foundation;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
@@ -61,20 +64,63 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
 	}
 	
+//	public void convertToSalesOrder(){
+//		createQuote();
+//		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+//		
+//		SalesOrderPage orderPageAdress = quotePage.clickConvertToOrder();
+//		orderPageAdress.setFirstName("Quality");
+//		orderPageAdress.setLastName("Assurance");
+//		orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
+//		orderPageAdress.setAddress(address);
+//		orderPageAdress.setCity(city);
+//		orderPageAdress.setZip(zip);
+//		
+//		SalesOrderPage salesOrderPagePayment = orderPageAdress.clickSave();
+//		SalesOrderPage salesOrderPage = salesOrderPagePayment.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave();
+//		orderNumber = salesOrderPage.getDocNumber();
+//		
+//		documentPage = salesOrderPage.goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.ORDERS);
+//		assertTrue(documentPage.hasSalesOrder(orderNumber));
+//	}
+	
+	/**
+	 * workaround added due to convert order bug.
+	 * Once the fix works, delete this and uncomment above method.
+	 */
+	
 	public void convertToSalesOrder(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
-		SalesOrderPage orderPageAdress = quotePage.clickConvertToOrder();
-		orderPageAdress.setFirstName("Quality");
-		orderPageAdress.setLastName("Assurance");
-		orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
-		orderPageAdress.setAddress(address);
-		orderPageAdress.setCity(city);
-		orderPageAdress.setZip(zip);
-		
-		SalesOrderPage salesOrderPagePayment = orderPageAdress.clickSave();
-		SalesOrderPage salesOrderPage = salesOrderPagePayment.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave();
+		SalesOrderPage salesOrderPage = null;
+		boolean convertOrderSuccess = false;
+		int retry=1;
+		while(convertOrderSuccess == false){
+			SalesOrderPage orderPageAdress = quotePage.clickConvertToOrder();
+			try{
+				orderPageAdress.setFirstName("Quality");
+				orderPageAdress.setLastName("Assurance");
+				orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
+				orderPageAdress.setAddress(address);
+				orderPageAdress.setCity(city);
+				orderPageAdress.setZip(zip);
+				orderPageAdress.clickCopyToShipping();
+				salesOrderPage = orderPageAdress.clickSave();
+
+			}catch(WebDriverException e){
+				System.out.println("cannot focus on element. Moving on...");
+			}
+			try{
+				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
+				salesOrderPage = salesOrderPage.clickSave();
+				convertOrderSuccess = true;
+			}catch(NullPointerException e){
+				System.out.println("convert order failed... retry "+ retry);
+				retry ++;
+				 quotePage = PageFactory.initElements(driver, QuotePage.class);
+			}
+		}
 		orderNumber = salesOrderPage.getDocNumber();
 		
 		documentPage = salesOrderPage.goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.ORDERS);

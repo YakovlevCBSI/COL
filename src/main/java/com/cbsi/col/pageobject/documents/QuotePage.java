@@ -15,7 +15,7 @@ public class QuotePage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 //		waitForPageToLoad(By.cssSelector("div h1"));
-		waitForTextToBeVisible(20000, "Quote (Open)", "span");
+		waitForTextToBeVisible(20000, "Quote (", "span");
 		initializePriceCalculator();
 	}
 

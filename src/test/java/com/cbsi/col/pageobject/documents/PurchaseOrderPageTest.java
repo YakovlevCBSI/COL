@@ -1,9 +1,11 @@
 package com.cbsi.col.pageobject.documents;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Doc;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
@@ -35,6 +37,7 @@ public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 		PurchaseOrdersTab purchaseOrderTab = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
 		PurchaseOrderPage purchaseOrderPage = purchaseOrderTab.clickViewPoNumberLinkedToSo(orderNumber);
 		purchaseOrderPage = purchaseOrderPage.setPoType(PoType.Manual).clickSave().clickConvertToSubmittedPo();
-
+		
+		assertEquals(purchaseOrderPage.getPoStatus(), DocStatus.Submitted.toString());
 	}
 }

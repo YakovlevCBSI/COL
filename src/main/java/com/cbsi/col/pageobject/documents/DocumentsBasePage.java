@@ -463,4 +463,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 	}
 	
+	public enum DocStatus{
+		Submitted;
+	}
+	
 }

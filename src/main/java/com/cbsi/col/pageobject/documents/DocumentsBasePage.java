@@ -37,6 +37,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			quoteInt = Integer.parseInt(quoteNumber);
 		}
 		
+		System.out.println(quoteInt);
 		return quoteInt;
 	}
 	//--------------------------  Bottom bar---------------------------//
@@ -440,6 +441,26 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		waitForQuickLoad();
 		
 		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	//----------------------------- RMA popup for SO and PO-----------------------------//
+	public static class CreateRmaPopup extends ColBasePage{
+
+		public CreateRmaPopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			switchFrame(By.cssSelector("iframe"));
+			waitForTextToBeVisible("RMA", "h3");
+		}
+		
+		@FindBy(css="span.btn-save")
+		private WebElement CreateRMA;
+		
+		public RMAPage clickCreateRMA(){
+			CreateRMA.click();
+			switchBack();
+			return PageFactory.initElements(driver, RMAPage.class);
+		}
 	}
 	
 }

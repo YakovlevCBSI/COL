@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.home.ColBasePage;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 
 public class SalesOrderPage extends DocumentsBasePage{
 
@@ -182,7 +183,7 @@ public class SalesOrderPage extends DocumentsBasePage{
 		
 		if(doc == Doc.CreatePO || doc == Doc.CreatePOAll) {
 			CreatePoPopup po = PageFactory.initElements(driver, CreatePoPopup.class);
-			PurchaseOrderPage purchaseOrderPage = po.clickCreatePos();
+			PurchaseOrdersTab purchaseOrderPage = po.clickCreatePos();
 			return (T)purchaseOrderPage;
 		}
 		else if (doc == Doc.CreateRMA) {
@@ -216,25 +217,6 @@ public class SalesOrderPage extends DocumentsBasePage{
 		UPS3DaySelectResidential
 	}
 	
-	public static class CreateRmaPopup extends ColBasePage{
-
-		public CreateRmaPopup(WebDriver driver) {
-			super(driver);
-			// TODO Auto-generated constructor stub
-			switchFrame(By.cssSelector("iframe"));
-			waitForTextToBeVisible("Create RMA", "h3");
-		}
-		
-		@FindBy(css="span.btn-save")
-		private WebElement CreateRMA;
-		
-		public RMAPage clickCreateRMA(){
-			CreateRMA.click();
-			switchBack();
-			return PageFactory.initElements(driver, RMAPage.class);
-		}
-	}
-	
 	public static class CreatePoPopup extends ColBasePage{
 
 		public CreatePoPopup(WebDriver driver) {
@@ -246,10 +228,10 @@ public class SalesOrderPage extends DocumentsBasePage{
 		@FindBy(css="span.btn-save")
 		private WebElement CreatePos;
 		
-		public PurchaseOrderPage clickCreatePos(){
+		public PurchaseOrdersTab clickCreatePos(){
 			CreatePos.click();
 			switchBack();
-			return PageFactory.initElements(driver, PurchaseOrderPage.class);
+			return PageFactory.initElements(driver, PurchaseOrdersTab.class);
 		}
 	}
 }

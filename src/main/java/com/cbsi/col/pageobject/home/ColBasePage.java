@@ -23,7 +23,7 @@ import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
-import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersPage;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 import com.cbsi.col.test.util.StringUtil;
 
@@ -208,7 +208,7 @@ public class ColBasePage {
 		return goToHomePage().goToSuppliersPage();
 	}
 	
-	public PurchaseOrdersPage goToPurchaseOrdersPage(){
+	public PurchaseOrdersTab goToPurchaseOrdersPage(){
 		return goToHomePage().goToPurchaseOrdersPage();
 	}
 	

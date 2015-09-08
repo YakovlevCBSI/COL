@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
-import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersPage;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 
 public class HomePage extends ColBasePage{
@@ -106,9 +106,9 @@ public class HomePage extends ColBasePage{
 		return PageFactory.initElements(driver, SuppliersPage.class);
 	}
 	
-	public PurchaseOrdersPage goToPurchaseOrdersPage(){
+	public PurchaseOrdersTab goToPurchaseOrdersPage(){
 		PurhcaseOrders.click();
-		return PageFactory.initElements(driver, PurchaseOrdersPage.class);
+		return PageFactory.initElements(driver, PurchaseOrdersTab.class);
 	}
 	
 	public boolean IsAccountsTabDisplayed(){

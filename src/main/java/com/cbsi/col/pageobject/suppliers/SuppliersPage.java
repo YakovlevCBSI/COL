@@ -18,7 +18,7 @@ public class SuppliersPage extends ColBasePage{
 	public SuppliersPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Suppliers", "h1");
+		waitForTextToBeVisible("Supplier", "h1");
 	}
 	
 	@FindBy(css="a[title='Create New Supplier']")

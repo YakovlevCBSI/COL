@@ -23,8 +23,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	@Test
 	public void createBundleInSalesOrder() throws InterruptedException{
 		convertToSalesOrder();
-		Thread.sleep(5000);
-		System.out.println("wait..");
+
 		SalesOrderPage orderPage = documentPage.goToOrder(orderNumber);
 		orderPage.selectProductFromTable(1);
 		orderPage = (SalesOrderPage) orderPage.selectFromLineActions(LineActions.Convert_to_Bundle);

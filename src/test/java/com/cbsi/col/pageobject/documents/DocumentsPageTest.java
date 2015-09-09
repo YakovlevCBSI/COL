@@ -1,9 +1,18 @@
 package com.cbsi.col.pageobject.documents;
 
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.documents.DocumentsPage.Status;
 import com.cbsi.col.test.foundation.ColBaseTest;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
+import com.cbsi.col.test.util.TableUtil;
 
 public class DocumentsPageTest extends ColBaseTest{
 
@@ -21,7 +30,38 @@ public class DocumentsPageTest extends ColBaseTest{
 	}
 	
 	@Test
-	public void sortTest(){
-//		documentsPage.
+	public void FilterByQuotesOpen(){
+		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
+		documentsPage = documentsPage.filterByStatus(Status.QUOTES_OPEN);
+		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Open", false));
+	}
+	
+	@Test
+	public void FilterByOrdersSubmitted(){
+		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
+		documentsPage = documentsPage.filterByStatus(Status.ORDERS_SUBMITTED);
+		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Submitted", false));
+	}
+	
+	@Test
+	public void FilterByInvoicesDue(){
+		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
+		documentsPage = documentsPage.filterByStatus(Status.INVOICES_DUE);
+		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Due", false));
+	}
+	
+	@Test
+	public void FilterByModifiedUser(){
+		String userName = "Park, Albert";
+		
+		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
+		documentsPage = documentsPage.filterByModifiedBy(userName);
+		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		assertTrue(TableUtil.tableMapHasWord(maps,"modifiedby", userName, false));
+
 	}
 }
+	

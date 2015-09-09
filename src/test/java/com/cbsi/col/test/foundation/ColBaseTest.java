@@ -81,9 +81,9 @@ public class ColBaseTest {
 	public void setBrowser(String browser){
 		this.browser = browser;
 	}
-	
-	@Rule
-	public Timeout globalTimeout = new Timeout(200000);
+//	
+//	@Rule
+//	public Timeout globalTimeout = new Timeout(240000);
 	
 	@Rule
 	public TestName testInfo = new TestName();

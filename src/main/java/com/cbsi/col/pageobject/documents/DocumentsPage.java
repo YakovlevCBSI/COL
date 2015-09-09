@@ -1,6 +1,7 @@
 package com.cbsi.col.pageobject.documents;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -18,8 +19,12 @@ public class DocumentsPage extends ColBasePage{
 	public DocumentsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad(By.cssSelector("div h1"));
+		waitForTextToBeVisible("Documents","h1");
 	}
 
+	@FindBy(css="table.costandard")
+	private WebElement Table;
+	
 	public List<String> getDescriptionTitles(){
 		List<WebElement> descriptions = driver.findElements(By.cssSelector("div[id^='lineDescriptionOne']"));
 		List<String> descriptionList = new ArrayList<String>();
@@ -210,7 +215,9 @@ public class DocumentsPage extends ColBasePage{
 	private WebElement StatusDrpdown;
 	public DocumentsPage filterByStatus(Status status){
 		StatusDrpdown.click();
-		driver.findElement(By.cssSelector("option[value='" + status.toString().toLowerCase().replace("_", "|") + "'")).click();
+		driver.findElement(By.cssSelector("option[value='" + status.toString().toLowerCase().replace("s_", "|") + "'")).click();
+//		driver.findElement(By.cssSelector("option[value*='" + status.toString().toLowerCase().replace("_", " ("))).click();
+
 		try{
 			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
 		}catch(TimeoutException e){
@@ -252,6 +259,10 @@ public class DocumentsPage extends ColBasePage{
 		
 	}
 	
+	public List<HashMap<String, String>> getTableAsMaps() {
+		return getTableAsMaps(Table, 0,12);
+	}
+	
 	public enum Time{
 		ALL,
 		TODAY,
@@ -267,10 +278,22 @@ public class DocumentsPage extends ColBasePage{
 		QUOTES_HOLD,
 		QUOTES_WON,
 		
+		ORDERS_ALL,
+		ORDERS_PENDING,
+		ORDERS_SUBMITTED,
+		ORDERS_COMPLETE,
+		
+		INVOICES_DUE
+		
+		
 	}	
 	
 	public enum DocumentTabs{
-		ALLQUOTESANDORDERS,
+		ALLQUOTESANDORDERS{
+			public String toString(){
+				return "Docs/list";
+			}
+		},
 		QUOTES{
 			public String toString(){
 				return "Docs/listQuotes";

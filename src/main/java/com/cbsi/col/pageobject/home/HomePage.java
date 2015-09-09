@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 

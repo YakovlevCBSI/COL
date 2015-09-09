@@ -16,7 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
-import com.cbsi.col.pageobject.home.ProductsPage;
+import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.test.util.StringUtil;
 
 public class DocumentsBasePage<T> extends ColBasePage{

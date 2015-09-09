@@ -18,7 +18,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
-import com.cbsi.col.pageobject.home.ProductsPage.Action;
+import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 

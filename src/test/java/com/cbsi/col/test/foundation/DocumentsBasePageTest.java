@@ -15,8 +15,8 @@ import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
-import com.cbsi.col.pageobject.home.ProductsPage;
-import com.cbsi.col.pageobject.home.ProductsPage.Action;
+import com.cbsi.col.pageobject.products.ProductsPage;
+import com.cbsi.col.pageobject.products.ProductsPage.Action;
 
 public class DocumentsBasePageTest extends ColBaseTest{
 	

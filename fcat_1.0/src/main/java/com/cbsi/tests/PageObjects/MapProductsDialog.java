@@ -70,8 +70,12 @@ public class MapProductsDialog extends BasePage{
 		}catch(TimeoutException t){
 			System.out.println("skipping wait for IE.");
 		}
-		waitForElementToBeInvisible(By.cssSelector("tbody.loading"));
-		waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
+		
+		String loadText = "tbody#mapping-table-body td.no-scripts-label";
+		
+		waitForElementToBeVisible(By.cssSelector(loadText));
+		waitForElementToBeInvisible(By.cssSelector(loadText));
+		
 		return this;
 	}
 

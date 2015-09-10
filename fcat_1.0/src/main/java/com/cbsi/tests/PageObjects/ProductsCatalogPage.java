@@ -56,6 +56,7 @@ public class ProductsCatalogPage extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
+	
 	@FindBy(css="div.page-button-bar div.link-button-bar a")
 	private WebElement ReturnToList;
 	
@@ -85,18 +86,27 @@ public class ProductsCatalogPage extends BasePage{
 		return PageFactory.initElements(driver, DetailsPage.class);
 	}
 	
-	private WebElement productRow;
+	private static WebElement productRow;
 	public ProductsCatalogPage setProductToUse(String productName){
 //		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + escapeHtml(productName.toUpperCase()) + "']"));
-		
+		productRow = null;
 		List<WebElement> productRows = driver.findElements(By.cssSelector("tbody#product-table-body tr td[class='product-id-column']"));
 		for(WebElement singleRow: productRows){
-			if(singleRow.getText().toLowerCase().equals(escapeHtml(productName.toLowerCase()))){
-				this.productRow = singleRow.findElement(By.xpath(".."));
+			if(singleRow.getText().toLowerCase().equals(productName.toLowerCase())){
+				productRow = singleRow.findElement(By.xpath(".."));
 				break;
 			}
 		}
 		
+		if(productRow == null){
+			System.out.println("navigate to next page.");
+			clickGoRight();
+			setProductToUse(productName);
+		}
+		
+		if(productRow == null){
+			throw new NullPointerException("Unable to find the product by pid " + productName);
+		}
 		return this;
 	}
 	
@@ -108,15 +118,15 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public BasePage clickAction(String actionButtonName){
 		if(actionButtonName.toLowerCase().equals(ElementConstants.MAP)){
-			productRow.findElement(By.xpath("td[@class='state actions']/a[1]")).click();
+			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[1]")).click();
 			return PageFactory.initElements(driver, MapProductsDialog.class);
 		}
 		else if(actionButtonName.toLowerCase().equals(ElementConstants.EDIT)){
-			productRow.findElement(By.xpath("td[@class='state actions']/a[2]")).click();
+			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[2]")).click();
 			return PageFactory.initElements(driver, EditProductPopupPage.class);
 		}
 		else if(actionButtonName.toLowerCase().equals(ElementConstants.DELETE)){
-			productRow.findElement(By.xpath("td[@class='state actions']/a[3]")).click();
+			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[3]")).click();
 			
 		}
 		else{

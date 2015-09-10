@@ -352,4 +352,9 @@ public class ColBasePage {
 		
 		return maps;
 	}
+	
+	//------------ detect if perl or java based---------//
+	public boolean isPerl(){
+		return driver.getCurrentUrl().endsWith(".epl");
+	}
 }

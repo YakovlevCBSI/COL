@@ -71,6 +71,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public boolean hasDoc(int docNumber){
+		setFilterByModifiedToDefault();		
 		return findDataRowByName(docNumber, true)==null? false:true;
 
 	}
@@ -229,7 +230,7 @@ public class DocumentsPage extends ColBasePage{
 	
 	@FindBy(css="select#saved_by_id")
 	private WebElement ModifiedBy;
-	public DocumentsPage filterByModifiedBy(String person){
+	public DocumentsPage setFilterByModifiedBy(String person){
 		WebElement userOption = null;
 		ModifiedBy.click();
 		List<WebElement> persons = ModifiedBy.findElements(By.xpath("option"));
@@ -255,8 +256,31 @@ public class DocumentsPage extends ColBasePage{
 			
 		}
 		
-		return PageFactory.initElements(driver, DocumentsPage.class);
-		
+		return PageFactory.initElements(driver, DocumentsPage.class);	
+	}
+	
+	public String getFilterByModified(){
+		WebElement defaultUser = ModifiedBy.findElement(By.xpath("option[1]"));
+		if(defaultUser.isDisplayed()){
+			return defaultUser.getText();
+		}else{
+			List<WebElement> users = ModifiedBy.findElements(By.xpath("option"));
+			for(WebElement user: users){
+				if(user.getAttribute("selected") != null){
+					return user.getText();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public DocumentsPage setFilterByModifiedToDefault(){
+		System.out.println("checking modfiied default");
+		if(!ModifiedBy.findElement(By.xpath("option[1]")).isDisplayed()){
+			System.out.println("Now set to default...");
+			setFilterByModifiedBy("Buyers (All)");
+		}
+		return this;
 	}
 	
 	public List<HashMap<String, String>> getTableAsMaps() {

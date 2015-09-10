@@ -8,15 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.home.ColBasePage;
+import com.cbsi.col.test.util.StringUtil;
 
 public class PurchaseOrdersTab extends ColBasePage{
 
 	public PurchaseOrdersTab(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Purchase Orders", "font");
+		waitForTextToBeVisible("Listed below", "p");
 	}
 	@FindBy(xpath="//tr[4]/td/table")
 	private WebElement Table;
@@ -70,6 +72,61 @@ public class PurchaseOrdersTab extends ColBasePage{
 		
 		System.out.println("did not find orderNumber in purchaseOrderTab...");
 		return null;		
+	}
+	
+	public PurchaseOrdersTab switchToTab(PoTabs po){
+		driver.findElement(By.linkText(StringUtil.cleanElementName(po.toString()))).click();
+		forceWait(500);
+		return PageFactory.initElements(driver, PurchaseOrdersTab.class);
+	}
+	
+	public enum PoTabs{
+		View_POs,
+		Supplier_RMAs
+	}
+	
+	@FindBy(css="select[name='buyer_filter']")
+	private WebElement BuyerFilter;
+	
+	public PurchaseOrdersTab setFilterByBuyer(String user){
+		BuyerFilter.click();
+		for(WebElement buyer: BuyerFilter.findElements(By.xpath("option"))){
+			if(buyer.getText().toLowerCase().contains(user)){
+				buyer.click();
+				break;
+			}
+		}
+		
+		return this;
+	}
+	
+	public String getFilterByBuyer(){
+		WebElement defaultUser = BuyerFilter.findElement(By.xpath("option[1]"));
+		if(defaultUser.isDisplayed()){
+			return defaultUser.getText();
+		}else{
+			List<WebElement> users = BuyerFilter.findElements(By.xpath("option"));
+			for(WebElement user: users){
+				if(user.getAttribute("selected") != null){
+					return user.getText();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public PurchaseOrdersTab setFilterByBuyerToDefault(){
+		System.out.println("checking modfiied default");
+		if(!BuyerFilter.findElement(By.xpath("option[1]")).isDisplayed()){
+			System.out.println("Now set to default...");
+			setFilterByBuyer("Buyers (All)");
+		}
+		return this;
+	}
+	
+	public boolean hasDoc(int docNumber){
+		setFilterByBuyerToDefault();
+		return findDataRowByName(docNumber)==null?false:true;
 	}
 	
 	

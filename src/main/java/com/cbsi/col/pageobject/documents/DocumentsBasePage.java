@@ -15,8 +15,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
+import com.cbsi.col.pageobject.documents.SalesOrderPage.CreatePoPopup;
 import com.cbsi.col.pageobject.home.ColBasePage;
 import com.cbsi.col.pageobject.products.ProductsPage;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.test.util.StringUtil;
 
 public class DocumentsBasePage<T> extends ColBasePage{
@@ -62,6 +64,15 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="li a[id *= '_completeInvoice']")
 	private WebElement CompletInvoice;
 	
+	@FindBy(css="button[id*='live_cost_']")
+	private WebElement LiveCost;
+	
+	public T clickLiveCost(){
+		LiveCost.click();
+		waitForQuickLoad();
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
 	public T clickSave(){
 		Save.click();
 		waitForQuickLoad();
@@ -86,9 +97,22 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return PageFactory.initElements(driver, SendPage.class);
 	}
 
+	@FindBy(css="span.btn-save")
+	private WebElement CreateInvoice;
+	
 	public InvoicePage clickConvertToInvoice(){
 //			CancelThisOrder.findElement(By.xpath("../button[@id='ld-nextaction-caret']")).click();
-		ConvertToInvoice.click();
+		try{
+			ConvertToInvoice.click(); //this is legacy.
+		}catch(NoSuchElementException e){
+			selectCreateDoc(Doc.CreateInvoiceAll);
+			waitForQuickLoad();
+			switchFrame();
+			waitForTextToBeVisible("Create Invoice", "h3");
+			CreateInvoice.click();
+			switchBack();
+				
+		}
 		return PageFactory.initElements(driver, InvoicePage.class);
 		
 		}
@@ -394,6 +418,17 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
+	@FindBy(css="button#addImportUpdate")
+	private WebElement AddImportUpdateDropdown;
+	public T selectFromAddImportUpdate(AddImportUpdates add){
+		AddImportUpdateDropdown.click();
+		
+		AddImportUpdateDropdown.findElement(By.xpath("../ul/li/a[contains(@title, '" + StringUtil.cleanElementName(add.toString()) + "')]")).click();
+		waitForQuickLoad();
+
+		return (T) PageFactory.initElements(driver, QuickAddProductPopup.class);	
+	}
+	
 	public enum LineActions{
 		Delete,
 		Compare,
@@ -406,6 +441,15 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Unbundle,
 		Insert_Header,
 		Insert_Subtotal
+	}
+	
+	public enum AddImportUpdates{
+		Quick_Add_Product,
+		UpdateMarginMarkup,
+		AddManualLineItem,
+		MergeIntoThisDocument,
+		ImportConfig,
+		ImportFromAutoAsk
 	}
 	
 	WebElement bundleHeader;
@@ -443,6 +487,41 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
+	@FindBy(css="button#docActions")
+	private WebElement CreateDoc;
+	public <T> T selectCreateDoc(Doc doc){
+		CreateDoc.click();
+		List<WebElement> docActions = driver.findElements(By.cssSelector("ul.dropdown-menu li a"));
+		for(WebElement e: docActions){
+			if(e.getAttribute("title").replaceAll("[ \\s+ ( )]", "").equals(doc.toString())){
+				e.click();
+			}
+		}
+		
+		waitForQuickLoad();
+		
+		if(doc == Doc.CreatePO || doc == Doc.CreatePOAll) {
+			CreatePoPopup po = PageFactory.initElements(driver, CreatePoPopup.class);
+			PurchaseOrdersTab purchaseOrderPage = po.clickCreatePos();
+			return (T)purchaseOrderPage;
+		}
+		else if (doc == Doc.CreateRMA) {
+			CreateRmaPopup crp = PageFactory.initElements(driver, CreateRmaPopup.class);
+			RMAPage rmaPage = crp.clickCreateRMA();
+			return (T)rmaPage;
+		}
+		
+		return null;
+	}
+	
+	public enum Doc{
+		CreatePO,
+		CreatePOAll,
+		CreateRMA,
+		CreateInvoice, 
+		CreateInvoiceAll
+	}
+	
 	//----------------------------- RMA popup for SO and PO-----------------------------//
 	public static class CreateRmaPopup extends ColBasePage{
 
@@ -465,6 +544,25 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	public enum DocStatus{
 		Submitted;
+	}
+	
+	//----------------------------- QuickAddProduct-----------------------------//
+	public static class QuickAddProductPopup extends ColBasePage{
+
+		public QuickAddProductPopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			waitForTextToBeVisible("Quick Add Product", "h3");
+		}
+		
+		public ProductsPage search(String text){
+			WebElement searchInput = driver.findElements(By.cssSelector("input#addProductKeyword")).get(1);
+			searchInput.sendKeys(text);
+			searchInput.findElement(By.xpath("../button")).click();
+			
+			return PageFactory.initElements(driver, ProductsPage.class);
+		}
+		
 	}
 	
 }

@@ -169,38 +169,6 @@ public class SalesOrderPage extends DocumentsBasePage{
 		return this;
 	}
 	
-	@FindBy(css="button#docActions")
-	private WebElement CreateDoc;
-	public <T> T selectCreateDoc(Doc doc){
-		CreateDoc.click();
-		List<WebElement> docActions = driver.findElements(By.cssSelector("ul.dropdown-menu li a"));
-		for(WebElement e: docActions){
-			if(e.getAttribute("title").replaceAll("[ \\s+ ( )]", "").equals(doc.toString())){
-				e.click();
-			}
-		}
-		
-		waitForQuickLoad();
-		
-		if(doc == Doc.CreatePO || doc == Doc.CreatePOAll) {
-			CreatePoPopup po = PageFactory.initElements(driver, CreatePoPopup.class);
-			PurchaseOrdersTab purchaseOrderPage = po.clickCreatePos();
-			return (T)purchaseOrderPage;
-		}
-		else if (doc == Doc.CreateRMA) {
-			CreateRmaPopup crp = PageFactory.initElements(driver, CreateRmaPopup.class);
-			RMAPage rmaPage = crp.clickCreateRMA();
-			return (T)rmaPage;
-		}
-		
-		return null;
-	}
-	
-	public enum Doc{
-		CreatePO,
-		CreatePOAll,
-		CreateRMA
-	}
 	public enum Payment{
 		Terms,
 		MoneyOrder,

@@ -58,7 +58,7 @@ public class DocumentsPageTest extends ColBaseTest{
 		String userName = "Park, Albert";
 		
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
-		documentsPage = documentsPage.filterByModifiedBy(userName);
+		documentsPage = documentsPage.setFilterByModifiedBy(userName);
 		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"modifiedby", userName, false));
 

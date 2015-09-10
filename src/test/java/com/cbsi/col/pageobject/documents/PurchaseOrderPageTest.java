@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
-import com.cbsi.col.pageobject.documents.SalesOrderPage.Doc;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage.PoType;
@@ -24,7 +24,7 @@ public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 		convertToSalesOrder();
 		
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
-		PurchaseOrdersTab purchaseOrderTab = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
+		PurchaseOrdersTab purchaseOrderTab = (PurchaseOrdersTab) ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
 		assertTrue(purchaseOrderTab.hasPoNumberLinkedToSo(orderNumber));
 	}
 	
@@ -34,7 +34,7 @@ public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 		
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
 		System.out.println(orderNumber);
-		PurchaseOrdersTab purchaseOrderTab = ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
+		PurchaseOrdersTab purchaseOrderTab = (PurchaseOrdersTab) ((SalesOrderPage) salesOrderPage.selectProductFromTable(1)).selectCreateDoc(Doc.CreatePO);
 		PurchaseOrderPage purchaseOrderPage = purchaseOrderTab.clickViewPoNumberLinkedToSo(orderNumber);
 		purchaseOrderPage = purchaseOrderPage.setPoType(PoType.Manual).clickSave().clickConvertToSubmittedPo();
 		

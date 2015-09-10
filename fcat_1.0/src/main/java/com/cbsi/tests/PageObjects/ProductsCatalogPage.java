@@ -87,7 +87,15 @@ public class ProductsCatalogPage extends BasePage{
 	
 	private WebElement productRow;
 	public ProductsCatalogPage setProductToUse(String productName){
-		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + escapeHtml(productName.toUpperCase()) + "']"));
+//		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + escapeHtml(productName.toUpperCase()) + "']"));
+		
+		List<WebElement> productRows = driver.findElements(By.cssSelector("tbody#product-table-body tr td[class='product-id-column']"));
+		for(WebElement singleRow: productRows){
+			if(singleRow.getText().toLowerCase().equals(escapeHtml(productName.toLowerCase()))){
+				this.productRow = singleRow.findElement(By.xpath(".."));
+				break;
+			}
+		}
 		
 		return this;
 	}

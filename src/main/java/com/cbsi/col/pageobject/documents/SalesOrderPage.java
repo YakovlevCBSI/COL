@@ -97,6 +97,8 @@ public class SalesOrderPage extends DocumentsBasePage{
 			waitForTextToBeVisible("Sales Order (Submitted)", "span");
 		}catch(UnhandledAlertException e){
 			acceptAlert();
+		}catch(NoSuchElementException e){
+			super.clickSave(); //if save not found, click the button from parent class.
 		}
 //		return this;
 		return PageFactory.initElements(driver, SalesOrderPage.class);

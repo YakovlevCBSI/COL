@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
@@ -25,6 +26,21 @@ public class InovicePageTest extends DocumentsBasePageTest{
 		documentPage = invoicePage.goToDocumentsPage().switchToTab(DocumentTabs.INVOICES);
 		
 		assertTrue(documentPage.hasInvoice(invoiceNumber));
+	}
+	
+	@Test
+	public void convertSalesOrderWithBundleToInvoice(){
+		convertToSalesOrder();
+		
+		SalesOrderPage orderPage = documentPage.goToOrder(orderNumber);
+		orderPage.selectProductFromTable(1);
+		orderPage = (SalesOrderPage) orderPage.selectFromLineActions(LineActions.Convert_to_Bundle);
+		orderPage.setBundleHeader("test1");
+		orderPage.setBundleDesc("test description");
+		orderPage = (SalesOrderPage) orderPage.clickSaveBundle();
+		orderPage.clickSave();
+		
+		InvoicePage invoicePage = orderPage.clickConvertToInvoice();
 	}
 	
 }

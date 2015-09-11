@@ -88,9 +88,18 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	 * workaround added due to convert order bug.
 	 * Once the fix works, delete this and uncomment above method.
 	 */
+	public void convertToSalesOrderOnly(){
+		convertToSalesOrder(false);
+	}
 	
 	public void convertToSalesOrder(){
-		createQuote();
+		convertToSalesOrder(true);
+	}
+	public void convertToSalesOrder(boolean createQuote){
+		if(createQuote){
+			createQuote();
+		}
+		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
 		SalesOrderPage salesOrderPage = null;

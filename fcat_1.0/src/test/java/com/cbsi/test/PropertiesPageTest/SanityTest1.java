@@ -27,9 +27,9 @@ import com.cbsi.tests.PageObjects.DetailsPage.InfoType;
 import com.cbsi.tests.PageObjects.DetailsPage.ProcessingQueue;
 import com.cbsi.tests.util.GlobalVar;
 
-public class SanityTest extends AllBaseTest{
+public class SanityTest1 extends AllBaseTest{
 
-	public SanityTest(String URL, String browser) {
+	public SanityTest1(String URL, String browser) {
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
@@ -134,77 +134,7 @@ public class SanityTest extends AllBaseTest{
 
 	}
 	
-	@Test
-	public void uploadFullFileExcelAutomaticFromScratch(){
-		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
-		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.selectDropBoxOption("Excel");
-		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
-		DetailsPage detailsPage = mappingPage.automap();
-		
-		assertTrue(detailsPage.FileUploadIsDone());
-	}
 
-	@Test
-	public void DelimiterMismatchManualTxtToExcel(){
-		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
-	
-		
-	}
-	
-	@Test
-	public void DelimiterMismatchAutomaticTxtToExcel(){
-		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
-		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.selectDropBoxOption("TXT");
-		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
-		
-	}
-	
-	@Test
-	public void DelimiterMismatchTxtToCsvManual(){
-		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.
-		
-	
-	}
-	
-	@Test
-	public void uploadFileWithCpnMfUpcFails(){
-		MappingPage mappingPage = UploadFullFile("CCSQS1604.txt", "TXT");
-		DetailsPage detailsPage = mappingPage.automap(false, false);
-		assertTrue(detailsPage.FileUploadIsDone());
-	}
-	
-	@Test
-	public void dataValidationMessageShowsForEmptyFields(){
-		needsCleanUp=false;
-		
-		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.clickNextFail();
-		
-		assertTrue(addCatalogPage.displaysCatalogNameError());
-		assertTrue(addCatalogPage.displaysCatalogCodeError());
-		assertTrue(addCatalogPage.displaysFtpLocationError());
-		assertTrue(addCatalogPage.displaysFtpUserNameError());
-		assertTrue(addCatalogPage.displaysFtpPasswordError());
-	}
-	
-	
-	@Test
-	public void validateProcessingQueueMessageExists() throws InterruptedException{
-		MappingPage mappingPage = UploadFullFile();
-		DetailsPage detailsPage = mappingPage.automap();
-		detailsPage.FileUploadIsDone();
-		detailsPage.expandDetails();
-
-		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.STORE, InfoType.MESSAGE)),"7");
-		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.MAP, InfoType.MESSAGE)),"7");
-		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.DIFFERENCE, InfoType.MESSAGE)),"7");
-		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE)),"7");
-		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE)),"1");	
-	}
 
 	public String getProcessedNumber(String queueMessage){
 		System.out.println(queueMessage);

@@ -14,10 +14,13 @@ import org.openqa.selenium.WebElement;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
+import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
@@ -107,6 +110,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		sendPage.clickEmail();
 		
 		assertTrue(sendPage.isEmailBoxOpen());
+		//Actually send the mail.
 		
 	}
 	
@@ -165,6 +169,56 @@ public class QuotePageTest extends DocumentsBasePageTest{
 					priceCalculator.getTotal() == priceCalculator.getExpectedTotal());
 		
 		quotePage.clickSave();
+	}
+	
+	@Test
+	public void addServiceItem(){
+
+		
+	}
+	
+	@Test
+	public void addTask(){
+		
+	}
+	
+	@Test
+	public void changeDate(){
+		
+	}
+	
+	@Test
+	public void liveCost(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage)quotePage.clickLiveCost();
+	}
+	
+	@Test
+	public void quickAddProduct(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		QuickAddProductPopup quickAddProductPopup = (QuickAddProductPopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Quick_Add_Product);
+		ProductsPage productPage = quickAddProductPopup.search("ibm");
+		quotePage = productPage.checkCompareBoxes(1).selectAction(Action.AddToQuote);
+		
+		//verify quick add product displays here.
+	}
+	
+	@Test
+	public void createRevisionThenRevert(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.clickSaveAsNewRevision("test1");
+		quotePage.goToRevisionsTab();
+		
+		assertTrue(quotePage.hasRevision("test1"));
+		
+		quotePage = quotePage.clickRevert("test1");
+		quotePage = (QuotePage)quotePage.clickSave();
 	}
 	
 //	@Test

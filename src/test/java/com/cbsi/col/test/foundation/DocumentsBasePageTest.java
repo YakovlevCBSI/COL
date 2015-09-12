@@ -43,7 +43,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	public void createQuote(){
 		CurrentAccountTab currentAccountPage = null;
 		try{
-			currentAccountPage=  customersPage.clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
 		}catch(NullPointerException e){
 			recentCustomersPage = createAccount(AccountType.CUSTOMER);
 			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_");

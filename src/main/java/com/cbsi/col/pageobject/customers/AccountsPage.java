@@ -236,4 +236,14 @@ public class AccountsPage extends ColBasePage{
 	public List<HashMap<String, String>> getTableAsMaps(){
 		return getTableAsMaps(table, 0, 11);
 	}
+	
+	//------------------------table filter------------------------//
+	@FindBy(css="select#accountType")
+	private WebElement TypeDropdown;
+	
+	public AccountsPage setFilterByAccountType(AccountType type){
+		TypeDropdown.click();
+		driver.findElement(By.cssSelector("option[value='" + StringUtil.camelCase(type.toString()) + "']")).click();
+		return PageFactory.initElements(driver, AccountsPage.class);
+	}
 }

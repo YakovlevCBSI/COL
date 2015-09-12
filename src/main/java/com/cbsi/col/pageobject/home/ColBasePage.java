@@ -357,4 +357,39 @@ public class ColBasePage {
 	public boolean isPerl(){
 		return driver.getCurrentUrl().endsWith(".epl");
 	}
+	
+	//------------------------ find data from table  -----------------------//
+	
+	static int currentPage=0;
+	private static List<WebElement> dataColumns;
+	
+	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor){
+
+		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(" + nthColumnToLookFor +") a"));
+		
+		for(WebElement dataColumn: dataColumns){
+//			System.out.println(dataColumn.getText());
+			if(dataColumn.getText().contains(quoteNumber)){
+				return dataColumn;
+			}
+		}
+		
+		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+		if(currentPage-1 >=0){
+			int removePage = currentPage;
+			while(removePage >0){
+				removePage--;
+				pageList.remove(removePage);
+			}
+		}
+		if(pageList.size() >=1){
+			currentPage++;
+			pageList.get(0).click();
+			waitForTextToBeVisible("Documents", "h1");
+			dataColumns=null;
+			return findDataRowByName(quoteNumber, nthColumnToLookFor);
+		}
+		
+		return null;		
+	}
 }

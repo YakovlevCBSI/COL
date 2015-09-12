@@ -1,5 +1,7 @@
 package com.cbsi.col.pageobject.documents;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +25,44 @@ public class QuotePage extends DocumentsBasePage{
 		return super.getDocNumber();
 	}
 
+	@FindBy(linkText="Revisions")
+	private WebElement Revisions;
+	
+	public QuotePage goToRevisionsTab(){
+		Revisions.click();
+		waitForTextToBeVisible("Revisions", "h1");
+		
+		return this;
+	}
+	
+	@FindBy(css="Table.costandard")
+	private WebElement Table;
+	
+	public boolean hasRevision(String description){
+		List<WebElement> descriptionColumns = Table.findElements(By.xpath("tbody/tr/td[7]"));
+		for(WebElement e: descriptionColumns){
+			if(e.getText().toLowerCase().contains(description.toLowerCase())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@FindBy(css="td a[title*='revertToRevision']")
+	private WebElement Revert;
+	public QuotePage clickRevert(String description){
+		List<WebElement> descriptionColumns = Table.findElements(By.xpath("tbody/tr/td[7]"));
+		WebElement revertButton;
+		for(WebElement e: descriptionColumns){
+			if(e.getText().toLowerCase().contains(description.toLowerCase())){
+				Revert = e.findElement(By.xpath("../td[4]/a"));
+				break;
+			}
+		}
+		
+		Revert.click();
+		return PageFactory.initElements(driver, QuotePage.class);
+	}
 	//----------------------- inner page object: copy to new quote  -----------------------//
 	public static class CopyToNewQuotePage extends ColBasePage{
 
@@ -60,4 +100,5 @@ public class QuotePage extends DocumentsBasePage{
 		}
 	}
 
+	
 }

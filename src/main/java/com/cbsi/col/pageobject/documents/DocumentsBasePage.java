@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -46,9 +47,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="button#next-action_save")
 	private WebElement Save;
 	
+	@FindBy(css="li a[id*='action_saveNewRevision']")
+	private WebElement SaveAsNewRevision;
+	
 	@FindBy(css="button#next-action_copyToQuote")
 	private WebElement CopyToNewQuote;
 	
+	@FindBy(css="button#ld-nextaction-caret")
+	private WebElement Caret;
 	@FindBy(css="button[id^='next-action_order']")
 	private WebElement ConvertToOrder;
 	
@@ -79,6 +85,16 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)this;
 	}
 	
+	public T clickSaveAsNewRevision(String description){
+		Caret.click();
+		SaveAsNewRevision.click();
+		Alert alert = driver.switchTo().alert();
+		alert.sendKeys(description);
+		alert.accept();
+		
+		waitForQuickLoad();
+		return (T)this;
+	}
 	public QuotePage clickCopyToNewQuote(){
 		CopyToNewQuote.click();
 		CopyToNewQuotePage copyToNewQuotePage = PageFactory.initElements(driver, CopyToNewQuotePage.class);

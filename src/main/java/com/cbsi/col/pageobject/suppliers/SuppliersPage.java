@@ -46,7 +46,9 @@ public class SuppliersPage extends ColBasePage{
 	
 	public enum SupplierTabs{
 		Recent_Supplier,
-		Supplier_List
+		Supplier_List, 
+		View_POs,
+		SupplierRMAs
 	}
 	
 	@FindBy(css="table.costandard")

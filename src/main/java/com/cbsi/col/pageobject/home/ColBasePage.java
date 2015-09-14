@@ -392,4 +392,30 @@ public class ColBasePage {
 		
 		return null;		
 	}
+	
+	///filter///
+	
+	@FindBy(css="select#time_limit")
+	private WebElement TimeDropdown;
+	public <T> T setFilterByDate(Time days){
+		TimeDropdown.click();
+		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
+		
+		try{
+			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
+		}catch(TimeoutException e){
+			
+		}
+		
+		return (T)PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+	
+	public enum Time{
+		ALL,
+		TODAY,
+		LAST7,
+		LAST30
+	}
+	
 }

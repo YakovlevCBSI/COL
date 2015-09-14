@@ -24,8 +24,16 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args){
-		String keyword = "CompreHensive_Test(3)";
-		
-		System.out.println(camelCase(keyword));
+//		System.out.println(getUserName());
 	}
+	
+	public static String cleanUserName(String name){
+		String userName =  name.split("@")[0];
+		System.out.println(userName);
+		
+		
+		String[] names = userName.split("\\.");
+		return names[1] + "," + names[0];
+	}
+
 }

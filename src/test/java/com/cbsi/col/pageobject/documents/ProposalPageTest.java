@@ -11,7 +11,7 @@ import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
-import com.cbsi.col.pageobject.documents.DocumentsPage.Time;
+import com.cbsi.col.pageobject.home.ColBasePage.Time;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class ProposalPageTest extends ColBaseTest{
@@ -36,7 +36,7 @@ public class ProposalPageTest extends ColBaseTest{
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
-		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).filterByDate(Time.TODAY);
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).setFilterByDate(Time.TODAY);
 		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 	
@@ -47,7 +47,7 @@ public class ProposalPageTest extends ColBaseTest{
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		
-		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).filterByDate(Time.TODAY);
+		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).setFilterByDate(Time.TODAY);
 		assertTrue(documentPage.hasProposal(docNumber));		
 	}
 

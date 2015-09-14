@@ -59,6 +59,19 @@ public class CurrentAccountTab extends ColBasePage{
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	
+	@FindBy(css="button#delete-doc-btn")
+	private WebElement deleteDocButton;
+	public CurrentAccountTab deleteADocumentFromTable(){
+		switchFrame();
+		WebElement tr = findDataRowByName("1", 2);
+		tr.findElement(By.xpath("../../td[13]/input")).click();
+		quickWait();
+		deleteDocButton.click();
+		switchBack();
+		
+		return PageFactory.initElements(driver, CurrentAccountTab.class);
+	}
+	
 	public static class ProposalPopup extends ColBasePage{
 	
 		public ProposalPopup(WebDriver driver) {

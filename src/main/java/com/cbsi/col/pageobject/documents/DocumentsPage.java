@@ -196,22 +196,6 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
-
-	@FindBy(css="select#time_limit")
-	private WebElement TimeDropdown;
-	public DocumentsPage filterByDate(Time days){
-		TimeDropdown.click();
-		driver.findElement(By.cssSelector("option[value='" + days.toString().toLowerCase() + "'")).click();
-		
-		try{
-			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
-		}catch(TimeoutException e){
-			
-		}
-		
-		return PageFactory.initElements(driver, DocumentsPage.class);
-	}
-	
 	@FindBy(css="select#status")
 	private WebElement StatusDrpdown;
 	public DocumentsPage filterByStatus(Status status){
@@ -236,14 +220,14 @@ public class DocumentsPage extends ColBasePage{
 		List<WebElement> persons = ModifiedBy.findElements(By.xpath("option"));
 		
 		for(WebElement p: persons){
-			if(p.getText().toLowerCase().replaceAll(",", "").contains(person.toLowerCase().replaceAll(",", ""))){
+			if(p.getText().toLowerCase().replaceAll("[, \\s+]", "").contains(person.toLowerCase().replaceAll("[, \\s+]", ""))){
 				userOption = p;
 				break;
 			}
-			if(p.getText().replaceAll(",", "").contains(person.toLowerCase().replaceAll(",", "").split("\\s+")[0])){
-				userOption = p;
-				break;
-			}
+//			if(p.getText().replaceAll(",", "").contains(person.toLowerCase().replaceAll(",", "").split("\\s+")[0])){
+//				userOption = p;
+//				break;
+//			}
 		}
 		if(userOption != null)
 			userOption.click();
@@ -286,13 +270,7 @@ public class DocumentsPage extends ColBasePage{
 	public List<HashMap<String, String>> getTableAsMaps() {
 		return getTableAsMaps(Table, 0,12);
 	}
-	
-	public enum Time{
-		ALL,
-		TODAY,
-		LAST7,
-		LAST30
-	}
+
 	
 	public enum Status{
 		ALL,

@@ -8,6 +8,7 @@ import java.util.List;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -53,8 +54,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="button#next-action_copyToQuote")
 	private WebElement CopyToNewQuote;
 	
-	@FindBy(css="button#ld-nextaction-caret")
+//	@FindBy(css="button#ld-nextaction-caret")
 	private WebElement Caret;
+	
 	@FindBy(css="button[id^='next-action_order']")
 	private WebElement ConvertToOrder;
 	
@@ -86,13 +88,18 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public T clickSaveAsNewRevision(String description){
+		Caret = Save.findElement(By.xpath("../button[contains(@id,'-caret')]"));
 		Caret.click();
+		quickWait();
 		SaveAsNewRevision.click();
+		
+		waitForAlert();	//wait for firrst alert to input descrption.
 		Alert alert = driver.switchTo().alert();
 		alert.sendKeys(description);
 		alert.accept();
 		
-		waitForQuickLoad();
+		waitForAlert(); //wait for second alert to confirmation.
+		acceptAlert();
 		return (T)this;
 	}
 	public QuotePage clickCopyToNewQuote(){

@@ -10,6 +10,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -169,6 +170,20 @@ public class ColBasePage {
 		forceWait(500);
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
+	}
+	
+	public void waitForAlert(){
+		boolean alertExists = false;
+		
+		while(!alertExists){
+			try{
+				Alert alert = driver.switchTo().alert();
+				alertExists = true;
+			}catch(NoAlertPresentException e){
+			
+			}
+			forceWait(100);
+		}
 	}
 	
 	public Actions getActions(){

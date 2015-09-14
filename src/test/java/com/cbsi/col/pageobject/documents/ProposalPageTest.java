@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
@@ -32,7 +33,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalFull(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
@@ -43,7 +44,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalQuick(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		

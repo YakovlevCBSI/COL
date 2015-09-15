@@ -74,9 +74,13 @@ public class MapProductsDialog extends BasePage{
 			System.out.println("skipping wait for IE.");
 		}
 		
-		String loadText = "#mapping-table-body > tr > td > div > div.splash-image";
+		String loadText = "tbody#mapping-table-body tr td div.overlay-body.splash div.splash-image";
 		
-		waitForElementToBeVisible(By.cssSelector(loadText));
+		try{
+			waitForElementToBeVisible(By.cssSelector(loadText));
+		}catch(TimeoutException e){
+			
+		}
 		waitForElementToBeInvisible(By.cssSelector(loadText));
 		
 		return this;

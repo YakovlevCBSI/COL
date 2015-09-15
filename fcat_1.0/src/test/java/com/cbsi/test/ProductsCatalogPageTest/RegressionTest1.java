@@ -77,11 +77,10 @@ public class RegressionTest1 extends AllBaseTest{
 	
 
 	@Test
-	public void Error500OnWhenNoChangesAreMadeOnMappingDialog_CCSQS1256(){
+	public void SaveDisabledWhenNoChangesAreMadeOnMappingDialog_CCSQS1256() throws InterruptedException{
 		ProductsCatalogPage prodcutsCatalogPage = navigateToProductsCatalogPage();
-		prodcutsCatalogPage.exitWithoutSaveOnMapppingDialog();
-
-		assertTrue(hasNoError());
+		MapProductsDialog mapDialog = prodcutsCatalogPage.clickNotMappedOrMappedIcon();
+		assertTrue(mapDialog.isSaveDisabled());
 	}
 	
 	@Test
@@ -141,6 +140,7 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage = addProductPopup.clickSave();
 		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
 		productsCatalogPage.clickYes();		
+		assertTrue(hasNoError());
 	}
 	
 	@Test
@@ -155,6 +155,7 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage = addProductPopup.clickSave();
 		productsCatalogPage.setProductToUse(tempId).clickAction(ElementConstants.DELETE);
 		productsCatalogPage.clickYes();		
+		assertTrue(hasNoError());
 	}
 	
 /**	

@@ -66,10 +66,10 @@ public class ProductsCatalogPage extends BasePage{
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 	
-	@FindBy(css="div[title='Not mapped']")
+	@FindBy(css="div[class='gp-icon plus']")
 	private WebElement NotMappedIcon;
 	
-	@FindBy(css="div[title='Mapped']")
+	@FindBy(css="div[class='gp-icon check']")
 	private WebElement MappedIcon;
 	
 	@FindBy(css="a#download-catalog span")

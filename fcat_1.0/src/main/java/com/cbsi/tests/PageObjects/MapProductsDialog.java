@@ -38,6 +38,9 @@ public class MapProductsDialog extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
+	public boolean isSaveDisabled(){
+		return Save.getAttribute("class").contains("disabled");
+	}
 	@FindBy(css="div.buttons a[onclick*='close']")
 	private WebElement Cancel;
 	

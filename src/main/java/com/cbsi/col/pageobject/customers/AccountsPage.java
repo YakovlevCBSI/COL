@@ -16,6 +16,8 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.test.util.StringUtil;
 
 public class AccountsPage extends ColBasePage{
@@ -90,8 +92,14 @@ public class AccountsPage extends ColBasePage{
 	}
 	
 	
+//	public boolean hasCompany(String companyName){
+//		return findDataRowByName(companyName)!=null?true:false;
+//	}
+	
+	//UNCOMMENT ABOVE ONCE THIS BUG IS FIXED 5667
 	public boolean hasCompany(String companyName){
-		return findDataRowByName(companyName)!=null?true:false;
+		AccountsPage accountPage = searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
+		return accountPage.findDataRowByName(companyName)!=null?true:false;
 	}
 	
 	@FindBy(css="button#delete-customer-btn")
@@ -148,6 +156,7 @@ public class AccountsPage extends ColBasePage{
 	}
 	
 	public CurrentAccountTab clickViewCustomer(String companyName){
+//		setFilterByAccountType(AccountType.CUSTOMER);
 		WebElement dataRow = findDataRowByName(companyName);
 		ViewCustomer = dataRow.findElement(By.xpath("../td/a[contains(@title,'View Customer')]"));
 		ViewCustomer.click();

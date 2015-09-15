@@ -18,6 +18,8 @@ import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
 import com.cbsi.col.pageobject.home.ColBasePage.Time;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -42,16 +44,17 @@ public class CreateAccountPageTest extends ColBaseTest{
 		super.cleanUp();
 		super.startUp();
 //		homePage.goToAccountsPage().goToRecentAccountsTab().deleteCompany(companyName);
-		AccountsPage accountPage = homePage.goToAccountsPage().goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).setFilterByDate(Time.TODAY);
+//		AccountsPage accountPage = homePage.goToAccountsPage().goToAllAcountsTab();
+		AccountsPage accountPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
 		accountPage.deleteCompany(companyName);
 	}
 
 	@Test
 	public void createCustomer(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.CUSTOMER);
-		AccountsPage accountPage = recentAccountsTab.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).setFilterByDate(Time.TODAY);
-		assertTrue(accountPage.hasCompany(companyName));
-//		assertTrue(recentAccountsTab.hasCompany(companyName));
+//		AccountsPage accountPage = recentAccountsTab.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).setFilterByDate(Time.TODAY);
+//		assertTrue(accountPage.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName));
 		
 	}
 	

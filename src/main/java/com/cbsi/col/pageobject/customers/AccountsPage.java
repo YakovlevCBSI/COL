@@ -92,15 +92,15 @@ public class AccountsPage extends ColBasePage{
 	}
 	
 	
-//	public boolean hasCompany(String companyName){
-//		return findDataRowByName(companyName)!=null?true:false;
-//	}
-	
-	//UNCOMMENT ABOVE ONCE THIS BUG IS FIXED 5667
 	public boolean hasCompany(String companyName){
-		AccountsPage accountPage = searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
-		return accountPage.findDataRowByName(companyName)!=null?true:false;
+		return findDataRowByName(companyName)!=null?true:false;
 	}
+	
+//	//UNCOMMENT ABOVE ONCE THIS BUG IS FIXED 5667
+//	public boolean hasCompany(String companyName){
+//		AccountsPage accountPage = searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
+//		return accountPage.findDataRowByName(companyName)!=null?true:false;
+//	}
 	
 	@FindBy(css="button#delete-customer-btn")
 	private WebElement DeleteInPopup;

@@ -422,7 +422,7 @@ public class ColBasePage {
 			
 		}
 		
-		return (T)PageFactory.initElements(driver, DocumentsPage.class);
+		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
 	

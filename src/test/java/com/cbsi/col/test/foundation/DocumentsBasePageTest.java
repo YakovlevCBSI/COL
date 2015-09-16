@@ -7,6 +7,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.customers.AccountsPage;
+import com.cbsi.col.pageobject.customers.AllAccountsTab;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
@@ -15,6 +17,8 @@ import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
+import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 
@@ -44,9 +48,12 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		CurrentAccountTab currentAccountPage = null;
 		try{
 			currentAccountPage=  customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+//			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
+//			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){
 			recentCustomersPage = createAccount(AccountType.CUSTOMER);
-			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_");
+//			AllAccountsTab  accountPage = recentCustomersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
+			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_customer_");
 			
 		}
 		

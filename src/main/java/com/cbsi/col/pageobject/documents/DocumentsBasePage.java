@@ -591,10 +591,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	WebElement BillingAndShippingDiv;
 	public void setBillingAndShippingDiv(){
-		if(BillingAndShippingDiv == null){
-			BillingAndShippingDiv = driver.findElement(By.xpath("div[@class='span4']/label/a[contains(@href='/billingshipping?')]"));
-			BillingAndShippingDiv = BillingAndShippingDiv.findElement(By.xpath("../../.."));
-		}
+//		BillingAndShippingDiv = driver.findElement(By.xpath("div[@class='span4']/label/a[contains(@href,'/billingshipping?')]"));
+		BillingAndShippingDiv = driver.findElement(By.cssSelector("div.span4 label a[href*='/billingshipping?']"));
+		BillingAndShippingDiv = BillingAndShippingDiv.findElement(By.xpath("../../.."));
+		
 	}
 	public String getBillTo(){
 		setBillingAndShippingDiv();

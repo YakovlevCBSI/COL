@@ -1,9 +1,11 @@
 package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
@@ -50,5 +52,28 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		documentPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);	
 		
 		convertToSalesOrderOnly();
+	}
+	
+	@Test//#5406
+	public void copySalesOrderToNewQuote(){
+		convertToSalesOrder();
+		
+		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
+		QuotePage quotePage = orderPage.clickCopyToNewQuote();
+		int newQuoteNumber = quotePage.getQuoteNumber();
+		
+		quotePage.clickSave();
+		
+		DocumentsPage documentPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		assertTrue(documentPage.hasQuote(newQuoteNumber));
+	}
+	
+	@Test//#5405
+	public void BillToShipToShowsInProspectSalesOrder(){
+		convertToSalesOrder(true, AccountType.PROSPECT);
+		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
+
+		assertTrue(salesOrderPage.getBillTo().contains(address));
+		assertTrue(salesOrderPage.getShipTo().contains(address));
 	}
 }

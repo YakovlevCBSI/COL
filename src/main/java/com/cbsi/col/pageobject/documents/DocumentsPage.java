@@ -170,14 +170,15 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
-	public SalesOrderPage clickSalesOrder(int orderNumber){
-		WebElement dataRow = findDataRowByName(orderNumber);
-		ViewQuote = dataRow.findElement(By.xpath("../td[2]/a"));
-		ViewQuote.click();
-		
-		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
-		return PageFactory.initElements(driver, SalesOrderPage.class);
-	}
+// wrong method use goToOrder instead.
+//	public SalesOrderPage clickViewSalesOrder(int orderNumber){
+//		WebElement dataRow = findDataRowByName(orderNumber);
+//		ViewQuote = dataRow.findElement(By.xpath("../td[2]/a"));
+//		ViewQuote.click();
+//		
+//		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
+//		return PageFactory.initElements(driver, SalesOrderPage.class);
+//	}
 	
 	public DocumentsPage switchToTab(DocumentTabs tab){
 //		if(tab == DocumentTabs.QUOTES){

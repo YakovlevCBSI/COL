@@ -11,9 +11,12 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
@@ -193,6 +196,23 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage = (QuotePage)quotePage.clickLiveCost();
+	}
+	
+	@Test
+	public void mergeQuote(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		double totalOld = quotePage.getPriceCalculator().getTotal();
+		
+		MergePopup mergePopup = (MergePopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Merge_into_this_Document);
+		mergePopup = mergePopup.selectFromList(DocList.Recent).clickSearch();
+		mergePopup.selectOneDoc().clickCopyIntoSelectedQuote();
+		
+		quotePage = PageFactory.initElements(driver, QuotePage.class);
+		
+		assertFalse(totalOld + " / " + quotePage.getPriceCalculator().getTotal(), 
+				totalOld == quotePage.getPriceCalculator().getTotal());	
 	}
 	
 	@Test

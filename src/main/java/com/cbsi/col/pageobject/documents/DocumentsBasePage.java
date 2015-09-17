@@ -448,8 +448,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		AddImportUpdateDropdown.findElement(By.xpath("../ul/li/a[contains(@title, '" + StringUtil.cleanElementName(add.toString()) + "')]")).click();
 		waitForQuickLoad();
+		if(add == AddImportUpdates.Merge_into_this_Document) return (T) PageFactory.initElements(driver, MergePopup.class);
 
-		return (T) PageFactory.initElements(driver, QuickAddProductPopup.class);	
+		return (T) PageFactory.initElements(driver, this.getClass());	
 	}
 	
 	public enum LineActions{
@@ -470,7 +471,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Quick_Add_Product,
 		UpdateMarginMarkup,
 		AddManualLineItem,
-		MergeIntoThisDocument,
+		Merge_into_this_Document,
 		ImportConfig,
 		ImportFromAutoAsk
 	}
@@ -588,6 +589,58 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 	}
 	//----------------------------- BillToShipToDiv-----------------------------//
+	public static class MergePopup extends ColBasePage{
+
+		public MergePopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			switchFrame();
+			waitForTextToBeVisible("Merge into", "h3");
+			
+		}
+		
+		@FindBy(css="input#doc_search_optiondoclist")
+		private WebElement List;
+		
+		@FindBy(css="a[title='Search'][href*='merge_quotes']")
+		private WebElement Search;
+		
+		@FindBy(css="select[name='doclist']")
+		private WebElement searchList;
+		
+		@FindBy(css="input[value='Copy into selected Quote']")
+		private WebElement copyIntoSelectedQuote;
+		public MergePopup selectFromList(DocList type){
+			List.click();
+			searchList.click();
+			searchList.findElement(By.xpath("option[@value='" + type.toString().toLowerCase() + "']")).click();
+			return this;
+		}
+		
+		public MergePopup clickSearch(){
+			Search.click();
+			switchBack();
+			return 	PageFactory.initElements(driver, MergePopup.class);
+		}
+		
+		public MergePopup selectOneDoc(){
+			driver.findElement(By.cssSelector("input[name='quote_id_selected']")).click();
+			return this;
+			
+		}
+		
+		public void clickCopyIntoSelectedQuote(){
+			copyIntoSelectedQuote.click();
+			switchBack();
+		}
+		
+		public enum DocList{
+			Recent,
+			Hotlist,
+			Modifiedbyme
+		}
+	}
+	//----------------------------- BillToShipToDiv-----------------------------//
 	
 	WebElement BillingAndShippingDiv;
 	public void setBillingAndShippingDiv(){
@@ -610,5 +663,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		setBillingAndShippingDiv();
 		return BillingAndShippingDiv.findElement(By.xpath("div[3]")).getText();
 	}
+	
+	//
 	
 }

@@ -28,7 +28,7 @@ public class InovicePageTest extends DocumentsBasePageTest{
 		assertTrue(documentPage.hasInvoice(invoiceNumber));
 	}
 	
-	@Test
+	@Test//#5389
 	public void convertSalesOrderWithBundleToInvoice(){
 		convertToSalesOrder();
 		

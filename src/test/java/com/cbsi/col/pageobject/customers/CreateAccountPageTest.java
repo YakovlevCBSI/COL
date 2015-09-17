@@ -44,10 +44,10 @@ public class CreateAccountPageTest extends ColBaseTest{
 		takeScreenshot();
 		super.cleanUp();
 		super.startUp();
-//		homePage.goToAccountsPage().goToRecentAccountsTab().deleteCompany(companyName);
-		AccountsPage accountPage = homePage.goToAccountsPage().goToAllAcountsTab().setFilterByDate(Time.TODAY);
+		homePage.goToAccountsPage().goToRecentAccountsTab().deleteCompany(companyName);
+//		AccountsPage accountPage = homePage.goToAccountsPage().goToAllAcountsTab().setFilterByDate(Time.TODAY);
 //		AccountsPage accountPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
-		accountPage.deleteCompany(companyName);
+//		accountPage.deleteCompany(companyName);
 	}
 
 	@Test

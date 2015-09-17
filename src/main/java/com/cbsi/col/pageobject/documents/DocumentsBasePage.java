@@ -120,7 +120,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return PageFactory.initElements(driver, SendPage.class);
 	}
 
-	@FindBy(css="span.btn-save")
+	@FindBy(css="a.btn.btn-primary")
 	private WebElement CreateInvoice;
 	
 	public InvoicePage clickConvertToInvoice(){
@@ -586,6 +586,29 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			return PageFactory.initElements(driver, ProductsPage.class);
 		}
 		
+	}
+	//----------------------------- BillToShipToDiv-----------------------------//
+	
+	WebElement BillingAndShippingDiv;
+	public void setBillingAndShippingDiv(){
+		if(BillingAndShippingDiv == null){
+			BillingAndShippingDiv = driver.findElement(By.xpath("div[@class='span4']/label/a[contains(@href='/billingshipping?')]"));
+			BillingAndShippingDiv = BillingAndShippingDiv.findElement(By.xpath("../../.."));
+		}
+	}
+	public String getBillTo(){
+		setBillingAndShippingDiv();
+		return BillingAndShippingDiv.findElement(By.xpath("div[1]")).getText();
+	}
+	
+	public String getShipTo(){
+		setBillingAndShippingDiv();
+		return BillingAndShippingDiv.findElement(By.xpath("div[2]")).getText();
+	}
+	
+	public String getOrderOptions(){
+		setBillingAndShippingDiv();
+		return BillingAndShippingDiv.findElement(By.xpath("div[3]")).getText();
 	}
 	
 }

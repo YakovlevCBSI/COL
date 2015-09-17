@@ -132,14 +132,20 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				orderPageAdress.clickCopyToShipping();
 				salesOrderPage = orderPageAdress.clickSave();
 
+			}catch(NoSuchElementException e){
+				salesOrderPage = PageFactory.initElements(driver, SalesOrderPage.class);
 			}catch(Exception e){
+				e.printStackTrace();
+	
 				System.out.println("cannot focus on element. Moving on...");
+				System.out.println("----------------------------------------");
 			}
 			try{
 				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
 				salesOrderPage = salesOrderPage.clickSave();
 				convertOrderSuccess = true;
 			}catch(NullPointerException e){
+				e.printStackTrace();
 				System.out.println("convert order failed... retry "+ retry);
 				retry ++;
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);

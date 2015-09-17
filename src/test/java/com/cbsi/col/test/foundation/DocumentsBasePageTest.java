@@ -47,7 +47,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	public void createQuote(){
 		CurrentAccountTab currentAccountPage = null;
 		try{
-			currentAccountPage=  customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
 //			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 //			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){

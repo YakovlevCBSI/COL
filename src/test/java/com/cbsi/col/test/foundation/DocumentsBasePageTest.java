@@ -45,13 +45,17 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	}
 	
 	public void createQuote(){
+		createQuote(AccountType.CUSTOMER);
+	}
+	
+	public void createQuote(AccountType type){
 		CurrentAccountTab currentAccountPage = null;
 		try{
-			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
 //			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 //			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){
-			recentCustomersPage = createAccount(AccountType.CUSTOMER);
+			recentCustomersPage = createAccount(type);
 //			AllAccountsTab  accountPage = recentCustomersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_customer_");
 			
@@ -103,8 +107,12 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		convertToSalesOrder(true);
 	}
 	public void convertToSalesOrder(boolean createQuote){
+		convertToSalesOrder(createQuote, AccountType.CUSTOMER);
+	}
+	
+	public void convertToSalesOrder(boolean createQuote, AccountType type){
 		if(createQuote){
-			createQuote();
+			createQuote(type);
 		}
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
@@ -124,7 +132,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				orderPageAdress.clickCopyToShipping();
 				salesOrderPage = orderPageAdress.clickSave();
 
-			}catch(WebDriverException e){
+			}catch(Exception e){
 				System.out.println("cannot focus on element. Moving on...");
 			}
 			try{

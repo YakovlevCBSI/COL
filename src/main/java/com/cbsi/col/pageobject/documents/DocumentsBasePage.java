@@ -449,7 +449,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		AddImportUpdateDropdown.findElement(By.xpath("../ul/li/a[contains(@title, '" + StringUtil.cleanElementName(add.toString()) + "')]")).click();
 		waitForQuickLoad();
 		if(add == AddImportUpdates.Merge_into_this_Document) return (T) PageFactory.initElements(driver, MergePopup.class);
-
+		else if(add == AddImportUpdates.Quick_Add_Product) return (T) PageFactory.initElements(driver, QuickAddProductPopup.class);
+		
 		return (T) PageFactory.initElements(driver, this.getClass());	
 	}
 	

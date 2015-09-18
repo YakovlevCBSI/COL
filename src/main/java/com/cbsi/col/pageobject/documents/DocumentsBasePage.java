@@ -30,15 +30,15 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getDocNumber(){
-		int quoteInt;
+	public long getDocNumber(){
+		long quoteInt;
 		try{
 			String quoteNumber= driver.findElement(By.cssSelector("div.control-column div.readonly-text")).getText();
 			quoteNumber = quoteNumber.split("-")[0].trim();
-			quoteInt = Integer.parseInt(quoteNumber);
+			quoteInt = Long.parseLong(quoteNumber);
 		}catch(NumberFormatException e){			
 			String quoteNumber= driver.findElement(By.cssSelector("input#quoteNumber")).getAttribute("value");
-			quoteInt = Integer.parseInt(quoteNumber);
+			quoteInt = Long.parseLong(quoteNumber);
 		}
 		
 		System.out.println(quoteInt);

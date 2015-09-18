@@ -21,7 +21,7 @@ public class QuotePage extends DocumentsBasePage{
 		initializePriceCalculator();
 	}
 
-	public int getQuoteNumber(){
+	public long getQuoteNumber(){
 		return super.getDocNumber();
 	}
 
@@ -63,6 +63,7 @@ public class QuotePage extends DocumentsBasePage{
 		Revert.click();
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
+
 	//----------------------- inner page object: copy to new quote  -----------------------//
 	public static class CopyToNewQuotePage extends ColBasePage{
 

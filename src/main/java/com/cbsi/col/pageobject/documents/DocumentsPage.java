@@ -48,48 +48,48 @@ public class DocumentsPage extends ColBasePage{
 //		return false;
 //	}
 	
-	public boolean hasQuote(int docNumber){
+	public boolean hasQuote(long docNumber){
 		return hasDoc(docNumber);
 	}
 	
-	public boolean hasProposal(int docNumber){
+	public boolean hasProposal(long docNumber){
 		return hasDoc(docNumber, false);
 
 	}
 	
-	public boolean hasInvoice(int docNumber){
+	public boolean hasInvoice(long docNumber){
 		System.out.println("Looking for invoice #" + docNumber);
 		return hasDoc(docNumber);
 	}
 
-	public boolean hasSalesOrder(int docNumber){
+	public boolean hasSalesOrder(long docNumber){
 		return hasDoc(docNumber);
 	}
 	
-	public boolean hasRma(int docNumber){
+	public boolean hasRma(long docNumber){
 		return hasDoc(docNumber);
 	}
 	
-	public boolean hasDoc(int docNumber){
+	public boolean hasDoc(long docNumber){
 		setFilterByModifiedToDefault();		
 		return findDataRowByName(docNumber, true)==null? false:true;
 
 	}
 	
-	public boolean hasDoc(int docNumber, boolean secondColumn){
+	public boolean hasDoc(long docNumber, boolean secondColumn){
 		return findDataRowByName(docNumber, secondColumn)==null? false:true;
 
 	}
 	
-	public QuotePage goToQuote(int quoteNumber){
+	public QuotePage goToQuote(long quoteNumber){
 		WebElement docLink = findDataRowByName(quoteNumber);
 		docLink.click();
 		
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
-	public SalesOrderPage goToOrder(int quoteNumber){
-		WebElement docLink = findDataRowByName(quoteNumber);
+	public SalesOrderPage goToOrder(long orderNumber){
+		WebElement docLink = findDataRowByName(orderNumber);
 		docLink.click();
 		
 		return PageFactory.initElements(driver, SalesOrderPage.class);
@@ -124,11 +124,11 @@ public class DocumentsPage extends ColBasePage{
 	static int currentPage=0;
 	private static List<WebElement> dataColumns;
 	
-	public WebElement findDataRowByName(int quoteNumber){
+	public WebElement findDataRowByName(long quoteNumber){
 		return findDataRowByName(quoteNumber, true);
 	}
 	
-	public WebElement findDataRowByName(int quoteNumber, boolean docNumberSecondcolumn){
+	public WebElement findDataRowByName(long quoteNumber, boolean docNumberSecondcolumn){
 		if(docNumberSecondcolumn){
 			dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(2) a"));
 		}else{

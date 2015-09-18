@@ -60,7 +60,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		
 		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
 		QuotePage quotePage = orderPage.clickCopyToNewQuote();
-		int newQuoteNumber = quotePage.getQuoteNumber();
+		long newQuoteNumber = quotePage.getQuoteNumber();
 		
 		quotePage.clickSave();
 		

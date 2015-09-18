@@ -27,9 +27,9 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	public RecentAccountsTab recentCustomersPage;
 	public DocumentsPage documentPage;
 	
-	protected int quoteNumber;
-	protected int orderNumber;
-	protected int invoiceNumber;
+	protected long quoteNumber;
+	protected long orderNumber;
+	protected long invoiceNumber;
 	
 	public DocumentsBasePageTest(String url, String browser) {
 		super(url, browser);
@@ -51,7 +51,9 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	public void createQuote(AccountType type){
 		CurrentAccountTab currentAccountPage = null;
 		try{
-			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+//			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+
 //			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 //			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){

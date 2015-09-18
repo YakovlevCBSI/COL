@@ -30,12 +30,12 @@ public class PurchaseOrdersTab extends ColBasePage{
 	static int currentPage=0;
 	private static List<WebElement> dataColumns;
 
-	public boolean hasPoNumberLinkedToSo(int salesOrderNumber){
+	public boolean hasPoNumberLinkedToSo(long salesOrderNumber){
 		return findDataRowByName(salesOrderNumber)==null?false:true;
 	
 	}
 	
-	public PurchaseOrderPage clickViewPoNumberLinkedToSo(int salesOrderNumber){
+	public PurchaseOrderPage clickViewPoNumberLinkedToSo(long salesOrderNumber){
 		 findDataRowByName(salesOrderNumber).findElement(By.xpath("../../td[3]/a")).click();
 		 return PageFactory.initElements(driver, PurchaseOrderPage.class);
 	}
@@ -45,7 +45,7 @@ public class PurchaseOrdersTab extends ColBasePage{
 		 return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 	
-	public WebElement findDataRowByName(int quoteNumber){
+	public WebElement findDataRowByName(long quoteNumber){
 		dataColumns = Table.findElements(By.xpath("tbody/tr/td[13]/a"));
 
 		for(WebElement dataColumn: dataColumns){

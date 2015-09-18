@@ -21,7 +21,7 @@ public class RMAPageTest extends DocumentsBasePageTest{
 		// TODO Auto-generated constructor stub
 	}
 	
-	int rmaNumber;
+	long rmaNumber;
 	
 	@Test
 	public void createRmaFromSalesOrder(){

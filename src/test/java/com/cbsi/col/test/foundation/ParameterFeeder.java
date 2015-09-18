@@ -33,7 +33,8 @@ public class ParameterFeeder {
 		return objects;				
 	}
 		
-	private static final String colUrl="https://stage.channelonline.com/colqa_sanity/";
+//	private static final String colUrl="https://stage.channelonline.com/colqa_sanity/";
+	private static final String colUrl="https://usmb.channelonline.com/acme/home/";
 	public String[] getColUrls(){
 		String[] urls = {
 				colUrl

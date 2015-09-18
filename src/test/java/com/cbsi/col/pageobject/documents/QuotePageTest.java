@@ -58,10 +58,10 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	public void copyToNewQuoteInDocumentsTable(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		int oldQuote = quotePage.getQuoteNumber();
+		long oldQuote = quotePage.getQuoteNumber();
 		
 		QuotePage quotePageNew = quotePage.clickCopyToNewQuote();
-		int newQuote = quotePageNew.getQuoteNumber();
+		long newQuote = quotePageNew.getQuoteNumber();
 		
 		assertFalse(oldQuote + " : " + newQuote, oldQuote == newQuote);	
 	}
@@ -71,7 +71,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage = quotePage.clickCopyToNewQuote();
-		int newQuoteNumber = quotePage.getQuoteNumber();
+		long newQuoteNumber = quotePage.getQuoteNumber();
 		
 		assertFalse(quoteNumber == newQuoteNumber);
 	}

@@ -379,11 +379,15 @@ public class ColBasePage {
 	private static List<WebElement> dataColumns;
 	
 	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor){
+		return findDataRowByName(quoteNumber, nthColumnToLookFor, "a");
+	}
+	
+	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor, String addPath){
 
-		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(" + nthColumnToLookFor +") a"));
+		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(" + nthColumnToLookFor + ") " + addPath));
 		
 		for(WebElement dataColumn: dataColumns){
-//			System.out.println(dataColumn.getText());
+			System.out.println(dataColumn.getText());
 			if(dataColumn.getText().contains(quoteNumber)){
 				return dataColumn;
 			}

@@ -60,6 +60,24 @@ public class MapProductsDialog extends BasePage{
 		return this;
 	}
 	
+	@FindBy(css="#mappingDialog div div.page-button-bar div.nav-bar.actions a[oldtitle='Next']")
+	private WebElement Next;
+	
+	@FindBy(css="#mappingDialog div div.page-button-bar div.nav-bar.actions a[oldtitle='Previous']")
+	private WebElement Previous;
+	
+	public MapProductsDialog clickNext(){
+		driver.findElement(By.cssSelector("#mappingDialog div div.page-button-bar div.nav-bar.actions a[oldtitle='Next']")).click();
+		waitForMapSearch();
+		return PageFactory.initElements(driver, MapProductsDialog.class);
+	}
+	
+	public MapProductsDialog clickPrevious(){
+		driver.findElement(By.cssSelector("#mappingDialog div div.page-button-bar div.nav-bar.actions a[oldtitle='Previous']")).click();
+		waitForMapSearch();
+		return PageFactory.initElements(driver, MapProductsDialog.class);
+	}
+	
 	@FindBy(css="input[id='manufacturer-name-mapper']")
 	private WebElement ManufactuererName;
 	
@@ -68,22 +86,26 @@ public class MapProductsDialog extends BasePage{
 		//forceWait(3);
 		deleteText();
 		ManufactuererName.sendKeys(searchText);
-		try{
-			waitForElementToBeVisible(By.cssSelector("tbody#mapping-table-body"));
-		}catch(TimeoutException t){
-			System.out.println("skipping wait for IE.");
-		}
+//		try{
+//			waitForElementToBeVisible(By.cssSelector("#mapping-table-body"));
+//		}catch(TimeoutException t){
+//			System.out.println("skipping wait for IE.");
+//		}
+//		
+		waitForMapSearch();
 		
+		return this;
+	}
+	
+	public void waitForMapSearch(){
 		String loadText = "tbody#mapping-table-body tr td div.overlay-body.splash div.splash-image";
-		
+
 		try{
 			waitForElementToBeVisible(By.cssSelector(loadText));
 		}catch(TimeoutException e){
 			
 		}
 		waitForElementToBeInvisible(By.cssSelector(loadText));
-		
-		return this;
 	}
 
 

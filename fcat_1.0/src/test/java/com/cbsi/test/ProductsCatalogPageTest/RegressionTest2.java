@@ -224,7 +224,9 @@ public class RegressionTest2 extends AllBaseTest{
 	
 	@Test
 	public void searchPidMfpnTest() throws Exception{
-		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+//		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,10);
+
 		productsCatalogPage.searchFor("pid", "00");
 		productsCatalogPage.searchFor("mf", "abc");
 		productsCatalogPage.waitForSearch();
@@ -284,6 +286,16 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage.clickYes();
 	}
 	
+	@Test
+	public void ErrorWhenYouGoPreviousInMappingDialog(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.setProductToUse().clickAction(ElementConstants.MAP);
+		mapDialog.searchName("Sony");
+		mapDialog = mapDialog.clickNext();
+		mapDialog = mapDialog.clickPrevious();
+		
+		assertTrue(hasNoError());
+	}
 
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){

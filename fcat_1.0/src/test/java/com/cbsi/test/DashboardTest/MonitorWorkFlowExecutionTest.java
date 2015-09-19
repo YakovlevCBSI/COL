@@ -29,8 +29,8 @@ public class MonitorWorkFlowExecutionTest extends FormBaseTest{
 		navigateToDashBoardPageFromCatalogs();
 		dashboardPage.pickStatus(STATUS.Error);
 		
-		expect.expect(NullPointerException.class);
-		expect.expectMessage("no available data");
+//		expect.expect(NullPointerException.class);
+//		expect.expectMessage("no available data");
 		dashboardPage.printDetailsMessage();
 	}
 	

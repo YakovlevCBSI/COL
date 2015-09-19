@@ -33,7 +33,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalFull(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
@@ -44,7 +44,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalQuick(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		

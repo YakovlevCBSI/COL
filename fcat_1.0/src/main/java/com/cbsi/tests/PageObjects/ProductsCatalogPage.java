@@ -110,6 +110,18 @@ public class ProductsCatalogPage extends BasePage{
 		return this;
 	}
 	
+	public ProductsCatalogPage setProductToUse(){
+//		this.productRow = driver.findElement(By.cssSelector("tbody#product-table-body tr[data-id='" + escapeHtml(productName.toUpperCase()) + "']"));
+		productRow = null;
+		List<WebElement> productRows = driver.findElements(By.cssSelector("tbody#product-table-body tr"));
+		productRow = productRows.get(0);
+		
+		if(productRow == null){
+			throw new NullPointerException("Unable to find the product to use");
+		}
+		return this;
+	}
+	
 	public boolean isProductRowMapped(){
 		//for compound xpath class name, make sure to use @contains!!! otherwise it never finds the element.
 		forceWait(3000);

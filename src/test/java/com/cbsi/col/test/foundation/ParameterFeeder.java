@@ -1,7 +1,9 @@
 package com.cbsi.col.test.foundation;
 
 public class ParameterFeeder {
-	private static final String staticUrl="https://usmb.channelonline.com/acme/home/";
+//	private static final String staticUrl="https://usmb.channelonline.com/acme/home/";
+	private static final String staticUrl="https://stage.channelonline.com/colqa_sanity/home";
+
 	private String passedUrl = System.getProperty("url");
 	private String colUrl = passedUrl==null?staticUrl:passedUrl;
 	

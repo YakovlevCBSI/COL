@@ -223,6 +223,18 @@ public class RegressionTest2 extends AllBaseTest{
 	}
 	
 	@Test
+	public void messageShowWhenSearchResultNone() throws Exception{
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+		productsCatalogPage.searchFor("pid", "abcdefgh21312321");
+		productsCatalogPage.waitForSearch(25000);
+		
+		String noResultMsg = productsCatalogPage.getProductValue(1).get("message");
+		
+		assertEquals("No products matched your search. Try to change filter to broaden your search.",
+				noResultMsg);
+	}
+	
+	@Test
 	public void searchPidMfpnTest() throws Exception{
 //		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,10);

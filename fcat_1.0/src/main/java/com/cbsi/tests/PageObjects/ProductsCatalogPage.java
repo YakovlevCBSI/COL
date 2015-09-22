@@ -288,12 +288,17 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public Map<String, String> dataRowToProductObject(WebElement dataTr){
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("product id", dataTr.findElement(By.xpath("td[starts-with(@class, 'product-id')]")).getText());
-		map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
-		map.put("part number", dataTr.findElement(By.xpath("td[starts-with(@class, 'part-number')]")).getText());
-		map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
-		map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("title"));
-		
+		try{
+			map.put("product id", dataTr.findElement(By.xpath("td[starts-with(@class, 'product-id')]")).getText());
+			map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
+			map.put("part number", dataTr.findElement(By.xpath("td[starts-with(@class, 'part-number')]")).getText());
+			map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
+			map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("title"));
+		}catch(NoSuchElementException e) {
+			//if no result is found, collect the no result found message.
+			map.put("message", dataTr.findElement(By.xpath("td[starts-with(@class, 'no-scripts')]")).getText());
+
+		}
 		return map;
 	}
 	

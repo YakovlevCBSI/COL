@@ -334,6 +334,10 @@ public class HomePage extends ColBasePage{
 	public boolean isEmailDisplayed(){
 		return Email.isDisplayed();
 	}
+	
+	public TopBar fromTopbar(){
+		return PageFactory.initElements(driver, TopBar.class);
+	}
 
 	
 }

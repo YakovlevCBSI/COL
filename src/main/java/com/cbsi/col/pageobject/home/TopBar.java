@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 
 public class TopBar extends ColBasePage{
@@ -23,6 +24,18 @@ public class TopBar extends ColBasePage{
 	@FindBy(css="li.item ul li a#crm-user")
 	private WebElement User;
 	
+	@FindBy(css="a[class*='view-notetask-btn'][data-type='note']")
+	private WebElement ViewNote;
+	
+	@FindBy(css="a[class*='add-notetask-btn'][data-type='note']")
+	private WebElement AddNote;
+	
+	@FindBy(css="a[class*='view-notetask-btn'][data-type='task']")
+	private WebElement ViewTask;
+	
+	@FindBy(css="a[class*='add-notetask-btn'][data-type='task']")
+	private WebElement AddTask;
+	
 	public boolean isInboxDropdownDisplayed(){
 		getActions().moveToElement(Inbox).build().perform();
 		return Inbox.findElement(By.xpath("../div[contains(@class,'dropdown-menu')]")).isDisplayed();
@@ -38,4 +51,22 @@ public class TopBar extends ColBasePage{
 		return User.findElement(By.xpath("../div[contains(@class,'dropdown-menu')]")).isDisplayed();
 	}
 	
+	public OrganizerPopup clickOrganizer(){
+		Organizer.click();
+		return PageFactory.initElements(driver, OrganizerPopup.class);
+	}
+	
+	public OrganizerPopup clickAddNote(){
+		getActions().moveToElement(Organizer).build().perform();
+		AddNote.click();
+		
+		return PageFactory.initElements(driver, OrganizerPopup.class);
+	}
+	
+	public OrganizerPopup clickAddTask(){
+		getActions().moveToElement(Organizer).build().perform();
+		AddTask.click();
+		
+		return PageFactory.initElements(driver, OrganizerPopup.class);
+	}
 }

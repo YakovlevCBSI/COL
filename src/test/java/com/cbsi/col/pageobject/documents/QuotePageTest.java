@@ -23,6 +23,7 @@ import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
@@ -174,19 +175,43 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage.clickSave();
 	}
 	
-	@Test
+	private String warrantyMfpn = "SYS-2027R-N3RF4+-EW2";
+	@Test //#5569
 	public void addServiceItem(){
-
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.searchProduct(warrantyMfpn);
 		
+		quotePage = PageFactory.initElements(driver, QuotePage.class);
+		quotePage.clickSave();
+		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		assertTrue(documnetsPage.hasQuote(quoteNumber));	
 	}
 	
 	@Test
-	public void addTask(){
+	public void addTaskInQuote(){
+//		createQuote();
+//		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		int oldTaskNum = quotePage.getTasks();
+		
+		quotePage = (QuotePage) quotePage.addTask("test1", "test description");
+		quotePage = (QuotePage) quotePage.clickSave();
+
+		int newTaskNum = quotePage.getTasks();
+		
+		assertTrue(oldTaskNum +1 == newTaskNum); 
 	}
 	
 	@Test
 	public void changeDate(){
+		
+	}
+	
+
+	@Test
+	public void restoreDeletedQuote(){
 		
 	}
 	

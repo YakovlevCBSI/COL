@@ -250,6 +250,10 @@ public class ColBasePage {
 		return searchPopup.searchFor(option, containsText,  column, searchText, clazz);
 	}
 	
+	public OrganizerPopup goToOrganizer(){
+		TopBar topbar = PageFactory.initElements(driver, TopBar.class);
+		return topbar.clickOrganizer();
+	}
 	//--------------------------frame switch----------------------------//
 	public void switchFrame(){
 		waitForElementToBeVisible(By.cssSelector("iframe"));

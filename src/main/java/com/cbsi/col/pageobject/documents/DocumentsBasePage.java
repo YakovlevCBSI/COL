@@ -19,6 +19,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.CreatePoPopup;
 import com.cbsi.col.pageobject.home.ColBasePage;
+import com.cbsi.col.pageobject.home.OrganizerPopup;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.test.util.StringUtil;
@@ -182,6 +183,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		@FindBy(css="input#total-credit")
 		private WebElement Total;
+		
+		@FindBy(css="select#shippingType")
+		private WebElement ShippingType;
 
 		public double getTaxOn() {
 			return Double.parseDouble(TaxOn.getAttribute("value"));
@@ -252,12 +256,33 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			return getExpectedTaxedSubTotal() + getExpectedNontaxableSubTotal();
 		}
 		
+		public String getShippingType(){
+			return ShippingType.findElement(By.xpath("option[@selected='selected']")).getText();
+		}
+		
+		public void setShipingType(ShippingTypes type){
+			ShippingType.click();
+//			forceWait(500);
+			for(WebElement e:ShippingType.findElements(By.xpath("option"))){
+				if(e.getText().equals(type.toString())) {
+					System.out.println("found " + e.getText());
+					e.click();
+					break;
+				}
+			}
+		}
 		public static double round(double value, int places) {
 		    if (places < 0) throw new IllegalArgumentException();
 
 		    BigDecimal bd = new BigDecimal(value);
 		    bd = bd.setScale(places, RoundingMode.HALF_UP);
 		    return bd.doubleValue();
+		}
+		
+		public enum ShippingTypes{
+			Global,
+			Customer,
+			Manual
 		}
 	}
 	
@@ -665,6 +690,33 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return BillingAndShippingDiv.findElement(By.xpath("div[3]")).getText();
 	}
 	
-	//
+	//----------------------------- Organizer - task -----------------------------//
+	@FindBy(css="div#company-name span a.add-notetask-btn")
+	private WebElement AddTaskButton;
+	
+	@FindBy(css="div#company-name span a.view-notetask-btn")
+	private WebElement TaskNum;
+	
+	public T addTask(String subject, String content){
+		AddTaskButton.click();
+		
+		OrganizerPopup organizerPopup = PageFactory.initElements(driver, OrganizerPopup.class);
+		organizerPopup.setSubject(subject);
+		organizerPopup.setContent(content);
+
+		System.out.println("Click SAve");
+		
+		organizerPopup.clickSave();
+		forceWait(1000);
+		organizerPopup.quit();
+		
+		forceWait(500);
+		
+		return (T) PageFactory.initElements(driver, this.getClass());
+	}
+	
+	public int getTasks(){
+		return Integer.parseInt(TaskNum.getText());
+	}
 	
 }

@@ -12,9 +12,11 @@ import com.cbsi.col.pageobject.customers.AllAccountsTab;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
@@ -118,6 +120,8 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		}
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
+		quotePage = (QuotePage) quotePage.clickSave();
 		
 		SalesOrderPage salesOrderPage = null;
 		boolean convertOrderSuccess = false;
@@ -141,6 +145,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	
 				System.out.println("cannot focus on element. Moving on...");
 				System.out.println("----------------------------------------");
+				
 			}
 			try{
 				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);

@@ -95,10 +95,6 @@ public class QuotePage extends DocumentsBasePage{
 			switchBack();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}
-		public void switchFrame(){
-			System.out.println("starting frame switch...");
-			switchFrame(By.cssSelector("iframe#modal-iframe"));
-		}
 	}
 
 	

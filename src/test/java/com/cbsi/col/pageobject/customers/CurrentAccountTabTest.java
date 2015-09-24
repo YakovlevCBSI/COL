@@ -3,6 +3,8 @@ package com.cbsi.col.pageobject.customers;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class CurrentAccountTabTest extends ColBaseTest{
@@ -23,7 +25,8 @@ public class CurrentAccountTabTest extends ColBaseTest{
 	
 	@Test
 	public void deleteQuoteFromAccountView(){
-		currentAccount.deleteADocumentFromTable();
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteQuotesByCompnayName("Qa");
 	}
 	
 	@Test

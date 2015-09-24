@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
@@ -59,18 +60,18 @@ public class CurrentAccountTab extends ColBasePage{
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	
-	@FindBy(css="button#delete-doc-btn")
-	private WebElement deleteDocButton;
-	public CurrentAccountTab deleteADocumentFromTable(){
-		switchFrame();
-		WebElement tr = findDataRowByName("1", 2);
-		tr.findElement(By.xpath("../../td[13]/input")).click();
-		quickWait();
-		deleteDocButton.click();
-		switchBack();
-		
-		return PageFactory.initElements(driver, CurrentAccountTab.class);
-	}
+//	@FindBy(css="button#delete-doc-btn")
+//	private WebElement deleteDocButton;
+//	public CurrentAccountTab deleteADocumentFromTable(){
+//		switchFrame();
+//		WebElement tr = findDataRowByName("1", 2);
+//		tr.findElement(By.xpath("../../td[13]/input")).click();
+//		quickWait();
+//		deleteDocButton.click();
+//		switchBack();
+//		
+//		return PageFactory.initElements(driver, CurrentAccountTab.class);
+//	}
 	
 	public static class ProposalPopup extends ColBasePage{
 	
@@ -116,4 +117,18 @@ public class CurrentAccountTab extends ColBasePage{
 		switchFrame(By.cssSelector("iframe#jframe"));
 		waitForElementToBeVisible(By.linkText("Create Proposal"));
 	}
+	
+	//-------------------------- Go to iframe ---------------------------//
+	
+	public DocumentsPage getDocumentsPage(){
+		switchFrame(); 
+
+		return 	PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+	public CurrentAccountTab exitDocumentsPage(){
+		switchBack();
+		return this;
+	}
+	
 }

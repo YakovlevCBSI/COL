@@ -18,10 +18,12 @@ import com.cbsi.col.pageobject.home.ColBasePage;
 public class DocumentsPage extends ColBasePage{
 	public DocumentsPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad(By.cssSelector("div h1"));
-		waitForTextToBeVisible("Documents","h1");
+//		waitForPageToLoad(By.cssSelector("div h1"));
+//		waitForTextToBeVisible("Documents","h1");
+		waitForTextToBeVisible("Recycle Bin", "a");
+		waitForTextToBeVisible("Quotes", "a");
 	}
-
+	
 	@FindBy(css="table.costandard")
 	private WebElement Table;
 	
@@ -89,6 +91,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public SalesOrderPage goToOrder(long orderNumber){
+		System.out.println("Go to order #" + orderNumber);
 		WebElement docLink = findDataRowByName(orderNumber);
 		docLink.click();
 		

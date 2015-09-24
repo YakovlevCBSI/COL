@@ -261,8 +261,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 		
 		public void setShipingType(ShippingTypes type){
+			waitForElementToBeClickable(By.cssSelector("select#shippingType"));
+			scrollToView(ShippingType);
 			ShippingType.click();
-//			forceWait(500);
+				
 			for(WebElement e:ShippingType.findElements(By.xpath("option"))){
 				if(e.getText().equals(type.toString())) {
 					System.out.println("found " + e.getText());
@@ -383,6 +385,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Search.click();
 		
 		return PageFactory.initElements(driver, ProductsPage.class);
+	}
+	
+	public T searchExactProduct(String productName){
+		AddProductSearchBox.sendKeys(productName);
+		Search.click();
+		
+		forceWait(1000);
+		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 			
 	//--------------------------------  product table-----------------------------------//

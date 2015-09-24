@@ -180,9 +180,8 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	public void addServiceItem(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		quotePage.searchProduct(warrantyMfpn);
+		quotePage = (QuotePage) quotePage.searchExactProduct(warrantyMfpn);
 		
-		quotePage = PageFactory.initElements(driver, QuotePage.class);
 		quotePage.clickSave();
 		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
 		assertTrue(documnetsPage.hasQuote(quoteNumber));	
@@ -198,6 +197,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		quotePage = (QuotePage) quotePage.addTask("test1", "test description");
 		quotePage = (QuotePage) quotePage.clickSave();
+		quotePage.refresh();
 
 		int newTaskNum = quotePage.getTasks();
 		

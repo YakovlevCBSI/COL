@@ -263,7 +263,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public void setShipingType(ShippingTypes type){
 			waitForElementToBeClickable(By.cssSelector("select#shippingType"));
 			scrollToView(ShippingType);
-			ShippingType.click();
+//			ShippingType.click();
+			getActions().moveToElement(ShippingType).click().build().perform();
 				
 			for(WebElement e:ShippingType.findElements(By.xpath("option"))){
 				if(e.getText().equals(type.toString())) {

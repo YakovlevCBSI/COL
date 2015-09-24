@@ -1,5 +1,7 @@
 package com.cbsi.tests.PageObjects;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -137,7 +139,7 @@ public abstract class BasePage {
 		}
 	}
 	
-	protected String tempFileName = System.currentTimeMillis() + "";
+	protected String tempFileName = getHostname() + System.currentTimeMillis() + "";
 	public String getTempFileName(){
 		return tempFileName;
 	}
@@ -156,4 +158,20 @@ public abstract class BasePage {
 	public String escapeHtml(String text){
 		return text.replace("<", "&lt;").replace(">","&gt;");
 	}
+	
+	
+	public static String getHostname(){
+		String hostName="";
+		try{
+		    InetAddress addr;
+		    addr = InetAddress.getLocalHost();
+		    hostName = addr.getHostName();
+		}
+		catch (UnknownHostException ex){
+		    System.out.println("Hostname can not be resolved");
+		}
+		
+		return hostName;
+	}
+	
 }

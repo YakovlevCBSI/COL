@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import net.jcip.annotations.NotThreadSafe;
 
@@ -47,7 +49,7 @@ public class SanityTest1 extends AllBaseTest{
 			super.cleanUpThenDeleteTemp();
 			
 			CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
-//			catalogsPageDirty.cleanUpLeftOverCatalogs();
+			catalogsPageDirty.cleanUpLeftOverCatalogs();
 		}
 
 
@@ -148,8 +150,5 @@ public class SanityTest1 extends AllBaseTest{
 	public void cleanUpAfterClass(){
 		CatalogsPage catalogPageF = PageFactory.initElements(driver, CatalogsPage.class);
 		catalogPageF.cleanUpLeftOverCatalogs();
-	}
-
-	
-	
+	}	
 }

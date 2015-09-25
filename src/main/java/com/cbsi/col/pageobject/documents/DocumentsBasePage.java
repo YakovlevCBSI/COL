@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.CreatePoPopup;
 import com.cbsi.col.pageobject.home.ColBasePage;
@@ -45,6 +46,19 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		System.out.println(quoteInt);
 		return quoteInt;
 	}
+	//--------------------------  Info ---------------------------//
+	@FindBy(css="div#company-name span a")
+	private WebElement CompanyName;
+	
+	public CurrentAccountTab clickCompanyLink(){
+		CompanyName.click();
+		return PageFactory.initElements(driver, CurrentAccountTab.class);
+	}
+	
+	public String getCompanyName(){
+		return CompanyName.getText();
+	}
+	
 	//--------------------------  Bottom bar---------------------------//
 	@FindBy(css="button#next-action_save")
 	private WebElement Save;
@@ -82,6 +96,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
+	
 	public T clickSave(){
 		Save.click();
 		waitForQuickLoad();
@@ -593,7 +608,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			waitForTextToBeVisible("RMA", "h3");
 		}
 		
-		@FindBy(css="span.btn-save")
+		@FindBy(css="a[href*='createRma();']")
 		private WebElement CreateRMA;
 		
 		public RMAPage clickCreateRMA(){

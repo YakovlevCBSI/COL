@@ -127,8 +127,9 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		boolean convertOrderSuccess = false;
 		int retry=1;
 		while(convertOrderSuccess == false){
-			SalesOrderPage orderPageAdress = quotePage.clickConvertToOrder();
+			SalesOrderPage orderPageAdress = null;
 			try{
+				orderPageAdress = quotePage.clickConvertToOrder();
 				orderPageAdress.setFirstName("Quality");
 				orderPageAdress.setLastName("Assurance");
 				orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
@@ -160,7 +161,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			try{
 				OrderOptionsPage orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
 				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.MoneyOrder);
-				orderOptionsPage.clickSave(SalesOrderPage.class);
+				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(NullPointerException e){
 				e.printStackTrace();

@@ -20,11 +20,12 @@ public class SalesOrderPage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 //		waitForPageToLoad(By.cssSelector("form div p"));
-		try{
-			waitForTextToBeVisible(10000, "Addresses", "b");
-		}catch(Exception e){
-			
-		}
+//		try{
+//			waitForTextToBeVisible(10000, "Addresses", "b");
+//		}catch(Exception e){
+//			
+//		}
+		waitForTextToBeVisible("Sales Order (", "span");
 	}
 	
 	@FindBy(css="#billing_FirstName")

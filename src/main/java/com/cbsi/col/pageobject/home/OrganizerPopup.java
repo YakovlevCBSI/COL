@@ -140,6 +140,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 	
 	public OrganizerPopup clickSave(){
 		this.Save.click();
+		forceWait(700); //closing right after causes a problem. Wait a bit.
 		return this;
 	}
 	
@@ -159,7 +160,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 		
 		waitForElementToBeVisible(By.cssSelector("button#convert-to-task-confirm-btn"));
 		ConvertToTaskConfirm.click();
-		forceWait(500);
+		forceWait(700);
 		return this;
 	}
 	
@@ -208,8 +209,6 @@ public class OrganizerPopup<T> extends ColBasePage{
 		setSubject(title);
 		setContent("some content...");
 		clickSave();
-		
-		forceWait(500); //closing right after causes a problem. Wait a bit.
 		
 		return this;
 	}

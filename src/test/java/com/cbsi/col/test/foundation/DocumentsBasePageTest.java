@@ -163,7 +163,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.MoneyOrder);
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
-			}catch(NullPointerException e){
+			}catch(Exception e){
 				e.printStackTrace();
 				System.out.println("convert order failed... retry "+ retry);
 				retry ++;

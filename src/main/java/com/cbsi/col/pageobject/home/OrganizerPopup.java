@@ -159,6 +159,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 		
 		waitForElementToBeVisible(By.cssSelector("button#convert-to-task-confirm-btn"));
 		ConvertToTaskConfirm.click();
+		forceWait(500);
 		return this;
 	}
 	

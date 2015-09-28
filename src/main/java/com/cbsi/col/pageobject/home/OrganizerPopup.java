@@ -18,6 +18,9 @@ public class OrganizerPopup<T> extends ColBasePage{
 		// TODO Auto-generated constructor stub
 		switchToNewWindow();
 		waitForTextToBeVisible("Date Range", "h3");
+		switchFrame();
+		waitForElementToBeVisible(By.cssSelector("p"));
+		switchBack();
 //		waitForTextToBeVisible("Task", "span");
 		forceWait(500);
 	}
@@ -151,6 +154,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 	@FindBy(css="button#convert-to-task-confirm-btn")
 	private WebElement ConvertToTaskConfirm;
 	public OrganizerPopup clickConverToTask(){
+		waitForElementToBeVisible(By.cssSelector("button#convert-to-task-btn"));
 		ConvertToTask.click();
 		
 		waitForElementToBeVisible(By.cssSelector("button#convert-to-task-confirm-btn"));
@@ -173,8 +177,18 @@ public class OrganizerPopup<T> extends ColBasePage{
 	private WebElement nav;
 	public OrganizerPopup switchTab(OrganizerTabs tab){
 		currentTab = tab;
-		nav.findElement(By.xpath("a[contains[@href,'#"+tab.toString() + "'])")).click();
-		return this;
+		
+		WebElement pickTab = nav.findElement(By.xpath("li/a[contains(@href,'#"+tab.toString().toLowerCase() + "')]"));
+		
+		if(pickTab.getAttribute("class").contains("active")) {
+			return this;
+		}
+		else {
+			pickTab.click();
+			forceWait(500);
+		}
+		
+		return PageFactory.initElements(driver, OrganizerPopup.class);
 	}
 	
 	public void quit(){
@@ -187,6 +201,16 @@ public class OrganizerPopup<T> extends ColBasePage{
 		All,
 		Note,
 		Task
+	}
+	
+	public OrganizerPopup quickSaveItem(String title){
+		setSubject(title);
+		setContent("some content...");
+		clickSave();
+		
+		forceWait(500); //closing right after causes a problem. Wait a bit.
+		
+		return this;
 	}
 	
 }

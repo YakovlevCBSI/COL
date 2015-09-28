@@ -51,6 +51,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	private WebElement CompanyName;
 	
 	public CurrentAccountTab clickCompanyLink(){
+		waitForQuickLoad();
 		CompanyName.click();
 		return PageFactory.initElements(driver, CurrentAccountTab.class);
 	}

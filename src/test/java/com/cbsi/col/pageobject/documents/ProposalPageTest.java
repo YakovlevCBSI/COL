@@ -5,11 +5,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.ColBasePage.Time;
@@ -50,6 +52,22 @@ public class ProposalPageTest extends ColBaseTest{
 		
 		documentPage = proposalPage.clickSave().goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
 		assertTrue(documentPage.hasProposal(docNumber));		
+	}
+	
+	@Test
+	public void eSignInProposal(){
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
+		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
+		OrderOptionsPage orderOptionPage = proposalPage.clickPrePareForESign();
+		ProposalPage proposlPageFinal = (ProposalPage) orderOptionPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave(ProposalPage.class);
+	}
+	
+	@Test
+	public void companyLinkRedirectToCurrentAccount(){
+		ProposalPage proposalPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.PROPOSALS).goToProposal(1);
+		String expectedName = proposalPage.getCompanyName();
+		CurrentAccountTab currentAccountTab = proposalPage.clickCompanyLink();
+		assertTrue(currentAccountTab.getCompany().contains(expectedName));
 	}
 
 }

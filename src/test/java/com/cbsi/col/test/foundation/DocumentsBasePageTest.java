@@ -14,11 +14,11 @@ import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.OrderOptionsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
-import com.cbsi.col.pageobject.documents.SalesOrderPage.Payment;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.pageobject.products.ProductsPage;
@@ -147,9 +147,20 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				System.out.println("----------------------------------------");
 				
 			}
+//			try{
+//				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
+//				salesOrderPage = salesOrderPage.clickSave();
+//				convertOrderSuccess = true;
+//			}catch(NullPointerException e){
+//				e.printStackTrace();
+//				System.out.println("convert order failed... retry "+ retry);
+//				retry ++;
+//				 quotePage = PageFactory.initElements(driver, QuotePage.class);
+//			}
 			try{
-				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
-				salesOrderPage = salesOrderPage.clickSave();
+				OrderOptionsPage orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
+				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.MoneyOrder);
+				orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(NullPointerException e){
 				e.printStackTrace();

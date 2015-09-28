@@ -102,10 +102,12 @@ public class ColBasePage {
 		String[] tags = tagNames;
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
+		
 	
 		outerLoop:
 		while(System.currentTimeMillis() - start < milliSeconds){
-			
+			System.out.println("searching Text...[" + text + "]");
+
 			List<WebElement> headers  = null;
 			
 			for(String tag: tagNames){

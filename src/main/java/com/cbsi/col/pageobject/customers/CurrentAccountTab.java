@@ -118,6 +118,14 @@ public class CurrentAccountTab extends ColBasePage{
 		waitForElementToBeVisible(By.linkText("Create Proposal"));
 	}
 	
+	//-------------------------- Company details---------------------------//
+	@FindBy(css="td#detailsnameAndNumber")
+	private WebElement CompanyName;
+	
+	public String getCompany(){
+		return CompanyName.getText();
+	}
+	
 	//-------------------------- Go to iframe ---------------------------//
 	
 	public DocumentsPage getDocumentsPage(){

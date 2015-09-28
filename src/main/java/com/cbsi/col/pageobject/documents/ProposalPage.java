@@ -3,15 +3,16 @@ package com.cbsi.col.pageobject.documents;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.home.ColBasePage;
 
-public class ProposalPage extends ColBasePage{
+public class ProposalPage extends DocumentsBasePage{
 
 	public ProposalPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Proposal (Draft)", "span");
+		waitForTextToBeVisible("Proposal (", "span");
 	}
 	
 	@FindBy(css="input#quoteNumber")
@@ -38,15 +39,15 @@ public class ProposalPage extends ColBasePage{
 		return this;
 	}
 	
-	public ProposalPage clickPrePareForESign(){
+	public OrderOptionsPage clickPrePareForESign(){
 		PrepareForESign.click();
-		return this;
+		return PageFactory.initElements(driver, OrderOptionsPage.class);
 	}
 	
-	public ProposalPage clickSend(){
-		Send.click();
-		return this;
-	}
+//	public ProposalPage clickSend(){
+//		Send.click();
+//		return this;
+//	}
 	
 
 }

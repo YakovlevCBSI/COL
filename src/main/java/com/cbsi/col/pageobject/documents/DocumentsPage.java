@@ -98,6 +98,12 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 	
+	public ProposalPage goToProposal(long orderNumber){
+		WebElement docLink = findDataRowByName(orderNumber, false);
+		docLink.click();
+		
+		return PageFactory.initElements(driver, ProposalPage.class);
+	}
 	public DocumentsPage deleteQuotesByCompnayName(String companyName){
 //		WebElement docLink = findDataRowByName(quoteNumber);
 		forceWait(300);

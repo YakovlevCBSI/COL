@@ -266,6 +266,16 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage = (QuotePage)quotePage.clickSave();
 	}
 	
+	@Test
+	public void companyLinkRedirectsToCurrentAccount(){
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		String expectedName = quotePage.getCompanyName();
+		CurrentAccountTab currentAccountPage = quotePage.clickCompanyLink();
+		String companyName = currentAccountPage.getCompany();
+		
+		assertTrue(companyName.contains(expectedName));
+	}
+	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
 //		AccountsPage accountPage = homePage.goToAccountsPage();

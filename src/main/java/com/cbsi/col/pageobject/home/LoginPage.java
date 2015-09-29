@@ -6,9 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.test.util.GlobalProperty;
 import com.cbsi.col.test.util.LoginProperty;
 
 public class LoginPage extends ColBasePage{
+	
+	private String userName = GlobalProperty.getProperty(GlobalProperty.USERNAME, LoginProperty.testUser);
+	private String password = LoginProperty.testPassword;
 	
 	public LoginPage(WebDriver driver){
 		super(driver);
@@ -25,7 +29,7 @@ public class LoginPage extends ColBasePage{
 	private WebElement submit;
 	//
 	public HomePage loginToHomePage(){
-		return loginToHomePage(LoginProperty.testUser, LoginProperty.testPassword);
+		return loginToHomePage(userName, password);
 	}
 	
 	public HomePage loginToHomePage(String username, String password){

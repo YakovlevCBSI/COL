@@ -1,11 +1,14 @@
 package com.cbsi.col.test.foundation;
 
+import com.cbsi.col.test.util.GlobalProperty;
+
 public class ParameterFeeder {
 //	private static final String staticUrl="https://usmb.channelonline.com/acme/home/";
 	private static final String staticUrl="https://stage.channelonline.com/colqa_sanity/home";
 
-	private String passedUrl = System.getProperty("url");
-	private String colUrl = passedUrl==null?staticUrl:passedUrl;
+//	private String colUrl = GlobalProperty.URL==null?staticUrl:GlobalProperty.URL;
+	private String colUrl = GlobalProperty.getProperty(GlobalProperty.URL, staticUrl);
+
 	
 	public Object[][] configureTestParams(){
 		String[] URLs = null;

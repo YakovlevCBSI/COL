@@ -56,7 +56,7 @@ public class CreateAccountPageTest extends ColBaseTest{
 		assertTrue(recentAccountsTab.hasCompany(companyName));
 	}
 	
-	@Ignore("Lead messed up data")
+//	@Ignore("Lead messed up data")
 	@Test
 	public void createLead(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.LEAD);

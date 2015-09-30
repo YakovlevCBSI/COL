@@ -153,9 +153,20 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			switchBack();
 				
 		}
-		return PageFactory.initElements(driver, InvoicePage.class);
-		
-		}
+		return PageFactory.initElements(driver, InvoicePage.class);	
+	}
+	
+	@FindBy(css="a#next-action_hotlist")
+	private WebElement AddToHotList;
+	public T clickAddToHotList(){
+		Caret = CopyToNewQuote.findElement(By.xpath("../button[contains(@id,'-caret')]"));
+		Caret.click();
+		forceWait(700);
+		AddToHotList.click();
+		waitForQuickLoad();
+
+		return (T) PageFactory.initElements(driver, this.getClass());
+	}
 	//----------------------- inner page object: calculator  -----------------------//
 	public PriceCalculator priceCalculator;
 	

@@ -385,10 +385,14 @@ public class ColBasePage {
 	private static List<WebElement> dataColumns;
 	
 	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor){
-		return findDataRowByName(quoteNumber, nthColumnToLookFor, "a");
+		return findDataRowByName(quoteNumber, nthColumnToLookFor, false);
 	}
 	
-	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor, String addPath){
+	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor, boolean goNextPage){
+		return findDataRowByName(quoteNumber, nthColumnToLookFor, "a", goNextPage);
+	}
+	
+	public WebElement findDataRowByName(String quoteNumber, int nthColumnToLookFor, String addPath, boolean goNextPage){
 
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(" + nthColumnToLookFor + ") " + addPath));
 		
@@ -399,20 +403,22 @@ public class ColBasePage {
 			}
 		}
 		
-		List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
-		if(currentPage-1 >=0){
-			int removePage = currentPage;
-			while(removePage >0){
-				removePage--;
-				pageList.remove(removePage);
+		if(goNextPage){
+			List<WebElement> pageList = driver.findElements(By.cssSelector("tr.footer td a"));
+			if(currentPage-1 >=0){
+				int removePage = currentPage;
+				while(removePage >0){
+					removePage--;
+					pageList.remove(removePage);
+				}
 			}
-		}
-		if(pageList.size() >=1){
-			currentPage++;
-			pageList.get(0).click();
-			waitForTextToBeVisible("Documents", "h1");
-			dataColumns=null;
-			return findDataRowByName(quoteNumber, nthColumnToLookFor);
+			if(pageList.size() >=1){
+				currentPage++;
+				pageList.get(0).click();
+				waitForTextToBeVisible("Documents", "h1");
+				dataColumns=null;
+				return findDataRowByName(quoteNumber, nthColumnToLookFor, addPath, true);
+			}
 		}
 		
 		return null;		

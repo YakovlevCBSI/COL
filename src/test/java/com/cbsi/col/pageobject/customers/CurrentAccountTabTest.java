@@ -26,17 +26,19 @@ public class CurrentAccountTabTest extends ColBaseTest{
 	@Test
 	public void deleteQuoteFromAccountView(){
 		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
-		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteQuotesByCompnayName("Qa");
+		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName("Qa");
 	}
 	
 	@Test
 	public void deleteProposalFromAccountview(){
 //		currentAccount.
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		documentsPage = documentsPage.switchToTab(DocumentTabs.PROPOSALS).deleteDocumentByCompanyName("Qa");
 	}
 	
 	@Test
 	public void purchaseOrderLinkRedirectsPage(){
-		
+	
 	}
 
 }

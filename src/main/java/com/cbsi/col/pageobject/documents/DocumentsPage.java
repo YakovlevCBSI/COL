@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,6 +50,14 @@ public class DocumentsPage extends ColBasePage{
 //		}
 //		return false;
 //	}
+	
+	@FindBy(css="div.btn-toolbar div a[href*='deleted=true']")
+	private WebElement RecycleBin;
+	
+	public RecycleBinPage clickRecycleBin(){
+		RecycleBin.click();
+		return PageFactory.initElements(driver, RecycleBinPage.class);
+	}
 	
 	public boolean hasQuote(long docNumber){
 		return hasDoc(docNumber);
@@ -104,27 +113,62 @@ public class DocumentsPage extends ColBasePage{
 		
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
-	public DocumentsPage deleteQuotesByCompnayName(String companyName){
+//	public DocumentsPage deleteQuotesByCompnayName(String companyName){
+////		WebElement docLink = findDataRowByName(quoteNumber);
+//		forceWait(300);
+//		List<WebElement> companyList = driver.findElements(By.cssSelector("table td:nth-child(3) a"));
+//		WebElement singleCompany = null;
+//		for(WebElement company: companyList){
+//			System.out.println("c name: " + company.getText());
+//			if(company.getText().toLowerCase().contains(companyName.toLowerCase()) && company.isDisplayed()) {
+//				singleCompany = company;
+//				break;
+//			}
+//			
+//		}
+//		System.out.println("deleting " + singleCompany.getText());
+//		singleCompany.findElement(By.xpath("../../td/input[contains(@id,'delete')]")).click();
+//	
+////		acceptAlert();
+//		
+//		forceWait(1000);
+//		driver.findElement(By.cssSelector("#delete-doc-btn")).click();
+//	
+//		forceWait(700);
+//		return PageFactory.initElements(driver, DocumentsPage.class);
+//	}
+	
+	public DocumentsPage deleteDocumentByCompanyName(String companyName){
 //		WebElement docLink = findDataRowByName(quoteNumber);
 		forceWait(300);
-		List<WebElement> companyList = driver.findElements(By.cssSelector("table td:nth-child(3) a"));
-		WebElement singleCompany = null;
-		for(WebElement company: companyList){
-			if(company.getText().toLowerCase().contains(companyName.toLowerCase()) && company.isDisplayed()) {
-				singleCompany = company;
-				break;
-			}
-			
+		WebElement company = findDataRowByName(companyName, 3, false);
+		
+		if(company == null){
+			company = findDataRowByName(companyName, 2, false);
 		}
-		System.out.println("deleting " + singleCompany.getText());
-		singleCompany.findElement(By.xpath("../../td/input[contains(@id,'delete')]")).click();
+		
+		System.out.println("deleting " + company.getText());
+		company.findElement(By.xpath("../../td/input[contains(@id,'delete')]")).click();
 	
 //		acceptAlert();
 		
 		forceWait(1000);
-		driver.findElement(By.cssSelector("#delete-doc-btn")).click();
+		driver.findElement(By.cssSelector("button[id^='delete-'][id*='-btn']")).click();
 	
 		forceWait(700);
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
+	public DocumentsPage deleteQuoteByDocNumber(long docNumber){
+		findDataRowByName(docNumber).findElement(By.xpath("td[14]/input")).click();
+		
+		System.out.println("deleting " + docNumber);	
+
+		forceWait(1000);
+		driver.findElement(By.cssSelector("button[id^='delete-'][id*='-btn']")).click();
+	
+		forceWait(700);
+		
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
@@ -192,10 +236,15 @@ public class DocumentsPage extends ColBasePage{
 	public DocumentsPage switchToTab(DocumentTabs tab){
 //		if(tab == DocumentTabs.QUOTES){
 //			driver.findElement(By.cssSelector("li a[href*='" + WordUtils.capitalizeFully(tab.toString()) + "/listQuotes'")).click();
-//		}else{
-			driver.findElement(By.cssSelector("li a[href*='" + (tab.toString()))).click();
+//		}else{	
+//			driver.findElement(By.cssSelector("li a[href*='" + (tab.toString()))).click();
 //		}
 		
+		try{
+			driver.findElement(By.cssSelector("li a[href*='" + (tab.toString()))).click();
+		}catch(NoSuchElementException e){
+			driver.findElement(By.cssSelector("li a[href*='" + (tab.toStringAlt()))).click();
+		}
 		try{
 			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);
 		}catch(TimeoutException e){
@@ -315,6 +364,10 @@ public class DocumentsPage extends ColBasePage{
 			public String toString(){
 				return "Proposals/list";
 			}
+			
+			public String toStringAlt(){
+				return "Proposals/customerList?";
+			}
 		},
 		ORDERS{
 			public String toString(){
@@ -332,6 +385,11 @@ public class DocumentsPage extends ColBasePage{
 			public String toString(){
 				return "Rmas/list";
 			}
+		};
+
+		public String toStringAlt() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	

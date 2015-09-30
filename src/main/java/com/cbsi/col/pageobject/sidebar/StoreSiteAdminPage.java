@@ -69,18 +69,18 @@ public class StoreSiteAdminPage extends ColBasePage{
 	}
 	
 	public boolean hasStore(String storeName){
-		return findDataRowByName(storeName, 2, "")==null?false:true;
+		return findDataRowByName(storeName, 2)==null?false:true;
 	}
 	
 	public StoreSiteAdminPage copyStore(String storeName){
-		WebElement dataRow = findDataRowByName(storeName, 2, "");
+		WebElement dataRow = findDataRowByName(storeName, 2);
 		WebElement copy = dataRow.findElement(By.xpath("../td[8]/a"));
 		copy.click();
 		
 		return PageFactory.initElements(driver, StoreSiteAdminPage.class);
 	}
 	public StoreSiteAdminPage deleteStore(String storeName){
-		WebElement dataRow = findDataRowByName(storeName, 2, "");
+		WebElement dataRow = findDataRowByName(storeName, 2);
 		WebElement delete = dataRow.findElement(By.xpath("../td[9]/a"));
 		
 		delete.click();

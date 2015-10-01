@@ -98,7 +98,7 @@ public class ColBasePage {
 		waitForTextToBeVisible(10000, text, tagNames);
 	}
 	
-	public void waitForTextToBeVisible(long milliSeconds, String text, String...tagNames){
+	public boolean waitForTextToBeVisible(long milliSeconds, String text, String...tagNames){
 		String[] tags = tagNames;
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
@@ -121,7 +121,7 @@ public class ColBasePage {
 				try{
 					if(h.getText().contains(text)){
 						headerOnWait = h;
-						break outerLoop;
+						return true;
 					}
 				}catch(Exception e){
 					
@@ -136,7 +136,7 @@ public class ColBasePage {
 			forceWait(100);	
 		}
 		
-		return;
+		return false;
 	}
 	
 	public WebElement refreshStaleElement(By by){

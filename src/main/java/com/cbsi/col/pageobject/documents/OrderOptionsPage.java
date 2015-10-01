@@ -83,8 +83,9 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 		@FindBy(css="#crm-main-pane-body > font > a:nth-child(1)")
 		private WebElement Save;
 		
-		public <T> T clickSave(Class<?> clazz){
+		public <T> T clickSave(Class clazz){
 			Save.click();
+			System.out.println("Clicked on save. Invoking " + clazz.getName() + " now");
 			return (T) PageFactory.initElements(driver, clazz);
 		}
 		

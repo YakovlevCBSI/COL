@@ -1,5 +1,6 @@
 package com.cbsi.col.pageobject.documents;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -15,17 +16,41 @@ import com.cbsi.col.pageobject.home.ColBasePage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 
 public class SalesOrderPage extends DocumentsBasePage{
-
-	public SalesOrderPage(WebDriver driver) {
+	public SalesOrderPage(WebDriver driver) throws Exception {
 		super(driver);
 		// TODO Auto-generated constructor stub
-//		waitForPageToLoad(By.cssSelector("form div p"));
-//		try{
-//			waitForTextToBeVisible(10000, "Addresses", "b");
-//		}catch(Exception e){
-//			
-//		}
-		waitForTextToBeVisible("Sales Order (", "span");
+		
+		waitForMultiHeader();
+	}
+	
+	public void waitForMultiHeader() throws Exception{		
+		long start = System.currentTimeMillis();
+		boolean headerFound= false;
+		while(System.currentTimeMillis() - start <= 10000){
+			try{
+//				waitForPageToLoad(By.cssSelector("form div p"));
+
+				if(waitForTextToBeVisible(1000, "Addresses", "b")) {
+					System.out.println("Found Address header. Break!");
+					headerFound = true;
+					break;
+				}
+			}catch(Exception e){
+				
+			}
+			
+			try{
+				if(waitForTextToBeVisible(1000, "Sales Order (", "span")) {
+					System.out.println("Found Sales Order Header. Break!");
+					headerFound = true;
+					break;
+				}
+			}catch(Exception e){
+				
+			}
+		}
+		
+		if(!headerFound) throw new Exception("failed to invoke Sales order page");
 	}
 	
 	@FindBy(css="#billing_FirstName")

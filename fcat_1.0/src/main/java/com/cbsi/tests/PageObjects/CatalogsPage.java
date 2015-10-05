@@ -234,6 +234,12 @@ public class CatalogsPage extends BasePage{
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
+	public ProductsCatalogPage goToCatalogByName(String catalogPartialText){
+		getCatalogByNameAndProductNumber(catalogPartialText, 0).click();
+		
+		return PageFactory.initElements(driver, ProductsCatalogPage.class); 
+	}
+	
 	public ProductsCatalogPage gotoCatalogByNameAndSomeNumberOfProducts(String catalogPartialText, int productNum){
 		getCatalogByNameAndProductNumber(catalogPartialText, productNum).click();
 		

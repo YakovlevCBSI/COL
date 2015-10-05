@@ -20,7 +20,6 @@ public class ProductsCatalogPage extends BasePage{
 	public ProductsCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-
 	}
 	
 	@Override
@@ -125,6 +124,8 @@ public class ProductsCatalogPage extends BasePage{
 	public boolean isProductRowMapped(){
 		//for compound xpath class name, make sure to use @contains!!! otherwise it never finds the element.
 		forceWait(3000);
+		
+		System.out.println("MApped? " + productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("class"));
 		return this.productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("class").contains("check");
 	}
 	
@@ -293,7 +294,9 @@ public class ProductsCatalogPage extends BasePage{
 			map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
 			map.put("part number", dataTr.findElement(By.xpath("td[starts-with(@class, 'part-number')]")).getText());
 			map.put("manufacturer name", dataTr.findElement(By.xpath("td[starts-with(@class, 'manufacturer-name')]")).getText());
-			map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("title"));
+//			map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("title"));
+			map.put("map", dataTr.findElement(By.xpath("td[@class='state actions']/a[1]/div")).getAttribute("class").contains("check")?"true":"false");
+
 		}catch(NoSuchElementException e) {
 			//if no result is found, collect the no result found message.
 			map.put("message", dataTr.findElement(By.xpath("td[starts-with(@class, 'no-scripts')]")).getText());
@@ -305,6 +308,10 @@ public class ProductsCatalogPage extends BasePage{
 	public Map<String, String> getProductValue(int nLine){
 		WebElement nRow = getDataRows().get(nLine-1);
 		return dataRowToProductObject(nRow);
+	}
+	
+	public Map<String, String> getProductAsMap(String cpn){
+		return setProductToUse(cpn).dataRowToProductObject(productRow);
 	}
 	
 	public EditProductPopupPage clickEdit(){
@@ -364,6 +371,11 @@ public class ProductsCatalogPage extends BasePage{
 	public boolean isRowMapped(By rowThatWasMapped){
 		return driver.findElement(rowThatWasMapped).getAttribute("title").toLowerCase().equals("mapped");
 	}
+	
+	public boolean isProductMapped(String cpn){
+		return productRow.getAttribute(name)
+	}
+	
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
 		mapProductsDialog.searchName(searchText);

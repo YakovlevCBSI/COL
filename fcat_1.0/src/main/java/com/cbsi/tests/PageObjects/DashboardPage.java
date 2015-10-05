@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -109,10 +111,37 @@ public class DashboardPage extends BasePage{
 		}
 	}
 	
+	public List<Map<String, String>> getWorkflowInfoById(long id){
+		List<Map<String, String>> workflows = new ArrayList<Map<String, String>>();
+		Map<String, String> workflow = new HashMap<String, String>();
+		
+		WebElement Table = driver.findElement(By.cssSelector("table[id ^='maingrid_" + id+"']"));
+		
+//		System.out.println("Table: " +(Table == null));
+		List<WebElement> trs = Table.findElements(By.xpath("tbody/tr[starts-with(@class,'ui-')]"));
+		
+//		System.out.println("trs: " + trs.size());
+		for(WebElement tr: trs){
+			List<WebElement> tds = tr.findElements(By.xpath("td[starts-with(@aria-describedby,'maingrid_" + id + "')]"));
+			
+//			System.out.println("tdsize: " +tds.size());
+			for(WebElement e: tds){
+//				System.out.println(e.getText());
+				workflow.put(e.getAttribute("aria-describedby").split("t_")[1], e.getText());
+			}
+			
+			workflows.add(workflow);
+		}
+		
+		return workflows;		
+	}
+	
+	WebElement expandButton;
 	public void clickExpandButton(String id){
-		WebElement expandButton = driver.findElement(By.cssSelector("tr[id='" + id + "'] td a"));
+		expandButton = driver.findElement(By.cssSelector("tr[id='" + id + "'] td a"));
 		expandButton.click();
 	}
+	
 	public enum STATUS{
 		Pending, 
 		Completed, 

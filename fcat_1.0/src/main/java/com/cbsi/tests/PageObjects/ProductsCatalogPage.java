@@ -372,10 +372,6 @@ public class ProductsCatalogPage extends BasePage{
 		return driver.findElement(rowThatWasMapped).getAttribute("title").toLowerCase().equals("mapped");
 	}
 	
-	public boolean isProductMapped(String cpn){
-		return productRow.getAttribute(name)
-	}
-	
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
 		mapProductsDialog.searchName(searchText);

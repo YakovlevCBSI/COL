@@ -97,7 +97,7 @@ public class RunWorkFlowManuallyTest extends FormBaseTest{
 		ProductsCatalogPage productPage = catalogsPage.goToCatalogByName(CATALOG_NAME);
 		productPage.setProductToUse(PRODUCT_CPN);
 		
-		assertTrue(productPage.isProductMapped(PRODUCT_CPN));
+		assertTrue(productPage.isProductRowMapped());
 	}
 	
 	public long runRemapJob(long catId, String blobFileName){

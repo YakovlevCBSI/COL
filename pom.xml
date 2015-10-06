@@ -38,6 +38,7 @@
 	           		<excludes>
 	           			 <exclude>**/*Base*.java</exclude>
 	           			 <exclude>**/DocumentsBasePageTest.java</exclude>
+	           			 <exclude>**/SuppliersPageTest.java</exclude>
 	           		</excludes>
 	           </configuration>
           	</plugin>

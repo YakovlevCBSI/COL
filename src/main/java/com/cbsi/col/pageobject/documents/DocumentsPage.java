@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -160,7 +161,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public DocumentsPage deleteQuoteByDocNumber(long docNumber){
-		findDataRowByName(docNumber).findElement(By.xpath("td[14]/input")).click();
+		findDataRowByName(docNumber).findElement(By.xpath("../../td[14]/input")).click();
 		
 		System.out.println("deleting " + docNumber);	
 
@@ -288,8 +289,11 @@ public class DocumentsPage extends ColBasePage{
 //				break;
 //			}
 		}
-		if(userOption != null)
+		if(userOption != null){
+			forceWait(1000);
 			userOption.click();
+
+		}
 		else
 			System.err.println("\"" + person + "\" is not found in Modified dropdown" );
 		
@@ -303,18 +307,16 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public String getFilterByModified(){
-		WebElement defaultUser = ModifiedBy.findElement(By.xpath("option[1]"));
-		if(defaultUser.isDisplayed()){
-			return defaultUser.getText();
-		}else{
-			List<WebElement> users = ModifiedBy.findElements(By.xpath("option"));
-			for(WebElement user: users){
-				if(user.getAttribute("selected") != null){
-					return user.getText();
-				}
+	
+		List<WebElement> users = ModifiedBy.findElements(By.xpath("option"));
+		for(WebElement user: users){
+			if(user.getAttribute("selected") != null){
+				return user.getText();
 			}
 		}
-		return null;
+		
+		WebElement defaultUser = ModifiedBy.findElement(By.xpath("option[1]"));
+		return defaultUser.getText();
 	}
 	
 	public DocumentsPage setFilterByModifiedToDefault(){
@@ -328,6 +330,15 @@ public class DocumentsPage extends ColBasePage{
 	
 	public List<HashMap<String, String>> getTableAsMaps() {
 		return getTableAsMaps(Table, 0,12);
+	}
+
+	
+	private static int currentPageNum= 1;
+	public DocumentsPage goToNextPage(){
+		driver.findElement(By.linkText("Next")).click();
+		currentPageNum++;
+		
+		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 
 	

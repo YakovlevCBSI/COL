@@ -61,7 +61,18 @@ public class DocumentsPageTest extends ColBaseTest{
 		documentsPage = documentsPage.setFilterByModifiedBy(userName);
 		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"modifiedby", userName, false));
-
+	}
+	
+	@Test
+	public void FilterByTodayShowsRecentlyCreatedDoc(){
+		
+	}
+	
+	@Test
+	public void FilterByAllUsersOptionIsNotChanged(){
+		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
+		documentsPage = documentsPage.setFilterByModifiedBy("Modified By (All)");
+		assertEquals("Modified By (All)", documentsPage.getFilterByModified());
 	}
 }
 	

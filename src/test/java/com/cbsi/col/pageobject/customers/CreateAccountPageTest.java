@@ -82,7 +82,7 @@ public class CreateAccountPageTest extends ColBaseTest{
 	}
 	
 	@Test
-	public void Generic(){
+	public void createGeneric(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.GENERIC);
 		assertTrue(recentAccountsTab.hasCompany(companyName));
 	}

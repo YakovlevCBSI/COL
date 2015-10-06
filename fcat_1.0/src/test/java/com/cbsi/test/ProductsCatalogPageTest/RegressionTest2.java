@@ -30,6 +30,8 @@ public class RegressionTest2 extends AllBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public static String noSearchFoundMessage = "No products matched your search. Try to change filter to broaden your search.";
+	
 	//("1328")
 	@Test
 	public void UnableToDeleteProductIdWithHtml_1308() throws InterruptedException{
@@ -199,6 +201,7 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.
+		assertEquals(noSearchFoundMessage, productsCatalogPage.getProductValue(1).get("message"));
 		assertTrue(hasNoError());	
 	}
 	
@@ -230,8 +233,8 @@ public class RegressionTest2 extends AllBaseTest{
 		
 		String noResultMsg = productsCatalogPage.getProductValue(1).get("message");
 		
-		assertEquals("No products matched your search. Try to change filter to broaden your search.",
-				noResultMsg);
+		assertEquals(noSearchFoundMessage, productsCatalogPage.getProductValue(1).get("message"));
+
 	}
 	
 	@Test
@@ -244,7 +247,9 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.
-		assertTrue(hasNoError());	
+		assertEquals(noSearchFoundMessage, productsCatalogPage.getProductValue(1).get("message"));
+		assertTrue(hasNoError());
+
 	}
 	
 	@Test

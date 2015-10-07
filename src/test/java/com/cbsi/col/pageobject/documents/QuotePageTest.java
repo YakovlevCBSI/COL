@@ -27,10 +27,8 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.HomePage;
-import com.cbsi.col.pageobject.home.HomePage.Favorites;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
-import com.cbsi.col.pageobject.sidebar.QuoteHotListPage;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 

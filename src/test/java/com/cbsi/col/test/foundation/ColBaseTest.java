@@ -401,7 +401,7 @@ public class ColBaseTest {
 			createNewCustomerPage.setEmail(companyName+"@email.com");
 			createNewCustomerPage.setContactInfo_CompanyName(companyName);
 			CurrentAccountTab currentAccountTab = createNewCustomerPage.clickSaveButton();
-			createNewCustomerPage.clickFinish();
+//			createNewCustomerPage.clickFinish();
 			
 			recentCustomersPage = currentAccountTab.goToAccountsPage().goToRecentCustomersTab();
 		}

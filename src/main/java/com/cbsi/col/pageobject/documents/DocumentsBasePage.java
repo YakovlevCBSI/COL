@@ -15,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
@@ -26,6 +28,7 @@ import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.test.util.StringUtil;
 
 public class DocumentsBasePage<T> extends ColBasePage{
+	public final Logger logger = LoggerFactory.getLogger(DocumentsBasePage.class);
 
 	public DocumentsBasePage(WebDriver driver) {
 		super(driver);
@@ -43,7 +46,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			quoteInt = Long.parseLong(quoteNumber);
 		}
 		
-		System.out.println(quoteInt);
+		logger.info(quoteInt+"");
 		return quoteInt;
 	}
 	//--------------------------  Info ---------------------------//
@@ -295,7 +298,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 				
 			for(WebElement e:ShippingType.findElements(By.xpath("option"))){
 				if(e.getText().equals(type.toString())) {
-					System.out.println("found " + e.getText());
+					logger.info("found " + e.getText());
 					e.click();
 					break;
 				}
@@ -742,7 +745,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		organizerPopup.setSubject(subject);
 		organizerPopup.setContent(content);
 
-		System.out.println("Click SAve");
+		logger.info("Click SAve");
 		
 		organizerPopup.clickSave();
 		forceWait(1000);

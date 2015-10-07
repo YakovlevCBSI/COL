@@ -12,6 +12,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
@@ -21,6 +23,8 @@ import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.test.util.StringUtil;
 
 public class AccountsPage extends ColBasePage{
+	public final Logger logger = LoggerFactory.getLogger(ColBasePage.class);
+
 	public AccountsPage(WebDriver driver){
 		super(driver);
 		try{
@@ -123,7 +127,7 @@ public class AccountsPage extends ColBasePage{
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
 			if(dataColumn.getText().contains(companyName)){
-				System.out.println("FOUND THE TEXT: " + companyName);
+				logger.info("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}
 		}
@@ -198,7 +202,7 @@ public class AccountsPage extends ColBasePage{
 			this.accountType = accountType.toString().toLowerCase();
 			
 			if(this.accountType.equals("customer")){
-				System.out.println("clicked customer");
+				logger.info("clicked customer");
 				Customer.click();
 			}else if(this.accountType.equals("lead")){
 				Lead.click();

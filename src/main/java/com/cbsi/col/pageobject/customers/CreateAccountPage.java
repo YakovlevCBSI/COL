@@ -42,7 +42,8 @@ public class CreateAccountPage extends ColBasePage{
 	@FindBy(linkText="Next")
 	private WebElement Next;
 	
-	@FindBy(css="button[title='Save']")
+//	@FindBy(css="button[title='Finish']")
+	@FindBy(css="a[title='Finish']")
 	private WebElement Finish;
 	
 	@FindBy(linkText="Cancel")
@@ -113,7 +114,7 @@ public class CreateAccountPage extends ColBasePage{
 	
 	public CreateAccountPage clickNext(){
 		Next.click();
-		
+		forceWait(500);
 		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
@@ -121,7 +122,9 @@ public class CreateAccountPage extends ColBasePage{
 		Finish.click();
 		forceWait(2000);
 		
-		return PageFactory.initElements(driver, CreateAccountPage.class);
+//		return PageFactory.initElements(driver, CreateAccountPage.class);
+		return this;
+
 	}
 	
 	public CreateAccountPage clickCancel(){

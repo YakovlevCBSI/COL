@@ -42,24 +42,31 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CreateAccountPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
+import com.cbsi.col.test.util.LoginProperty;
+import com.cbsi.col.test.util.StringUtil;
 
 @RunWith(Parameterized.class)
 public class ColBaseTest {
+	public final Logger logger = LoggerFactory.getLogger(ColBaseTest.class);
+
 	protected WebDriver driver;
 	
 	private String url;
 	private String browser;
 	private String username = System.getProperty("user.name");	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
-
+	public boolean isGrid = false ;
 	
 	public ColBaseTest(String url, String browser){
 		this.url = url;
@@ -82,6 +89,9 @@ public class ColBaseTest {
 		this.browser = browser;
 	}
 //	
+	public String getUserName(){
+		return StringUtil.cleanUserName(LoginProperty.testUser);
+	}
 //	@Rule
 //	public Timeout globalTimeout = new Timeout(240000);
 	
@@ -106,6 +116,7 @@ public class ColBaseTest {
 //		driver.manage().window().maximize();
 		driver.manage().window().setSize(new Dimension(1600, 700));
 		navigatetoLoginPage();
+
 	}
 	
 	public void cleanUp(){
@@ -114,28 +125,40 @@ public class ColBaseTest {
 	
 	public WebDriver configureDrivers(){
 		WebDriver emptyDriver = null;
-		System.out.println("staring conditions");
+		logger.info("configure driver for browser");
+		if(!isGrid){
+			if(getBrowser().contains("chrome")){
+				emptyDriver = getChromeDriver();
+			}else if(getBrowser().contains("internet explorer")){
+				emptyDriver = getIEDriver();
+			}
+			else{
+				try{
+					FirefoxProfile profile = new FirefoxProfile();
+					emptyDriver = new FirefoxDriver(profile);
+				}catch(Exception e){
+					logger.info("Failed to create a firefox driver");
+					e.printStackTrace();
+				}
+				
+			}
+		}else{
+			try {
+				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
+//				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getFirefoxCapability());
+//				emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getChromeCapability());
 
-		if(getBrowser().contains("chrome")){
-			emptyDriver = getChromeDriver();
-		}else if(getBrowser().contains("internet explorer")){
-			emptyDriver = getIEDriver();
-		}
-		else{
-			try{
-				FirefoxProfile profile = new FirefoxProfile();
-				emptyDriver = new FirefoxDriver(profile);
-			}catch(Exception e){
-				System.out.println("Failed to create a firefox driver");
+			
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 		
 //		try {
 //			emptyDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), getBrowser().contains("chrome")?getChromeCapability():getFirefoxCapability());
 //		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
+//			10// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 
@@ -261,18 +284,18 @@ public class ColBaseTest {
                             
                             //second try failed. Take a screenshot.
                             if(i+1 ==2){
-                            	System.err.println("Taking a screenshot");
+                            	logger.info("Taking a screenshot");
                             	takeScreenshot();
                             }
                         } finally{
                         	 if(driver!=null){
-                        		 System.out.println("quit the driver");
+                        		 logger.info("quit the driver");
                              	driver.quit();
                              }  
                         }
                     }
                     if(isAutoRun()){
-                    	System.out.println("killed all driver instances");
+                    	logger.info("killed all driver instances");
         				runCommand("killall firefox");
         				runCommand("killall chrome");
         			}
@@ -357,14 +380,20 @@ public class ColBaseTest {
 			createNewCustomerPage.setCity(city);
 			createNewCustomerPage.setZip(zip);
 			createNewCustomerPage = createNewCustomerPage.clickNext();
+			
 //			
 //			//---------------------------------------------------------------------------
-//			//WORK AROUND FOR IFrame loading error without Contact info #5431
-//			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
-//			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+			//WORK AROUND FOR IFrame loading error withouta Contact info #5431
+			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
+			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
+
+			createNewCustomerPage = createNewCustomerPage.clickFinish();
 			
+			createNewCustomerPage.waitForAlert();
+			createNewCustomerPage.acceptAlert();
+		
 			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{
 			createNewCustomerPage.setFirstName(companyName.split("_")[0]);
@@ -372,7 +401,8 @@ public class ColBaseTest {
 			createNewCustomerPage.setEmail(companyName+"@email.com");
 			createNewCustomerPage.setContactInfo_CompanyName(companyName);
 			CurrentAccountTab currentAccountTab = createNewCustomerPage.clickSaveButton();
-
+			createNewCustomerPage.clickFinish();
+			
 			recentCustomersPage = currentAccountTab.goToAccountsPage().goToRecentCustomersTab();
 		}
 		
@@ -380,5 +410,6 @@ public class ColBaseTest {
 	}
 	
 
+	
 	
 }

@@ -4,14 +4,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class AddressPage extends ColBasePage{
+	public final Logger logger = LoggerFactory.getLogger(AddressPage.class);
 
 	public AddressPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
+		logger.info(getClass().getName());
 		waitForTextToBeVisible(1000, "Addresses", "b");
 	}
 

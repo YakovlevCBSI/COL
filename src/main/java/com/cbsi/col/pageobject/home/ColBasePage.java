@@ -19,6 +19,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
@@ -31,6 +33,8 @@ import com.cbsi.col.test.util.StringUtil;
 
 public class ColBasePage {
 	protected WebDriver driver;
+	public final Logger logger = LoggerFactory.getLogger(ColBasePage.class);
+	
 	public ColBasePage(WebDriver driver){
 		this.driver= driver;
 	}
@@ -106,7 +110,7 @@ public class ColBasePage {
 	
 		outerLoop:
 		while(System.currentTimeMillis() - start < milliSeconds){
-			System.out.println("searching Text...[" + text + "]");
+			logger.info("searching Text...[" + text + "]");
 
 			List<WebElement> headers  = null;
 			
@@ -131,7 +135,7 @@ public class ColBasePage {
 			forceWait(100);
 		}
 		
-		System.out.println("Wait for: " + headerOnWait.getText());
+		logger.info("Wait for: " + headerOnWait.getText());
 		while(!headerOnWait.isDisplayed() && (System.currentTimeMillis() - start < milliSeconds)){
 			forceWait(100);	
 		}
@@ -292,11 +296,11 @@ public class ColBasePage {
 		
 		while(driver.getWindowHandles().size() <=1){
 			forceWait(300);
-			System.out.println("waiting for new window...");
+			logger.info("waiting for new window...");
 		}
 		
 		for(String winHandle: driver.getWindowHandles()){
-			System.out.println(winHandle);
+			logger.info(winHandle);
 		}
 		
 		for(String winHandle: driver.getWindowHandles()){
@@ -308,7 +312,7 @@ public class ColBasePage {
 	public void switchToNextWindow(){
 		while(driver.getWindowHandles().size() <=1){
 			forceWait(300);
-			System.out.println("waiting for new window...");
+			logger.info("waiting for new window...");
 		}
 		System.out.println(new ArrayList<String>(driver.getWindowHandles()).get(i));
 		driver.switchTo().window(new ArrayList<String>(driver.getWindowHandles()).get(i));
@@ -329,7 +333,7 @@ public class ColBasePage {
 		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
 		int count=0;
 		for(WebElement e: headerElements){
-			System.out.println(count + " ; " + e.getText());count++;
+			logger.info(count + " ; " + e.getText());count++;
 		}
 		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
 		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
@@ -344,7 +348,7 @@ public class ColBasePage {
 		
 		if(skipColumnNums != null){
 			for(int i=skipColumnNums.length-1; i >=0; i--){
-				System.out.println(skipColumnNums[i]);
+				logger.info(skipColumnNums[i]+"");
 				headerElements.remove(skipColumnNums[i]);  //remove column (VIEW)
 			}
 		}
@@ -364,7 +368,7 @@ public class ColBasePage {
 			HashMap<String, String> map = new HashMap<String, String>();
 			for(int i=0; i< headerColumns.length; i++){
 				String data = tr.findElement(By.xpath("td[" + (i+2) + "]")).getText();
-				System.out.print(headerColumns[i] + " : " + data  + " | ");
+				logger.info(headerColumns[i] + " : " + data  + " | ");
 				map.put(headerColumns[i], data==null?"":data);
 			}
 			System.out.println();

@@ -6,12 +6,15 @@ import org.junit.Before;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.AllAccountsTab;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.AddressPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.OrderOptionsPage;
@@ -25,7 +28,8 @@ import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 
 public class DocumentsBasePageTest extends ColBaseTest{
-	
+	public final Logger logger = LoggerFactory.getLogger(DocumentsBasePage.class);
+
 	public RecentAccountsTab recentCustomersPage;
 	public DocumentsPage documentPage;
 	
@@ -67,7 +71,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quoteNumber = quotePage.getQuoteNumber();
-		System.out.println("Looking for quote#:  " + quoteNumber );
+		logger.info("Looking for quote#:  " + quoteNumber );
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");
 		productPage.checkCompareBoxes(1,2,3);
 		
@@ -144,8 +148,15 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			}catch(Exception e){
 				e.printStackTrace();
 	
-				System.out.println("cannot focus on element. Moving on...");
-				System.out.println("----------------------------------------");
+				logger.info("cannot focus on element. Moving on...");
+				logger.info("----------------------------------------");
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 //			try{
@@ -165,7 +176,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				convertOrderSuccess = true;
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("convert order failed... retry "+ retry);
+				logger.info("convert order failed... retry "+ retry);
 				retry ++;
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 			}

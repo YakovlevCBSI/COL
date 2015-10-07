@@ -13,11 +13,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class DocumentsPage extends ColBasePage{
+	public final Logger logger = LoggerFactory.getLogger(DocumentsPage.class);
+	
 	public DocumentsPage(WebDriver driver){
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("div h1"));
@@ -70,7 +74,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public boolean hasInvoice(long docNumber){
-		System.out.println("Looking for invoice #" + docNumber);
+		logger.info("Looking for invoice #" + docNumber);
 		return hasDoc(docNumber);
 	}
 
@@ -101,7 +105,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public SalesOrderPage goToOrder(long orderNumber){
-		System.out.println("Go to order #" + orderNumber);
+		logger.info("Go to order #" + orderNumber);
 		WebElement docLink = findDataRowByName(orderNumber);
 		docLink.click();
 		

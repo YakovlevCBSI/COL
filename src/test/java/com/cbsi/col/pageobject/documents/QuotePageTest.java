@@ -7,7 +7,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,8 +26,11 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.home.HomePage;
+import com.cbsi.col.pageobject.home.HomePage.Favorites;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
+import com.cbsi.col.pageobject.sidebar.QuoteHotListPage;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 
@@ -35,6 +40,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		super(url, browser);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	
 	@Test
 	public void createQuote(){
@@ -277,23 +285,58 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 //	@Test
-//	public void cleanUpCompanies() throws Exception{
-//		AccountsPage accountPage = homePage.goToAccountsPage();
-//		while(true){
-//			List<WebElement> deleteCustomers = driver.findElements(By.cssSelector("tr td"));
-//			for(WebElement e: deleteCustomers){
-//				if(e.getText().toLowerCase().startsWith("qa_customer")){
-//					WebElement delete = e.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
-//					delete.click();
-//					Thread.sleep(500);
-//					Alert alert = driver.switchTo().alert();
-//					alert.accept();
-//					break;
-//				}
-//			}
-//			Thread.sleep(500);
-//		}
+//	public void deleteHotList(){
+//
+////		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+////
+////		quotePage = (QuotePage) quotePage.clickAddToHotList();
+////		
+////		QuoteHotListPage quoteHotListPage = quotePage.goToHomePage().navigateToSideBar(Favorites.Quote_Hot_List_Setting, quoteNumber,QuoteHotListPage.class);
+//		QuoteHotListPage quoteHotListPage = customersPage.goToHomePage().navigateToSideBar(Favorites.Quote_Hot_List_Setting, quoteNumber,QuoteHotListPage.class);
+//
+//		quoteHotListPage.deleteQuote(quoteNumber);
+//
+//		homePage=  PageFactory.initElements(driver, HomePage.class);
+//		quoteHotListPage= homePage.navigateToSideBar(Favorites.Quote_Hot_List_Setting, quoteNumber, QuoteHotListPage.class);
+//		assertFalse(quoteHotListPage.hasDoc(quoteNumber));
 //	}
+	
+	@Test
+	public void deleteQuoteShowsInRecycleBin(){
+		createQuote();
+		documentPage = documentPage.deleteQuoteByDocNumber(quoteNumber);
+		RecycleBinPage recyclePage = documentPage.clickRecycleBin();
+		assertTrue(recyclePage.hasDoc(quoteNumber));
+	}
+	
+	@Test
+	public void restoreQuoteFromRecycleBin(){
+		createQuote();
+		documentPage = documentPage.deleteQuoteByDocNumber(quoteNumber);
+		RecycleBinPage recyclePage = documentPage.clickRecycleBin();
+		recyclePage.restoreByDocNumber(quoteNumber);
+		assertFalse(recyclePage.hasDoc(quoteNumber));
+	}
+	
+
+	@Test
+	public void cleanUpCompanies() throws Exception{
+		AccountsPage accountPage = homePage.goToAccountsPage();
+		while(true){
+			List<WebElement> deleteCustomers = driver.findElements(By.cssSelector("tr td"));
+			for(WebElement e: deleteCustomers){
+				if(e.getText().toLowerCase().startsWith("qa_customer")){
+					WebElement delete = e.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
+					delete.click();
+					Thread.sleep(500);
+					Alert alert = driver.switchTo().alert();
+					alert.accept();
+					break;
+				}
+			}
+			Thread.sleep(500);
+		}
+	}
 	
 //	
 

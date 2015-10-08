@@ -1,5 +1,6 @@
 package com.cbsi.col.pageobject.home;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -63,6 +64,27 @@ public class OrganizerPopupTest extends ColBaseTest{
 		OrganizerPopup taskPopup = homePage.fromTopbar().clickAddTask().switchTab(OrganizerTabs.Task);
 		assertTrue(taskPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
 		
+	}
+	
+	@Test
+	public void deleteNote(){
+		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddNote();
+		organizerPopup.quickSaveItem(testItem);
+		organizerPopup.clickRefresh();
+		
+		organizerPopup = organizerPopup.clickCheckBoxItem(testItem).clickDelete();
+		assertFalse(organizerPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
+	}
+	
+	@Test
+	public void deleteTask() throws InterruptedException{
+		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddTask();
+		organizerPopup.quickSaveItem(testItem);
+		
+		organizerPopup.clickRefresh();
+		
+		organizerPopup = organizerPopup.clickCheckBoxItem(testItem).clickDelete();
+		assertFalse(organizerPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
 	}
 	
 	@Test

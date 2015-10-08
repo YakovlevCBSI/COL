@@ -167,7 +167,7 @@ public class DocumentsPage extends ColBasePage{
 	public DocumentsPage deleteQuoteByDocNumber(long docNumber){
 		findDataRowByName(docNumber).findElement(By.xpath("../../td[14]/input")).click();
 		
-		System.out.println("deleting " + docNumber);	
+		logger.info("deleting " + docNumber);	
 
 		forceWait(1000);
 		driver.findElement(By.cssSelector("button[id^='delete-'][id*='-btn']")).click();
@@ -324,7 +324,7 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public DocumentsPage setFilterByModifiedToDefault(){
-		System.out.println("checking modfiied default");
+		logger.debug("checking modfiied default");
 		if(!ModifiedBy.findElement(By.xpath("option[1]")).isDisplayed()){
 			System.out.println("Now set to default...");
 			setFilterByModifiedBy("Buyers (All)");

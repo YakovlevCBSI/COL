@@ -15,7 +15,8 @@ public class RecycleBinPage extends ColBasePage{
 	}
 	
 	public RecycleBinPage restoreByDocNumber(long docNumber){
-		findDataRowByName(docNumber+"", 2).findElement(By.xpath("td/[14]/input")).click();
+		forceWait(1000);
+		findDataRowByName(docNumber+"", 2).findElement(By.xpath("../../td[14]/input")).click();
 		forceWait(1000);
 		return PageFactory.initElements(driver, RecycleBinPage.class);
 	}

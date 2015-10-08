@@ -49,7 +49,16 @@ public class CreateAccountPageTest extends ColBaseTest{
 //		AccountsPage accountPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
 //		accountPage.deleteCompany(companyName);
 	}
-
+//
+//	@Test
+//	public void cleanUpCompanies() throws InterruptedException{
+//		customersPage = customersPage.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER);
+//		while(true){
+//			customersPage.deleteCompany("Qa");
+//			Thread.sleep(1000);
+//		}
+//	}
+	
 	@Test
 	public void createCustomer(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.CUSTOMER);

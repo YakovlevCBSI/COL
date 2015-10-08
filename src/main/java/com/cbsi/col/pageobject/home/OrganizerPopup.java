@@ -43,8 +43,11 @@ public class OrganizerPopup<T> extends ColBasePage{
 	@FindBy(css="button#copy-notetask-btn")
 	private WebElement Copy;
 	
-	@FindBy(css="button#delete-item-btn")
+	@FindBy(css="button[class*='delete-mul']")
 	private WebElement Delete;
+	
+	@FindBy(css="button[id*='confirm-delete']")
+	private WebElement ConfirmDelete;
 	
 	@FindBy(css="button#send-notetask-btn")
 	private WebElement Email;
@@ -119,7 +122,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 		}
 		
 		if(maps.isEmpty()){
-			System.err.println("No note/tasks were found...");
+			logger.debug("No note/tasks were found...");
 		}
 		
 		return maps;	
@@ -128,8 +131,8 @@ public class OrganizerPopup<T> extends ColBasePage{
 	public boolean hasItem(String attribute, String value){
 		List<Map<String, String>> map = getNoteTaskItems();
 		for(Map<String, String> item: map){
-			System.out.println(item.get(attribute));
-			System.out.println(item.get("time"));
+//			System.out.println(item.get(attribute));
+//			System.out.println(item.get("time"));
 			if(item.get(attribute).equals(value)){
 				return true;
 			}
@@ -147,7 +150,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 	
 	public OrganizerPopup clickRefresh(){
 		Refresh.click();
-		forceWait(700);
+		forceWait(1000);
 //		waitForElementToBeVisible(By.cssSelector("div.organizer-result-details p a"));
 		return this;
 	}
@@ -165,8 +168,16 @@ public class OrganizerPopup<T> extends ColBasePage{
 	}
 	
 	public OrganizerPopup clickDelete(){
-		this.Save.click();
-		return this;
+		List<WebElement> deletes = driver.findElements(By.cssSelector("button[class*='delete-mul']"));
+		for(WebElement e: deletes){
+			if(e.isDisplayed()) {
+				e.click();
+				break;
+			}
+		}
+		forceWait(500);
+		ConfirmDelete.click();
+		return PageFactory.initElements(driver, OrganizerPopup.class);
 	}
 	
 	public OrganizerPopup clickEmail(){
@@ -174,6 +185,19 @@ public class OrganizerPopup<T> extends ColBasePage{
 		return this;
 	}
 	
+	public OrganizerPopup clickCheckBoxItem(String title){
+		List<WebElement> list = driver.findElements(By.cssSelector("div p.title a"));
+		logger.debug("number of checkboxes: " + list.size());
+		for(WebElement e: list){
+			if(e.getText().contains(title)){
+				e.findElement(By.xpath("../../../div/div/div/label/input")).click();
+				logger.info("checkbox " + title);
+				break;
+			}
+		}
+		
+		return this;
+	}
 	
 	@FindBy(css="ul.nav")
 	private WebElement nav;
@@ -209,6 +233,8 @@ public class OrganizerPopup<T> extends ColBasePage{
 		setSubject(title);
 		setContent("some content...");
 		clickSave();
+		
+		forceWait(500);
 		
 		return this;
 	}

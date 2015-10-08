@@ -71,6 +71,7 @@ public class ColBaseTest {
 	public ColBaseTest(String url, String browser){
 		this.url = url;
 		this.browser = browser;
+
 	}
 	
 	public String getUrl(){
@@ -92,8 +93,8 @@ public class ColBaseTest {
 	public String getUserName(){
 		return StringUtil.cleanUserName(LoginProperty.testUser);
 	}
-//	@Rule
-//	public Timeout globalTimeout = new Timeout(240000);
+	@Rule
+	public Timeout globalTimeout = new Timeout(240000);
 	
 	@Rule
 	public TestName testInfo = new TestName();

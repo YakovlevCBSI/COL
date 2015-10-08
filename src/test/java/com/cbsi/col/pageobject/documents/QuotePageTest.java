@@ -317,24 +317,24 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 
-	@Test
-	public void cleanUpCompanies() throws Exception{
-		AccountsPage accountPage = homePage.goToAccountsPage();
-		while(true){
-			List<WebElement> deleteCustomers = driver.findElements(By.cssSelector("tr td"));
-			for(WebElement e: deleteCustomers){
-				if(e.getText().toLowerCase().startsWith("qa_customer")){
-					WebElement delete = e.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
-					delete.click();
-					Thread.sleep(500);
-					Alert alert = driver.switchTo().alert();
-					alert.accept();
-					break;
-				}
-			}
-			Thread.sleep(500);
-		}
-	}
+//	@Test
+//	public void cleanUpCompanies() throws Exception{
+//		AccountsPage accountPage = homePage.goToAccountsPage();
+//		while(true){
+//			List<WebElement> deleteCustomers = driver.findElements(By.cssSelector("tr td"));
+//			for(WebElement e: deleteCustomers){
+//				if(e.getText().toLowerCase().startsWith("qa_customer")){
+//					WebElement delete = e.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
+//					delete.click();
+//					Thread.sleep(500);
+//					Alert alert = driver.switchTo().alert();
+//					alert.accept();
+//					break;
+//				}
+//			}
+//			Thread.sleep(500);
+//		}
+//	}
 	
 //	
 

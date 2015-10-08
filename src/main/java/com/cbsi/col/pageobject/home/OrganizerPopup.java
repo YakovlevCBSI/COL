@@ -150,8 +150,8 @@ public class OrganizerPopup<T> extends ColBasePage{
 	
 	public OrganizerPopup clickRefresh(){
 		Refresh.click();
-		forceWait(1000);
-//		waitForElementToBeVisible(By.cssSelector("div.organizer-result-details p a"));
+		forceWait(2000);
+//		waitForElementToBeVisible(By.cssSelector("p.title a"));
 		return this;
 	}
 	

@@ -59,13 +59,21 @@ public class CreateAccountPage extends ColBasePage{
 	private WebElement SaveButton;
 	
 	//----------------------Lead-speicifc fields-------------------------//
-	@FindBy(css="input#firstname")
+	@FindBy(css="input[id*='firstname']")
 	private WebElement ContactInfo_FirstName;
 	
-	@FindBy(css="input#lastname")
+	@FindBy(css="input[id*='lastname']")
 	private WebElement ContactInfo_LastName;
 	
 	//--------------------------------------------------------------------//
+	
+	@FindBy(css="input[name='copy_b_to_s']")
+	private WebElement Copy;
+	
+	public CreateAccountPage clickCopy(){
+		Copy.click();
+		return this;
+	}
 	
 	public CreateAccountPage setCompanyName(String companyName){
 		CompanyName.sendKeys(companyName);

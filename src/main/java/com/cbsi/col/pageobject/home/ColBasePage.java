@@ -33,6 +33,7 @@ import com.cbsi.col.test.util.StringUtil;
 
 public class ColBasePage {
 	protected WebDriver driver;
+	
 	public final Logger logger = LoggerFactory.getLogger(ColBasePage.class);
 	
 	public ColBasePage(WebDriver driver){
@@ -400,9 +401,11 @@ public class ColBasePage {
 
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(" + nthColumnToLookFor + ") " + addPath));
 		
+		logger.debug("data column size " + dataColumns.size());
 		for(WebElement dataColumn: dataColumns){
-			System.out.println(dataColumn.getText());
+			logger.debug(dataColumn.getText());
 			if(dataColumn.getText().contains(quoteNumber)){
+				logger.debug("found doc# " + quoteNumber);
 				return dataColumn;
 			}
 		}

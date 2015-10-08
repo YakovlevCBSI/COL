@@ -390,10 +390,15 @@ public class ColBaseTest {
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
 
-			createNewCustomerPage = createNewCustomerPage.clickFinish();
+			createNewCustomerPage = createNewCustomerPage.clickNext();
 			
-			createNewCustomerPage.waitForAlert();
-			createNewCustomerPage.acceptAlert();
+			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
+			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+			
+			createNewCustomerPage.clickCopy().clickFinish();
+//
+//			createNewCustomerPage.waitForAlert();
+//			createNewCustomerPage.acceptAlert();
 		
 			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{

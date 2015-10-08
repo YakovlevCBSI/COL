@@ -43,6 +43,8 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 				break;
 			case MoneyOrder:
 				MoneyOrder.click();
+				driver.findElement(By.cssSelector("input[name='transaction_number']")).sendKeys("123");
+
 				break;
 			case COD:
 				COD.click();
@@ -77,6 +79,7 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 						break;
 				default:
 			}
+			
 			return this;
 		}
 		

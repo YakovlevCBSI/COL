@@ -129,10 +129,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return copyToNewQuotePage.clickCreate();
 	}
 	
-	public SalesOrderPage clickConvertToOrder(){
+	public AddressPage clickConvertToOrder(){
 
 		ConvertToOrder.click();
-		return PageFactory.initElements(driver, SalesOrderPage.class);
+		return PageFactory.initElements(driver, AddressPage.class);
 	}	
 	
 	public SendPage clickSend(){

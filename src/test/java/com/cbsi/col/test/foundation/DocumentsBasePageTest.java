@@ -128,12 +128,15 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quotePage = (QuotePage) quotePage.clickSave();
 		
 		SalesOrderPage salesOrderPage = null;
+		OrderOptionsPage orderOptionsPage = null;
 		boolean convertOrderSuccess = false;
 		int retry=1;
 		while(convertOrderSuccess == false){
-			SalesOrderPage orderPageAdress = null;
+			AddressPage orderPageAdress = null;
+
 			try{
 				orderPageAdress = quotePage.clickConvertToOrder();
+
 				orderPageAdress.setFirstName("Quality");
 				orderPageAdress.setLastName("Assurance");
 				orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
@@ -141,7 +144,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				orderPageAdress.setCity(city);
 				orderPageAdress.setZip(zip);
 				orderPageAdress.clickCopyToShipping();
-				salesOrderPage = orderPageAdress.clickSave();
+				orderOptionsPage = orderPageAdress.clickSave();
 
 			}catch(NoSuchElementException e){
 				salesOrderPage = PageFactory.initElements(driver, SalesOrderPage.class);
@@ -151,14 +154,8 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				logger.info("cannot focus on element. Moving on...");
 				logger.info("----------------------------------------");
 				
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
 			}
+			
 //			try{
 //				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
 //				salesOrderPage = salesOrderPage.clickSave();
@@ -170,13 +167,13 @@ public class DocumentsBasePageTest extends ColBaseTest{
 //				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 //			}
 			try{
-				OrderOptionsPage orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
+				orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
 				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.MoneyOrder);
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){
 				e.printStackTrace();
-				logger.info("convert order failed... retry "+ retry);
+				logger.warn("convert order failed... retry "+ retry);
 				retry ++;
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 			}

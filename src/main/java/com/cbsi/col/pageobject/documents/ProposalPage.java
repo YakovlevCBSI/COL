@@ -39,10 +39,16 @@ public class ProposalPage extends DocumentsBasePage{
 		return this;
 	}
 	
-	public AddressPage clickPrePareForESign(){
+	public AddressPage clickPrePareForESignToAddressPage(){
 		PrepareForESign.click();
 		waitForQuickLoad();
 		return PageFactory.initElements(driver, AddressPage.class);
+	}
+	
+	public OrderOptionsPage clickPrePareForESign(){
+		PrepareForESign.click();
+		waitForQuickLoad();
+		return PageFactory.initElements(driver, OrderOptionsPage.class);
 	}
 	
 //	public ProposalPage clickSend(){

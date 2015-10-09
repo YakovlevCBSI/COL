@@ -126,7 +126,8 @@ public class AccountsPage extends ColBasePage{
 	public WebElement findDataRowByName(String companyName){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
-			if(dataColumn.getText().contains(companyName)){
+			if(dataColumn.getText().contains(companyName) && 
+					dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(AccountType.CUSTOMER.toString())){  //only search for customer.
 				logger.info("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}

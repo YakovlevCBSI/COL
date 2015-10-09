@@ -118,7 +118,7 @@ public class ParameterFeeder {
 		if(!isDevTest && !isProdTest){
 			String[] URLs = {
 					GlobalVar.stageServer,
-					GlobalVar.stageServer + GlobalVar.embedPath,
+//					GlobalVar.stageServer + GlobalVar.embedPath,
 					GlobalVar.BFPServer, // BFP only embed.
 					
 					
@@ -128,14 +128,14 @@ public class ParameterFeeder {
 		else if (isDevTest){
 			String[] URLsDev = {
 				GlobalVar.devServer,
-				GlobalVar.devServer + GlobalVar.embedPath
+//				GlobalVar.devServer + GlobalVar.embedPath
 						};
 			URLFinal = URLsDev;
 
 		}
 		else{
 			String[] URLsProd = {
-					GlobalVar.prodServer + GlobalVar.embedPath
+//					GlobalVar.prodServer + GlobalVar.embedPath
 			};
 			
 			URLFinal = URLsProd;
@@ -148,7 +148,7 @@ public class ParameterFeeder {
 		if(!isDevTest && !isProdTest){
 			String[] URLs = {
 				//	GlobalVar.stageServer,
-					GlobalVar.stageServer + GlobalVar.embedPath,
+//					GlobalVar.stageServer + GlobalVar.embedPath,
 					GlobalVar.BFPServer, // BFP only embed.
 				//	GlobalVar.devServer,
 			//-------->	GlobalVar.devServer + GlobalVar.embedPath
@@ -198,7 +198,7 @@ public class ParameterFeeder {
 	public String[] getStageURL(){
 		String[] URLs = {
 				GlobalVar.stageServer,
-				GlobalVar.stageServer + GlobalVar.embedPath,
+//				GlobalVar.stageServer + GlobalVar.embedPath,
 				//GlobalVar.BFPServer, // BFP only embed.
 				//GlobalVar.devServer,
 				//GlobalVar.devServer + GlobalVar.embedPath

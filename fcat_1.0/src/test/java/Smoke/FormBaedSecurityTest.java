@@ -3,9 +3,14 @@ package Smoke;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
@@ -21,6 +26,9 @@ public class FormBaedSecurityTest extends FormBaseTest{
 		super(URL, browser);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	
 	@Override
 	@Before
@@ -50,7 +58,7 @@ public class FormBaedSecurityTest extends FormBaseTest{
 	@Ignore
 	@Test
 	public void Login_GoodUser_BadPw(){
-		navigateToLoginPage(GlobalVar.LocalId,"badPassword");
+		navigateToLoginPage(GlobalVar.LocalId,"badPasswrd");
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		System.out.println(loginPage.getErrorMessage());
 		assertEquals("Your login attempt was not successful, try again. Reason: Bad credentials .", loginPage.getErrorMessage());
@@ -68,7 +76,8 @@ public class FormBaedSecurityTest extends FormBaseTest{
 	@Test
 	public void DoNotAccessCatalogPageWIthoutLogin(){
 		driver.get(directUrlToProductsPage);
-		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
+		assertEquals("HTTP Status 401 - Could not authorize",driver.findElement(By.cssSelector("h1")).getText());
+//		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		
 	}
 }

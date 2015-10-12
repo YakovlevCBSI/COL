@@ -214,8 +214,23 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage.setProductToUse(id);
 		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.clickAction(ElementConstants.MAP);
 		assertEquals(mfPn, mapDialog.getMappedMfPn());
+	}
+	
+	@Test
+	public void exactMatchWhenMappingAProductLeadingZeros() throws InterruptedException{
+		String id = getRandomNumber();
+		String mf = "Lexmark";
+		String mfPn = "0069G8256";
+		System.out.println("id: " + id);
 		
-		
-		
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addPopup = productsCatalogPage.clickAddProduct();
+		addPopup.setId(id);
+		addPopup.setMf(mf);
+		addPopup.setMfpn(mfPn);
+		productsCatalogPage = addPopup.clickSave();
+		productsCatalogPage.setProductToUse(id);
+		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.clickAction(ElementConstants.MAP);
+		assertEquals(mfPn, mapDialog.getMappedMfPn());
 	}
 }

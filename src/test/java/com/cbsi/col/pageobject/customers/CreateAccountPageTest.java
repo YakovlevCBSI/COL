@@ -69,30 +69,30 @@ public class CreateAccountPageTest extends ColBaseTest{
 	@Test
 	public void createLead(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.LEAD);
-		assertTrue(recentAccountsTab.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName, AccountType.LEAD));
 	}
 	
 	@Test
 	public void createProspect(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.PROSPECT);
-		assertTrue(recentAccountsTab.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName, AccountType.PROSPECT));
 	}
 
 	@Test
 	public void createPartner(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.PARTNER);
-		assertTrue(recentAccountsTab.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName, AccountType.PARTNER));
 	}
 	
 	@Test
 	public void createVendor(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.VENDOR);
-		assertTrue(recentAccountsTab.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName, AccountType.VENDOR));
 	}
 	
 	@Test
 	public void createGeneric(){
 		RecentAccountsTab recentAccountsTab = createAccount(AccountType.GENERIC);
-		assertTrue(recentAccountsTab.hasCompany(companyName));
+		assertTrue(recentAccountsTab.hasCompany(companyName, AccountType.GENERIC));
 	}
 }

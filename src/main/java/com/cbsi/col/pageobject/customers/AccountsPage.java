@@ -100,6 +100,11 @@ public class AccountsPage extends ColBasePage{
 		return findDataRowByName(companyName)!=null?true:false;
 	}
 	
+	public boolean hasCompany(String companyName, AccountType type){
+		return findDataRowByName(companyName, type)!=null?true:false;
+	}
+	
+	
 //	//UNCOMMENT ABOVE ONCE THIS BUG IS FIXED 5667
 //	public boolean hasCompany(String companyName){
 //		AccountsPage accountPage = searchFor(QueryOption.Customers, true, QueryColumn.All, companyName, AccountsPage.class);
@@ -121,13 +126,18 @@ public class AccountsPage extends ColBasePage{
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 	
+	public WebElement findDataRowByName(String companyName){
+		return findDataRowByName(companyName, AccountType.CUSTOMER);
+	}
+	
 	private static List<WebElement> dataColumns;
 	int currentPage=0;
-	public WebElement findDataRowByName(String companyName){
+	public WebElement findDataRowByName(String companyName, AccountType type){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
-			if(dataColumn.getText().contains(companyName) && 
-					dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(AccountType.CUSTOMER.toString())){  //only search for customer.
+			logger.debug(dataColumn.getText());
+			if(dataColumn.getText().contains(companyName) && dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(type.toString())){  //only search for customer.
+
 				logger.info("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}
@@ -146,7 +156,7 @@ public class AccountsPage extends ColBasePage{
 			pageList.get(0).click();
 			waitForTextToBeVisible("Accounts", "h1");
 			dataColumns=null;
-			return findDataRowByName(companyName);
+			return findDataRowByName(companyName, type);
 		}
 		
 		return null;		

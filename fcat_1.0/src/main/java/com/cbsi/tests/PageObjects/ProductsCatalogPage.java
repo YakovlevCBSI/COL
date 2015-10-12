@@ -408,31 +408,36 @@ public class ProductsCatalogPage extends BasePage{
 	}
 	
 	public boolean actionIconsRenderCorrectly(){
-		List<WebElement> iconList = driver.findElements(By.cssSelector("tr td.actions"));
+		List<WebElement> iconList = driver.findElements(By.cssSelector("tr td.mapped-column.actions"));
+		System.out.println("size: " + iconList.size());
 		String gpicon= "gp-icon ";
 		
 		int count=0;
 		for(WebElement e: iconList){
-			System.out.println(e.getAttribute("class"));
-			String checkOrPlus = e.findElement(By.xpath("a[1]/div")).getAttribute("class");
-			if(!(checkOrPlus.equals(gpicon + "check") || checkOrPlus.equals(gpicon + "plus"))){
-				System.out.println("check " + checkOrPlus  + "/ " + count);
-				return false;
-			}
+			if(e.isDisplayed()){
+				System.out.println(e.getAttribute("class"));
+				String checkOrPlus = e.findElement(By.xpath("a[1]/div")).getAttribute("class");
+				System.out.println("COP: " + checkOrPlus);
+				if(!(checkOrPlus.contains(gpicon + "check") || checkOrPlus.contains(gpicon + "plus"))){
+					System.out.println("check " + checkOrPlus  + "/ " + count);
+					return false;
+				
+				}
+				
+				String edit = e.findElement(By.xpath("a[2]/div")).getAttribute("class");
+				if(!(edit.equals(gpicon +"edit"))){
+					System.out.println("edit: " + edit + "/ " + count);
+					return false;
+				}
+				
+				String trash = e.findElement(By.xpath("a[3]/div")).getAttribute("class");
+				if(!(trash.equals(gpicon + "trash"))){
+					System.out.println("trash; " + trash + "/ " + count);
+					return false;
+				}
 			
-			String edit = e.findElement(By.xpath("a[2]/div")).getAttribute("class");
-			if(!(edit.equals(gpicon +"edit"))){
-				System.out.println("edit: " + edit + "/ " + count);
-				return false;
+				count++;
 			}
-			
-			String trash = e.findElement(By.xpath("a[3]/div")).getAttribute("class");
-			if(!(trash.equals(gpicon + "trash"))){
-				System.out.println("trash; " + trash + "/ " + count);
-				return false;
-			}
-			
-			count++;
 		}
 		
 		return true;

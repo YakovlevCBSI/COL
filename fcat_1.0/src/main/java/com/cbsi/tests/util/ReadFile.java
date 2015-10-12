@@ -41,23 +41,24 @@ public class ReadFile {
 		GlobalVar.BFPPw = (tempVar[1]);
 		GlobalVar.LocalId = (tempVar[2]);
 		GlobalVar.LocalPw = (tempVar[3]);
-		GlobalVar.stageServer = (tempVar[4]);
-		GlobalVar.devServer = (tempVar[5]);
-		GlobalVar.BFPServer = tempVar[6];
-		GlobalVar.prodServer = tempVar[7];
-		GlobalVar.BSId= tempVar[8];
-		GlobalVar.BSAccessKey= tempVar[9];
-		GlobalVar.dbURL=tempVar[10];
-		GlobalVar.dbUserName=tempVar[11];
-		GlobalVar.dbPassword=tempVar[12];
-		GlobalVar.ftpURL=tempVar[13];
-		GlobalVar.ftpUserName=tempVar[14];
-		GlobalVar.ftpPassword=tempVar[15];
+		GlobalVar.ProdPw = (tempVar[4]);
+		GlobalVar.stageServer = (tempVar[5]);
+		GlobalVar.devServer = (tempVar[6]);
+		GlobalVar.BFPServer = tempVar[7];
+		GlobalVar.prodServer = tempVar[8];
+		GlobalVar.BSId= tempVar[9];
+		GlobalVar.BSAccessKey= tempVar[10];
+		GlobalVar.dbURL=tempVar[11];
+		GlobalVar.dbUserName=tempVar[12];
+		GlobalVar.dbPassword=tempVar[13];
+		GlobalVar.ftpURL=tempVar[14];
+		GlobalVar.ftpUserName=tempVar[15];
+		GlobalVar.ftpPassword=tempVar[16];
 		
-		GlobalVar.MongoHost=tempVar[16];
-		GlobalVar.MongoUsername=tempVar[17];
+		GlobalVar.MongoHost=tempVar[17];
+		GlobalVar.MongoUsername=tempVar[18];
 		System.out.println(GlobalVar.MongoUsername);
-		GlobalVar.MongoPassword= tempVar[18];
+		GlobalVar.MongoPassword= tempVar[19];
 	}
 	
 	//For debug.

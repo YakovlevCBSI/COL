@@ -10,6 +10,7 @@ public class GlobalVar {
 	
 	public static String LocalId ="";
 	public static String LocalPw= "";
+	public static String ProdPw = "";
 	
 	public static String stageServer = "",
 			   devServer = "",

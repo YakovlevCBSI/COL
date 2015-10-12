@@ -7,8 +7,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -62,6 +64,9 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+//	public boolean isGrid = true ;
+
+	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
 
@@ -314,7 +319,13 @@ public class BaseTest {
 	
 	public void EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
-		FCatHomePage homePage = loginPage.loginToHomePage();
+		FCatHomePage homePage =null;
+		if (!getURL().contains("fcat.")){
+			homePage = loginPage.loginToHomePage();
+		}
+		else {
+			homePage = loginPage.loginToHomePage(GlobalVar.LocalId, GlobalVar.ProdPw);
+		}
 		catalogsPage = homePage.goToCatalogs();
 		return;
 
@@ -334,7 +345,7 @@ public class BaseTest {
 	
 	public FCatLoginPage EasyLoginToFcat(String username, String pw){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
-		return loginPage.loginToHomePage(username, pw);
+		return loginPage.loginToHomePageFail(username, pw);
 		
 	}
 	

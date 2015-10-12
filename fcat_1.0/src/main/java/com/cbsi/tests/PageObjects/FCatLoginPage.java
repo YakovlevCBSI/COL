@@ -32,26 +32,44 @@ public class FCatLoginPage extends BasePage{
 	
 	private String adminU = GlobalVar.LocalId;
 	private String adminP= GlobalVar.LocalPw;
+	private String adminPProd =GlobalVar.ProdPw;
 			
 ;	public FCatHomePage loginToHomePage(){
 	
-		customWait(10);
+//		customWait(10);
+//		LoginLink.click();
+//		
+//		waitForElementToBeVisible(By.cssSelector("#j_username"));
+//		usernameField.sendKeys(adminU);
+//		
+//		customWait(20);
+//		//passwordField.click();
+//		passwordField.sendKeys(adminP);
+//		
+//		Submit.click();
+//		
+//		return PageFactory.initElements(driver, FCatHomePage.class);
+		return loginToHomePage(adminU, adminP);
+	}
+
+	public FCatHomePage loginToHomePage(String username, String pw){
+		customWait(5);
 		LoginLink.click();
 		
-		waitForElementToBeVisible(By.cssSelector("#j_username"));
-		usernameField.sendKeys(adminU);
+		customWait(20);
+		//usernameField.click();
+		usernameField.sendKeys(username);
 		
 		customWait(20);
 		//passwordField.click();
-		passwordField.sendKeys(adminP);
+		passwordField.sendKeys(pw);
 		
 		Submit.click();
-		
 		return PageFactory.initElements(driver, FCatHomePage.class);
-	}
+}
 
 //Testing bad credit
-	public FCatLoginPage loginToHomePage(String username, String pw){
+	public FCatLoginPage loginToHomePageFail(String username, String pw){
 		customWait(5);
 		LoginLink.click();
 		

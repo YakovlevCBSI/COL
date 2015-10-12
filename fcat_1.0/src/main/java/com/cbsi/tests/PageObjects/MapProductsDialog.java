@@ -22,6 +22,13 @@ public class MapProductsDialog extends BasePage{
 	@FindBy(css="#mappedFlag")
 	private WebElement mappedFlag;
 	
+	@FindBy(css="td#mappedMfPn")
+	private WebElement mappedMfPn;
+	
+	public String getMappedMfPn(){
+		return mappedMfPn.getText();
+	}
+	
 	public boolean isMapped(){
 		if(mappedFlag.getText().toLowerCase().contains("none")){
 			return false;

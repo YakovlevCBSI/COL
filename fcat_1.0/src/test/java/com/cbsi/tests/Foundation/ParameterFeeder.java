@@ -165,7 +165,7 @@ public class ParameterFeeder {
 		}
 		else{
 			String[] URLsProd = {
-					GlobalVar.prodServer + GlobalVar.embedPath
+					GlobalVar.prodServer
 			};
 			
 			URLFinal = URLsProd;

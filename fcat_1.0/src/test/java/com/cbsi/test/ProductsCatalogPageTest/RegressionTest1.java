@@ -196,9 +196,25 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage.searchFor("pid", searchText);
 		
 		assertTrue(hasNoError());
+	}	
+	
+	@Test
+	public void exactMatchWhenMappingAProduct(){
+		String id = getRandomNumber();
+		String mf = "Lexmark";
+		String mfPn = "69GB256";
+		
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		AddProductPopup addPopup = productsCatalogPage.clickAddProduct();
+		addPopup.setId(getRandomNumber());
+		addPopup.setMf(mf);
+		addPopup.setMfpn(mfPn);
+		productsCatalogPage = addPopup.clickSave();
+		productsCatalogPage.setProductToUse(id);
+		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.clickAction(ElementConstants.MAP);
+		assertEquals(mfPn, mapDialog.getMappedMfPn());
+		
+		
+		
 	}
-	
-	
-
-	
 }

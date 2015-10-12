@@ -199,14 +199,15 @@ public class RegressionTest1 extends AllBaseTest{
 	}	
 	
 	@Test
-	public void exactMatchWhenMappingAProduct(){
+	public void exactMatchWhenMappingAProduct() throws InterruptedException{
 		String id = getRandomNumber();
 		String mf = "Lexmark";
-		String mfPn = "69GB256";
+		String mfPn = "69G8256";
+		System.out.println("id: " + id);
 		
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
 		AddProductPopup addPopup = productsCatalogPage.clickAddProduct();
-		addPopup.setId(getRandomNumber());
+		addPopup.setId(id);
 		addPopup.setMf(mf);
 		addPopup.setMfpn(mfPn);
 		productsCatalogPage = addPopup.clickSave();

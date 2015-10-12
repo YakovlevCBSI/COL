@@ -130,16 +130,23 @@ public class ProductsCatalogPage extends BasePage{
 	}
 	
 	public BasePage clickAction(String actionButtonName){
+		WebElement actionButton = null;
 		if(actionButtonName.toLowerCase().equals(ElementConstants.MAP)){
-			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[1]")).click();
+			actionButton = productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[1]"));
+			scrollToView(actionButton);
+			actionButton.click();
 			return PageFactory.initElements(driver, MapProductsDialog.class);
 		}
 		else if(actionButtonName.toLowerCase().equals(ElementConstants.EDIT)){
-			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[2]")).click();
+			actionButton = productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[2]"));
+			scrollToView(actionButton);
+			actionButton.click();
 			return PageFactory.initElements(driver, EditProductPopupPage.class);
 		}
 		else if(actionButtonName.toLowerCase().equals(ElementConstants.DELETE)){
-			productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[3]")).click();
+			actionButton =  productRow.findElement(By.xpath("td[contains(@class,'state actions')]/a[3]"));
+			scrollToView(actionButton);
+			actionButton.click();
 			
 		}
 		else{
@@ -334,6 +341,7 @@ public class ProductsCatalogPage extends BasePage{
 			/*
 			 * **/
 			rowThatWasMapped = MappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
+			System.out.println(rowThatWasMapped);
 			MappedIcon.click();
 		}catch(Exception e){
 			System.out.println("couldn't find mapped icon, finding not mapped instead.");
@@ -405,7 +413,7 @@ public class ProductsCatalogPage extends BasePage{
 		
 		int count=0;
 		for(WebElement e: iconList){
-			
+			System.out.println(e.getAttribute("class"));
 			String checkOrPlus = e.findElement(By.xpath("a[1]/div")).getAttribute("class");
 			if(!(checkOrPlus.equals(gpicon + "check") || checkOrPlus.equals(gpicon + "plus"))){
 				System.out.println("check " + checkOrPlus  + "/ " + count);

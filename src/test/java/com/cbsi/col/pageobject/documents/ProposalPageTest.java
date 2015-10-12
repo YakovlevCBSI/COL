@@ -58,13 +58,13 @@ public class ProposalPageTest extends ColBaseTest{
 	public void eSignInProposal(){
 		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
+
+		AddressPage addressPage  = proposalPage.clickPrePareForESign();
+		addressPage.setFirstName("qa");
+		addressPage.setLastName("qa");
+		addressPage.clickCopyToShipping();
 		
-//		AddressPage addressPage  = proposalPage.clickPrePareForESign();
-//		addressPage.setFirstName("qa");
-//		addressPage.setLastName("qa");
-//		addressPage.clickCopyToShipping();
-		
-		OrderOptionsPage orderOptionPage  = proposalPage.clickPrePareForESign();
+		OrderOptionsPage orderOptionPage  = addressPage.clickSave();
 		ProposalPage proposlPageFinal = (ProposalPage) orderOptionPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave(ProposalPage.class);
 	}
 	

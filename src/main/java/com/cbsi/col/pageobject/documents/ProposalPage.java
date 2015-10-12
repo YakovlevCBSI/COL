@@ -45,10 +45,10 @@ public class ProposalPage extends DocumentsBasePage{
 		return PageFactory.initElements(driver, AddressPage.class);
 	}
 	
-	public OrderOptionsPage clickPrePareForESign(){
+	public AddressPage clickPrePareForESign(){
 		PrepareForESign.click();
 		waitForQuickLoad();
-		return PageFactory.initElements(driver, OrderOptionsPage.class);
+		return PageFactory.initElements(driver, AddressPage.class);
 	}
 	
 //	public ProposalPage clickSend(){

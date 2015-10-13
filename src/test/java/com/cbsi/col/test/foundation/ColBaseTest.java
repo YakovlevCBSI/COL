@@ -4,8 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +68,7 @@ public class ColBaseTest {
 	
 	private String url;
 	private String browser;
-	private String username = System.getProperty("user.name");	
+	private String username = System.getProperty("user.name");
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
 	public boolean isGrid = GlobalProperty.GRID!=null?true:false;
 //	public boolean isGrid = true;
@@ -375,8 +377,10 @@ public class ColBaseTest {
 			login = new LoginUtil();
 			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
 		}
-		else
-			homePage = loginPage.loginToHomePage();
+		else{		
+			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
+//			homePage = loginPage.loginToHomePage();
+		}
 		return;
 	}
 	
@@ -435,7 +439,25 @@ public class ColBaseTest {
 		return recentCustomersPage;
 	}
 	
-
+	public static String getHostname(){
+		String hostName="";
+		try{
+		    InetAddress addr;
+		    addr = InetAddress.getLocalHost();
+		    hostName = addr.getHostName();
+		}
+		catch (UnknownHostException ex){
+		    System.out.println("Hostname can not be resolved");
+		}
+		
+		return hostName;
+	}
+	
+	public String getUsername(){
+		if(getHostname().endsWith("1")) return LoginProperty.testUser1;
+		else if (getHostname().endsWith("2")) return LoginProperty.testUser2;
+		else return LoginProperty.testUser3;
+	}
 	
 	
 }

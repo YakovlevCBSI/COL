@@ -38,8 +38,9 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 			homePage = currentAccount.exitDocumentsPage().goToHomePage();
 			navigateToCustomersPage();
 			createQuote();
+			documentsPage = documentsPage.goToAccountsPage().goToCurrentAccountTab().getDocumentsPage();
 		}
-		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName(companyNameCommon);
+		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName("Qa");
 	}
 	
 	@Test

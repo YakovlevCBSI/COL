@@ -3,12 +3,14 @@ package com.cbsi.col.pageobject.customers;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.test.foundation.ColBaseTest;
+import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
-public class CurrentAccountTabTest extends ColBaseTest{
+public class CurrentAccountTabTest extends DocumentsBasePageTest{
 
 	public CurrentAccountTabTest(String url, String browser) {
 		super(url, browser);
@@ -32,6 +34,11 @@ public class CurrentAccountTabTest extends ColBaseTest{
 	@Test
 	public void deleteQuoteFromAccountView(){
 		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		if(!documentsPage.hasQuote(1)){
+			homePage = currentAccount.exitDocumentsPage().goToHomePage();
+			navigateToCustomersPage();
+			createQuote();
+		}
 		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName(companyNameCommon);
 	}
 	

@@ -135,8 +135,8 @@ public class AccountsPage extends ColBasePage{
 	public WebElement findDataRowByName(String companyName, AccountType type){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
-			logger.debug(dataColumn.getText() + " / " + type.toString() + " / " + companyName);
-			logger.debug(dataColumn.findElement(By.xpath("../td[4]")).getText());
+//			logger.debug(dataColumn.getText() + " / " + type.toString() + " / " + companyName);
+//			logger.debug(dataColumn.findElement(By.xpath("../td[4]")).getText());
 //			System.out.println(type != null);
 //			System.out.println(dataColumn.findElement(By.xpath("../td[3]")).getText() + " / " + (companyName));
 //			System.out.println(dataColumn.findElement(By.xpath("../td[4]")).getText() + " / " + (type.toString()));
@@ -145,7 +145,7 @@ public class AccountsPage extends ColBasePage{
 				logger.info("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}
-			else if(type == null && dataColumn.getText().toLowerCase().contains(companyName)){
+			else if(type == null && dataColumn.getText().toLowerCase().contains(companyName.toLowerCase())){
 				return dataColumn;
 			}
 		}

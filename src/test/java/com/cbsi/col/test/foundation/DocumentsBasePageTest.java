@@ -58,14 +58,14 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		CurrentAccountTab currentAccountPage = null;
 		try{
 //			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
-			currentAccountPage=  customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);  //If no qa customer exists, create one.
 
 //			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 //			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){
 			recentCustomersPage = createAccount(type);
 //			AllAccountsTab  accountPage = recentCustomersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
-			currentAccountPage = recentCustomersPage.clickViewCustomer("Qa_customer_");
+			currentAccountPage = recentCustomersPage.clickViewCustomer(companyNameCommon);
 			
 		}
 		
@@ -168,7 +168,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 //			}
 			try{
 				orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
-				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.MoneyOrder);
+				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.Terms);
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){

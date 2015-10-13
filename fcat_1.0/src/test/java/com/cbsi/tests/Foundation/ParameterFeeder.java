@@ -27,7 +27,7 @@ public class ParameterFeeder {
 		isDevTest = isDevTesting();
 //		isDevTest=true;
 		isProdTest = isProdTesting();
-//		isProdTest = true;
+		isProdTest = true;
 
 		System.out.println("<------------DEVorPROD: " + isDevTest +" / " + isProdTest +"--------->");
 	}
@@ -135,7 +135,7 @@ public class ParameterFeeder {
 		}
 		else{
 			String[] URLsProd = {
-//					GlobalVar.prodServer + GlobalVar.embedPath
+					GlobalVar.prodServer
 			};
 			
 			URLFinal = URLsProd;

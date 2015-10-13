@@ -35,7 +35,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalFull(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
 		
@@ -46,7 +46,7 @@ public class ProposalPageTest extends ColBaseTest{
 	@Test
 	public void createProposalQuick(){
 		int docNumber;
-		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
 		
@@ -56,15 +56,19 @@ public class ProposalPageTest extends ColBaseTest{
 	
 	@Test
 	public void eSignInProposal(){
-		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer("Qa_");
+		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
-
-		AddressPage addressPage  = proposalPage.clickPrePareForESign();
-		addressPage.setFirstName("qa");
-		addressPage.setLastName("qa");
-		addressPage.clickCopyToShipping();
+		OrderOptionsPage orderOptionPage = null;
 		
-		OrderOptionsPage orderOptionPage  = addressPage.clickSave();
+		try{
+			AddressPage addressPage  = proposalPage.clickPrePareForESign();
+			addressPage.setFirstName("qa");
+			addressPage.setLastName("qa");
+			addressPage.clickCopyToShipping();
+			addressPage.clickSave();
+		}catch(Exception e){
+			orderOptionPage = PageFactory.initElements(driver, OrderOptionsPage.class);
+		}
 		ProposalPage proposlPageFinal = (ProposalPage) orderOptionPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave(ProposalPage.class);
 	}
 	

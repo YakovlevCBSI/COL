@@ -135,13 +135,17 @@ public class AccountsPage extends ColBasePage{
 	public WebElement findDataRowByName(String companyName, AccountType type){
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
-			logger.debug(dataColumn.getText());
-			if(type != null && dataColumn.getText().contains(companyName) && dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(type.toString())){  //only search for customer.
+			logger.debug(dataColumn.getText() + " / " + type.toString() + " / " + companyName);
+			logger.debug(dataColumn.findElement(By.xpath("../td[4]")).getText());
+//			System.out.println(type != null);
+//			System.out.println(dataColumn.findElement(By.xpath("../td[3]")).getText() + " / " + (companyName));
+//			System.out.println(dataColumn.findElement(By.xpath("../td[4]")).getText() + " / " + (type.toString()));
+			if(type != null && dataColumn.findElement(By.xpath("../td[3]")).getText().toLowerCase().contains(companyName.toLowerCase()) && dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().equals(type.toString())){  //only search for customer.
 
 				logger.info("FOUND THE TEXT: " + companyName);
 				return dataColumn;
 			}
-			else if(type == null){
+			else if(type == null && dataColumn.getText().toLowerCase().contains(companyName)){
 				return dataColumn;
 			}
 		}

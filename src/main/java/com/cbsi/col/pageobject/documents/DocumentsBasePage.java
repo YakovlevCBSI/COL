@@ -63,6 +63,25 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return CompanyName.getText();
 	}
 	
+	@FindBy(css="div#contact-name")
+	private WebElement Contact;
+	
+	@FindBy(css="a#contact-edit")
+	private WebElement ContactEdit;
+	
+	
+	public T setContact(){
+		if(getContact() == null) ContactEdit.click();
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	public String getContact(){
+		if(Contact.getText().toLowerCase().contains("n/a")) return null;
+		
+		return Contact.getText();
+	}
+	
 	//--------------------------  Bottom bar---------------------------//
 	@FindBy(css="button#next-action_save")
 	private WebElement Save;

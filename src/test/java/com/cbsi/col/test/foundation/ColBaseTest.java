@@ -53,7 +53,9 @@ import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
+import com.cbsi.col.test.util.GlobalProperty;
 import com.cbsi.col.test.util.LoginProperty;
+import com.cbsi.col.test.util.LoginUtil;
 import com.cbsi.col.test.util.StringUtil;
 
 @RunWith(Parameterized.class)
@@ -66,7 +68,9 @@ public class ColBaseTest {
 	private String browser;
 	private String username = System.getProperty("user.name");	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
-	public boolean isGrid = false ;
+	public boolean isGrid = GlobalProperty.GRID!=null?true:false;
+//	public boolean isGrid = true;
+
 	
 	public ColBaseTest(String url, String browser){
 		this.url = url;
@@ -90,9 +94,7 @@ public class ColBaseTest {
 		this.browser = browser;
 	}
 //	
-	public String getUserName(){
-		return StringUtil.cleanUserName(LoginProperty.testUser);
-	}
+
 	@Rule
 	public Timeout globalTimeout = new Timeout(240000);
 	
@@ -121,6 +123,10 @@ public class ColBaseTest {
 	}
 	
 	public void cleanUp(){
+     	if(isGrid && userCheckedOut == true){
+     		userCheckedOut= false;
+     		login.checkInUser();
+     	}
 		driver.quit();
 	}
 	
@@ -292,6 +298,10 @@ public class ColBaseTest {
                         	 if(driver!=null){
                         		 logger.info("quit the driver");
                              	driver.quit();
+                             	if(isGrid && userCheckedOut == true){
+                             		login.checkInUser();
+                             	}
+
                              }  
                         }
                     }
@@ -356,13 +366,22 @@ public class ColBaseTest {
 
 	}
 	
+	LoginUtil login;
+	public static boolean userCheckedOut = false;
 	public void navigatetoLoginPage(){
 		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-		homePage =  loginPage.loginToHomePage();
+		if(isGrid){
+			userCheckedOut=true;
+			login = new LoginUtil();
+			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
+		}
+		else
+			homePage = loginPage.loginToHomePage();
 		return;
 	}
 	
-	public static final String companyName = "Qa_customer_"+System.currentTimeMillis();
+	public static final String companyName = "QaCustomer"+System.currentTimeMillis();
+	public static final String companyNameCommon = "QaCustomer";
 	public static final String address = "444 Oceancrest Dr";
 	public static final String city = "Irvine";
 	public static final String zip = "90019";
@@ -385,15 +404,16 @@ public class ColBaseTest {
 //			
 //			//---------------------------------------------------------------------------
 			//WORK AROUND FOR IFrame loading error withouta Contact info #5431
-			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
-			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+			createNewCustomerPage.setContactInfo_FirstName("Qa");
+			createNewCustomerPage.setContactInfo_LastName("customer");
+			createNewCustomerPage.setDefaultContact();
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
 
 			createNewCustomerPage = createNewCustomerPage.clickNext();
 			
-			createNewCustomerPage.setContactInfo_FirstName(companyName.split("_")[0]);
-			createNewCustomerPage.setContactInfo_LastName(companyName.split("_")[1]);
+			createNewCustomerPage.setContactInfo_FirstName("Qa");
+			createNewCustomerPage.setContactInfo_LastName("customers");
 			
 			createNewCustomerPage.clickCopy().clickFinish();
 //
@@ -402,8 +422,8 @@ public class ColBaseTest {
 		
 			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{
-			createNewCustomerPage.setFirstName(companyName.split("_")[0]);
-			createNewCustomerPage.setLastName(companyName.split("_")[1]);
+			createNewCustomerPage.setFirstName("Qa");
+			createNewCustomerPage.setLastName("customers");
 			createNewCustomerPage.setEmail(companyName+"@email.com");
 			createNewCustomerPage.setContactInfo_CompanyName(companyName);
 			CurrentAccountTab currentAccountTab = createNewCustomerPage.clickSaveButton();

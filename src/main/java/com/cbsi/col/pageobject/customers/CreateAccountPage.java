@@ -29,7 +29,6 @@ public class CreateAccountPage extends ColBasePage{
 	@FindBy(css="#zip")
 	private WebElement Zip;
 
-	
 	@FindBy(css="input#fname")
 	private WebElement FirstName;
 	
@@ -65,6 +64,8 @@ public class CreateAccountPage extends ColBasePage{
 	@FindBy(css="input[id*='lastname']")
 	private WebElement ContactInfo_LastName;
 	
+	@FindBy(css="input#default")
+	private WebElement DesignateThisPerson;
 	//--------------------------------------------------------------------//
 	
 	@FindBy(css="input[name='copy_b_to_s']")
@@ -161,6 +162,11 @@ public class CreateAccountPage extends ColBasePage{
 		forceWait(500);
 		
 		return PageFactory.initElements(driver, CurrentAccountTab.class);
+	}
+	
+	public CreateAccountPage setDefaultContact(){
+		DesignateThisPerson.click();
+		return this;
 	}
 	
 	public CreateAccountPage setContactInfo_CompanyName(String companyName){

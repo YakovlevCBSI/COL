@@ -115,7 +115,7 @@ public class AccountsPage extends ColBasePage{
 	private WebElement DeleteInPopup;
 	
 	public AccountsPage deleteCompany(String companyName){
-		WebElement dataRow = findDataRowByName(companyName);
+		WebElement dataRow = findDataRowByName(companyName, null);
 		WebElement deleteButton = dataRow.findElement(By.xpath("../td/a[contains(@id,'delete')]"));
 		deleteButton.click();
 		
@@ -136,9 +136,12 @@ public class AccountsPage extends ColBasePage{
 		dataColumns = driver.findElements(By.cssSelector("table.costandard tbody tr td:nth-child(3)"));
 		for(WebElement dataColumn: dataColumns){
 			logger.debug(dataColumn.getText());
-			if(dataColumn.getText().contains(companyName) && dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(type.toString())){  //only search for customer.
+			if(type != null && dataColumn.getText().contains(companyName) && dataColumn.findElement(By.xpath("../td[4]")).getText().toUpperCase().contains(type.toString())){  //only search for customer.
 
 				logger.info("FOUND THE TEXT: " + companyName);
+				return dataColumn;
+			}
+			else if(type == null){
 				return dataColumn;
 			}
 		}

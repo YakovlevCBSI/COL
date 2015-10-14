@@ -378,8 +378,8 @@ public class ColBaseTest {
 			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
 		}
 		else{		
-			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
-//			homePage = loginPage.loginToHomePage();
+//			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
+			homePage = loginPage.loginToHomePage();
 		}
 		return;
 	}
@@ -403,6 +403,9 @@ public class ColBaseTest {
 			createNewCustomerPage.setAddress(address);
 			createNewCustomerPage.setCity(city);
 			createNewCustomerPage.setZip(zip);
+			
+			createNewCustomerPage.setDefaultPaymentToCod();
+			
 			createNewCustomerPage = createNewCustomerPage.clickNext();
 			
 //			
@@ -456,7 +459,9 @@ public class ColBaseTest {
 	public String getUsername(){
 		if(getHostname().endsWith("1")) return LoginProperty.testUser1;
 		else if (getHostname().endsWith("2")) return LoginProperty.testUser2;
-		else return LoginProperty.testUser3;
+		else if (getHostname().endsWith("3")) return LoginProperty.testUser3;
+		
+		return LoginProperty.testUser_manual;
 	}
 	
 	

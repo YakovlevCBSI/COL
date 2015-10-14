@@ -11,7 +11,7 @@ import com.cbsi.col.test.util.LoginProperty;
 
 public class LoginPage extends ColBasePage{
 	
-	private String userName = GlobalProperty.getProperty(GlobalProperty.USERNAME, LoginProperty.testUser);
+	private String userName = GlobalProperty.getProperty(GlobalProperty.USERNAME, LoginProperty.testUser_manual);
 	private String password = LoginProperty.testPassword;
 	
 	public LoginPage(WebDriver driver){

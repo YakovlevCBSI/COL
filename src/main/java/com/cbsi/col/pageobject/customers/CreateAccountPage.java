@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.customers;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,6 +57,12 @@ public class CreateAccountPage extends ColBasePage{
 	
 	@FindBy(css="button#update-acct-btn")
 	private WebElement SaveButton;
+	
+	@FindBy(css="select#default_payment_option_id")
+	private WebElement DefaultPaymentOption;
+	
+	@FindBy(css="option[value='2']")
+	private WebElement COD;
 	
 	//----------------------Lead-speicifc fields-------------------------//
 	@FindBy(css="input[id*='firstname']")
@@ -166,6 +173,14 @@ public class CreateAccountPage extends ColBasePage{
 	
 	public CreateAccountPage setDefaultContact(){
 		DesignateThisPerson.click();
+		return this;
+	}
+	
+	public CreateAccountPage setDefaultPaymentToCod(){
+		scrollToView(Next);
+		DefaultPaymentOption.click();
+		forceWait(3000);
+		COD.click();
 		return this;
 	}
 	

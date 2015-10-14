@@ -168,13 +168,22 @@ public class DocumentsBasePageTest extends ColBaseTest{
 //			}
 			try{
 				orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
-				orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.Terms);
+				if(retry ==1){
+					orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.Terms);
+				}else {
+					orderOptionsPage = orderOptionsPage.setPaymentMethod(com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.COD);
+
+				}
+				Thread.sleep(2000);
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){
 				e.printStackTrace();
 				logger.warn("convert order failed... retry "+ retry);
 				retry ++;
+				if(retry > 4){
+					throw new NullPointerException("Convert To Order failed after  4 attempts");
+				}
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 			}
 		}

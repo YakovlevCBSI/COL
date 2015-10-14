@@ -378,8 +378,9 @@ public class ColBaseTest {
 			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
 		}
 		else{		
-//			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
-			homePage = loginPage.loginToHomePage();
+			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
+//			homePage = loginPage.loginToHomePage();
+			logger.info("logged in as a user " + getUsername());
 		}
 		return;
 	}

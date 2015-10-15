@@ -153,9 +153,10 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage.setQtyInTable(1, 5);
 		double unitPriceFirstRow = quotePage.getUnitPriceFromTable(1);
+		double expectedPrice = Double.parseDouble(String.format("%.2f", unitPriceFirstRow*5));
 
-		assertTrue("expected: " +  unitPriceFirstRow * 5 + " / actual: " + quotePage.getTotalPriceFromTable(1),
-				unitPriceFirstRow * 5 == quotePage.getTotalPriceFromTable(1));
+		assertTrue("expected: " +  expectedPrice + " / actual: " + quotePage.getTotalPriceFromTable(1),
+				expectedPrice == quotePage.getTotalPriceFromTable(1));
 	}
 	
 	@Test

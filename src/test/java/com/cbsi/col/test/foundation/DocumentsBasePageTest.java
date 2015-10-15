@@ -149,7 +149,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			}catch(NoSuchElementException e){
 				salesOrderPage = PageFactory.initElements(driver, SalesOrderPage.class);
 			}catch(Exception e){
-				e.printStackTrace();
+//				logger.debug(e.printStackTrace());
 	
 				logger.info("cannot focus on element. Moving on...");
 				logger.info("----------------------------------------");
@@ -178,7 +178,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){
-				e.printStackTrace();
+//				e.printStackTrace();
 				logger.warn("convert order failed... retry "+ retry);
 				retry ++;
 				if(retry > 4){

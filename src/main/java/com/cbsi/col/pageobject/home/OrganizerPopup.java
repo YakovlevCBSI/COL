@@ -175,7 +175,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 				break;
 			}
 		}
-		forceWait(500);
+		waitForElementToBeVisible(By.cssSelector("button[id*='confirm-delete']"));
 		ConfirmDelete.click();
 		return PageFactory.initElements(driver, OrganizerPopup.class);
 	}

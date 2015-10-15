@@ -3,6 +3,10 @@ package com.cbsi.test.PropertiesPageTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,7 +41,7 @@ public class SanityTest2 extends AllBaseTest{
 			super.cleanUpThenDeleteTemp();
 			
 			CatalogsPage catalogsPageDirty=PageFactory.initElements(driver, CatalogsPage.class);
-//			catalogsPageDirty.cleanUpLeftOverCatalogs();
+			catalogsPageDirty.cleanUpLeftOverCatalogs();
 		}
 	}
 	
@@ -62,8 +66,17 @@ public class SanityTest2 extends AllBaseTest{
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){
 		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
+	}
 	
+	@Test
+	public void marketListSorted(){
+		needsCleanUp = false;
 		
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(false);
+		List<String> orginalList =  addCatalogPage.getMarkets();
+		List<String> listToSort =  copy(orginalList);
+		sortList(listToSort);
+		assertTrue(orginalList.equals(listToSort));
 	}
 	
 	@Test
@@ -128,6 +141,21 @@ public class SanityTest2 extends AllBaseTest{
 	public void cleanUpAfterClass(){
 		CatalogsPage catalogPageF = PageFactory.initElements(driver, CatalogsPage.class);
 		catalogPageF.cleanUpLeftOverCatalogs();
+	}  
+	
+	private static void sortList(List<String> aItems){
+	    Collections.sort(aItems, String.CASE_INSENSITIVE_ORDER);
 	}
+	
+	private List<String> copy(List<String> list){
+		List<String> stringList = new ArrayList<String>();
+		for(String s: list){
+			stringList.add(s);
+		}
+		
+		return stringList;
+	}
+	
+	
 	
 }

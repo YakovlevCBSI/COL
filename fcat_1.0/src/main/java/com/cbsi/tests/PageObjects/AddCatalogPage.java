@@ -1,5 +1,8 @@
 package com.cbsi.tests.PageObjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
@@ -36,6 +39,7 @@ public class AddCatalogPage extends BasePage {
 
 	@FindBy(css="input#Name") private WebElement name;
 	@FindBy(linkText="Next") private WebElement Next;
+	@FindBy(css="select[name='CountryMarket']") private WebElement Market;
 	
 	public UploadPopupPage clickNext(){
 		Next.click();
@@ -67,6 +71,30 @@ public class AddCatalogPage extends BasePage {
 		Next.click();
 		
 		return;
+	}
+	
+	public AddCatalogPage setMarket(String country){
+		Market.click();
+		List<WebElement> list = Market.findElements(By.cssSelector("option"));
+		
+		for(WebElement e: list){
+			if(e.getText().toLowerCase().equals(country.toLowerCase())){
+				e.click();
+				break;
+			}
+		}
+		return this;
+	}
+	
+	public List<String> getMarkets(){
+		List<WebElement> list = Market.findElements(By.cssSelector("option"));
+		List<String> listToString = new ArrayList<String>();
+		
+		for(WebElement e: list){
+			listToString.add(e.getText());
+		}
+		
+		return listToString;	
 	}
 	
 	public boolean fieldValidationErrorIsDisplayed(){

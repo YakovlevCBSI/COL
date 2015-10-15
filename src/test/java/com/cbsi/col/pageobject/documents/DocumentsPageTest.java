@@ -46,7 +46,7 @@ public class DocumentsPageTest extends ColBaseTest{
 		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Submitted", false));
 	}
 	
-	@Ignore("today is off by timezone")
+	@Ignore("today is off by timezone") 
 	@Test
 	public void FilterByInvoicesDue(){
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);

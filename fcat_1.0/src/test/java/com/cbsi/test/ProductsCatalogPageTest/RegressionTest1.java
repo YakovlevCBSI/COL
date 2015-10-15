@@ -198,7 +198,7 @@ public class RegressionTest1 extends AllBaseTest{
 		assertTrue(hasNoError());
 	}	
 	
-	@Test
+	@Test//1795
 	public void exactMatchWhenMappingAProduct() throws InterruptedException{
 		String id = getRandomNumber();
 		String mf = "Lexmark";
@@ -213,7 +213,13 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage = addPopup.clickSave();
 		productsCatalogPage.setProductToUse(id);
 		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.clickAction(ElementConstants.MAP);
-		assertEquals(mfPn, mapDialog.getMappedMfPn());
+		String mfPnActual = mapDialog.getMappedMfPn();
+
+		mapDialog.clickCancel();
+		productsCatalogPage.setProductToUse(id).clickAction(ElementConstants.DELETE);
+		productsCatalogPage.clickYes();
+		
+		assertEquals(mfPn, mfPnActual);
 	}
 	
 	@Test
@@ -231,6 +237,12 @@ public class RegressionTest1 extends AllBaseTest{
 		productsCatalogPage = addPopup.clickSave();
 		productsCatalogPage.setProductToUse(id);
 		MapProductsDialog mapDialog = (MapProductsDialog) productsCatalogPage.clickAction(ElementConstants.MAP);
-		assertEquals(mfPn, mapDialog.getMappedMfPn());
+		String mfPnActual = mapDialog.getMappedMfPn();
+		
+		mapDialog.clickCancel();
+		productsCatalogPage.setProductToUse(id).clickAction(ElementConstants.DELETE);
+		productsCatalogPage.clickYes();
+		
+		assertEquals(mfPn, mfPnActual);
 	}
 }

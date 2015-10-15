@@ -91,6 +91,7 @@ public class MappingPage extends BasePage{
 				}		
 		}
 		
+		scrollToView(Save);
 		clickSave();
 		
 		return PageFactory.initElements(driver, DetailsPage.class);

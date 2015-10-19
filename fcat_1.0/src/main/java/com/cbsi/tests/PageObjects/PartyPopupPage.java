@@ -112,9 +112,10 @@ public class PartyPopupPage extends BasePage{
 		List<WebElement> list = null;
 		if(searchText != null){
 			list = driver.findElements(By.cssSelector("tr td.party-name-column"));
+			System.out.println("party name size: " + list.size());
 			for(WebElement e: list){
 				if(e.getText().toLowerCase().equals(this.searchText.toLowerCase())){
-					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
+					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column actions']/a"));
 					plusIcon.click();
 					break;
 				}
@@ -122,9 +123,12 @@ public class PartyPopupPage extends BasePage{
 		}
 		else if(searchCode != null){
 			list = driver.findElements(By.cssSelector("tr td.party-code-column"));
+			System.out.println("party name size: " + list.size());
+
 			for(WebElement e: list){
+				System.out.println("code: " + e.getText() + "|  search ; " + searchCode );
 				if(e.getText().toLowerCase().equals(this.searchCode.toLowerCase()) ){
-					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column']/a"));
+					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column actions']/a"));
 					plusIcon.click();
 					break;
 				}

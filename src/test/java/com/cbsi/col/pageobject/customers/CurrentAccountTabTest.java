@@ -45,16 +45,9 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void deleteProposalFromAccountview(){
-//		currentAccount.
-		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
-		documentsPage = documentsPage.switchToTab(DocumentTabs.PROPOSALS);
-		
-		if(!documentsPage.hasProposal(1)){ //if proposal does not exist, create one.
-			currentAccount = currentAccount.exitDocumentsPage();
-			currentAccount = ((ProposalPage) currentAccount.clickCreateProposal().setContact()).clickSave().goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
-			documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
-		}
-				
+		currentAccount = ((ProposalPage) currentAccount.clickCreateProposal().setContact()).clickSave().goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+			
 		documentsPage.deleteDocumentByCompanyName("Qa");
 	}
 	

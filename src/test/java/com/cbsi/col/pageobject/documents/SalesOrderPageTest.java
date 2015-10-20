@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
@@ -75,5 +76,15 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 
 		assertTrue(salesOrderPage.getBillTo().contains(address));
 		assertTrue(salesOrderPage.getShipTo().contains(address));
+	}
+	
+	@Test
+	public void addSubTotalAndBundleSubTotal(){
+		convertToSalesOrder();
+		
+		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
+		PriceCalculator priceCalculator = addSubtotalBundleWorkFlow(orderPage).getPriceCalculator();
+		assertTrue(3200.00 == priceCalculator.getSubtotal());
+
 	}
 }

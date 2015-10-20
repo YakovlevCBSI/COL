@@ -20,6 +20,7 @@ import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.OrderOptionsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
@@ -55,6 +56,10 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	}
 	
 	public void createQuote(AccountType type){
+		createQuote(type, true);
+	}
+	
+	public void createQuote(AccountType type, boolean goToDocumentsPage){
 		CurrentAccountTab currentAccountPage = null;
 		try{
 //			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
@@ -74,13 +79,16 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		logger.info("Looking for quote#:  " + quoteNumber );
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");
 		productPage.checkCompareBoxes(1,2,3);
+		productPage.selectAction(Action.AddToQuote);
 		
-		QuotePage quotePageNew = productPage.selectAction(Action.AddToQuote);
+		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);
 		quotePageNew.clickSave();
 		
-		documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		
-		
-		assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
+		if(goToDocumentsPage){
+			documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		
+			
+			assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
+		}
 	}
 	
 //	public void convertToSalesOrder(){
@@ -191,5 +199,38 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		
 		documentPage = salesOrderPage.goToHomePage().goToDocumentsPage().switchToTab(DocumentTabs.ORDERS);
 		assertTrue(documentPage.hasSalesOrder(orderNumber));
+	}
+	
+	public DocumentsBasePage addSubtotalBundleWorkFlow(DocumentsBasePage quotePagePass){
+		DocumentsBasePage quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePagePass.selectProductFromTable(1,2,3)).selectFromLineActions(LineActions.Delete);
+		
+		ProductsPage productPage =quotePage.goToProductsPage();
+		try{
+			productPage.goToLinkText("System & Power Cables");
+		}catch(Exception e){
+			productPage.goToLinkText("Systems");
+			productPage.goToLinkText("System & Power Cables");
+		}
+		productPage.checkCompareBoxes(1,2,3, 5).selectAction(Action.AddToQuote);
+		
+		quotePage = PageFactory.initElements(driver, quotePagePass.getClass());
+		
+		quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(1)).selectFromLineActions(LineActions.Add_Subtotal);
+		quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(3, 4)).selectFromLineActions(LineActions.Convert_to_Bundle);
+		
+		DocumentsBasePage quotePageNew = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(7)).selectFromLineActions(LineActions.Add_Subtotal);
+		ProductsPage productPageNew =quotePageNew.goToProductsPage();
+		productPage.goToLinkText("System & Power Cables");
+		productPage.checkCompareBoxes(7).selectAction(Action.AddToQuote);
+		quotePageNew = PageFactory.initElements(driver, quotePagePass.getClass());
+		
+		quotePageNew.setQtyInTable(1, 1);
+		quotePageNew.setQtyInTable(4, 2);
+		quotePageNew.setQtyInTable(5, 3);
+		quotePageNew.setQtyInTable(6, 4);
+		quotePageNew.setQtyInTable(7, 5);
+		quotePageNew.setQtyInTable(9, 6);
+		
+		return quotePageNew;
 	}
 }

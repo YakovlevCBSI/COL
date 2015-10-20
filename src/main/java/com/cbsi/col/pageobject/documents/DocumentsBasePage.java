@@ -12,6 +12,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -197,6 +198,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public PriceCalculator getPriceCalculator(){
+		initializePriceCalculator();
 		return priceCalculator;
 	}
 	
@@ -236,6 +238,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="select#shippingType")
 		private WebElement ShippingType;
 
+		@FindBy(css="span#subtotal")
+		private WebElement SubTotal;
+		
 		public double getTaxOn() {
 			return Double.parseDouble(TaxOn.getAttribute("value"));
 		}
@@ -307,6 +312,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		public String getShippingType(){
 			return ShippingType.findElement(By.xpath("option[@selected='selected']")).getText();
+		}
+		
+		public double getSubtotal(){
+			System.out.println("SubTotal: " + SubTotal.getText());
+			return Double.parseDouble(StringUtil.cleanCurrency(SubTotal.getText()));
 		}
 		
 		public void setShipingType(ShippingTypes type){
@@ -448,9 +458,26 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	//--------------------------------  product table-----------------------------------//
 	@FindBy(css="table.line-item-reorder")
 	private WebElement productTable;
-	public T selectProductFromTable(int...n){
+	public <T>T selectProductFromTable(int...n){
 		for(int nth: n){
-			productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input")).click();
+//			productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input")).click();
+			waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype][\"+ nth + \"]/td/label/input"));
+			WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype]["+ nth + "]/td/label/input"));
+			scrollToView(input);
+			
+			boolean clickable = false;
+			int retry = 0;
+			
+			while(!clickable && retry <=5){
+				try{
+					input.click();
+					clickable = true;
+				}catch(Exception e){
+					forceWait(500);
+					retry++;
+				}
+			}
+
 		}
 		return (T)this;
 	}
@@ -492,7 +519,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public void setQtyInTable(int nth, int qty){
-		WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div/div/input[contains(@id, 'quantity')]"));
+//		WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/div/div/input[contains(@id, 'quantity')]"));
+		WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype][" + nth + "]/td/div/div/input[contains(@id, 'quantity')]"));
+
 		input.clear();
 		input.sendKeys(qty+"");
 		input.sendKeys(Keys.TAB);
@@ -550,7 +579,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 						},
 		Unbundle,
 		Insert_Header,
-		Insert_Subtotal
+		Insert_Subtotal,
+		Add_Subtotal
 	}
 	
 	public enum AddImportUpdates{

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.home.ColBasePage;
@@ -15,17 +16,18 @@ import com.cbsi.col.pageobject.home.ColBasePage;
 public class ProductsPage extends ColBasePage{
 	public ProductsPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad(By.cssSelector("h4"));
+		waitForTextToBeVisible("Search By:", "span");
 	}
 	
 	@FindBy(css="a[title href*='item_add']")
 	private WebElement AddToQuote;
 	
-	public DocumentsPage addProductsToQuote(int...nThCheckBoxes){
+	public void addProductsToQuote(int...nThCheckBoxes){
 		checkCompareBoxes(nThCheckBoxes);
 		AddToQuote.click();
 		
-		return PageFactory.initElements(driver, DocumentsPage.class);
+//		return (T)PageFactory.initElements(driver, this.getClass());
+		return;
 	}
 	
 	public ProductsPage checkCompareBoxes(int...nThCheckBoxes){
@@ -50,6 +52,11 @@ public class ProductsPage extends ColBasePage{
 		return foundTitles;
 	}
 	
+	public void goToLinkText(String linkText){
+		driver.findElement(By.linkText(linkText)).click();
+		waitForTextToBeVisible("Products", "h4");
+	}
+	
 	@FindBy(css="select#action")
 	private WebElement SelectOne;
 	
@@ -68,7 +75,7 @@ public class ProductsPage extends ColBasePage{
 	@FindBy(css="input[name='Go']")
 	private WebElement Go;
 	
-	public QuotePage selectAction(Action action){
+	public void selectAction(Action action){
 
 		SelectOne.click();
 		forceWait(1000);
@@ -92,7 +99,9 @@ public class ProductsPage extends ColBasePage{
 		
 		Go.click();
 		
-		return PageFactory.initElements(driver, QuotePage.class);
+//		return (T)PageFactory.initElements(driver, this.getClass());
+		return;
+
 	}
 	
 	public enum Action{

@@ -47,7 +47,7 @@ public class ProposalPage extends DocumentsBasePage{
 	
 	public AddressPage clickPrePareForESign(){
 		PrepareForESign.click();
-		waitForQuickLoad();
+		waitForQuickLoad(10);
 		return PageFactory.initElements(driver, AddressPage.class);
 	}
 	

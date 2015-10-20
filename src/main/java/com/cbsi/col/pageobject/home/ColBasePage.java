@@ -279,8 +279,12 @@ public class ColBasePage {
 	}
 	
 	public void waitForQuickLoad(){
+		waitForQuickLoad(5);
+	}
+	
+	public void waitForQuickLoad(int second){
 		try{
-			waitForElementToBeVisible(By.cssSelector("div#loading-modal"), 5);
+			waitForElementToBeVisible(By.cssSelector("div#loading-modal"), second);
 		}catch(TimeoutException e){
 			
 		}

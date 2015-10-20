@@ -164,8 +164,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa");
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
-		quotePage = quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;
+		quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;
 		
+		quotePage = PageFactory.initElements(driver, QuotePage.class);
 		PriceCalculator priceCalculator = quotePage.getPriceCalculator();
 		
 		priceCalculator.setTaxOn(3.25);
@@ -254,7 +255,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		QuickAddProductPopup quickAddProductPopup = (QuickAddProductPopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Quick_Add_Product);
 		ProductsPage productPage = quickAddProductPopup.search("ibm");
-		quotePage = productPage.checkCompareBoxes(1).selectAction(Action.AddToQuote);
+		productPage.checkCompareBoxes(1).selectAction(Action.AddToQuote);
+		
+		quotePage = PageFactory.initElements(driver, QuotePage.class);
 		
 		//verify quick add product displays here.
 	}
@@ -317,6 +320,18 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertFalse(recyclePage.hasDoc(quoteNumber));
 	}
 	
+	@Test
+	public void addSubTotalAndBundleSubTotal(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+
+		PriceCalculator priceCalculator = addSubtotalBundleWorkFlow(quotePage).getPriceCalculator();
+		assertTrue(3200.00 == priceCalculator.getTaxedSubTotal());
+	}
+	
+	public void goToSystemAndPowerCables(){
+//		productPage.goToLinkText("System & Power Cables");
+	}
 
 //	@Test
 //	public void cleanUpCompanies() throws Exception{

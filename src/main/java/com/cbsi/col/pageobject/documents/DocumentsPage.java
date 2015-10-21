@@ -56,7 +56,8 @@ public class DocumentsPage extends ColBasePage{
 //		return false;
 //	}
 	
-	@FindBy(css="div.btn-toolbar div a[href*='deleted=true']")
+//	@FindBy(css="div.btn-toolbar div a[href*='deleted=true']")
+	@FindBy(linkText="Recycle Bin")
 	private WebElement RecycleBin;
 	
 	public RecycleBinPage clickRecycleBin(){

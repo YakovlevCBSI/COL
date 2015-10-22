@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.ListUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -137,6 +138,19 @@ public abstract class BasePage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void waitForQuickLoad(){
+		waitForQuickLoad(5);
+	}
+	
+	public void waitForQuickLoad(int second){
+		try{
+			waitForElementToBeVisible(By.cssSelector("div.splash-image"));
+		}catch(TimeoutException e){
+			
+		}
+		waitForElementToBeInvisible(By.cssSelector("div.splash-image"));
 	}
 	
 	protected String tempFileName = getHostname() + System.currentTimeMillis() + "";

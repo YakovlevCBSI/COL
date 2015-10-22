@@ -3,13 +3,17 @@ package com.cbsi.test.ProductsCatalogPageTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.tests.Foundation.AllBaseTest;
 import com.cbsi.tests.PageObjects.AddProductPopup;
+import com.cbsi.tests.PageObjects.CatalogsPage;
+import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.EditProductPopupPage;
 import com.cbsi.tests.PageObjects.MapProductsDialog;
 import com.cbsi.tests.PageObjects.ProductsCatalogPage;
@@ -19,6 +23,8 @@ public class RegressionTest2 extends AllBaseTest{
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+	
+	private boolean needsCleanUp = false;
 	public ProductsCatalogPage  productsCatalogPage = null;
 	protected static final String mf = "ATI Technologies";
 	protected static final String mfPn = "0030620R";
@@ -31,6 +37,15 @@ public class RegressionTest2 extends AllBaseTest{
 	}
 	
 	public static String noSearchFoundMessage = "No products matched your search. Try to change filter to broaden your search.";
+	
+	
+	@After
+	public void cleanUp(){
+		if(needsCleanUp) {
+			driver.close();
+			super.cleanUpThenDeleteTemp();
+		}
+	}
 	
 	//("1328")
 	@Test
@@ -133,10 +148,42 @@ public class RegressionTest2 extends AllBaseTest{
 		ProductsCatalogPage productsCatalogPageFinal = editProduct.clickSave();	
 		productsCatalogPageFinal.setProductToUse(rowMapped);
 
-		assertTrue(productsCatalogPageFinal.isProductRowMapped());
-		
+		assertTrue(productsCatalogPageFinal.isProductRowMapped());		
 	}
 	
+	public ProductsCatalogPage productPage;
+	
+	@Test
+	public void checkMapCountAfterFileUpload() throws InterruptedException{
+		needsCleanUp = true;
+		
+		DetailsPage detailsPage = UploadFullFile().automap();
+		CatalogsPage catalogsPage = detailsPage.clickReturnToList();
+		productPage = catalogsPage.goToCatalogByName(tempFile);
+		
+		assertTrue(productPage.getTotalProducts() == 7);
+		assertTrue(productPage.getMapped() == 6);
+		assertTrue(productPage.getNotMapped() == 1);	
+	}
+	
+	@Test
+	public void checkMapCountAfterDelete() throws InterruptedException{
+		needsCleanUp = true;
+
+		checkMapCountAfterFileUpload();
+		
+		int initMapped = productPage.getMapped();
+		int initNotMapped = productPage.getNotMapped();
+		int initTotal = productPage.getTotalProducts();
+		
+		productPage.setProductToUse();
+		productPage = (ProductsCatalogPage) productPage.clickAction(ElementConstants.DELETE);
+		productPage = productPage.clickYes();
+		
+		assertTrue("expected: " + (initMapped -1) + " / actual: " + productPage.getMapped(),initMapped - 1 == productPage.getMapped());
+		assertTrue("expected: " + (initNotMapped -1) + " / actual: " + productPage.getNotMapped(), initNotMapped == productPage.getNotMapped());
+		assertTrue("expected: " + (initTotal - 1) + " / actual: " + productPage.getTotalProducts(), initTotal - 1 == productPage.getTotalProducts());
+	}
 	
 	@Test
 	public void mapUpcEanWhenMfPnIsUpcEan(){
@@ -144,6 +191,7 @@ public class RegressionTest2 extends AllBaseTest{
 		MapProductsDialog mapDialog =productsCatalogPage.clickNotMappedOrMappedIcon();
 		
 		String rowMapped = productsCatalogPage.getRowThatWasMapped();
+
 		System.out.println(rowMapped);
 		ProductsCatalogPage productsCatalogPageNew= ifMappedUnmapItem(mapDialog);
 		productsCatalogPageNew.setProductToUse(rowMapped);
@@ -176,11 +224,6 @@ public class RegressionTest2 extends AllBaseTest{
 		String errorMessage = addProductPopup.clickSaveFail();
 		
 		assertEquals("The product already exists", errorMessage);
-	}
-
-	
-	public void mapCountIsCorrect(){
-		
 	}
 	
 	@Test
@@ -256,6 +299,11 @@ public class RegressionTest2 extends AllBaseTest{
 	public void mapMfPnWithoutLeadingZero(){
 		String tempId = getRandomNumber();
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		
+		int initMapped = productsCatalogPage.getMapped();
+		int initNotMapped = productsCatalogPage.getNotMapped();
+		int initTotal = productsCatalogPage.getTotalProducts();
+		
 		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
 		addProductPopup.setId(tempId);
 		addProductPopup.setMf(mf);
@@ -267,14 +315,24 @@ public class RegressionTest2 extends AllBaseTest{
 		
 		productsCatalogPage.clickAction(ElementConstants.DELETE);	
 		productsCatalogPage.clickYes();
+		
+		assertTrue(initMapped + 1 == productsCatalogPage.getMapped());
+		assertTrue(initNotMapped == productsCatalogPage.getNotMapped());
+		assertTrue(initTotal + 1 == productsCatalogPage.getTotalProducts());
 	}
 	
 	@Test
 	public void mapMfMfpn(){
 		String tempId = getRandomNumber();
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		
+		int initMapped = productsCatalogPage.getMapped();
+		int initNotMapped = productsCatalogPage.getNotMapped();
+		int initTotal = productsCatalogPage.getTotalProducts();
+		
 		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
 		addProductPopup.setId(tempId);
+		System.out.println(tempId);
 		addProductPopup.setMf(mf);
 		addProductPopup.setMfpn(mfPn);
 		
@@ -284,6 +342,10 @@ public class RegressionTest2 extends AllBaseTest{
 		
 		productsCatalogPage.clickAction(ElementConstants.DELETE);
 		productsCatalogPage.clickYes();
+		
+		assertTrue(initMapped + 1 == productsCatalogPage.getMapped());
+		assertTrue(initNotMapped == productsCatalogPage.getNotMapped());
+		assertTrue(initTotal + 1 == productsCatalogPage.getTotalProducts());
 	}
 	
 	@Ignore("unable to map by skuId due to mongo bug")
@@ -291,6 +353,11 @@ public class RegressionTest2 extends AllBaseTest{
 	public void mapSkuId(){
 		String tempId = getRandomNumber();
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPageManual();
+		
+		int initMapped = productsCatalogPage.getMapped();
+		int initNotMapped = productsCatalogPage.getNotMapped();
+		int initTotal = productsCatalogPage.getTotalProducts();
+		
 		AddProductPopup addProductPopup = productsCatalogPage.clickAddProduct();
 		addProductPopup.setId(tempId);
 		addProductPopup.setSkuId(sku);
@@ -298,6 +365,10 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage = addProductPopup.clickSave();
 		productsCatalogPage.setProductToUse(tempId);
 		assertTrue(productsCatalogPage.isProductRowMapped());
+		
+		assertTrue(initMapped + 1 == productsCatalogPage.getMapped());
+		assertTrue(initNotMapped == productsCatalogPage.getNotMapped());
+		assertTrue(initTotal + 1 == productsCatalogPage.getTotalProducts());
 		
 		productsCatalogPage.clickAction(ElementConstants.DELETE);
 		productsCatalogPage.clickYes();
@@ -313,7 +384,11 @@ public class RegressionTest2 extends AllBaseTest{
 		
 		assertTrue(hasNoError());
 	}
-
+	
+	@Test
+	public void mapIconRefreshesOnSecondTimeMapping(){
+		
+	}
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
 		ProductsCatalogPage productsCatalogPageNew= null;

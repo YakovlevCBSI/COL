@@ -178,6 +178,17 @@ public class ProductsCatalogPage extends BasePage{
 	@FindBy(xpath="//table[@class='statistics-table']/tbody/tr[3]/td[2]")
 	public WebElement NotMappedValue;
 	
+	public int getTotalProducts(){
+		return Integer.parseInt(TotalProductsValue.getText());
+	}
+	
+	public int getMapped(){
+		return Integer.parseInt(MappedValue.getText());
+	}
+	
+	public int getNotMapped(){
+		return Integer.parseInt(NotMappedValue.getText());
+	}
 	
 	@FindBy(css="input#product-id")
 	public WebElement ProductIDInput;
@@ -447,9 +458,19 @@ public class ProductsCatalogPage extends BasePage{
 	
 	@FindBy(linkText="Yes")
 	private WebElement Yes;
-	public void clickYes(){
+	public ProductsCatalogPage clickYes(){
 		waitForElementToBeVisible(By.linkText("Yes"));
 		Yes.click();
+		
+		forceWait(800);
+		try {
+			waitForQuickLoad();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}
 	
 	

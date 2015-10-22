@@ -313,12 +313,12 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage.setProductToUse(tempId);
 		assertTrue(productsCatalogPage.isProductRowMapped());
 		
-		productsCatalogPage.clickAction(ElementConstants.DELETE);	
-		productsCatalogPage.clickYes();
-		
 		assertTrue(initMapped + 1 == productsCatalogPage.getMapped());
 		assertTrue(initNotMapped == productsCatalogPage.getNotMapped());
 		assertTrue(initTotal + 1 == productsCatalogPage.getTotalProducts());
+		
+		productsCatalogPage.clickAction(ElementConstants.DELETE);	
+		productsCatalogPage.clickYes();
 	}
 	
 	@Test
@@ -340,12 +340,12 @@ public class RegressionTest2 extends AllBaseTest{
 		productsCatalogPage.setProductToUse(tempId);
 		assertTrue(productsCatalogPage.isProductRowMapped());
 		
+		assertTrue("expected: " + (initMapped + 1)  + "/ actual; " +  productsCatalogPage.getMapped(), initMapped + 1 == productsCatalogPage.getMapped());
+		assertTrue("expected: " + initNotMapped + "/ actual; " +  productsCatalogPage.getNotMapped(), initNotMapped == productsCatalogPage.getNotMapped());
+		assertTrue("expected: "+ (initTotal + 1) + "/ actual; " + productsCatalogPage.getTotalProducts(), initTotal + 1 == productsCatalogPage.getTotalProducts());
+		
 		productsCatalogPage.clickAction(ElementConstants.DELETE);
 		productsCatalogPage.clickYes();
-		
-		assertTrue(initMapped + 1 == productsCatalogPage.getMapped());
-		assertTrue(initNotMapped == productsCatalogPage.getNotMapped());
-		assertTrue(initTotal + 1 == productsCatalogPage.getTotalProducts());
 	}
 	
 	@Ignore("unable to map by skuId due to mongo bug")

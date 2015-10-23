@@ -186,8 +186,15 @@ public class OrganizerPopup<T> extends ColBasePage{
 	}
 	
 	public OrganizerPopup clickCheckBoxItem(String title){
+
+		while(driver.findElements(By.cssSelector("div p.title a")).size()==0){
+			forceWait(500);
+		}
+		
 		List<WebElement> list = driver.findElements(By.cssSelector("div p.title a"));
+
 		logger.debug("number of checkboxes: " + list.size());
+		
 		for(WebElement e: list){
 			if(e.getText().contains(title)){
 				e.findElement(By.xpath("../../../div/div/div/label/input")).click();

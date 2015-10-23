@@ -377,11 +377,11 @@ public class DocumentsPage extends ColBasePage{
 			}
 		},
 		PROPOSALS{
-			public String toString(){
+			public String toStringAlt(){
 				return "Proposals/list";
 			}
 			
-			public String toStringAlt(){
+			public String toString(){
 				return "Proposals/customerList?";
 			}
 		},

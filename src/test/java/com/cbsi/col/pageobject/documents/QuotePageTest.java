@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -47,10 +48,12 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		super.createQuote();
 	}
 	
+	public QuotePage quotePage;
+	
 	@Test
 	public void createBundleInQuote(){
 		createQuote();
-		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage.selectProductFromTable(1);
 		quotePage = (QuotePage)quotePage.selectFromLineActions(LineActions.Convert_to_Bundle);
 		quotePage.setBundleHeader("test1");
@@ -267,13 +270,41 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		List<HashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
 		quotePage.clickSaveAsNewRevision("test1");
-		quotePage.goToRevisionsTab();
 		
-		assertTrue(quotePage.hasRevision("test1"));
+		quotePage.searchProduct("ibm").checkCompareBoxes(1,2).selectAction(Action.AddToQuote);
 		
-		quotePage = quotePage.clickRevert("test1");
-		quotePage = (QuotePage)quotePage.clickSave();
+		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);
+		quotePageNew.clickSave();
+
+		quotePageNew.goToRevisionsTab();
+		
+		assertTrue(quotePageNew.hasRevision("test1"));
+		
+		quotePageNew = quotePageNew.clickRevert("test1");
+		quotePageNew = (QuotePage)quotePageNew.clickSave();
+		List<HashMap<String, String>> productMapAfterRevision = quotePageNew.getTableAsMaps();
+		
+		assertTrue(productMapBeforeRevision.equals(productMapAfterRevision));
+	}
+	
+	@Test
+	public void createRevisionOnItemdsWithBundleThenRevert(){
+		createBundleInQuote();
+		
+		List<HashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
+		quotePage.clickSaveAsNewRevision("test1");
+
+		quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Delete);
+		
+		quotePage.clickSave();
+		quotePage = (QuotePage) quotePage.goToRevisionsTab().clickRevert("test1").clickSave();
+		
+		List<HashMap<String, String>> productMapAfterRevision = quotePage.getTableAsMaps();
+		
+		assertTrue(productMapBeforeRevision.equals(productMapAfterRevision));
 	}
 	
 	@Test
@@ -329,8 +360,12 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertTrue(3200.00 == priceCalculator.getTaxedSubTotal());
 	}
 	
-	public void goToSystemAndPowerCables(){
-//		productPage.goToLinkText("System & Power Cables");
+	@Test
+	public void productLineItemDisplaysAllColumns(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		assertTrue(quotePage.tableColumnsAreDisplayed());
 	}
 
 //	@Test

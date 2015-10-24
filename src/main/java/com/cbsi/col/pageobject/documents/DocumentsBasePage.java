@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -555,6 +556,21 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
+	public boolean tableColumnsAreDisplayed(){
+		String[] expectedHeaders = new String[]{"Edit", "Description", "Link", "Mfr Part #", "List Price", "Qty", "Tax", "Price", "Total"};
+		List<String> headersToString = new ArrayList<String>();
+		List<WebElement> headers = productTable.findElements(By.xpath("thead/tr/th"));
+		for(WebElement e: headers){
+			if(!e.getText().isEmpty() && e.getText().length() >=1){
+				headersToString.add(e.getText());
+			}
+		}
+		 String[] actualHeaders = headers.toArray(new String[headers.size()]);
+		
+		return expectedHeaders.equals(actualHeaders);
+	
+	}
+	
 	@FindBy(css="button#addImportUpdate")
 	private WebElement AddImportUpdateDropdown;
 	public T selectFromAddImportUpdate(AddImportUpdates add){
@@ -660,6 +676,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		CreateRMA,
 		CreateInvoice, 
 		CreateInvoiceAll
+	}
+	
+	public List<HashMap<String, String>> getTableAsMaps(){
+		return super.getTableAsMaps(1,productTable, 0,1,2,3,6,8,9);  //only get MfrPart, margin, total datas.
 	}
 	
 	//----------------------------- RMA popup for SO and PO-----------------------------//

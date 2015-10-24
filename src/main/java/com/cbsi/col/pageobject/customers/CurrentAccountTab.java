@@ -130,6 +130,7 @@ public class CurrentAccountTab extends ColBasePage{
 	
 	public DocumentsPage getDocumentsPage(){
 		switchFrame(); 
+		forceWait(500);
 
 		return 	PageFactory.initElements(driver, DocumentsPage.class);
 	}

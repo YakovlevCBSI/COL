@@ -1,6 +1,7 @@
 package com.cbsi.col.pageobject.home;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,7 @@ import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 import com.cbsi.col.test.util.StringUtil;
+import com.google.common.primitives.Ints;
 
 public class ColBasePage {
 	protected WebDriver driver;
@@ -100,7 +102,7 @@ public class ColBasePage {
 	}
 	
 	public void waitForTextToBeVisible(String text, String...tagNames){
-		waitForTextToBeVisible(10000, text, tagNames);
+		waitForTextToBeVisible(15000, text, tagNames);
 	}
 	
 	public boolean waitForTextToBeVisible(long milliSeconds, String text, String...tagNames){
@@ -334,12 +336,15 @@ public class ColBasePage {
 	}
 	
 	//-------------------- parse table such as search results, etc-------------------------------------//
+	
 	public List<HashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){
+		return getTableAsMaps(1, table, skipColumnNums); //get 2nd td element text for seach result.
+	}
+	
+	public List<HashMap<String, String>> getTableAsMaps(int getNthTdElement, WebElement table, int...skipColumnNums){
+		
+		//collect headers and table rows to use.
 		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
-		int count=0;
-		for(WebElement e: headerElements){
-			logger.info(count + " ; " + e.getText());count++;
-		}
 		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
 		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
 
@@ -351,30 +356,21 @@ public class ColBasePage {
 			return maps;
 		}
 		
-		if(skipColumnNums != null){
-			for(int i=skipColumnNums.length-1; i >=0; i--){
-				logger.info(skipColumnNums[i]+"");
-				headerElements.remove(skipColumnNums[i]);  //remove column (VIEW)
+
+		for(int j=0; j<trs.size(); j++){
+			if(trs.get(j).getAttribute("class").contains("collapsible")) {	//skip collapsible columns on product table.
+				continue; 
 			}
-		}
-		
-		String[] headerColumns = new String[headerElements.size()];
-		for(int i=0; i < headerElements.size(); i++){
-			if(!headerElements.get(i).getText().isEmpty()){
-				headerColumns[i] = StringUtil.cleanTableKey(headerElements.get(i).getText());
-			}else{
-				headerColumns[i] = StringUtil.cleanTableKey(headerElements.get(i).findElement(By.xpath("a")).getText());
-			}
-//			System.out.println(headerColumns[i]);
-		}
-		
-//		System.out.println("trs: " + trs.size());
-		for(WebElement tr: trs){
+
 			HashMap<String, String> map = new HashMap<String, String>();
-			for(int i=0; i< headerColumns.length; i++){
-				String data = tr.findElement(By.xpath("td[" + (i+2) + "]")).getText();
-				logger.info(headerColumns[i] + " : " + data  + " | ");
-				map.put(headerColumns[i], data==null?"":data);
+			for(int i=0; i< headerElements.size(); i++){		
+				if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
+					continue;
+				}
+				
+				String data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+				logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
+				map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 			}
 			System.out.println();
 			maps.add(map);

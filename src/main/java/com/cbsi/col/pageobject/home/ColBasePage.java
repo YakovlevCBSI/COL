@@ -358,7 +358,7 @@ public class ColBasePage {
 		
 
 		for(int j=0; j<trs.size(); j++){
-			if(trs.get(j).getAttribute("class").contains("collapsible")) {	//skip collapsible columns on product table.
+			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
 				continue; 
 			}
 

@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -557,7 +558,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public boolean tableColumnsAreDisplayed(){
-		String[] expectedHeaders = new String[]{"Edit", "Description", "Link", "Mfr Part #", "List Price", "Qty", "Tax", "Price", "Total"};
+		String[] expectedHeaders = new String[]{"Edit", "Description"/**, "Link"*/, "Mfr Part #", "List Price", "Qty", "Tax", "Price", "Total"};
 		List<String> headersToString = new ArrayList<String>();
 		List<WebElement> headers = productTable.findElements(By.xpath("thead/tr/th"));
 		for(WebElement e: headers){
@@ -565,9 +566,15 @@ public class DocumentsBasePage<T> extends ColBasePage{
 				headersToString.add(e.getText());
 			}
 		}
-		 String[] actualHeaders = headers.toArray(new String[headers.size()]);
+		 String[] actualHeaders = headersToString.toArray(new String[headersToString.size()]);
+		 
+		 logger.debug("actual headers:");
+		 for(String s: actualHeaders){
+			 logger.debug(s + " / ");
+		 }
 		
-		return expectedHeaders.equals(actualHeaders);
+//		return expectedHeaders.equals(actualHeaders);
+		return Arrays.asList(actualHeaders).containsAll(Arrays.asList(expectedHeaders));
 	
 	}
 	

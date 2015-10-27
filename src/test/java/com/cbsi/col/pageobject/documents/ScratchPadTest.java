@@ -39,16 +39,14 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 	public void emptyDocCleansProducts(){
 		scratchPad = homePage.goToScratchPadPage(); 
 		
-		if(scratchPad.getTableAsMaps().size() >=1){
-			scratchPad = scratchPad.clickEmptyDoc();
-		}
-		else{
+		if(scratchPad.getTableAsMaps().size() ==0){
 			ProductsPage productsPage = scratchPad.searchProduct("Lenovo");
 			productsPage.checkCompareBoxes(1,2).selectAction(Action.AddToQuote);
 			
-			scratchPad = PageFactory.initElements(driver, ScratchPadPage.class);
-			scratchPad = scratchPad.clickEmptyDoc();
+			scratchPad = PageFactory.initElements(driver, ScratchPadPage.class);		
 		}
+
+		scratchPad = scratchPad.clickEmptyDoc();
 		
 		assertTrue(scratchPad.getTableAsMaps().size() == 0);
 	}

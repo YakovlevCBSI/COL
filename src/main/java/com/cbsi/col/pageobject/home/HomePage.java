@@ -11,8 +11,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.ScratchPadPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
+import com.cbsi.col.pageobject.sidebar.QuoteHotListPage;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 
 public class HomePage extends ColBasePage{
@@ -32,7 +34,7 @@ public class HomePage extends ColBasePage{
 	
 	@CacheLookup
 	@FindBy(css="#crm-controlpanesectionlink-favorites")
-	private WebElement Favorites;
+	private WebElement Favorite;
 	
 	@FindBy(css="#crm-controlpaneaccordionlink-customers")
 	private WebElement RecentCustomers;
@@ -81,6 +83,12 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="li#li-document-active a")
 	private WebElement DocumentActive;
 	
+	@FindBy(css="li#crm-doc-menu")
+	private WebElement RecentDocDropdown;
+	
+	@FindBy(partialLinkText="Scratch Pad (Scratch Pad)")
+	private WebElement ScratchPad;
+	
 	public  AccountsPage goToAccountsPage(){
 		Accounts.click();
 
@@ -110,6 +118,14 @@ public class HomePage extends ColBasePage{
 	public PurchaseOrdersTab goToPurchaseOrdersPage(){
 		PurhcaseOrders.click();
 		return PageFactory.initElements(driver, PurchaseOrdersTab.class);
+	}
+	
+	public ScratchPadPage goToScratchPadPage(){
+		RecentDocDropdown.click();
+		scrollToView(ScratchPad);
+		
+		ScratchPad.click();
+		return PageFactory.initElements(driver, ScratchPadPage.class);
 	}
 	
 	public boolean IsAccountsTabDisplayed(){
@@ -157,6 +173,43 @@ public class HomePage extends ColBasePage{
 		return (T) PageFactory.initElements(driver, clazz);
 	}
 	
+	@FindBy(css="a#crm-controlpanelink-edithotlist")
+	private WebElement FavoritesSetting;
+	
+	@FindBy(css="a#crm-controlpaneaccordionlink-quotehotlist")
+	private WebElement QuoteHotList;
+	
+	@SuppressWarnings("unchecked")
+	public <T> T  navigateToSideBar(Favorites page, long docNumber, Class<?> clazz){
+		if(!Favorite.findElement(By.xpath("../../div[2]")).getAttribute("class").contains("in")) 
+			Favorite.click();
+				
+		if(!QuoteHotList.findElement(By.xpath("../../div[2]")).getAttribute("class").contains("in"))
+			QuoteHotList.click();
+		
+		if(page == Favorites.Quote_Hot_List){
+			boolean quoteExists = false;
+			
+			for(WebElement e: QuoteHotList.findElement(By.xpath("../../div[2]")).findElements(By.xpath("ul/li/a"))){
+				if(e.getText().contains(docNumber+"")){
+					e.click();
+					quoteExists = true;
+					break;
+				}
+			}
+			
+			if(!quoteExists){
+				throw new NullPointerException("No doc found");
+			}
+		}
+		else if(page == Favorites.Quote_Hot_List_Setting){
+			FavoritesSetting.click();
+		}
+
+		refresh();
+		return (T) PageFactory.initElements(driver, clazz);
+	}
+	
 	public enum Admin{
 		Account_Services,
 		Catalog_Admin,
@@ -179,6 +232,21 @@ public class HomePage extends ColBasePage{
 		Tax_Profile
 	}
 	
+	public enum Recent{
+		foo;
+		enum move{
+			djfkld
+		}
+	}
+	
+	public enum Favorites{
+		Quote_Hot_List,
+		Quote_Hot_List_Setting
+	}
+	
+	public enum AllCatalogs{
+		
+	}
 //	@FindBy(css="div.crm-side-pane div a#crm-toggle-controlpane")
 //	private WebElement ControlPanel;
 	
@@ -214,6 +282,7 @@ public class HomePage extends ColBasePage{
 		while(isControlPaneExpanded()){
 			forceWait(100);
 		}
+		forceWait(200);
 		
 		return this;
 	}
@@ -222,7 +291,8 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="li.accordion-group.group-section div[id *= '-admin']")
 	private WebElement AdminDiv;
 	
-	@FindBy(css="li.accordion-group.group-section div[id *= '-reports']")
+//	@FindBy(css="li.accordion-group.group-section div[id *= '-reports']")
+	@FindBy(css="#crm-controlpane-header-reports")
 	private WebElement ReportsDiv;
 	
 	@FindBy(css="li.accordion-group.group-section div[id *= '-selectors']")

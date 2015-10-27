@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.ScratchPadPage;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.pageobject.products.ProductsPage;
@@ -367,8 +369,12 @@ public class ColBasePage {
 				if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
 					continue;
 				}
-				
-				String data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+				String data =null;
+				try{
+					data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+				}catch(NoSuchElementException e){
+					return maps;
+				}
 				logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
 				map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 			}

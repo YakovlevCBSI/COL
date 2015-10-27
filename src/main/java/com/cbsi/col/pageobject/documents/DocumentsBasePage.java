@@ -689,6 +689,24 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return super.getTableAsMaps(1,productTable, 0,1,2,3,6,8,9);  //only get MfrPart, margin, total datas.
 	}
 	
+	
+	public <T>T removeAllProducts(){
+		List<HashMap<String, String>> beforeProducts = getTableAsMaps();
+
+		if(beforeProducts == null || beforeProducts.size() ==0){
+			return (T)this;
+		}
+		else{
+			for(int i = 0; i < beforeProducts.size(); i++){
+				selectProductFromTable(i+1);
+			}
+		}
+		
+		selectFromLineActions(LineActions.Delete);
+
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
 	//----------------------------- RMA popup for SO and PO-----------------------------//
 	public static class CreateRmaPopup extends ColBasePage{
 

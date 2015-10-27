@@ -86,9 +86,6 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="li#crm-doc-menu")
 	private WebElement RecentDocDropdown;
 	
-	@FindBy(partialLinkText="Scratch Pad (Scratch Pad)")
-	private WebElement ScratchPad;
-	
 	public  AccountsPage goToAccountsPage(){
 		Accounts.click();
 
@@ -122,9 +119,15 @@ public class HomePage extends ColBasePage{
 	
 	public ScratchPadPage goToScratchPadPage(){
 		RecentDocDropdown.click();
-		scrollToView(ScratchPad);
+		forceWait(500);
 		
-		ScratchPad.click();
+		List<WebElement> dropdowns = driver.findElements(By.cssSelector("li#crm-tab-bar-right ul li div ul li a"));
+		if(!dropdowns.get(0).getText().toLowerCase().contains("scratch pad")){
+			dropdowns.get(dropdowns.size()-1).click();
+		}
+		else{
+			dropdowns.get(0).click();
+		}
 		return PageFactory.initElements(driver, ScratchPadPage.class);
 	}
 	

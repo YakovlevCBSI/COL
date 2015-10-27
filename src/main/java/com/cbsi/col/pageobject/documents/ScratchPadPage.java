@@ -7,7 +7,7 @@ public class ScratchPadPage extends DocumentsBasePage{
 	public ScratchPadPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Scratch Pad", "span");
+		waitForTextToBeVisible(20000,"The \"Scratch Pad\" serves two purposes:", "p");
 	}
 
 }

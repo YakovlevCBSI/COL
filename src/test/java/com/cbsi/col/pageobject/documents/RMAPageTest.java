@@ -50,6 +50,8 @@ public class RMAPageTest extends DocumentsBasePageTest{
 		
 		rmaPage = rmaPage.clickFinalize();		
 		assertEquals(DocumentState.Approved.toString(), rmaPage.getDocumentState());
+		
+		rmaPage.clickSend();
 	}
 	
 

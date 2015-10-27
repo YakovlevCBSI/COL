@@ -98,18 +98,13 @@ public class DocumentsPage extends ColBasePage{
 
 	}
 	
-	public QuotePage goToQuote(long quoteNumber){
-		WebElement docLink = findDataRowByName(quoteNumber);
-		docLink.click();
-		
+	public QuotePage goToQuote(long docNumber){
+		goToDocument(docNumber);	
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
-	public SalesOrderPage goToOrder(long orderNumber){
-		logger.info("Go to order #" + orderNumber);
-		WebElement docLink = findDataRowByName(orderNumber);
-		docLink.click();
-		
+	public SalesOrderPage goToOrder(long docNumber){
+		goToDocument(docNumber);	
 		return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 	
@@ -119,6 +114,18 @@ public class DocumentsPage extends ColBasePage{
 		
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
+	
+	public RMAPage goToRma(long docNumber){
+		goToDocument(docNumber);		
+		return PageFactory.initElements(driver, RMAPage.class);
+	}
+	
+	public void goToDocument(long docNumber){
+		logger.info("Go to doc #" + docNumber);
+		WebElement docLink = findDataRowByName(docNumber);
+		docLink.click();
+	}
+	
 //	public DocumentsPage deleteQuotesByCompnayName(String companyName){
 ////		WebElement docLink = findDataRowByName(quoteNumber);
 //		forceWait(300);

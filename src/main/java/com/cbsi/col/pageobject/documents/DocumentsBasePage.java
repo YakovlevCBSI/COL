@@ -854,4 +854,19 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return Integer.parseInt(TaskNum.getText());
 	}
 	
+	//----------------------------- Document state -----------------------------//
+
+	public enum DocumentState{
+		Pending,
+		Authorized,
+		Approved
+	}
+	
+	@FindBy(css="h1[class*='page-title'] span")
+	private WebElement PageTitle;
+	
+	public String getDocumentState(){
+		return StringUtil.cleanPageTitle(PageTitle.getText());
+	}
+	
 }

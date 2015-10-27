@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class RMAPage extends DocumentsBasePage{
 
@@ -11,6 +12,37 @@ public class RMAPage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForTextToBeVisible("RMA", "span");
+	}
+	
+	@FindBy(css="button[title^='Submit']")
+	private WebElement Submit;
+	
+	@FindBy(css="button[title^='Authorize']")
+	private WebElement Authorize;
+	
+	
+	@FindBy(css="button[title^='Finalize']")
+	private WebElement Finalize;
+	
+	public RMAPage clickSubmit(){
+		Submit.click();
+		waitForQuickLoad();
+		
+		return PageFactory.initElements(driver, RMAPage.class);
+	}
+	
+	public RMAPage clickAuthorize(){
+		Authorize.click();
+		waitForQuickLoad();
+		
+		return PageFactory.initElements(driver, RMAPage.class);
+	}
+	
+	public RMAPage clickFinalize(){
+		Finalize.click();
+		waitForQuickLoad();
+		
+		return PageFactory.initElements(driver, RMAPage.class);
 	}
 	
 	@FindBy(css="select[id ^='noteReason-']")

@@ -23,11 +23,25 @@ public class StringUtil {
 		return WordUtils.capitalizeFully(text, new char[]{'_'}).replaceAll("_", "");
 	}
 	
+	public static String cleanPageTitle(String text){
+		int startIndex =  text.indexOf("(");
+		int endIndex = text.indexOf(")");
+		
+		return text.substring(startIndex+1, endIndex);
+	}
+	
 	public static void main(String[] args){
 //		System.out.println(getUserName());
+		
+		String state = "sales order   (Approved)";
+		System.out.println(cleanPageTitle(state));
 	}
 	
 	public static String cleanUserName(String name){
+		if(name.contains("cbsiqa")){
+			return "user, test";
+		}
+		
 		String userName =  name.split("@")[0];
 		System.out.println(userName);
 		

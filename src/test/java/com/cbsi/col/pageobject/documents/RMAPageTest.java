@@ -1,10 +1,12 @@
 package com.cbsi.col.pageobject.documents;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.RMAPage.Reasons;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage;
@@ -24,7 +26,7 @@ public class RMAPageTest extends DocumentsBasePageTest{
 	long rmaNumber;
 	
 	@Test
-	public void createRmaFromSalesOrder(){
+	public void createRmaFromSalesOrderThenFinalize(){
 		
 		convertToSalesOrder();
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
@@ -37,6 +39,17 @@ public class RMAPageTest extends DocumentsBasePageTest{
 		
 		documentPage = rmaPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
 		assertTrue(documentPage.hasRma(rmaNumber));	
+		
+		rmaPage = documentPage.goToRma(rmaNumber);
+		rmaPage = rmaPage.clickSubmit();
+		
+		assertEquals(DocumentState.Pending.toString(), rmaPage.getDocumentState());
+		
+		rmaPage = rmaPage.clickAuthorize();	
+		assertEquals(DocumentState.Authorized.toString(), rmaPage.getDocumentState());
+		
+		rmaPage = rmaPage.clickFinalize();		
+		assertEquals(DocumentState.Approved.toString(), rmaPage.getDocumentState());
 	}
 	
 

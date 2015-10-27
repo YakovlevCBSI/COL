@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -95,8 +96,19 @@ public class QuotePage extends DocumentsBasePage{
 		private WebElement Cancel;
 		
 		public QuotePage clickCreate(){
+			logger.debug("Clicking Create");
 			Create.click();
+			
 			switchBack();
+			return PageFactory.initElements(driver, QuotePage.class);
+		}
+		
+		@FindBy(css="td input[type='text']")
+		private WebElement CustomerAndContactSearch;
+		public QuotePage setCustomerAndContactSearch(String text){
+			CustomerAndContactSearch.sendKeys(text);
+			forceWait(300);
+			getActions().sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.RETURN).build().perform();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}
 	}

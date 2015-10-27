@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
+
 public class ScratchPadPage extends DocumentsBasePage{
 
 	public ScratchPadPage(WebDriver driver) {
@@ -20,6 +22,9 @@ public class ScratchPadPage extends DocumentsBasePage{
 	@FindBy(css="a[title='Empty Doc']")
 	private WebElement EmptyDoc;
 	
+	@FindBy(css="button[title='Copy to Customer']")
+	private WebElement CopyToCustomer;
+	
 	public ScratchPadPage clickEmptyDoc(){
 		CopyToCustomerCaret.click();
 		EmptyDoc.click();
@@ -27,6 +32,13 @@ public class ScratchPadPage extends DocumentsBasePage{
 		waitForQuickLoad();
 		
 		return PageFactory.initElements(driver, ScratchPadPage.class);
+	}
+	
+	public QuotePage clickCopyToCustomer(){
+		CopyToCustomer.click();
+		
+		CopyToNewQuotePage copyToNewQuotePage = PageFactory.initElements(driver, CopyToNewQuotePage.class);
+		return copyToNewQuotePage.setCustomerAndContactSearch("qa");
 	}
 
 }

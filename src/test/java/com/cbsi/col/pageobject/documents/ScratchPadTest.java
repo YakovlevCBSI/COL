@@ -32,10 +32,24 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 		
 		scratchPad = PageFactory.initElements(driver, ScratchPadPage.class);
 		
+		assertTrue(scratchPad.getTableAsMaps().size()==2);
+	}
+	
+	@Test
+	public void emptyDocCleansProducts(){
+		scratchPad = homePage.goToScratchPadPage(); 
 		
+		if(scratchPad.getTableAsMaps().size() >=1){
+			scratchPad = scratchPad.clickEmptyDoc();
+		}
+		else{
+			ProductsPage productsPage = scratchPad.searchProduct("Lenovo");
+			productsPage.checkCompareBoxes(1,2).selectAction(Action.AddToQuote);
+			
+			scratchPad = PageFactory.initElements(driver, ScratchPadPage.class);
+			scratchPad = scratchPad.clickEmptyDoc();
+		}
 		
-		List<HashMap<String, String>> afterProducts = scratchPad.getTableAsMaps();
-		
-		assertTrue(afterProducts.size()==2);
+		assertTrue(scratchPad.getTableAsMaps().size() == 0);
 	}
 }

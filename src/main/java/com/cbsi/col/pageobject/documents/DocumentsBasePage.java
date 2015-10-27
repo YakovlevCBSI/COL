@@ -443,6 +443,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	private WebElement Search;
 	
 	public ProductsPage searchProduct(String productName){
+		waitForElementToBeVisible(By.cssSelector("input#addProductKeyword"));
+		forceWait(500); // Scratchpad input does not recognize there is text without this wait.
+
 		AddProductSearchBox.sendKeys(productName);
 		Search.click();
 		

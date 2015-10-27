@@ -862,7 +862,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public enum DocumentState{
 		Pending,
 		Authorized,
-		Approved
+		Approved,
+		Submitted,
+		Complete
 	}
 	
 	@FindBy(css="h1[class*='page-title'] span")

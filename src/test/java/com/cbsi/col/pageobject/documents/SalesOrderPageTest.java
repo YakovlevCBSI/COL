@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
@@ -21,6 +22,14 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	@Test
 	public void convertToSalesOrder(){
 		super.convertToSalesOrder();
+		
+		SalesOrderPage orderPage = documentPage.goToOrder(orderNumber);
+		assertEquals(DocumentState.Submitted.toString(), orderPage.getDocumentState());
+
+		
+		orderPage = orderPage.clickCompleteThisOrder();
+		
+		assertEquals(DocumentState.Complete.toString(), orderPage.getDocumentState());
 	}
 	
 	

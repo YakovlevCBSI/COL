@@ -113,6 +113,18 @@ public class SalesOrderPage extends DocumentsBasePage{
 	private WebElement Cancel;
 	
 	
+	@FindBy(css="a[title='Complete this Order']")
+	private WebElement CompleteThisOrder;
+	
+	public SalesOrderPage clickCompleteThisOrder(){
+		CompleteThisOrder.findElement(By.xpath("../../../button[contains(@id,'-caret')]")).click();
+		CompleteThisOrder.click();
+		
+		waitForQuickLoad();
+		forceWait(500);
+		return PageFactory.initElements(driver, SalesOrderPage.class);
+	}
+	
 	//There is an addToOrder(?) page. work on it whenever needed.
 	public SalesOrderPage clickSave(){
 		

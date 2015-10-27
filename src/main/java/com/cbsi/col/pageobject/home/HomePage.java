@@ -14,7 +14,7 @@ import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ScratchPadPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
-import com.cbsi.col.pageobject.sidebar.QuoteHotListPage;
+//import com.cbsi.col.pageobject.sidebar.QuoteHotListPage;
 import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 
 public class HomePage extends ColBasePage{

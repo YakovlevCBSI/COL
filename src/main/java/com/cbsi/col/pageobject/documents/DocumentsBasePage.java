@@ -864,7 +864,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Authorized,
 		Approved,
 		Submitted,
-		Complete
+		Complete,
+		Document_Declined {
+			public String toString(){
+				return "Document Declined";
+			}
+		}
 	}
 	
 	@FindBy(css="h1[class*='page-title'] span")

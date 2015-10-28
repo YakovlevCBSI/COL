@@ -13,6 +13,7 @@ public class ProposalPage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		waitForTextToBeVisible("Proposal (", "span");
+		waitForQuickLoad();
 	}
 	
 	@FindBy(css="input#quoteNumber")

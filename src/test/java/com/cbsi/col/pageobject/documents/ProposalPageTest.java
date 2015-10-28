@@ -31,10 +31,10 @@ public class ProposalPageTest extends ColBaseTest{
 		super.startUp();
 		navigateToCustomersPage();
 	}
-	
+	private int docNumber;
+
 	@Test
-	public void createProposalFull(){
-		int docNumber;
+	public void createProposalFull(){		
 		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal();
 		docNumber = proposalPage.getQuoteNumber();
@@ -45,7 +45,6 @@ public class ProposalPageTest extends ColBaseTest{
 	
 	@Test
 	public void createProposalQuick(){
-		int docNumber;
 		CurrentAccountTab currentAccountPage= customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		ProposalPage proposalPage = currentAccountPage.clickCreateProposal(false);
 		docNumber = proposalPage.getQuoteNumber();
@@ -78,6 +77,13 @@ public class ProposalPageTest extends ColBaseTest{
 		String expectedName = proposalPage.getCompanyName();
 		CurrentAccountTab currentAccountTab = proposalPage.clickCompanyLink();
 		assertTrue(currentAccountTab.getCompany().contains(expectedName));
+	}
+	
+	@Test
+	public void previewWithNoError(){
+		createProposalFull();
+		ProposalPage proposalPage  = documentPage.switchToTab(DocumentTabs.PROPOSALS).goToProposal(docNumber);
+		proposalPage.clickSend();
 	}
 
 }

@@ -599,14 +599,20 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Compare,
 		Price_History,
 		Add_to_Catalogs,
-		Convert_to_Bundle {public String toString(){
+		Convert_to_Bundle {
+						public String toString(){
 								return "Convert to bundle";
 							}
 						},
 		Unbundle,
 		Insert_Header,
 		Insert_Subtotal,
-		Add_Subtotal
+		Add_Subtotal, 
+		Copy_Line{
+			public String toString(){
+				return "Copy_Line(s)";
+			}
+		}
 	}
 	
 	public enum AddImportUpdates{

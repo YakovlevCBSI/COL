@@ -141,7 +141,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void productComparisonInQuote(){
+	public void lineAction_Compare(){
 		createQuote();
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
@@ -317,6 +317,29 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertTrue(companyName.contains(expectedName));
 	}
 	
+	@Test
+	public void lineAction_CopyLine(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
+		List<HashMap<String,String>> maps = quotePage.getTableAsMaps();
+
+		int count =0;
+		
+		for(HashMap<String, String> hashmap: maps){	//after copy line action, count how many of copied item exists in product table.
+			if(hashmap.get("mfrpart#").contains("34355AU")){
+				count++;
+			}		
+		}
+		
+		assertTrue(count==2);
+		assertTrue(maps.size() ==4);
+
+	}
+	
 //	@Test
 //	public void deleteHotList(){
 //
@@ -365,6 +388,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
+
 		assertTrue(quotePage.tableColumnsAreDisplayed());
 	}
 

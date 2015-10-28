@@ -1,6 +1,7 @@
 package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +14,7 @@ import org.junit.rules.ExpectedException;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
@@ -68,6 +70,14 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 		QuotePage quotePage = scratchPad.clickCopyToCustomer();
 		
 		assertTrue(productNumBefore == quotePage.getTableAsMaps().size());
+	}
+	
+	@Test
+	public void previewWithoutError(){
+		scratchPad = homePage.goToScratchPadPage(); 
+		addProductIfEmpty();
+		
+		scratchPad.clickSend();
 	}
 	
 	public void addProductIfEmpty(){

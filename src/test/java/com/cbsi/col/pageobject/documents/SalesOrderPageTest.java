@@ -35,7 +35,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void createBundleInSalesOrder() throws InterruptedException{
-		convertToSalesOrder();
+		super.convertToSalesOrder();
 
 		SalesOrderPage orderPage = documentPage.goToOrder(orderNumber);
 		orderPage.selectProductFromTable(1);
@@ -66,7 +66,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test//#5406
 	public void copySalesOrderToNewQuote(){
-		convertToSalesOrder();
+		super.convertToSalesOrder();
 		
 		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
 		QuotePage quotePage = orderPage.clickCopyToNewQuote();
@@ -89,7 +89,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void addSubTotalAndBundleSubTotal(){
-		convertToSalesOrder();
+		super.convertToSalesOrder();		
 		
 		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
 		PriceCalculator priceCalculator = addSubtotalBundleWorkFlow(orderPage).getPriceCalculator();

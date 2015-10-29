@@ -77,6 +77,7 @@ public class ProductsPage extends ColBasePage{
 	
 	public void selectAction(Action action){
 
+		scrollToView(SelectOne);
 		SelectOne.click();
 		forceWait(1000);
 //		Cheeck if dropdown is open. If not, open it again.		

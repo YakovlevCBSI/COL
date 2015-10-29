@@ -337,7 +337,6 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		assertTrue(count==2);
 		assertTrue(maps.size() ==4);
-
 	}
 	
 //	@Test
@@ -379,8 +378,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 
-		PriceCalculator priceCalculator = addSubtotalBundleWorkFlow(quotePage).getPriceCalculator();
-		assertTrue(3200.00 == priceCalculator.getTaxedSubTotal());
+		PriceCalculator priceCalculator = ((DocumentsBasePage) addSubtotalBundleWorkFlow(quotePage).clickSave()).getPriceCalculator();
+		logger.debug("subTotal: " + priceCalculator.getTaxedSubTotal());
+		assertTrue( 3200.00 == priceCalculator.getSubtotal());
 	}
 	
 	@Test

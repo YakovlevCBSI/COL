@@ -17,7 +17,7 @@ public class CurrentAccountTab extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 //		waitForPageToLoad(By.cssSelector("li.active a[href*='Customers/view']"));
-		waitForTextToBeVisible("Account View", "span");
+		waitForTextToBeVisible("Account View", "h1 span");
 	}
 	
 	@FindBy(linkText="Create Quote")

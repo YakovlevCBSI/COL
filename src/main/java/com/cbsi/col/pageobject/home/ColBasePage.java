@@ -126,10 +126,16 @@ public class ColBasePage {
 				else headers =header1s;
 			}
 			
-			for(WebElement h: headers){
+//			for(WebElement h: headers){
+//			for(int i=headers.size()-1; i>=0 ; i--){
+			for(int i=0; i<headers.size() ; i++){
+
+				logger.debug("collected search Text:  " + headers.get(i).getText());
 				try{
-					if(h.getText().contains(text)){
-						headerOnWait = h;
+					if(headers.get(i).getText().isEmpty()) continue;
+					
+					if(headers.get(i).getText().contains(text)){
+						headerOnWait = headers.get(i);
 						return true;
 					}
 				}catch(Exception e){
@@ -195,6 +201,26 @@ public class ColBasePage {
 			}
 			forceWait(100);
 		}
+	}
+	public boolean isAlertPresent(){
+		boolean alertExists = false;
+
+		long start = System.currentTimeMillis();
+		while(!alertExists && System.currentTimeMillis() - start < 1500){
+			try{
+				Alert alert = driver.switchTo().alert();
+				return true;
+			}catch(NoAlertPresentException e){
+			
+			}
+			forceWait(100);
+		}
+		
+		return alertExists;
+	}
+	public String getAlertMessage(){
+		Alert alert = driver.switchTo().alert();
+		return alert.getText();
 	}
 	
 	public Actions getActions(){
@@ -273,9 +299,12 @@ public class ColBasePage {
 	}
 	
 	public void switchFrame(By by){
-		waitForElementToBeVisible(By.cssSelector("iframe"));
+//		waitForElementToBeVisible(By.cssSelector("iframe"));
+//		logger.debug("iframe is visible");
 		driver.switchTo().defaultContent();
+		logger.debug("switched to defaultContent");
 		driver.switchTo().frame(driver.findElement(by));
+		logger.debug("Exit switchFrame method.");
 	}
 	
 	public void switchBack(){

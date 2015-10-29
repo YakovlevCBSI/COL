@@ -22,7 +22,7 @@ public class QuotePage extends DocumentsBasePage{
 		// TODO Auto-generated constructor stub
 //		waitForPageToLoad(By.cssSelector("div h1"));
 		logger.info(getClass().getName());
-		waitForTextToBeVisible(20000, "Quote (", "span");
+		waitForTextToBeVisible(20000, "Quote (", "h1 span");
 		initializePriceCalculator();
 	}
 

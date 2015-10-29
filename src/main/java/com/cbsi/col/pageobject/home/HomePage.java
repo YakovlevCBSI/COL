@@ -21,7 +21,7 @@ public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad(By.cssSelector("#tab-home"));
-		waitForTextToBeVisible("My Channel", "a");
+		waitForTextToBeVisible("My Channel", "ul li.active a");
 	}
 	
 	@CacheLookup

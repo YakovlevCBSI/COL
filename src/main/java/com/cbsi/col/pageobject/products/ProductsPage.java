@@ -16,7 +16,7 @@ import com.cbsi.col.pageobject.home.ColBasePage;
 public class ProductsPage extends ColBasePage{
 	public ProductsPage(WebDriver driver){
 		super(driver);
-		waitForTextToBeVisible("Search By:", "span");
+		waitForTextToBeVisible("Search By:", "ul li span.nav-title");
 	}
 	
 	@FindBy(css="a[title href*='item_add']")

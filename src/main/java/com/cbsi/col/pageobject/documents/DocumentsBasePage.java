@@ -159,6 +159,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	public SendPage clickSend(){
 		Send.click();
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, SendPage.class);
 	}
 
@@ -357,8 +358,13 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public SendPage(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
-			waitForTextToBeVisible("Select a view", "label");
+//			waitForTextToBeVisible("Select a view", "label");
+			waitForQuickLoad();
+			logger.debug("looking for print button");
+			waitForTextToBeVisible("Print", "button");
+			logger.debug("looking for iframe");
 			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"));
+			logger.debug("found iframe");
 			switchBack();
 		}
 		
@@ -448,7 +454,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 
 		AddProductSearchBox.sendKeys(productName);
 		Search.click();
-		
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, ProductsPage.class);
 	}
 	

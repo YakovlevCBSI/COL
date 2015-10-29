@@ -26,8 +26,8 @@ public class DocumentsPage extends ColBasePage{
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("div h1"));
 //		waitForTextToBeVisible("Documents","h1");
-		waitForTextToBeVisible("Recycle Bin", "a");
-		waitForTextToBeVisible("Quotes", "a");
+		waitForTextToBeVisible("Recycle Bin", "ul li.last.pull-right a");
+		waitForTextToBeVisible("Quotes", "ul li a");
 	}
 	
 	@FindBy(css="table.costandard")

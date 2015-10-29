@@ -12,8 +12,8 @@ public class ProposalPage extends DocumentsBasePage{
 	public ProposalPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Proposal (", "span");
 		waitForQuickLoad();
+		waitForTextToBeVisible("Proposal (", "h1 span");
 	}
 	
 	@FindBy(css="input#quoteNumber")

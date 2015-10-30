@@ -12,7 +12,7 @@ public class InvoicePage extends DocumentsBasePage{
 	public InvoicePage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Invoice", "span");
+		waitForTextToBeVisible("Invoice", "h1 span");
 	}
 	
 	@FindBy(css="input[name='quoteNumber']")

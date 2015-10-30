@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -180,7 +181,16 @@ public class AccountsPage extends ColBasePage{
 	public CurrentAccountTab clickViewCustomer(String companyName){
 //		setFilterByAccountType(AccountType.CUSTOMER);
 		WebElement dataRow = findDataRowByName(companyName);
+		if(dataRow == null){
+			dataRow = findDataRowByName(companyName, AccountType.LEAD);
+		}
+		
 		ViewCustomer = dataRow.findElement(By.xpath("../td/a[contains(@title,'View Customer')]"));
+		
+		if(ViewCustomer == null){
+			ViewCustomer = dataRow.findElement(By.xpath("../td/a[contains(@title,'View Account')]"));
+		}
+		
 		ViewCustomer.click();
 		
 		waitForElementToBeInvisible(By.xpath("td/a[contains(@title,'View Customer')]"));
@@ -192,7 +202,7 @@ public class AccountsPage extends ColBasePage{
 		public CreateAccountPopup(WebDriver driver){
 //			forceWait(5000);
 			super(driver);
-			waitForElementToBeVisible(By.cssSelector("h3"));
+//			waitForElementToBeVisible(By.cssSelector("h3"));
 		}
 		
 		@FindBy(css="input[value='customer']")
@@ -233,9 +243,21 @@ public class AccountsPage extends ColBasePage{
 			}else if(this.accountType.equals("generic")){
 				Generic.click();
 			}
-			waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"));
+			
+			try{
+				waitForElementToBeVisible(By.cssSelector("button#save-tpl-btn"), 3);
+			}catch(Exception e){
+				
+			}
 //			OK.click();
-			OK.click();
+			
+			try{
+				OK.click();
+			}catch(NoSuchElementException e){ //for convertAccount in Lead.
+				OK = driver.findElement(By.xpath("//button[@id='convert-tpl-btn']"));
+				OK.click();
+			}
+			
 			waitForQuickLoad();
 			return PageFactory.initElements(driver, CreateAccountPage.class);
 		}	
@@ -275,6 +297,7 @@ public class AccountsPage extends ColBasePage{
 	public AccountsPage setFilterByAccountType(AccountType type){
 		TypeDropdown.click();
 		driver.findElement(By.cssSelector("option[value='" + StringUtil.camelCase(type.toString()) + "']")).click();
+		forceWait(500);
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 }

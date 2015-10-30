@@ -99,7 +99,7 @@ public class ColBasePage {
 		waitForTextToBeVisible(10000, text, "h1", "h2", "h3");
 	}
 	
-	public void waitForTextToBeVisilbe(long milliSeconds, String text){
+	public void waitForTextToBeVisible(long milliSeconds, String text){
 		waitForTextToBeVisible(milliSeconds, text, "h1", "h2", "h3");
 	}
 	

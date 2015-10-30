@@ -15,7 +15,7 @@ public class CreateAccountPage extends ColBasePage{
 	public CreateAccountPage(WebDriver driver){
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
-		waitForTextToBeVisible(15000,"Company Info", "ul li a");
+		waitForTextToBeVisible(15000,"Company Info");
 	}
 	
 	@FindBy(css="#company")

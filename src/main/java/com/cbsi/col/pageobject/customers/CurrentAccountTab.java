@@ -50,11 +50,10 @@ public class CurrentAccountTab extends ColBasePage{
 	public CreateAccountPage clickConvertAccountType(AccountType accountType){
 		ConvertAccountType.click();
 		
-		waitForTextToBeVisible("Convert Account", "div a h3");
+		waitForTextToBeVisible("Convert Account", "div h3");
+		forceWait(500);
 		CreateAccountPopup convertAccount = PageFactory.initElements(driver, CreateAccountPopup.class);
-		convertAccount.pickAccountType(accountType);
-		
-		return PageFactory.initElements(driver, CreateAccountPage.class);
+		return convertAccount.pickAccountType(accountType);
 	}
 	
 	public ContactInfoPage clickAddAContact(){

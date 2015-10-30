@@ -55,6 +55,7 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 	public PurchaseOrderPage clickConvertToSubmittedPo(){
 		ConvertToSubmittedPo.click();
 		acceptAlert();
+		forceWait(500); //wait for refresh.
 		waitForTextToBeVisible("Purchase Order (Submitted)", "h1");
 		return PageFactory.initElements(driver, PurchaseOrderPage.class);
 	}

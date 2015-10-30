@@ -192,7 +192,7 @@ public class AccountsPage extends ColBasePage{
 		public CreateAccountPopup(WebDriver driver){
 //			forceWait(5000);
 			super(driver);
-			waitForElementToBeVisible(By.cssSelector("div.modal-header h3"));
+			waitForElementToBeVisible(By.cssSelector("h3"));
 		}
 		
 		@FindBy(css="input[value='customer']")

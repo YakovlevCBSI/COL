@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.customers.AccountsPage.CreateAccountPopup;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
@@ -32,6 +34,49 @@ public class CurrentAccountTab extends ColBasePage{
 	
 	@FindBy(css="div a[href*='list?deleted=']")
 	private WebElement Recyclebin;
+	
+	@FindBy(linkText="Add a Contact")
+	private WebElement AddAContact;
+	
+	@FindBy(linkText="Merge")
+	private WebElement Merge;
+	
+	@FindBy(linkText="Delete")
+	private WebElement Delete;
+	
+	@FindBy(linkText="Convert Account Type")
+	private WebElement ConvertAccountType;
+	
+	public CreateAccountPage clickConvertAccountType(AccountType accountType){
+		ConvertAccountType.click();
+		
+		waitForTextToBeVisible("Convert Account", "div a h3");
+		CreateAccountPopup convertAccount = PageFactory.initElements(driver, CreateAccountPopup.class);
+		convertAccount.pickAccountType(accountType);
+		
+		return PageFactory.initElements(driver, CreateAccountPage.class);
+	}
+	
+	public ContactInfoPage clickAddAContact(){
+		AddAContact.click();
+		forceWait(500);
+		
+		return PageFactory.initElements(driver, ContactInfoPage.class);
+	}
+	
+	public MergeCustomerPage clickMerge(){
+		Merge.click();
+		forceWait(500);
+		
+		return PageFactory.initElements(driver, MergeCustomerPage.class);
+	}
+	
+	public AllAccountsTab clickDelete(){
+		Delete.click();
+		acceptAlert();
+		
+		return PageFactory.initElements(driver, AllAccountsTab.class);	
+	}
 	
 	public QuotePage clickCreateQuote(){
 		switchFrame();

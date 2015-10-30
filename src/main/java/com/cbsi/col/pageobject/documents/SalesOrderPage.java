@@ -20,7 +20,8 @@ public class SalesOrderPage extends DocumentsBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		
-		waitForMultiHeader();
+//		waitForMultiHeader();
+		waitForTextToBeVisible(5000, "Sales Order (", "h1 span");
 	}
 	
 	public void waitForMultiHeader() throws Exception{		
@@ -40,7 +41,7 @@ public class SalesOrderPage extends DocumentsBasePage{
 			}
 			
 			try{
-				if(waitForTextToBeVisible(1000, "Sales Order (", "span")) {
+				if(waitForTextToBeVisible(1000, "Sales Order (", "h1 span")) {
 					System.out.println("Found Sales Order Header. Break!");
 					headerFound = true;
 					break;

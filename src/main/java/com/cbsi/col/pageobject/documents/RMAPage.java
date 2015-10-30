@@ -11,7 +11,7 @@ public class RMAPage extends DocumentsBasePage{
 	public RMAPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("RMA", "span");
+		waitForTextToBeVisible("RMA", "h1 span");
 	}
 	
 	@FindBy(css="button[title^='Submit']")

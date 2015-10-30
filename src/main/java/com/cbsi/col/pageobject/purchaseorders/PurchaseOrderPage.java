@@ -66,6 +66,7 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 	
 	public RMAPage clickCreateRma(){
 		CreateRma.click();
+		forceWait(500);
 		CreateRmaPopup crp = PageFactory.initElements(driver, CreateRmaPopup.class);
 		return crp.clickCreateRMA();
 		

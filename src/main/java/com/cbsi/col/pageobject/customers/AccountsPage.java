@@ -227,6 +227,11 @@ public class AccountsPage extends ColBasePage{
 		private WebElement OK;
 		
 		public CreateAccountPage pickAccountType(AccountType accountType){
+			pickAccountTypeSimple(accountType);
+			return PageFactory.initElements(driver, CreateAccountPage.class);
+		}	
+		
+		public void pickAccountTypeSimple(AccountType accountType){
 			this.accountType = accountType.toString().toLowerCase();
 			
 			if(this.accountType.equals("customer")){
@@ -259,8 +264,7 @@ public class AccountsPage extends ColBasePage{
 			}
 			
 			waitForQuickLoad();
-			return PageFactory.initElements(driver, CreateAccountPage.class);
-		}	
+		}
 	}
 	
 	@FindBy(linkText="Recent Accounts")

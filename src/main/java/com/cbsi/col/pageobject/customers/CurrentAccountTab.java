@@ -47,13 +47,15 @@ public class CurrentAccountTab extends ColBasePage{
 	@FindBy(linkText="Convert Account Type")
 	private WebElement ConvertAccountType;
 	
-	public CreateAccountPage clickConvertAccountType(AccountType accountType){
+	public EditAccountPage  clickConvertAccountType(AccountType accountType){
 		ConvertAccountType.click();
 		
 		waitForTextToBeVisible("Convert Account", "div h3");
 		forceWait(500);
 		CreateAccountPopup convertAccount = PageFactory.initElements(driver, CreateAccountPopup.class);
-		return convertAccount.pickAccountType(accountType);
+		convertAccount.pickAccountTypeSimple(accountType);
+		
+		return PageFactory.initElements(driver, EditAccountPage.class);
 	}
 	
 	public ContactInfoPage clickAddAContact(){

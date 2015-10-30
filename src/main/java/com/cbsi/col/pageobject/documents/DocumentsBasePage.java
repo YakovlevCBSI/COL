@@ -252,6 +252,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			cleanInput(TaxOn);
 			TaxOn.sendKeys(taxOn+"");
 			TaxOn.sendKeys(Keys.TAB);
+			forceWait(200);
 		}
 
 		public double getShippingAmount() {

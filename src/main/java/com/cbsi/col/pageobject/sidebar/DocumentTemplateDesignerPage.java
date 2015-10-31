@@ -15,8 +15,13 @@ public class DocumentTemplateDesignerPage extends ColBasePage{
 	public DocumentTemplateDesignerPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
+		logger.debug("initializing DocumentTempalteDesignerPage.class");
+		waitForQuickLoad();
+		logger.debug("wait for quick load passed.");
 		waitForTextToBeVisible(15000, "Document Template Designer:", "span");
-		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
+		logger.debug("passed looking for visible text");
+		waitForQuickLoad();
+		logger.debug("passed loading-modal");
 
 		
 	}

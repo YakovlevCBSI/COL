@@ -407,7 +407,7 @@ public class ColBaseTest {
 			
 			createNewCustomerPage.setDefaultPaymentToCod();
 			
-			createNewCustomerPage = createNewCustomerPage.clickNext();
+			createNewCustomerPage = (CreateAccountPage) createNewCustomerPage.clickNext();
 			
 //			
 //			//---------------------------------------------------------------------------
@@ -418,7 +418,7 @@ public class ColBaseTest {
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
 
-			createNewCustomerPage = createNewCustomerPage.clickNext();
+			createNewCustomerPage = (CreateAccountPage) createNewCustomerPage.clickNext();
 			
 			createNewCustomerPage.setContactInfo_FirstName("Qa");
 			createNewCustomerPage.setContactInfo_LastName("customers");

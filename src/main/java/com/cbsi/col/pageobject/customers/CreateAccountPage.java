@@ -14,7 +14,12 @@ import com.cbsi.col.pageobject.home.ColBasePage;
 public class CreateAccountPage extends AccountBasePage{
 	public CreateAccountPage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
+		
+		try{
+			waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
+		}catch(Exception e){
+			waitForTextToBeVisible("Contact Info","fieldset legend"); //if lead page, wait for this.
+		}
 	}
 	
 	public CreateAccountPage(WebDriver driver, boolean waitForTextLoad){

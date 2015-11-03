@@ -45,7 +45,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		orderPage = (SalesOrderPage) orderPage.selectFromLineActions(LineActions.Convert_to_Bundle);
 		orderPage.setBundleHeader("test1");
 		orderPage.setBundleDesc("test description");
-		orderPage = (SalesOrderPage) orderPage.clickSaveBundle();
+		orderPage = (SalesOrderPage) orderPage.clickSaveLineItem();
 		
 		assertEquals("test1", orderPage.getBundleHeader());
 		assertEquals("test description", orderPage.getBundleDesc());

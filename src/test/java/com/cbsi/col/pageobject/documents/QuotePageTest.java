@@ -58,7 +58,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage = (QuotePage)quotePage.selectFromLineActions(LineActions.Convert_to_Bundle);
 		quotePage.setBundleHeader("test1");
 		quotePage.setBundleDesc("test description");
-		quotePage = (QuotePage)quotePage.clickSaveBundle();
+		quotePage = (QuotePage)quotePage.clickSaveLineItem();
 		
 		assertEquals("test1",quotePage.getBundleHeader());
 		assertEquals("test description", quotePage.getBundleDesc());
@@ -139,16 +139,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertTrue(sendPage.isFileDownloaded());
 		
 	}
-	
-	@Test
-	public void lineAction_Compare(){
-		createQuote();
-		
-		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		quotePage = (QuotePage) quotePage.selectProductFromTable(1,2);
-		ComparisonPage comPage = (ComparisonPage)quotePage.selectFromLineActions(LineActions.Compare);
-	}
-	
+
 	@Test
 	public void quantityChangeUpdatesPrice(){
 		createQuote();
@@ -316,29 +307,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		assertTrue(companyName.contains(expectedName));
 	}
-	
-	@Test
-	public void lineAction_CopyLine(){
-		createQuote();
-		
-		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		
-		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
-		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
-		List<HashMap<String,String>> maps = quotePage.getTableAsMaps();
 
-		int count =0;
-		
-		for(HashMap<String, String> hashmap: maps){	//after copy line action, count how many of copied item exists in product table.
-			if(hashmap.get("mfrpart#").contains("34355AU")){
-				count++;
-			}		
-		}
-		
-		assertTrue(count==2);
-		assertTrue(maps.size() ==4);
-	}
-	
 //	@Test
 //	public void deleteHotList(){
 //
@@ -391,7 +360,63 @@ public class QuotePageTest extends DocumentsBasePageTest{
 
 		assertTrue(quotePage.tableColumnsAreDisplayed());
 	}
+	
+	@Test
+	public void lineAction_CopyLine(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
+		List<HashMap<String,String>> maps = quotePage.getTableAsMaps();
 
+		int count =0;
+		
+		for(HashMap<String, String> hashmap: maps){	//after copy line action, count how many of copied item exists in product table.
+			if(hashmap.get("mfrpart#").contains("34355AU")){
+				count++;
+			}		
+		}
+		
+		assertTrue(count==2);
+		assertTrue(maps.size() ==4);
+	}
+	
+	@Test
+	public void lineAction_Compare(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1,2);
+		ComparisonPage comPage = (ComparisonPage)quotePage.selectFromLineActions(LineActions.Compare);
+	}
+	
+	@Test
+	public void lineAction_AddToCatalog(){
+		
+	}
+	
+	@Test
+	public void lineAction_InsertSubTotalHeader(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Insert_Subtotal_Header);
+		quotePage = (QuotePage) quotePage.clickSaveLineItem();
+		
+		assertEquals("[Subtotal Header]",quotePage.getSubTotalHeader());	
+	}
+	
+	@Test
+	public void lineAction_AddBlankLine_AddHorizontalLine(){
+		
+	}
+
+	@Test
+	public void lineAction_LinkLine(){
+		
+	}
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
 //		AccountsPage accountPage = homePage.goToAccountsPage();

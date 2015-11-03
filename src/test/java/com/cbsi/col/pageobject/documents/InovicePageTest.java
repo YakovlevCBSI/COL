@@ -4,8 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class InovicePageTest extends DocumentsBasePageTest{
@@ -37,7 +39,7 @@ public class InovicePageTest extends DocumentsBasePageTest{
 		orderPage = (SalesOrderPage) orderPage.selectFromLineActions(LineActions.Convert_to_Bundle);
 		orderPage.setBundleHeader("test1");
 		orderPage.setBundleDesc("test description");
-		orderPage = (SalesOrderPage) orderPage.clickSaveBundle();
+		orderPage = (SalesOrderPage) orderPage.clickSaveLineItem();
 		orderPage.clickSave();
 		
 		InvoicePage invoicePage = orderPage.clickConvertToInvoice();

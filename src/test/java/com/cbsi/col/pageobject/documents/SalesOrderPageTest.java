@@ -4,11 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.EditProductPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
@@ -95,5 +98,22 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		PriceCalculator priceCalculator = addSubtotalBundleWorkFlow(orderPage).getPriceCalculator();
 		assertTrue(3200.00 == priceCalculator.getSubtotal());
 
+	}
+	
+	@Test
+	public void salesOrderNoteShowsInPreview(){
+		super.convertToSalesOrder();
+		
+		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
+		orderPage.selectProductFromTable(1);
+		EditProductPage editProductPage = orderPage.editProductFromTable(1);
+		editProductPage.addItemNote("qa_ball_game").clickSaveThenExit();
+		
+		orderPage = PageFactory.initElements(driver, SalesOrderPage.class);
+		
+		assertEquals("qa_ball_game", orderPage.getItemNoteFromTable(1));
+		
+		SendPage sendPage = orderPage.clickSend();
+		assertEquals("qa_ball_game", sendPage.getLineItemNote());	
 	}
 }

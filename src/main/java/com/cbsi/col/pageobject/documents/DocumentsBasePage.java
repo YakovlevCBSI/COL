@@ -36,6 +36,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public DocumentsBasePage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
+		logger.debug("invoking documentsBasePage");
 	}
 
 	public long getDocNumber(){
@@ -418,22 +419,30 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			//do some io stuff here to cehck file. Then remove the file after.
 			return true;
 		}
-			//--------------EmailBox component-------------//
-			
-			@FindBy(css="a#submitEmail")
-			private WebElement SendEmail;
-			
-			@FindBy(css="a#cancel-email-btn")
-			private WebElement Cancel;
+		//--------------EmailBox component-------------//
 		
-			@FindBy(css="a#add-attachment-btn")
-			private WebElement AddAttachment;
-			
-			public void clickCancel(){
-				Cancel.click();
-			}
+		@FindBy(css="a#submitEmail")
+		private WebElement SendEmail;
 		
+		@FindBy(css="a#cancel-email-btn")
+		private WebElement Cancel;
+	
+		@FindBy(css="a#add-attachment-btn")
+		private WebElement AddAttachment;
 		
+		public void clickCancel(){
+			Cancel.click();
+		}
+	
+		//--------------document content-------------//
+
+		@FindBy(css="tr.lineItemNoteRow td.lineItemNote span")
+		private WebElement LineItemNote;
+		
+		public String getLineItemNote(){
+			switchFrame();
+			return LineItemNote.getText().replace("Note:", "").trim();
+		}
 	}
 	
 	
@@ -492,6 +501,21 @@ public class DocumentsBasePage<T> extends ColBasePage{
 
 		}
 		return (T)this;
+	}
+	
+	public EditProductPage editProductFromTable(int nth){
+		waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype][\"+ nth + \"]/td/label/input"));
+		WebElement edit = productTable.findElement(By.xpath("tbody/tr[@data-itemtype]["+ nth + "]/td[contains(@class,'-edit-cell')]/a"));
+		edit.click();
+		
+		waitForQuickLoad();
+		return PageFactory.initElements(driver, EditProductPage.class);
+	}
+	
+	public String getItemNoteFromTable(int nth){
+		waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype][\"+ nth + \"]/td/label/input"));
+		WebElement itemNote = productTable.findElement(By.xpath("tbody/tr["+ (nth +1)+ "]/td/div[@class='lineitem-notes']/div/div/div/div/div/textarea[contains(@class,'note-text-area')]"));
+		return itemNote.getText();
 	}
 	
 	public List<String> getProductNamesFromTable(int...n){
@@ -817,6 +841,51 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			Modifiedbyme
 		}
 	}
+	
+	//----------------------------- EditProduct page-----------------------------//
+	
+	public static class EditProductPage extends ColBasePage{
+
+		public EditProductPage(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			logger.debug("invoking editProductPage");
+			switchFrame();
+			waitForElementToBeVisible(By.cssSelector("div.popup-content table.popupbody"));
+		}
+		
+		@FindBy(css="textarea#note")
+		private WebElement ItemNote;
+		
+		public EditProductPage addItemNote(String comment){
+			ItemNote.sendKeys(comment);
+			return this;
+		}
+		
+		@FindBy(css="button#lineitem-modal-save")
+		private WebElement Save;
+		
+		@FindBy(css="div.modal-header a.close-modal")
+		private WebElement Close;
+		public void clickSaveThenExit(){
+			clickSave();
+			
+			switchBack();
+			this.Close.click();
+			
+			forceWait(500);
+			waitForElementToBeInvisible(By.cssSelector("div.popup-content table.popupbody"));
+		}
+		
+		public EditProductPage clickSave(){
+			switchBack();
+			this.Save.click();
+			forceWait(500);
+			
+			return PageFactory.initElements(driver, EditProductPage.class);
+		}
+	}
+
 	//----------------------------- BillToShipToDiv-----------------------------//
 	
 	WebElement BillingAndShippingDiv;

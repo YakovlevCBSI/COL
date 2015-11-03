@@ -21,7 +21,7 @@ public class SalesOrderPage extends DocumentsBasePage{
 		// TODO Auto-generated constructor stub
 		
 //		waitForMultiHeader();
-		waitForTextToBeVisible(5000, "Sales Order (", "h1 span");
+		waitForTextToBeVisible(7000, "Sales Order (", "h1 span");
 	}
 	
 	public void waitForMultiHeader() throws Exception{		

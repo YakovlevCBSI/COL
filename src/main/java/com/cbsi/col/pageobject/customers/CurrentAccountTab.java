@@ -83,7 +83,7 @@ public class CurrentAccountTab extends ColBasePage{
 		switchFrame();
 		CreateQuote.click();
 		forceWait(500);
-		switchBack();
+//		switchBack();
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	
@@ -94,7 +94,7 @@ public class CurrentAccountTab extends ColBasePage{
 	public ProposalPage clickCreateProposal(boolean full){
 		switchFrame();
 		CreateProposal.click();
-		switchBack();
+//		switchBack();
 
 		waitForQuickLoad();
 		
@@ -158,10 +158,16 @@ public class CurrentAccountTab extends ColBasePage{
 		}
 	}
 	
+//	public void switchFrame(){  iFrame changed to Div.
+//		waitForElementToBeVisible(By.cssSelector("iframe"));
+//		switchFrame(By.cssSelector("iframe#jframe"));
+//		waitForElementToBeVisible(By.linkText("Create Proposal"));
+//	}
+	
 	public void switchFrame(){
-		waitForElementToBeVisible(By.cssSelector("iframe"));
-		switchFrame(By.cssSelector("iframe#jframe"));
+		waitForElementToBeVisible(By.cssSelector("div#modal-wrapper div#main"));
 		waitForElementToBeVisible(By.linkText("Create Proposal"));
+		forceWait(300);
 	}
 	
 	//-------------------------- Company details---------------------------//

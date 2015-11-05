@@ -1,6 +1,7 @@
 package com.cbsi.col.pageobject.suppliers;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -68,7 +69,7 @@ public class SuppliersPage extends ColBasePage{
 		return PageFactory.initElements(driver, SuppliersPage.class);
 	}
 	
-	public List<HashMap<String, String>> getTableAsMaps(){
+	public List<LinkedHashMap<String, String>> getTableAsMaps(){
 		return getTableAsMaps(SupplierTable, 0, 1, 9);
 	}
 	

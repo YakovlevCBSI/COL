@@ -2,6 +2,7 @@ package com.cbsi.col.pageobject.documents;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -340,7 +341,7 @@ public class DocumentsPage extends ColBasePage{
 		return this;
 	}
 	
-	public List<HashMap<String, String>> getTableAsMaps() {
+	public List<LinkedHashMap<String, String>> getTableAsMaps() {
 		return getTableAsMaps(Table, 0,12);
 	}
 

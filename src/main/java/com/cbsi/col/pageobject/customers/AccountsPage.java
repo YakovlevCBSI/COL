@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.customers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -290,7 +291,7 @@ public class AccountsPage extends ColBasePage{
 	@FindBy(css="table.costandard")
 	WebElement table;
 	
-	public List<HashMap<String, String>> getTableAsMaps(){
+	public List<LinkedHashMap<String, String>> getTableAsMaps(){
 		return getTableAsMaps(table, 0, 11);
 	}
 	

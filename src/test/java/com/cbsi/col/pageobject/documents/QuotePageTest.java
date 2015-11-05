@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -262,7 +262,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		List<HashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
 		quotePage.clickSaveAsNewRevision("test1");
 		
 		quotePage.searchProduct("ibm").checkCompareBoxes(1,2).selectAction(Action.AddToQuote);
@@ -276,7 +276,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		quotePageNew = quotePageNew.clickRevert("test1");
 		quotePageNew = (QuotePage)quotePageNew.clickSave();
-		List<HashMap<String, String>> productMapAfterRevision = quotePageNew.getTableAsMaps();
+		List<LinkedHashMap<String, String>> productMapAfterRevision = quotePageNew.getTableAsMaps();
 		
 		assertTrue(productMapBeforeRevision.equals(productMapAfterRevision));
 	}
@@ -285,7 +285,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	public void createRevisionOnItemdsWithBundleThenRevert(){
 		createBundleInQuote();
 		
-		List<HashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> productMapBeforeRevision = quotePage.getTableAsMaps();
 		quotePage.clickSaveAsNewRevision("test1");
 
 		quotePage.selectProductFromTable(1);
@@ -294,7 +294,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage.clickSave();
 		quotePage = (QuotePage) quotePage.goToRevisionsTab().clickRevert("test1").clickSave();
 		
-		List<HashMap<String, String>> productMapAfterRevision = quotePage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> productMapAfterRevision = quotePage.getTableAsMaps();
 		
 		assertTrue(productMapBeforeRevision.equals(productMapAfterRevision));
 	}
@@ -370,12 +370,12 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
 		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
-		List<HashMap<String,String>> maps = quotePage.getTableAsMaps();
+		List<LinkedHashMap<String,String>> maps = quotePage.getTableAsMaps();
 
 		int count =0;
 		
-		for(HashMap<String, String> hashmap: maps){	//after copy line action, count how many of copied item exists in product table.
-			if(hashmap.get("mfrpart#").contains("34355AU")){
+		for(LinkedHashMap<String, String> LinkedHashMap: maps){	//after copy line action, count how many of copied item exists in product table.
+			if(LinkedHashMap.get("mfrpart#").contains("34355AU")){
 				count++;
 			}		
 		}
@@ -416,9 +416,13 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
 		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Add_Blank_Line);
-		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Add_Horizontal_Line);
-		List<HashMap<String, String>> maps = quotePage.getTableAsMaps();
 		
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Add_Horizontal_Line);
+		
+		List<LinkedHashMap<String, String>> maps = quotePage.getTableAsMaps();
+
+		logger.debug("mapSize: " +maps.size());
 		assertEquals(Table.H_Line.toString(), maps.get(1).get(Table.Other.toString()));
 		assertEquals(Table.B_Line.toString(), maps.get(2).get(Table.Other.toString()));	
 	}

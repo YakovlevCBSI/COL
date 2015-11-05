@@ -5,7 +5,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -588,6 +590,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			return (T) PageFactory.initElements(driver, ComparisonPage.class);
 		}
 		
+		forceWait(500);
+		
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
@@ -737,13 +741,13 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		CreateInvoiceAll
 	}
 	
-	public List<HashMap<String, String>> getTableAsMaps(){
+	public List<LinkedHashMap<String, String>> getTableAsMaps(){
 		return super.getTableAsMaps(1,productTable, 0,1,2,3,6,8,9);  //only get MfrPart, margin, total datas.
 	}
 	
 	
 	public <T>T removeAllProducts(){
-		List<HashMap<String, String>> beforeProducts = getTableAsMaps();
+		List<LinkedHashMap<String, String>> beforeProducts = getTableAsMaps();
 
 		if(beforeProducts == null || beforeProducts.size() ==0){
 			return (T)this;

@@ -3,7 +3,9 @@ package com.cbsi.col.pageobject.home;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.ListUtils;
@@ -375,7 +377,7 @@ public class ColBasePage {
 		},
 		B_Line{
 			public String toString() {
-				return "hline";}
+				return "bline";}
 		},
 		Other{
 			public String toString(){
@@ -384,16 +386,16 @@ public class ColBasePage {
 		}
 	}
 	
-	public List<HashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){
+	public List<LinkedHashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){
 		return getTableAsMaps(1, table, skipColumnNums); //get 2nd td element text for seach result.
 	}
 	
-	public List<HashMap<String, String>> getTableAsMaps(int getNthTdElement, WebElement table, int...skipColumnNums){
+	public List<LinkedHashMap<String, String>> getTableAsMaps(int getNthTdElement, WebElement table, int...skipColumnNums){
 		
 		//collect headers and table rows to use.
 		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
 		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
-		List<HashMap<String, String>> maps= new ArrayList<HashMap<String, String>>();
+		List<LinkedHashMap<String, String>>  maps= new ArrayList< LinkedHashMap<String, String>>();
 
 		// if no table rows exists, there is no data return empty maps.
 		if(trs.size() ==0 || trs == null){
@@ -405,14 +407,16 @@ public class ColBasePage {
 		
 
 		for(int j=0; j<trs.size(); j++){
-			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
+//			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
+			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") ==null )) {	//skip collapsible columns on product table.
 				continue; 
 			}
 
-			HashMap<String, String> map = new HashMap<String, String>();
+			LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 			String tr =null;
 			
 			if((tr = trs.get(j).getAttribute("data-itemtype"))!= null && tr.contains("line")){
+				logger.warn("Passing first line item conditioin: "+ tr);
 				map.put(Table.Other.toString(), trs.get(j).getAttribute("data-itemtype"));
 			}
 			else{

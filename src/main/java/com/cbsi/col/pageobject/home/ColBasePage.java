@@ -410,8 +410,8 @@ public class ColBasePage {
 			}
 
 			HashMap<String, String> map = new HashMap<String, String>();
-			
-			if(trs.get(i).getAttribute("data-itemtype").contains("line")){
+			String tr =null;
+			if((tr = trs.get(i).getAttribute("data-itemtype"))!= null && tr.contains("line")){
 				map.put(Table.Other.toString(), trs.get(i).getAttribute("data-itemtype"));
 			}
 			else{

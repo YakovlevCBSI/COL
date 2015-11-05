@@ -404,6 +404,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage.selectProductFromTable(1);
 		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Insert_Subtotal_Header);
+		quotePage.setBundleHeader("");
 		quotePage = (QuotePage) quotePage.clickSaveLineItem();
 		
 		assertEquals("[Subtotal Header]",quotePage.getSubTotalHeader());	

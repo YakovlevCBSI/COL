@@ -38,7 +38,7 @@ import com.google.common.primitives.Ints;
 public class ColBasePage {
 	protected WebDriver driver;
 	
-	public final Logger logger = LoggerFactory.getLogger(ColBasePage.class);
+	public final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public ColBasePage(WebDriver driver){
 		this.driver= driver;
@@ -368,6 +368,22 @@ public class ColBasePage {
 	
 	//-------------------- parse table such as search results, etc-------------------------------------//
 	
+	public enum Table{
+		H_Line{
+			public String toString() {
+				return "hline";}
+		},
+		B_Line{
+			public String toString() {
+				return "hline";}
+		},
+		Other{
+			public String toString(){
+				return "other";
+			}
+		}
+	}
+	
 	public List<HashMap<String, String>> getTableAsMaps(WebElement table, int...skipColumnNums){
 		return getTableAsMaps(1, table, skipColumnNums); //get 2nd td element text for seach result.
 	}
@@ -394,22 +410,29 @@ public class ColBasePage {
 			}
 
 			HashMap<String, String> map = new HashMap<String, String>();
-			for(int i=0; i< headerElements.size(); i++){		
-				if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
-					continue;
+			
+			if(trs.get(i).getAttribute("data-itemtype").contains("line")){
+				map.put(Table.Other.toString(), trs.get(i).getAttribute("data-itemtype"));
+			}
+			else{
+				for(int i=0; i< headerElements.size(); i++){		
+					if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
+						continue;
+					}
+					String data =null;
+					try{
+						data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+					}catch(NoSuchElementException e){
+						return maps;
+					}
+					logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
+					map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 				}
-				String data =null;
-				try{
-					data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
-				}catch(NoSuchElementException e){
-					return maps;
-				}
-				logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
-				map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 			}
 			System.out.println();
 			maps.add(map);
 		}
+			
 		
 		return maps;
 	}
@@ -490,5 +513,4 @@ public class ColBasePage {
 		LAST7,
 		LAST30
 	}
-	
 }

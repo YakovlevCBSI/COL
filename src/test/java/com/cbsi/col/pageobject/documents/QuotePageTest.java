@@ -27,6 +27,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.home.ColBasePage.Table;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
@@ -116,7 +117,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 
 	@Test
 	public void sendQuoteViaEmail(){
-	createQuote();
+		createQuote();
 		
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		SendPage sendPage = quotePage.clickSend();
@@ -410,12 +411,44 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void lineAction_AddBlankLine_AddHorizontalLine(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Add_Blank_Line);
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Add_Horizontal_Line);
+		List<HashMap<String, String>> maps = quotePage.getTableAsMaps();
 		
+		assertEquals(Table.H_Line.toString(), maps.get(1).get(Table.Other.toString()));
+		assertEquals(Table.B_Line.toString(), maps.get(2).get(Table.Other.toString()));	
 	}
 
 	@Test
 	public void lineAction_LinkLine(){
-		
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) quotePage.selectProductFromTable(1,2);
+		quotePage.selectFromLineActions(LineActions.Link_Lines);
+	}
+	
+	@Test
+	public void editBillTo(){
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		quotePage.clickBillTo();
+
+	}
+	
+	@Test
+	public void editShipTo(){
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		quotePage.clickShipTo();
+	}
+	
+	@Test
+	public void editOrderOptions(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		quotePage.clickOrderOptions();
 	}
 //	@Test
 //	public void cleanUpCompanies() throws Exception{

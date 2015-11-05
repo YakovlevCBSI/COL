@@ -915,6 +915,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public AddressPage clickBillTo(){
+		setBillingAndShippingDiv();
 		BillingAndShippingDiv.findElement(By.xpath("div[1]/label/a")).click();
 		return PageFactory.initElements(driver, AddressPage.class);
 	}

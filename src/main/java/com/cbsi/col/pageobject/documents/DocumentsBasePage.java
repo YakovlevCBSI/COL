@@ -624,7 +624,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		return (T) PageFactory.initElements(driver, this.getClass());	
 	}
-	
+
 	public enum LineActions{
 		Delete,
 		Compare,
@@ -637,13 +637,20 @@ public class DocumentsBasePage<T> extends ColBasePage{
 						},
 		Unbundle,
 		Insert_Header,
+		Insert_Subtotal_Header,
 		Insert_Subtotal,
 		Add_Subtotal, 
+		Add_Blank_Line,
+		Add_Horizontal_Line,
 		Copy_Line{
-			public String toString(){
-				return "Copy_Line(s)";
-			}
-		}
+				public String toString(){
+					return "Copy_Line(s)";
+				}
+		},
+		Link_Lines,
+		Unlink_Lines,
+		Insert_COL_Toll,
+		Print_Selected
 	}
 	
 	public enum AddImportUpdates{
@@ -682,12 +689,17 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return descSpan.getText();
 	}
 	
-	public T clickSaveBundle(){
+	public T clickSaveLineItem(){
 		WebElement save = bundleHeader.findElement(By.xpath("../../../../td/a[@title='Done']"));
 		save.click();
 		waitForQuickLoad();
 		
 		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	public String getSubTotalHeader(){
+		literaHeaderText = productTable.findElement(By.xpath("tbody/tr/td/span[@class='edit-document-lineitem-inline']"));
+		return literaHeaderText.getText();
 	}
 	
 	@FindBy(css="button#docActions")
@@ -891,8 +903,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	WebElement BillingAndShippingDiv;
 	public void setBillingAndShippingDiv(){
 //		BillingAndShippingDiv = driver.findElement(By.xpath("div[@class='span4']/label/a[contains(@href,'/billingshipping?')]"));
-		BillingAndShippingDiv = driver.findElement(By.cssSelector("div.span4 label a[href*='/billingshipping?']"));
-		BillingAndShippingDiv = BillingAndShippingDiv.findElement(By.xpath("../../.."));
+//		if(BillingAndShippingDiv == null){
+			BillingAndShippingDiv = driver.findElement(By.cssSelector("div.span4 label a[href*='/billingshipping?']"));
+			BillingAndShippingDiv = BillingAndShippingDiv.findElement(By.xpath("../../.."));
+//		}
 		
 	}
 	public String getBillTo(){
@@ -900,14 +914,35 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return BillingAndShippingDiv.findElement(By.xpath("div[1]")).getText();
 	}
 	
+	public AddressPage clickBillTo(){
+		BillingAndShippingDiv.findElement(By.xpath("div[1]/label/a")).click();
+		return PageFactory.initElements(driver, AddressPage.class);
+	}
+	
 	public String getShipTo(){
 		setBillingAndShippingDiv();
 		return BillingAndShippingDiv.findElement(By.xpath("div[2]")).getText();
 	}
 	
+	public AddressPage clickShipTo(){
+		setBillingAndShippingDiv();
+		BillingAndShippingDiv.findElement(By.xpath("div[2]/label/a")).click();
+		return PageFactory.initElements(driver, AddressPage.class);
+	}
+	
+	
 	public String getOrderOptions(){
 		setBillingAndShippingDiv();
 		return BillingAndShippingDiv.findElement(By.xpath("div[3]")).getText();
+	}
+	
+	public OrderOptionsPage clickOrderOptions(){
+		setBillingAndShippingDiv();
+		BillingAndShippingDiv.findElement(By.xpath("div[3]/label/a")).click();
+		waitForAlert();
+		acceptAlert();
+
+		return PageFactory.initElements(driver, OrderOptionsPage.class);
 	}
 	
 	//----------------------------- Organizer - task -----------------------------//

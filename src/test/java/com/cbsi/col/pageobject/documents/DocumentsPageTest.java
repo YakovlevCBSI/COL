@@ -2,7 +2,7 @@ package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Before;
@@ -34,7 +34,7 @@ public class DocumentsPageTest extends ColBaseTest{
 	public void FilterByQuotesOpen(){
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
 		documentsPage = documentsPage.filterByStatus(Status.QUOTES_OPEN);
-		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Open", false));
 	}
 	
@@ -42,7 +42,7 @@ public class DocumentsPageTest extends ColBaseTest{
 	public void FilterByOrdersSubmitted(){
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
 		documentsPage = documentsPage.filterByStatus(Status.ORDERS_SUBMITTED);
-		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Submitted", false));
 	}
 	
@@ -51,7 +51,7 @@ public class DocumentsPageTest extends ColBaseTest{
 	public void FilterByInvoicesDue(){
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
 		documentsPage = documentsPage.filterByStatus(Status.INVOICES_DUE);
-		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Due", false));
 	}
 	
@@ -61,7 +61,7 @@ public class DocumentsPageTest extends ColBaseTest{
 		
 		documentsPage = documentsPage.switchToTab(DocumentTabs.ALLQUOTESANDORDERS);
 		documentsPage = documentsPage.setFilterByModifiedBy(userName);
-		List<HashMap<String, String>> maps= documentsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps= documentsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"modifiedby", userName, false));
 	}
 	

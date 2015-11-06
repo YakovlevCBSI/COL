@@ -3,7 +3,7 @@ package com.cbsi.col.pageobject.home;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountAllContains(){
 		String keyword = "qa";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.All, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWordContains(maps, keyword));
 	}
 	
@@ -44,7 +44,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountAllStartsWith(){
 		String keyword = "qa";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, false, QueryColumn.All, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWordStartsWith(maps, keyword));
 	}
 	
@@ -52,7 +52,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountEmailContains(){
 		String keyword = "a\\_";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.Email, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps, "email",keyword, false));
 	}
 	
@@ -60,7 +60,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountEmailStartsWith(){
 		String keyword = "qa";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, false, QueryColumn.Email, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps, "email",keyword, true));
 	}
 	
@@ -68,7 +68,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountCompanyContains(){
 		String keyword = "a\\_";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.Company, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"companylocationcode", keyword, false));
 	}
 	
@@ -76,7 +76,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountCompanyStartsWith(){
 		String keyword = "qa";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, false, QueryColumn.Company, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"companylocationcode", keyword, true));
 	}
 	
@@ -84,7 +84,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountCityStartsWith(){
 		String keyword = "Irvin";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, false, QueryColumn.City, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"city", keyword, true));
 	}
 	
@@ -92,7 +92,7 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountCityContainsWith(){
 		String keyword = "rvin";
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.City, keyword, AccountsPage.class);
-		List<HashMap<String, String>> maps = accountsPage.getTableAsMaps();
+		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"city", keyword, false));
 	}
 	

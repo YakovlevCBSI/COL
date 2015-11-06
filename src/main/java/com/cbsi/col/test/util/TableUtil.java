@@ -1,22 +1,22 @@
 package com.cbsi.col.test.util;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TableUtil {
-	public static boolean tableMapHasWordStartsWith(List<HashMap<String, String>> maps, String keyword){
+	public static boolean tableMapHasWordStartsWith(List<LinkedHashMap<String, String>> maps, String keyword){
 		return tableMapHasWord(maps, keyword, true);
 	}
 	
-	public static boolean tableMapHasWordContains(List<HashMap<String, String>> maps, String keyword){
+	public static boolean tableMapHasWordContains(List<LinkedHashMap<String, String>> maps, String keyword){
 		return tableMapHasWord(maps, keyword, false);
 	}
 	
-	public static boolean tableMapHasWord(List<HashMap<String, String>> maps, String keyword, boolean startsWith){
+	public static boolean tableMapHasWord(List<LinkedHashMap<String, String>> maps, String keyword, boolean startsWith){
 		return tableMapHasWord(maps, null, keyword, startsWith);
 	}
 	
-	public static boolean tableMapHasWord(List<HashMap<String, String>> maps, String keyName, String keyword, boolean startsWith){
+	public static boolean tableMapHasWord(List<LinkedHashMap<String, String>> maps, String keyName, String keyword, boolean startsWith){
 		if(maps.size() ==0 || maps == null){
 			return false;
 		}
@@ -24,7 +24,7 @@ public class TableUtil {
 		keyword = StringUtil.cleanRegexChars(keyword);
 		
 		if(keyName == null){
-			for(HashMap<String, String> map: maps){
+			for(LinkedHashMap<String, String> map: maps){
 				boolean wordFound = false;
 				for(String key: map.keySet()){
 					
@@ -48,7 +48,7 @@ public class TableUtil {
 			}
 		}
 		else{
-			for(HashMap<String, String> map: maps){
+			for(LinkedHashMap<String, String> map: maps){
 				boolean wordFound = false;
 //				System.out.println(map.get(keyName) + " | " + keyword);
 

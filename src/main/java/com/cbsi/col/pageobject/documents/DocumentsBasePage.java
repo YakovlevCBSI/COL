@@ -475,6 +475,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Search.click();
 		
 		forceWait(1000);
+		waitForQuickLoad();
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 			

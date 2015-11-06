@@ -395,20 +395,27 @@ public class ColBasePage {
 		//collect headers and table rows to use.
 		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
 		List<WebElement> trs = table.findElements(By.xpath("tbody/tr"));
+		
+		logger.debug("headerElements size: " + headerElements.size());
+		logger.debug("trs size: " + trs.size());
+		
 		List<LinkedHashMap<String, String>>  maps= new ArrayList< LinkedHashMap<String, String>>();
 
 		// if no table rows exists, there is no data return empty maps.
 		if(trs.size() ==0 || trs == null){
+			logger.debug("Exit due to trs ==0");
 			return maps;
 		}
 		if(trs.size() <=1 && trs.get(0).findElement(By.xpath("td")).getText().toLowerCase().contains("no result")){
+			logger.debug("NO RESULT FOUND");
 			return maps;
 		}
 		
 
 		for(int j=0; j<trs.size(); j++){
+			logger.debug("trs class = '"+trs.get(j).getAttribute("class") + "'");
 //			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
-			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") ==null )) {	//skip collapsible columns on product table.
+			if(trs.get(j).getAttribute("class").contains("collapsible") ) {	//skip collapsible columns on product table.
 				continue; 
 			}
 
@@ -422,6 +429,7 @@ public class ColBasePage {
 			else{
 				for(int i=0; i< headerElements.size(); i++){		
 					if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
+						logger.debug("skipping column " + i);
 						continue;
 					}
 					String data =null;

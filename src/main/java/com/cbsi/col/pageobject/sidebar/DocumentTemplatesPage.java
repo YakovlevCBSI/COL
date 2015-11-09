@@ -68,6 +68,8 @@ public class DocumentTemplatesPage extends ColBasePage{
 		ctp.setDescription(desc);
 		ctp.clickOK();
 		
+		waitForQuickLoad();
+		
 		return PageFactory.initElements(driver, DocumentTemplateDesignerPage.class);
 	}
 	

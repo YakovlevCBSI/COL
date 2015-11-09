@@ -3,7 +3,12 @@ package com.cbsi.col.test.util;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TableUtil {
+	public static final Logger logger = LoggerFactory.getLogger(TableUtil.class);
+	
 	public static boolean tableMapHasWordStartsWith(List<LinkedHashMap<String, String>> maps, String keyword){
 		return tableMapHasWord(maps, keyword, true);
 	}
@@ -17,6 +22,8 @@ public class TableUtil {
 	}
 	
 	public static boolean tableMapHasWord(List<LinkedHashMap<String, String>> maps, String keyName, String keyword, boolean startsWith){
+		logger.debug("map size: " + maps.size());
+		
 		if(maps.size() ==0 || maps == null){
 			return false;
 		}

@@ -87,8 +87,8 @@ public class HomePage extends ColBasePage{
 	private WebElement RecentDocDropdown;
 	
 	public  AccountsPage goToAccountsPage(){
+		forceWait(500); //wait for message alert to load.
 		Accounts.click();
-		forceWait(500);
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 

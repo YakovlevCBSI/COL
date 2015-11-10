@@ -31,7 +31,7 @@ public class AccountsPage extends ColBasePage{
 		super(driver);
 		try{
 			waitForQuickLoad();
-			waitForPageToLoad(By.cssSelector("form#customerForm h1"), 10);
+			waitForPageToLoad(By.cssSelector("form#customerForm h1"), 15);
 		}catch(Exception e){
 			
 		}

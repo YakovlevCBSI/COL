@@ -88,7 +88,7 @@ public class HomePage extends ColBasePage{
 	
 	public  AccountsPage goToAccountsPage(){
 		Accounts.click();
-
+		forceWait(500);
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 

@@ -102,7 +102,7 @@ public class CurrentAccountTab extends ColBasePage{
 		if(full) proposalPopup.selectFull();
 		else proposalPopup.selectQuick();
 		
-		waitForQuickLoad();
+		waitForQuickLoad(10);
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	

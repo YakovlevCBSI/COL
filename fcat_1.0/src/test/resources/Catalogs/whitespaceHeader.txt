@@ -1,0 +1,3 @@
+Item ID	Manufacturer Name	MFR Part # 	Product Description	URL
+1916207	Microsoft	WTLCMZJVFZENCMC	Office Home and Student 2016 for Windows (1 User) [Download]	http://www.staples.com/Office-Home-and-Student-2016-for-Windows-1-User-Download-/product_1916207
+1916210	Microsoft	XQTQUSV2WY8SNUD	Microsoft Office 365 University for Windows/Mac (2-Device) [Download]	http://www.staples.com/Microsoft-Office-365-University-for-Windows-Mac-2-Device-Download-/product_1916210

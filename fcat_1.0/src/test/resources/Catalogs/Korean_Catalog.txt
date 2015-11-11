@@ -1,0 +1,3 @@
+유저고유번호	제조회사	제조번호	가격	설명	웹사이트
+가1	엘지	가2	$56.233	컴퓨터	http://wwww.lifeisgood.com
+나1	삼성	나2	%34,234.22	텔레비젼	http://www.samsung.com

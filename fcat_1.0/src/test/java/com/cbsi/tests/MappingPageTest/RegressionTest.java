@@ -2,6 +2,7 @@ package com.cbsi.tests.MappingPageTest;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -36,6 +37,25 @@ public class RegressionTest extends AllBaseTest{
 		
 	}
 
+	public static final	List<String> expectedHeaders = Arrays.asList(new String[]{"유저고유번호", "제조회사", "제조번호", "가격", "설명", "웹사이트"});		
+	public static final	List<String> expectedPreviews = Arrays.asList(new String[]{"가1", "엘지", "가2", "$56.233", "컴퓨터", "http://wwww.lifeisgood.com"});
+	
+	@Test
+	public void headersAndPreviewColumnsDisplayDoubleByteLanguage(){
+		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", "TXT");
+		
+		assertTrue(mappingPage.getHeaders().equals(expectedHeaders));
+		assertTrue(mappingPage.getDataPreviews().equals(expectedPreviews));		
+	}
+	
+	public static final	List<String> expectedPreviewsFromWhiteSpace = Arrays.asList(new String[]{"Item ID", "Manufacturer Name", "MFR Part #", "Product Description", "URL"});
+	
+	@Test
+	public void parseHeaderWithWhiteSpace(){
+		MappingPage mappingPage = UploadFullFile("whitespaceHeader.txt", "TXT");
+		assertTrue(mappingPage.getHeaders().equals(expectedPreviewsFromWhiteSpace));
+	}
+	
 	@After
 	public void cleanUp(){
 		driver.close();

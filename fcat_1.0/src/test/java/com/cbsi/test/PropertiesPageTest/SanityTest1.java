@@ -24,6 +24,7 @@ import com.cbsi.tests.PageObjects.AddCatalogPage;
 import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.MappingPage;
+import com.cbsi.tests.PageObjects.MappingPage.CNetFields;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.PageObjects.DetailsPage.InfoType;
 import com.cbsi.tests.PageObjects.DetailsPage.ProcessingQueue;
@@ -133,9 +134,24 @@ public class SanityTest1 extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
-
 	}
 	
+	@Test
+	public void uploadFullFileTxtWithDoubleByteCharacter(){
+		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", "TXT");
+		mappingPage.setCnetField(CNetFields.ProductId, 1);
+		mappingPage.setCnetField(CNetFields.ManufacturerName, 2);
+		mappingPage.setCnetField(CNetFields.ManufacturerPartNumber, 3);
+		mappingPage.setCnetField(CNetFields.Price, 4);
+		mappingPage.setCnetField(CNetFields.ProductNameOrDescription, 5);
+//		mappingPage.setCnetField(CNetFields.AddToCartURL, 6);
+
+		mappingPage.clickSave();
+		
+		DetailsPage detailsPage = PageFactory.initElements(driver, DetailsPage.class);
+		assertTrue(detailsPage.FileUploadIsDone());
+
+	}
 
 
 	public String getProcessedNumber(String queueMessage){

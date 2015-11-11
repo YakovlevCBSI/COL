@@ -105,6 +105,11 @@ public class MappingPage extends BasePage{
 		return headers;
 	}
 	
+	public List<WebElement> collectDataPreviews(){
+		List<WebElement> dataPreviews = driver.findElements(By.cssSelector("tr.highlighted td.data-preview-column"));
+		return dataPreviews;
+	}
+	
 	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number", "pn"};
 	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer", "mfpn"};
 	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer", "mfn", "mfrname"};
@@ -162,6 +167,57 @@ public class MappingPage extends BasePage{
 		}
 		
 		return matchword;
+	}
+	
+	public MappingPage setCnetField(CNetFields value, int n){
+		WebElement dropdown = driver.findElement(By.cssSelector("table.catalog-mapping-table tr:nth-child(" + n + ") td a"));
+		scrollToView(dropdown);
+		dropdown.click();
+		
+		forceWait(500);
+		List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li a[rel='" + value.toString() + "']"));
+		for(WebElement dropdownSelection: dropdownSelections){
+			if(dropdownSelection.isDisplayed()) {
+				dropdownSelection.click(); 
+				break;
+			}
+		}
+		
+		
+		return this;
+	}
+	
+	public enum CNetFields{
+		ProductId{
+			public String toString(){
+				return "id";
+			}
+		},
+		ManufacturerName{
+			public String toString(){
+				return "mf";
+			}
+		},
+		ManufacturerPartNumber{
+			public String toString(){
+				return "mfPn";
+			}
+		},
+		Price{
+			public String toString(){
+				return "price";
+			}
+		},
+		ProductNameOrDescription{
+			public String toString(){
+				return "productName";
+			}
+		},
+		AddToCartURL{
+			public String toString(){
+				return "addToCartUrl";
+			}
+		}	
 	}
 	
 	public static void main(String[] args){
@@ -264,6 +320,26 @@ public class MappingPage extends BasePage{
 		return true;
 	}
 	
+	public List<String> getHeaders(){
+		List<String> headersAsString = new ArrayList<String>();
+		
+		for(WebElement header:collectHeaders()){
+			headersAsString.add(header.getText());
+			System.out.println("header: " + header.getText());
+		}
+		
+		return headersAsString;
+	}
+	
+	public List<String> getDataPreviews(){
+		List<String> dataPreviews = new ArrayList<String>();
+		
+		for(WebElement e: collectDataPreviews()){
+			dataPreviews.add(e.getText());
+		}
+		
+		return dataPreviews;
+	}
 	
 	
 }

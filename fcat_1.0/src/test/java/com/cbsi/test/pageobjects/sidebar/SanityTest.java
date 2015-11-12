@@ -48,11 +48,6 @@ public class SanityTest extends FormBaseTest{
 	}
 	
 	@Test
-	public void loadItemIdentificationTypePage(){
-		fcatHomePage.goToItemIdentification();
-	}
-	
-	@Test
 	public void loadMasterPage(){
 		fcatHomePage.goToMaster();
 	}

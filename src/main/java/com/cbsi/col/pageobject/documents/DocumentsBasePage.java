@@ -62,6 +62,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public CurrentAccountTab clickCompanyLink(){
 		waitForQuickLoad();
 		CompanyName.click();
+		forceWait(500);
 		return PageFactory.initElements(driver, CurrentAccountTab.class);
 	}
 	

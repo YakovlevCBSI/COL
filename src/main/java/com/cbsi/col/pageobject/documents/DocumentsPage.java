@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -100,7 +101,14 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public QuotePage goToQuote(long docNumber){
-		goToDocument(docNumber);	
+		try{
+			goToDocument(docNumber);
+			return PageFactory.initElements(driver, QuotePage.class);
+
+		}catch(Exception e){
+			logger.debug("handle expired alert");
+			acceptAlert();			
+		}
 		return PageFactory.initElements(driver, QuotePage.class);
 	}
 	

@@ -33,7 +33,7 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void deleteQuoteFromAccountView(){
-		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);;
 		if(!documentsPage.hasQuote(1)){
 			homePage = currentAccount.exitDocumentsPage().goToHomePage();
 			navigateToCustomersPage();

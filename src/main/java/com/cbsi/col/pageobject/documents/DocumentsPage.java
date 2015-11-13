@@ -166,8 +166,14 @@ public class DocumentsPage extends ColBasePage{
 	
 //		acceptAlert();
 		
-		forceWait(1000);
-		driver.findElement(By.cssSelector("button[id^='delete-'][id*='-btn']")).click();
+		waitForTextToBeVisible("Are you sure", "div form p");
+//		forceWait(1000);
+		for(WebElement del:driver.findElements(By.cssSelector("button[id^='delete-'][id*='-btn']"))){
+			if(del.isDisplayed()){
+				del.click();
+				break;
+			}
+		}
 	
 		forceWait(700);
 		return PageFactory.initElements(driver, DocumentsPage.class);
@@ -219,8 +225,9 @@ public class DocumentsPage extends ColBasePage{
 		}
 		if(pageList.size() >=1){
 			currentPage++;
-			pageList.get(0).click();
+
 			waitForTextToBeVisible("Documents", "h1");
+	
 			dataColumns=null;
 			return findDataRowByName(quoteNumber, docNumberSecondcolumn);
 		}

@@ -94,15 +94,21 @@ public class CurrentAccountTab extends ColBasePage{
 	public ProposalPage clickCreateProposal(boolean full){
 		switchFrame();
 		CreateProposal.click();
-//		switchBack();
 
 		waitForQuickLoad();
 		
 		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
 		if(full) proposalPopup.selectFull();
+
 		else proposalPopup.selectQuick();
 		
-		waitForQuickLoad(10);
+		try{
+			waitForQuickLoad(10);
+		}catch(Exception e){
+			refresh();
+			waitForQuickLoad(10);	
+		}
+
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	
@@ -167,7 +173,7 @@ public class CurrentAccountTab extends ColBasePage{
 	public void switchFrame(){
 		waitForElementToBeVisible(By.cssSelector("div#modal-wrapper div#main"));
 		waitForElementToBeVisible(By.linkText("Create Proposal"));
-		forceWait(300);
+		forceWait(500);
 	}
 	
 	//-------------------------- Company details---------------------------//

@@ -6,7 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.HomePage.Admin;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
@@ -102,7 +105,23 @@ public class TemplatesPageTest extends ColBaseTest{
 	public DocumentTemplatesPage createQuoteTemplateSetup(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
 		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("All").clickSave().clickSave();	
-		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
+		
+		//-------------Temp workaround for navigating away.-------------//
+		try{
+			homePage = dtdp.goToHomePage();
+	
+		}catch(Exception e){
+			if(driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).isDisplayed()){
+				driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).click();
+			}
+			homePage = PageFactory.initElements(driver, HomePage.class);
+		}
+		
+		//-------------------------------------------------------//
+		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
+
+//		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
+
 		return dtp;
 	}
 	public String getCopyOfTestVar(){
@@ -111,11 +130,11 @@ public class TemplatesPageTest extends ColBaseTest{
 	}
 	
 	
-//	@Test
-//	public void deleteTestTemplates(){
-////		dtp = dtp.clickProposalsTab();
-//		while(true)
-//		dtp = dtp.deleteQuoteTemplateByName("_");
-//	}
+	@Test
+	public void deleteTestTemplates(){
+//		dtp = dtp.clickProposalsTab();
+		while(true)
+		dtp = dtp.deleteQuoteTemplateByName("_");
+	}
 
 }

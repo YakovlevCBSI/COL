@@ -120,9 +120,14 @@ public class DocumentsPage extends ColBasePage{
 	public ProposalPage goToProposal(long orderNumber){
 		WebElement docLink = findDataRowByName(orderNumber, false);
 		docLink.click();
-		
+		try{		
+			return PageFactory.initElements(driver, ProposalPage.class);
+		}catch(Exception e){
+			refresh();
+		}
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
+	
 	
 	public RMAPage goToRma(long docNumber){
 		goToDocument(docNumber);		

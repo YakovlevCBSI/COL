@@ -105,8 +105,9 @@ public class CurrentAccountTab extends ColBasePage{
 		try{
 			waitForQuickLoad(10);
 		}catch(Exception e){
+			logger.info("stuck at loading. Try again.");
 			refresh();
-			waitForQuickLoad(10);	
+			waitForQuickLoad(20);	
 		}
 
 		return PageFactory.initElements(driver, ProposalPage.class);

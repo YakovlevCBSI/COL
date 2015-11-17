@@ -271,10 +271,25 @@ public class ColBasePage {
 //	@FindBy(css="a#tab-home span")
 	@FindBy(css="a#tab-home")
 	private WebElement Home;
+//	public HomePage goToHomePage(){
+//		scrollToView(Home);
+//		Home = refreshStaleElement(By.cssSelector("a#tab-home span"));
+//		Home.click();		
+//		return PageFactory.initElements(driver, HomePage.class);
+//	}
+	
 	public HomePage goToHomePage(){
 		scrollToView(Home);
 		Home = refreshStaleElement(By.cssSelector("a#tab-home span"));
-		Home.click();		
+		Home.click();	
+		try{
+			logger.debug("Home is enabled");	
+			return PageFactory.initElements(driver, HomePage.class);
+		}catch(Exception e){
+			if(driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).isDisplayed()){
+				driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).click();
+			}
+		}
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	

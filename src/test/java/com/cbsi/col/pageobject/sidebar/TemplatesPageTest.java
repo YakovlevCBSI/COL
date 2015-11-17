@@ -105,22 +105,8 @@ public class TemplatesPageTest extends ColBaseTest{
 	public DocumentTemplatesPage createQuoteTemplateSetup(){
 		DocumentTemplateDesignerPage dtdp = dtp.createNewQuoteTemplate(testVar);
 		dtdp = dtdp.addComponentTop().fromCompany().pickComponents("All").clickSave().clickSave();	
-		
-		//-------------Temp workaround for navigating away.-------------//
-		try{
-			homePage = dtdp.goToHomePage();
-	
-		}catch(Exception e){
-			if(driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).isDisplayed()){
-				driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).click();
-			}
-			homePage = PageFactory.initElements(driver, HomePage.class);
-		}
-		
-		//-------------------------------------------------------//
-		dtp = homePage.navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 
-//		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
+		dtp = dtdp.goToHomePage().navigateToSideBar(Admin.Document_Templates, DocumentTemplatesPage.class);
 
 		return dtp;
 	}
@@ -130,11 +116,11 @@ public class TemplatesPageTest extends ColBaseTest{
 	}
 	
 	
-	@Test
-	public void deleteTestTemplates(){
-//		dtp = dtp.clickProposalsTab();
-		while(true)
-		dtp = dtp.deleteQuoteTemplateByName("_");
-	}
+//	@Test
+//	public void deleteTestTemplates(){
+////		dtp = dtp.clickProposalsTab();
+//		while(true)
+//		dtp = dtp.deleteQuoteTemplateByName("_");
+//	}
 
 }

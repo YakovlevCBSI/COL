@@ -96,20 +96,25 @@ public class CurrentAccountTab extends ColBasePage{
 		CreateProposal.click();
 
 		waitForQuickLoad();
-		
+
 		ProposalPopup proposalPopup = PageFactory.initElements(driver, ProposalPopup.class);
 		if(full) proposalPopup.selectFull();
 
 		else proposalPopup.selectQuick();
-		
-		try{
-			waitForQuickLoad(10);
-		}catch(Exception e){
-			logger.info("stuck at loading. Try again.");
-			refresh();
-			waitForQuickLoad(20);	
-		}
 
+		//-------------------- remove this block after this fix-----------------------/
+		boolean isOnLoading = true;
+		while(isOnLoading){
+			try{
+				waitForQuickLoad(10);	
+				isOnLoading = false;
+			}catch(Exception e){
+				logger.info("stuck at loading. Try again.");
+				refresh();
+			}
+		}
+		//-----------------------------------------------------------------/
+		
 		return PageFactory.initElements(driver, ProposalPage.class);
 	}
 	

@@ -338,7 +338,7 @@ public class ColBasePage {
 		}catch(TimeoutException e){
 			
 		}
-		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"));
+		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"), 15);
 	}
 	
 	

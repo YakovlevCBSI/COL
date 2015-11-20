@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -162,6 +164,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;
 		
 		quotePage = PageFactory.initElements(driver, QuotePage.class);
+		
+		logger.debug("quoteNumber; " + quotePage.getDocNumber());
+		
 		PriceCalculator priceCalculator = quotePage.getPriceCalculator();
 		
 		priceCalculator.setTaxOn(3.25);
@@ -276,6 +281,8 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		quotePageNew = quotePageNew.clickRevert("test1");
 		quotePageNew = (QuotePage)quotePageNew.clickSave();
+		
+		logger.debug("------- get Table After revision -----------");
 		List<LinkedHashMap<String, String>> productMapAfterRevision = quotePageNew.getTableAsMaps();
 		
 		assertTrue(productMapBeforeRevision.equals(productMapAfterRevision));
@@ -302,6 +309,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	@Test
 	public void companyLinkRedirectsToCurrentAccount(){
 		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+	
 		String expectedName = quotePage.getCompanyName();
 		CurrentAccountTab currentAccountPage = quotePage.clickCompanyLink();
 		String companyName = currentAccountPage.getCompany();
@@ -454,6 +462,20 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 //		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
 		quotePage.clickOrderOptions();
+	}
+	
+	@Test
+	public void lineActionBarIsSticky() throws InterruptedException{
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		quotePage.setDocumentNotes("a");
+		quotePage.forceWait(2000);
+		
+		assertTrue(quotePage.isLineActionsDropdownDisplayed());
+		assertTrue(quotePage.isReorderLinesDisplayed());
+		assertTrue(quotePage.isAddImportUpdateDropdownDisplayed());
+		assertTrue(quotePage.isLiveCost());
 	}
 //	@Test
 //	public void cleanUpCompanies() throws Exception{

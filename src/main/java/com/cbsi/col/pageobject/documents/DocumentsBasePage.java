@@ -436,7 +436,6 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public void clickCancel(){
 			Cancel.click();
 		}
-	
 		//--------------document content-------------//
 
 		@FindBy(css="tr.lineItemNoteRow td.lineItemNote span")
@@ -576,6 +575,28 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="div#rma-operations-toolbar div div button#lineActions")
 	private WebElement LineActionsDropdown;
 	
+	@FindBy(css="button#reorderLines")
+	private WebElement ReorderLines;
+	
+	@FindBy(css="button#addImportUpdate")
+	private WebElement AddImportUpdateDropdown;
+	
+	public boolean isLineActionsDropdownDisplayed(){
+		return LineActionsDropdown.isDisplayed();
+	}
+	
+	public boolean isReorderLinesDisplayed(){
+		return ReorderLines.isDisplayed();
+	}
+	
+	public boolean isAddImportUpdateDropdownDisplayed(){
+		return AddImportUpdateDropdown.isDisplayed();
+	}
+	
+	public boolean isLiveCost(){
+		return LiveCost.isDisplayed();
+	}
+	
 	public T selectFromLineActions(LineActions lAction){
 		LineActionsDropdown.click();
 		
@@ -617,9 +638,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return Arrays.asList(actualHeaders).containsAll(Arrays.asList(expectedHeaders));
 	
 	}
-	
-	@FindBy(css="button#addImportUpdate")
-	private WebElement AddImportUpdateDropdown;
+
 	public T selectFromAddImportUpdate(AddImportUpdates add){
 		AddImportUpdateDropdown.click();
 		
@@ -1020,4 +1039,18 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return StringUtil.cleanPageTitle(PageTitle.getText());
 	}
 	
+	//----------------------------- Document notes -----------------------------//
+	@FindBy(css="textarea#external-notes")
+	private WebElement DocumentNotes;
+	
+	@FindBy(css="textarea#internal-notes")
+	private WebElement InternalDocumentNotes;
+	
+	public void setDocumentNotes(String text){
+		DocumentNotes.sendKeys(text);
+	}
+	
+	public void setInternalDocumentNotes(String text){
+		InternalDocumentNotes.sendKeys(text);
+	}
 }

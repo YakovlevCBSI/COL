@@ -25,6 +25,7 @@ import com.cbsi.tests.PageObjects.CatalogsPage;
 import com.cbsi.tests.PageObjects.DetailsPage;
 import com.cbsi.tests.PageObjects.MappingPage;
 import com.cbsi.tests.PageObjects.MappingPage.CNetFields;
+import com.cbsi.tests.PageObjects.ProductsCatalogPage;
 import com.cbsi.tests.PageObjects.UploadPopupPage;
 import com.cbsi.tests.PageObjects.DetailsPage.InfoType;
 import com.cbsi.tests.PageObjects.DetailsPage.ProcessingQueue;
@@ -137,6 +138,14 @@ public class SanityTest1 extends AllBaseTest{
 	}
 	
 	@Test
+	public void uploadFullFileXMLManual(){
+		MappingPage mappingPage = UploadFullFile("XML.xml", "XML");
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
 	public void uploadFullFileTxtWithDoubleByteCharacter(){
 		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", "TXT");
 		mappingPage.setCnetField(CNetFields.ProductId, 1);
@@ -150,7 +159,6 @@ public class SanityTest1 extends AllBaseTest{
 		
 		DetailsPage detailsPage = PageFactory.initElements(driver, DetailsPage.class);
 		assertTrue(detailsPage.FileUploadIsDone());
-
 	}
 
 

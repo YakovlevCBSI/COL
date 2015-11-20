@@ -163,6 +163,9 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="li a[rel='Excel']")
 	private WebElement Excel;
 	
+	@FindBy(css="li a[rel='Xml']")
+	private WebElement XML;
+	
 	public UploadPopupPage selectDropBoxOption(String option){
 		try {
 			Thread.sleep(3000);
@@ -175,6 +178,7 @@ public class UploadPopupPage extends BasePage{
 		if(option.equals("CSV")) CSV.click();
 		else if(option.equals("TXT")) TXT.click();
 		else if(option.equals("Excel")) Excel.click();
+		else if(option.equals("XML")) XML.click();
 		
 		return this;
 	}

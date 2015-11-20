@@ -18,32 +18,40 @@ public class checkItemsInCache {
 	@Test
 	public void checkUpcEanIsLoaded(){
 		List<MongoItem> mongoItems = ItemDao.getItemFirst(upcCatalogId, partyId);
-		
 		String upcAsc = mongoItems.get(0).getItemIds().get(MongoItem.ID);
 		
-		System.out.println(upcAsc);
 		List<MongoItem> mongoItemsLast =  ItemDao.getItemLast(upcCatalogId, partyId);
 		String upcDsc = mongoItemsLast.get(0).getItemIds().get(MongoItem.ID);
-
+		
+		
+		List<MongoItem> mongoItemsMid =  ItemDao.getItems(upcCatalogId, partyId, MongoItem.MODID, -1, 1, 10000);
+		String upcMid = mongoItemsMid.get(0).getItemIds().get(MongoItem.ID);
+		
 		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcAsc).get(MongoItem.MASTERID));
 		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcDsc).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcMid).get(MongoItem.MASTERID));
 
 	}
 	
 	@Test
 	public void checkMasterIsLoaded(){
-		List<MongoItem> mongoItems = ItemDao.getItemFirst(masterCatalogId, partyId);
-		
+		List<MongoItem> mongoItems = ItemDao.getItemFirst(masterCatalogId, partyId);	
 		String mf1 = mongoItems.get(0).getItemIds().get(MongoItem.MF);
 		String mfPn1 = mongoItems.get(0).getItemIds().get(MongoItem.MFPN);
 		
-		System.out.println(mf1 + " : " + mfPn1);
 		List<MongoItem> mongoItemsLast =  ItemDao.getItemLast(masterCatalogId, partyId);
 		String mf2 = mongoItemsLast.get(0).getItemIds().get(MongoItem.MF);
 		String mfPn2 = mongoItemsLast.get(0).getItemIds().get(MongoItem.MFPN);
+		
+		List<MongoItem> mongoItemsMid =  ItemDao.getItems(masterCatalogId, partyId, MongoItem.MODID, -1, 1, 10000);
+		String mf3 = mongoItemsMid.get(0).getItemIds().get(MongoItem.MF);
+		String mfPn3 = mongoItemsMid.get(0).getItemIds().get(MongoItem.MFPN);
+
 
 		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
 		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf3, mfPn3).get(MongoItem.MASTERID));
+
 	}
 	
 	@Test
@@ -59,4 +67,6 @@ public class checkItemsInCache {
 		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
 		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
 	}
+	
+	
 }

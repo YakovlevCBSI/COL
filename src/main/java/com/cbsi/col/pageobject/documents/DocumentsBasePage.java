@@ -801,6 +801,35 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return shipTrackTable.isDisplayed();
 	}
 	
+	public <T>T clickReorderLine(){
+		ReorderLines.click();
+		forceWait(500);
+		
+		while(!driver.findElement(By.cssSelector("button#reorderLines")).getText().contains("Return to")){
+			forceWait(100);
+		}
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	public <T>T reorder(int before, int after){
+		WebElement from = productTable.findElement(By.xpath("tbody/tr[" + before + "]/tr/td/div"));
+		WebElement to = productTable.findElement(By.xpath("tbody/tr[" + after + "]/tr/td/div"));
+
+		to.click();
+
+		getActions().clickAndHold(from).build().perform();
+		forceWait(500);
+		getActions().moveToElement(to, 0, 150).build().perform();
+		forceWait(500);
+		getActions().release().build().perform();
+		
+		forceWait(5000);
+		ReorderLines.click();
+		
+		forceWait(1000);
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
 	//----------------------------- RMA popup for SO and PO-----------------------------//
 	public static class CreateRmaPopup extends ColBasePage{
 

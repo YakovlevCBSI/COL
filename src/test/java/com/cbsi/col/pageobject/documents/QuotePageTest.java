@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -477,6 +478,18 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertTrue(quotePage.isAddImportUpdateDropdownDisplayed());
 		assertTrue(quotePage.isLiveCost());
 	}
+	
+	@Test
+	public void reorderProducts(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		Map<String, String> firstProduct = (Map<String, String>) quotePage.getTableAsMaps().get(0);
+		quotePage = (QuotePage) ((QuotePage) quotePage.clickReorderLine()).reorder(1,3);
+		
+		assertFalse(quotePage.getTableAsMaps().get(0).equals(firstProduct));
+	}
+	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
 //		AccountsPage accountPage = homePage.goToAccountsPage();

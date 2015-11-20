@@ -63,11 +63,17 @@ public class ProposalPageTest extends ColBaseTest{
 			AddressPage addressPage  = proposalPage.clickPrePareForESign();
 			addressPage.setFirstName("qa");
 			addressPage.setLastName("qa");
+			addressPage.setAddress(address);
+			addressPage.setCity(city);
+			addressPage.setZip(zip);
+			
 			addressPage.clickCopyToShipping();
 			addressPage.clickSave();
+
 		}catch(Exception e){
-			orderOptionPage = PageFactory.initElements(driver, OrderOptionsPage.class);
 		}
+		
+		orderOptionPage = PageFactory.initElements(driver, OrderOptionsPage.class);
 		ProposalPage proposlPageFinal = (ProposalPage) orderOptionPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder).clickSave(ProposalPage.class);
 	}
 	

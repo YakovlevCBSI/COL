@@ -765,6 +765,23 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	
+	@FindBy(css="button[id*='serialstracking-tbl-btn']")
+	private WebElement ShowSerialShipping;
+	
+	public <T>T clickShowSerialShipping(){
+		ShowSerialShipping.click();
+		forceWait(500);
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	@FindBy(css="table.source.shiptrack")
+	private WebElement shipTrackTable;
+	
+	public boolean isShipTrackTableDisplayed(){
+		return shipTrackTable.isDisplayed();
+	}
+	
 	//----------------------------- RMA popup for SO and PO-----------------------------//
 	public static class CreateRmaPopup extends ColBasePage{
 

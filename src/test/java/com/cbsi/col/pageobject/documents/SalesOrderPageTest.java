@@ -116,4 +116,21 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		SendPage sendPage = orderPage.clickSend();
 		assertEquals("qa_ball_game", sendPage.getLineItemNote());	
 	}
+	
+	@Test
+	public void createDocDropdownIsNotDisplayedWhenOrderIsPending(){
+		
+	}
+	
+	@Test
+	public void showSerialShippingIsDisplayed(){
+		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		
+		super.convertToSalesOrderOnly();
+		
+		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
+		orderPage = (SalesOrderPage) orderPage.clickShowSerialShipping();
+		
+		assertTrue(orderPage.isShipTrackTableDisplayed());
+	}
 }

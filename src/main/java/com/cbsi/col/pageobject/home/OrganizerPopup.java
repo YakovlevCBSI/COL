@@ -18,8 +18,8 @@ public class OrganizerPopup<T> extends ColBasePage{
 		// TODO Auto-generated constructor stub
 		switchToNewWindow();
 		waitForTextToBeVisible("Date Range", "h3");
-		switchFrame();
-		waitForElementToBeVisible(By.cssSelector("p"));
+//		switchFrame();
+//		waitForElementToBeVisible(By.cssSelector("p"));
 		switchBack();
 //		waitForTextToBeVisible("Task", "span");
 		forceWait(500);

@@ -325,8 +325,8 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public boolean isDefaultCatalog(){
-		String defaultText = myCatalog.findElement(By.xpath("../span")).getText();
-		return defaultText.toLowerCase().contains("(default)");
+		String defaultText = myCatalog.findElement(By.xpath("../label")).getText();
+		return defaultText.toLowerCase().contains("default");
 	}
 	
 	public List<String> getCatalogNames(){

@@ -49,6 +49,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		navigateToCustomersPage();
 //		recentCustomersPage = createAccount();
 //		recentCustomersPage = pickRandomAccount();
+
 	}
 	
 	public void createQuote(){
@@ -85,7 +86,9 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quotePageNew.clickSave();
 		
 		if(goToDocumentsPage){
-			documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		
+//			documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		
+			documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");		
+
 			
 			assertTrue("didnt find quote #" + quoteNumber, documentPage.hasQuote(quoteNumber));
 		}
@@ -135,11 +138,12 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
 		quotePage = (QuotePage) quotePage.clickSave();
 		
+		quotePage.forceWait(1000);
 		SalesOrderPage salesOrderPage = null;
 		OrderOptionsPage orderOptionsPage = null;
 		boolean convertOrderSuccess = false;
 		int retry=1;
-		while(convertOrderSuccess == false){
+		while(!convertOrderSuccess){
 			AddressPage orderPageAdress = null;
 
 			try{
@@ -204,6 +208,13 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	public DocumentsBasePage addSubtotalBundleWorkFlow(DocumentsBasePage quotePagePass){
 		DocumentsBasePage quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePagePass.selectProductFromTable(1,2,3)).selectFromLineActions(LineActions.Delete);
 		
+//		logger.debug("Wait 5000 mili.........................");
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		ProductsPage productPage =quotePage.goToProductsPage();
 		try{
 			productPage.goToLinkText("System & Power Cables");

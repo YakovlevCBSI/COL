@@ -21,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
@@ -192,7 +193,8 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage = (QuotePage) quotePage.searchExactProduct(warrantyMfpn);
 		
 		quotePage.clickSave();
-		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+//		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
 		assertTrue(documnetsPage.hasQuote(quoteNumber));	
 	}
 	
@@ -201,7 +203,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 //		createQuote();
 //		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+
 		int oldTaskNum = quotePage.getTasks();
 		
 		quotePage = (QuotePage) quotePage.addTask("test1", "test description");
@@ -309,7 +313,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void companyLinkRedirectsToCurrentAccount(){
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+
 	
 		String expectedName = quotePage.getCompanyName();
 		CurrentAccountTab currentAccountPage = quotePage.clickCompanyLink();
@@ -446,14 +452,18 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void editBillTo(){
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+
 		quotePage.clickBillTo();
 
 	}
 	
 	@Test
 	public void editShipTo(){
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+
 		quotePage.clickShipTo();
 	}
 	
@@ -488,6 +498,16 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage = (QuotePage) ((QuotePage) quotePage.clickReorderLine()).reorder(1,3);
 		
 		assertFalse(quotePage.getTableAsMaps().get(0).equals(firstProduct));
+	}
+	
+	@Test
+	public void getStatus(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		
+		assertEquals(DocumentState.Open.toString(), quotePage.getDocumentState());
+		
+		quotePage.clickSend().clickEmail().clickSendEmail();
 	}
 	
 //	@Test

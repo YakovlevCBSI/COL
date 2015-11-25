@@ -1,5 +1,7 @@
 package com.cbsi.col.pageobject.customers;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,29 +33,29 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		currentAccount = recentAccountsTab.clickViewCustomer(companyNameCommon);
 	}
 	
-	@Test
-	public void deleteQuoteFromAccountView(){
-		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);;
-		if(!documentsPage.hasQuote(1)){
-			homePage = currentAccount.exitDocumentsPage().goToHomePage();
-			navigateToCustomersPage();
-			createQuote();
-			documentsPage = documentsPage.goToAccountsPage().goToCurrentAccountTab().getDocumentsPage();
-		}
-		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName("Qa");
-	}
-	
-	@Test
-	public void deleteProposalFromAccountview(){
-		currentAccount = ((ProposalPage) currentAccount.clickCreateProposal().setContact()).clickSave().goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
-		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
-			
-		documentsPage.deleteDocumentByCompanyName("Qa");
-	}
+//	@Test
+//	public void deleteQuoteFromAccountView(){
+//		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);;
+//		if(!documentsPage.hasQuote(1)){
+//			homePage = currentAccount.exitDocumentsPage().goToHomePage();
+//			navigateToCustomersPage();
+//			createQuote();
+//			documentsPage = documentsPage.goToAccountsPage().goToCurrentAccountTab().getDocumentsPage();
+//		}
+//		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName("Qa");
+//	}
+//	
+//	@Test
+//	public void deleteProposalFromAccountview(){
+//		currentAccount = ((ProposalPage) currentAccount.clickCreateProposal().setContact()).clickSave().goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
+//		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
+//			
+//		documentsPage.deleteDocumentByCompanyName("Qa");
+//	}
 	
 	@Test
 	public void purchaseOrderLinkRedirectsPage(){
-	
+		assertTrue(false);
 	}
 
 }

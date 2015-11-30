@@ -389,6 +389,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			switchToNextWindow();			
 		}
 		
+		public SendPage clickEmail(){
+			Email.click();
+			return this;
+		}
+
+		
 		@FindBy(css="html#print-preview")
 		private WebElement printWindow;
 		public boolean isPrintPrviewOpen(){
@@ -403,11 +409,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			return driver.findElements(By.cssSelector("html#print-preview")).size()>=1 ? true:false;
 		}
 		
-		public SendPage clickEmail(){
-			Email.click();
-			return this;
-		}
-		
+
 		public boolean isEmailBoxOpen(){
 			waitForTextToBeVisible("Attachment Format", "legend");
 			return true;
@@ -433,9 +435,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="a#add-attachment-btn")
 		private WebElement AddAttachment;
 		
+		public void clickSendEmail(){
+			SendEmail.click();
+		}
+		
 		public void clickCancel(){
 			Cancel.click();
 		}
+		
 		//--------------document content-------------//
 
 		@FindBy(css="tr.lineItemNoteRow td.lineItemNote span")
@@ -1058,7 +1065,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			public String toString(){
 				return "Document Declined";
 			}
-		}
+		},
+		Open
 	}
 	
 	@FindBy(css="h1[class*='page-title'] span")
@@ -1081,5 +1089,5 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	public void setInternalDocumentNotes(String text){
 		InternalDocumentNotes.sendKeys(text);
-	}
+	}	
 }

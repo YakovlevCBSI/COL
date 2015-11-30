@@ -363,7 +363,6 @@ public class ColBaseTest {
 	
 	public void navigateToCustomersPage(){
 //		navigatetoLoginPage();
-		
 		customersPage = homePage.goToAccountsPage();
 
 	}
@@ -403,6 +402,7 @@ public class ColBaseTest {
 			createNewCustomerPage.setCompanyName(companyName);
 			createNewCustomerPage.setAddress(address);
 			createNewCustomerPage.setCity(city);
+			createNewCustomerPage.setState("ca");
 			createNewCustomerPage.setZip(zip);
 			
 			createNewCustomerPage.setDefaultPaymentToCod();

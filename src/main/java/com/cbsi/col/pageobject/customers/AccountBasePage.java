@@ -26,6 +26,9 @@ public class AccountBasePage extends ColBasePage{
 	@FindBy(css="#city")
 	protected WebElement City;
 	
+	@FindBy(css="select#state")
+	private WebElement State;
+	
 	@FindBy(css="#zip")
 	protected WebElement Zip;
 
@@ -107,6 +110,22 @@ public class AccountBasePage extends ColBasePage{
 	
 	public AccountBasePage setCity(String city){
 		City.sendKeys(city);
+		return this;
+	}
+	
+	public AccountBasePage setState(String state){
+		State.click();
+		List<WebElement> States = State.findElements(By.cssSelector("option"));
+		
+		forceWait(500);
+		
+		for(WebElement s: States){
+			if(state.toLowerCase().equals(s.getText().toLowerCase())){
+				s.click();
+				break;
+			}
+		}
+		
 		return this;
 	}
 	

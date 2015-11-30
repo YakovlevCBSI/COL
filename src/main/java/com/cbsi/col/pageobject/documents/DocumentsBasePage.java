@@ -164,6 +164,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public SendPage clickSend(){
 		Send.click();
 		waitForQuickLoad();
+		forceWait(500);
 		return PageFactory.initElements(driver, SendPage.class);
 	}
 
@@ -391,6 +392,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		public SendPage clickEmail(){
 			Email.click();
+			waitForElementToBeVisible(By.cssSelector("div#email-options"));
 			return this;
 		}
 

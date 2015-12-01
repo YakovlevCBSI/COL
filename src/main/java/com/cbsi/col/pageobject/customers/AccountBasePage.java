@@ -26,7 +26,7 @@ public class AccountBasePage extends ColBasePage{
 	@FindBy(css="#city")
 	protected WebElement City;
 	
-	@FindBy(css="select#state")
+	@FindBy(css="select[id*='state']")
 	private WebElement State;
 	
 	@FindBy(css="#zip")
@@ -79,6 +79,7 @@ public class AccountBasePage extends ColBasePage{
 	
 	@FindBy(css="input#default")
 	protected WebElement DesignateThisPerson;
+
 	//--------------------------------------------------------------------//
 	
 	

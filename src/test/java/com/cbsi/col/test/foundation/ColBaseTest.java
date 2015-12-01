@@ -415,6 +415,7 @@ public class ColBaseTest {
 			createNewCustomerPage.setContactInfo_FirstName("Qa");
 			createNewCustomerPage.setContactInfo_LastName("customer");
 			createNewCustomerPage.setDefaultContact();
+			createNewCustomerPage.setState("ca");
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
 
@@ -422,6 +423,7 @@ public class ColBaseTest {
 			
 			createNewCustomerPage.setContactInfo_FirstName("Qa");
 			createNewCustomerPage.setContactInfo_LastName("customers");
+			createNewCustomerPage.setState("ca");
 			
 			createNewCustomerPage.clickCopy().clickFinish();
 //

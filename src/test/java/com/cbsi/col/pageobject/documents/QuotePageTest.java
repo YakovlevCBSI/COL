@@ -510,6 +510,15 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage.clickSend().clickEmail().clickSendEmail();
 	}
 	
+	@Test
+	public void lockedQuoteIsNotEdiabled(){
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage)quotePage.clickElectronicSignature();
+		
+		assertEquals(DocumentState.Out_For_E_Sign.toString(), quotePage.getDocumentState());
+	}
+	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
 //		AccountsPage accountPage = homePage.goToAccountsPage();

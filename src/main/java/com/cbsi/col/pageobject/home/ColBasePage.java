@@ -176,6 +176,14 @@ public class ColBasePage {
 	   forceWait(500);
 	}
 	
+	public void scroll(int yAxis){
+	
+	   getActions().moveByOffset(300, 100).click().build().perform();
+	   String js = String.format("window.scrollBy(0,"+ yAxis +")","");
+	   ((JavascriptExecutor)driver).executeScript(js);
+	   forceWait(3000);
+	}
+	
 	public void forceWait(long time){
 		try {
 			Thread.sleep(time);
@@ -316,10 +324,18 @@ public class ColBasePage {
 	}
 	
 	public void switchFrame(By by){
-//		waitForElementToBeVisible(By.cssSelector("iframe"));
-//		logger.debug("iframe is visible");
-		driver.switchTo().defaultContent();
-		logger.debug("switched to defaultContent");
+		switchFrame(by, true);
+	}
+	
+	public void switchFrame(By by, boolean switchToDefault){
+		waitForElementToBeVisible(By.cssSelector("iframe"));
+		logger.debug("iframe is visible");
+		
+		if(switchToDefault){
+			driver.switchTo().defaultContent();
+			logger.debug("switched to defaultContent");
+		}
+		
 		driver.switchTo().frame(driver.findElement(by));
 		logger.debug("Exit switchFrame method.");
 	}

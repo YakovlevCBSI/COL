@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment;
 import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.CreatePoPopup;
 import com.cbsi.col.pageobject.home.ColBasePage;
@@ -108,6 +109,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="button#next-action_send")
 	private WebElement Send;
 	
+	@FindBy(css="a#next-action_esign")
+	private WebElement ElectronicSignature;
+	
 	@FindBy(css="div.btn-group.dropup button#next-action_cancelOrder")
 	private WebElement CancelThisOrder;
 	
@@ -166,6 +170,28 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		waitForQuickLoad();
 		forceWait(500);
 		return PageFactory.initElements(driver, SendPage.class);
+	}
+	
+	public T clickElectronicSignature(){
+		Caret = Send.findElement(By.xpath("../button[@id='ld-nextaction-caret']"));
+		Caret.click();
+		forceWait(500);
+
+		ElectronicSignature.click();
+		
+		if(isAlertPresent()){
+			waitForAlert();
+			acceptAlert();
+		}	
+
+		OrderOptionsPage orderOptions = PageFactory.initElements(driver, OrderOptionsPage.class);
+		orderOptions.setPoNumber(123);
+		orderOptions.setPaymentMethod(Payment.COD);
+		
+		SendPage sendPage  = (SendPage) orderOptions.clickSave(SendPage.class);
+		sendPage.clickSendEsignLink("cbsiqa@gmail.com");		
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 
 	@FindBy(css="a.btn.btn-primary")
@@ -366,10 +392,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			// TODO Auto-generated constructor stub
 //			waitForTextToBeVisible("Select a view", "label");
 			waitForQuickLoad();
-			logger.debug("looking for print button");
-			waitForTextToBeVisible("Print", "button");
+			logger.debug("looking for update button");
+			switchFrame();
+			waitForTextToBeVisible("Update Preview", "button");
+//			switchBack();
 			logger.debug("looking for iframe");
-			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"));
+			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"), false);
 			logger.debug("found iframe");
 			switchBack();
 		}
@@ -383,6 +411,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="button#save-btn")
 		private WebElement PDF;
 		
+		@FindBy(css="button#esign-btn")
+		private WebElement SendEsignLink;
+		
 		public void clickPrint(){
 
 			Print.click();
@@ -393,6 +424,22 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public SendPage clickEmail(){
 			Email.click();
 			waitForElementToBeVisible(By.cssSelector("div#email-options"));
+			return this;
+		}
+		
+		public SendPage clickSendEsignLink(String email){
+			switchFrame();
+			SendEsignLink.click();
+			waitForTextToBeVisible("Subject", "label");
+			
+			setTo(email);
+			
+			clickSendEmail();
+			
+			if(isAlertPresent())
+				acceptAlert();
+			
+			switchBack();
 			return this;
 		}
 
@@ -437,12 +484,25 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="a#add-attachment-btn")
 		private WebElement AddAttachment;
 		
+		@FindBy(css="div[id*='PageExport_mailto'] div div")
+		private WebElement To;
+		
 		public void clickSendEmail(){
 			SendEmail.click();
 		}
 		
 		public void clickCancel(){
 			Cancel.click();
+		}
+		
+		public void setTo(String email){
+			getActions().moveToElement(To).click().build().perform();
+			forceWait(500);
+			To.findElement(By.xpath("div/div/div/input")).sendKeys(email);
+			
+			getActions().sendKeys(Keys.RETURN).build().perform();
+			
+			forceWait(500);			
 		}
 		
 		//--------------document content-------------//
@@ -1068,7 +1128,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 				return "Document Declined";
 			}
 		},
-		Open
+		Open, 
+		Out_For_E_Sign {
+			public String toString(){
+				return "Out For E-Sign";
+			}
+		}
 	}
 	
 	@FindBy(css="h1[class*='page-title'] span")

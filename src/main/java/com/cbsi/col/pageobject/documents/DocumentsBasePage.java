@@ -384,22 +384,41 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	//----------------------- inner page object: sendPage  -----------------------//
-	
+
 	public static class SendPage extends ColBasePage{
 
 		public SendPage(WebDriver driver) {
 			super(driver);
-			// TODO Auto-generated constructor stub
-//			waitForTextToBeVisible("Select a view", "label");
+			waitForLoad();
+			
+		}
+		
+		public void waitForLoad(){
 			waitForQuickLoad();
 			logger.debug("looking for update button");
-			switchFrame();
+			
+			if(isEsign()) 
+				logger.debug("[This is Esign page. Frame switched]");
+				switchFrame();
+			
 			waitForTextToBeVisible("Update Preview", "button");
-//			switchBack();
+			
 			logger.debug("looking for iframe");
 			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"), false);
 			logger.debug("found iframe");
+			
 			switchBack();
+		}
+		
+		public boolean isEsign(){
+			try{
+				WebElement esignDiv = driver.findElement(By.cssSelector("div#esign-send-modal"));
+				return true;
+			}catch(NoSuchElementException e){
+			
+			}
+			
+			return false;
 		}
 		
 		@FindBy(css="button#print-btn")
@@ -484,8 +503,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="a#add-attachment-btn")
 		private WebElement AddAttachment;
 		
-		@FindBy(css="div[id*='PageExport_mailto'] div div")
+		@FindBy(css=ToPath)
 		private WebElement To;
+		private static final String ToPath= "div[id*='PageExport_mailto'] div div";
+
 		
 		public void clickSendEmail(){
 			SendEmail.click();
@@ -496,6 +517,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 		
 		public void setTo(String email){
+			waitForElementToBeVisible(ToPath);
 			getActions().moveToElement(To).click().build().perform();
 			forceWait(500);
 			To.findElement(By.xpath("div/div/div/input")).sendKeys(email);

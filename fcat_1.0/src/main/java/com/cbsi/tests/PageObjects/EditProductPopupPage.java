@@ -26,7 +26,10 @@ public class EditProductPopupPage extends BasePage{
 	@Override
 	public void waitForPageToLoad(){
 		waitForElementToBeVisible(By.cssSelector("#content > div.fancybox-wrap.fancybox-desktop.fancybox-type-html.fancybox-opened > div > div > div > div > div.overlay-body.dialog"));
-		}
+		waitForElementToBeVisible(By.cssSelector(EditTable));
+	}
+
+	private String EditTable = "#editProductForm table tbody tr td";
 	
 	@FindBy(css="#saveButton")
 	private WebElement Save;

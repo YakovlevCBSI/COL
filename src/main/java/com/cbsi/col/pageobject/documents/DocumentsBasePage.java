@@ -397,9 +397,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			waitForQuickLoad();
 			logger.debug("looking for update button");
 			
-			if(isEsign()) 
+			if(isEsign()) {
 				logger.debug("[This is Esign page. Frame switched]");
 				switchFrame();
+			}
 			
 			waitForTextToBeVisible("Update Preview", "button");
 			

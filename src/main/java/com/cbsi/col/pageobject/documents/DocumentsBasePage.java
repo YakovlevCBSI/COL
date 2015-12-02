@@ -97,6 +97,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="li a[id*='action_saveNewRevision']")
 	private WebElement SaveAsNewRevision;
 	
+	@FindBy(css="li a[id*='action_saveAndClose']")
+	private WebElement SaveAndClose;
+	
 	@FindBy(css="button#next-action_copyToQuote")
 	private WebElement CopyToNewQuote;
 	
@@ -134,6 +137,15 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public T clickSave(){
 		Save.click();
 		waitForQuickLoad();
+		return (T)this;
+	}
+	
+	public T clickSaveAndClose(){
+		Caret = Save.findElement(By.xpath("../button[contains(@id,'-caret')]"));
+		Caret.click();
+		quickWait();
+		SaveAndClose.click();
+		
 		return (T)this;
 	}
 	

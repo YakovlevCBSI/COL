@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -320,27 +321,47 @@ public class ColBasePage {
 	@FindBy(css="span.btn-title")
 	private WebElement DocumentDropdown;
 	
-	public Map<Long, String> getActiveDocument(){
-		Map<Long, String> docNumberAndTypes = new HashMap<Long, String>();
+	/**
+	 * make below two methods more flexible using regex.
+	 * @return
+	 */
+	public Map<Document, String> getActiveDocument(){
+		Map<Document, String> docNumberAndTypes = new HashMap<Document, String>();
 		
-		String[] datas = DocumentDropdown.getText().split("/");
-		docNumberAndTypes.put(Long.parseLong(datas[0].trim()), datas[1].replace("[( )]", "").trim());
+		String[] datas = DocumentDropdown.getText().split("/")[0].split("\\(");
+		System.out.println("Data0: " + datas[0]);
+		System.out.println("Data1: " + datas[1]);
 		
+		docNumberAndTypes.put(Document.ID, datas[0].trim() );
+		docNumberAndTypes.put(Document.TYPE, datas[1].replace("[( )]", "").trim());
+
 		return docNumberAndTypes;
 	}
 	
-	public Map<Long, String> getAllDocuments(){
-		Map<Long, String> docNumberAndTypes = new LinkedHashMap<Long, String>();
+	public List<HashMap<Document, String>> getAllDocuments(){
+		List<HashMap<Document, String>> docNumberAndTypes = new LinkedList<HashMap<Document, String>>();
 
+		DocumentDropdown.click();
 		List<WebElement> documentLists = DocumentDropdown.findElements(By.xpath("../../div/ul/li/a"));
 		
 		for(WebElement d: documentLists){
-			String[] datas = DocumentDropdown.getText().split("/");
-			docNumberAndTypes.put(Long.parseLong(datas[0].trim()), datas[1].trim());
+
+			if(d.getText().isEmpty()) continue;
+			HashMap<Document, String> docNumberAndType = new HashMap<Document, String>();
+
+			logger.debug("next active doc: " + d.getText());
+			String[] datas = d.getText().split("/")[0].split("\\(");
+
+			docNumberAndType.put(Document.ID, datas[0].trim());
+			docNumberAndType.put(Document.TYPE, datas[1].trim().replace(")", ""));
+			
+			docNumberAndTypes.add(docNumberAndType);
 		}
 		
 		return docNumberAndTypes;
 	}
+	
+	
 	
 	//--------------------------frame switch----------------------------//
 	public void switchFrame(){
@@ -584,5 +605,10 @@ public class ColBasePage {
 		TODAY,
 		LAST7,
 		LAST30
+	}
+	
+	public enum Document{
+		ID,
+		TYPE
 	}
 }

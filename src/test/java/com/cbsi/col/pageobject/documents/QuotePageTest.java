@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.home.ColBasePage.Document;
 import com.cbsi.col.pageobject.home.ColBasePage.Table;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.products.ProductsPage;
@@ -524,8 +526,23 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 		assertFalse(quotePage.isShipToEnabled());
 		assertFalse(quotePage.isBillToEnabled());
-		
 	}
+	
+	@Test
+	public void saveAndCloseOpensNextDocument(){
+		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+		
+		List<HashMap<Document, String>> allDocuments = quotePage.getAllDocuments();		
+		String first_id = allDocuments.get(1).get(Document.ID);
+		String first_doctype = allDocuments.get(1).get(Document.TYPE);
+		
+		quotePage.clickSaveAndClose();
+
+		DocumentsBasePage<?> doc = (DocumentsBasePage<?>) PageFactory.initElements(driver, getDocumentClassByName(first_doctype));
+	
+		assertEquals(first_id, doc.getDocNumber()+"");
+	}
+
 	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{
@@ -562,4 +579,14 @@ public class QuotePageTest extends DocumentsBasePageTest{
 //			
 //		}
 //	}
+	
+	public Class<?> getDocumentClassByName(String name){
+		try {
+			return Class.forName("com.cbsi.col.pageobject.documents."+name + "Page");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

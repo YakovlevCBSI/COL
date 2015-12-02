@@ -400,12 +400,18 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			if(isEsign()) {
 				logger.debug("[This is Esign page. Frame switched]");
 				switchFrame();
+				waitForTextToBeVisible("Update Preview", "button");
+
+			}else if(isProposalPreview()){
+				waitForTextToBeVisible("PDF", "button");
+			}else{
+				waitForTextToBeVisible("Update Preview", "button");
 			}
 			
-			waitForTextToBeVisible("Update Preview", "button");
-			
 			logger.debug("looking for iframe");
+			forceWait(500);
 			switchFrame(By.cssSelector("iframe#pdfPreviewIframe"), false);
+//			switchFrame();
 			logger.debug("found iframe");
 			
 			switchBack();
@@ -414,6 +420,17 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public boolean isEsign(){
 			try{
 				WebElement esignDiv = driver.findElement(By.cssSelector("div#esign-send-modal"));
+				return true;
+			}catch(NoSuchElementException e){
+			
+			}
+			
+			return false;
+		}
+		
+		public boolean isProposalPreview(){
+			try{
+				WebElement esignDiv = driver.findElement(By.cssSelector("div#send-proposal-preview"));
 				return true;
 			}catch(NoSuchElementException e){
 			

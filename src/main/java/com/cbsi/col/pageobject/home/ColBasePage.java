@@ -316,6 +316,32 @@ public class ColBasePage {
 		TopBar topbar = PageFactory.initElements(driver, TopBar.class);
 		return topbar.clickOrganizer();
 	}
+	
+	@FindBy(css="span.btn-title")
+	private WebElement DocumentDropdown;
+	
+	public Map<Long, String> getActiveDocument(){
+		Map<Long, String> docNumberAndTypes = new HashMap<Long, String>();
+		
+		String[] datas = DocumentDropdown.getText().split("/");
+		docNumberAndTypes.put(Long.parseLong(datas[0].trim()), datas[1].replace("[( )]", "").trim());
+		
+		return docNumberAndTypes;
+	}
+	
+	public Map<Long, String> getAllDocuments(){
+		Map<Long, String> docNumberAndTypes = new LinkedHashMap<Long, String>();
+
+		List<WebElement> documentLists = DocumentDropdown.findElements(By.xpath("../../div/ul/li/a"));
+		
+		for(WebElement d: documentLists){
+			String[] datas = DocumentDropdown.getText().split("/");
+			docNumberAndTypes.put(Long.parseLong(datas[0].trim()), datas[1].trim());
+		}
+		
+		return docNumberAndTypes;
+	}
+	
 	//--------------------------frame switch----------------------------//
 	public void switchFrame(){
 		driver.switchTo().defaultContent();
@@ -328,7 +354,9 @@ public class ColBasePage {
 	}
 	
 	public void switchFrame(By by, boolean switchToDefault){
-		waitForElementToBeVisible(By.cssSelector("iframe"));
+//		waitForElementToBeVisible(By.cssSelector("iframe"));
+		forceWait(500);
+		
 		logger.debug("iframe is visible");
 		
 		if(switchToDefault){

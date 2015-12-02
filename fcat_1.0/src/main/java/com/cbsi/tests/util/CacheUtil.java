@@ -12,8 +12,6 @@ import java.util.Map;
 import com.cbsi.tests.FCatMongoObject.MongoItem;
 
 public class CacheUtil {
-	static String server = "http://ccs-dev1.cloudapp.net:8080"; //stage
-
 	private String mf;
 	private String mfPn;
 	private String upcEan;
@@ -22,6 +20,11 @@ public class CacheUtil {
 	private String result;
 	
 	private Map<String, String> mapResult;
+	
+	private static Env env;
+	public CacheUtil(Env env){
+		this.env = env;
+	}
 	
 	public Map<String, String> getCacheByupcEan(String upcEan){
 		return getCache("", "", upcEan);
@@ -34,6 +37,7 @@ public class CacheUtil {
 	public  Map<String, String> getCache(String mf, String mfPn, String upcEan){
 		try{
 			 URL address = new URL(getUrl(mf, mfPn, upcEan));
+			 System.out.println(address.toString());
 			 con = (HttpURLConnection) address.openConnection();
 			 con.setRequestMethod("GET");
 		}catch(Exception e){
@@ -83,11 +87,32 @@ public class CacheUtil {
 		}
 	}
 	
-	public static String getUrl(String mf, String mfPn, String upcEan){
-		return StringUtil.cleanUrl(server + "/fcat-fastmap/querypn?mfr="+mf+"&pn="+mfPn+"&upc=" + upcEan);
+	public String getUrl(String mf, String mfPn, String upcEan){
+		
+		return env.getServer() + "/fcat-fastmap/querypn?"
+				+ "mfr=" + StringUtil.cleanUrl(mf)
+				+"&pn="+ StringUtil.cleanUrl(mfPn) 
+				+ "&upc=" + StringUtil.cleanUrl(upcEan);
 	}
 	
 	public static void main(String[] args){
-		new CacheUtil().getCache("","","0000000001267");
+		new CacheUtil(Env.STAGE).getCache("","","0000000001267");
 	}
+	
+	public enum Env{
+		STAGE("http://ccs-dev1.cloudapp.net:8080"),
+		PROD("http://ccs-fcat-us1.cloudapp.net:6700");
+		
+		private String server;
+		
+		Env(String server){
+			this.server = server;
+		}
+		
+		public String getServer(){
+			return server;
+		}
+	}
+	
+	
 }

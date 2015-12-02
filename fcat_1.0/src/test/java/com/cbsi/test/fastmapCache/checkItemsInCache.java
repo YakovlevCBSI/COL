@@ -3,11 +3,13 @@ package com.cbsi.test.fastmapCache;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.cbsi.tests.FCatMongoObject.ItemDao;
 import com.cbsi.tests.FCatMongoObject.MongoItem;
 import com.cbsi.tests.util.CacheUtil;
+import com.cbsi.tests.util.CacheUtil.Env;
 
 public class checkItemsInCache {
 
@@ -15,6 +17,13 @@ public class checkItemsInCache {
 	private static final int masterCatalogId=313;
 	private static final int masterCatalogId2=5450;
 	private static final int partyId = 10;
+	
+	public CacheUtil cacheUtil;
+	@Before
+	public void startUp(){
+		 cacheUtil = new CacheUtil(Env.STAGE);
+	}
+	
 	@Test
 	public void checkUpcEanIsLoaded(){
 		List<MongoItem> mongoItems = ItemDao.getItemFirst(upcCatalogId, partyId);
@@ -27,9 +36,9 @@ public class checkItemsInCache {
 		List<MongoItem> mongoItemsMid =  ItemDao.getItems(upcCatalogId, partyId, MongoItem.MODID, -1, 1, 10000);
 		String upcMid = mongoItemsMid.get(0).getItemIds().get(MongoItem.ID);
 		
-		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcAsc).get(MongoItem.MASTERID));
-		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcDsc).get(MongoItem.MASTERID));
-		Assert.assertNotEquals("null",new CacheUtil().getCacheByupcEan(upcMid).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null",cacheUtil.getCacheByupcEan(upcAsc).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null",cacheUtil.getCacheByupcEan(upcDsc).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null",cacheUtil.getCacheByupcEan(upcMid).get(MongoItem.MASTERID));
 
 	}
 	
@@ -47,10 +56,14 @@ public class checkItemsInCache {
 		String mf3 = mongoItemsMid.get(0).getItemIds().get(MongoItem.MF);
 		String mfPn3 = mongoItemsMid.get(0).getItemIds().get(MongoItem.MFPN);
 
+		System.out.println("mf: " + mf1 + " / " + "mfPn: " + mfPn1);
+		System.out.println("mf: " + mf2 + " / " + "mfPn: " + mfPn2);
+		System.out.println("mf: " + mf3 + " / " + "mfPn: " + mfPn3);
 
-		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
-		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
-		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf3, mfPn3).get(MongoItem.MASTERID));
+
+		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf3, mfPn3).get(MongoItem.MASTERID));
 
 	}
 	
@@ -63,9 +76,12 @@ public class checkItemsInCache {
 		List<MongoItem> mongoItemsLast =  ItemDao.getItemLast(masterCatalogId2, partyId);
 		String mf2 = mongoItemsLast.get(0).getItemIds().get(MongoItem.MF);
 		String mfPn2 = mongoItemsLast.get(0).getItemIds().get(MongoItem.MFPN);
-
-		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
-		Assert.assertNotEquals("null", new CacheUtil().getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
+		
+		System.out.println("mf: " + mf1 + " / " + "mfPn: " + mfPn1);
+		System.out.println("mf: " + mf2 + " / " + "mfPn: " + mfPn2);
+		
+		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf1, mfPn1).get(MongoItem.MASTERID));
+		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
 	}
 	
 	

@@ -511,12 +511,20 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void lockedQuoteIsNotEdiabled(){
+	public void lockedQuoteIsNotEditable(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage = (QuotePage)quotePage.clickElectronicSignature();
 		
 		assertEquals(DocumentState.Out_For_E_Sign.toString(), quotePage.getDocumentState());
+
+		assertFalse(quotePage.isReorderLinesDisplayed());
+		assertFalse(quotePage.isAddImportUpdateDropdownDisplayed());
+		assertFalse(quotePage.isLiveCost());
+		
+		assertFalse(quotePage.isShipToEnabled());
+		assertFalse(quotePage.isBillToEnabled());
+		
 	}
 	
 //	@Test

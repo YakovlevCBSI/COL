@@ -520,6 +520,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			waitForElementToBeVisible(ToPath);
 			getActions().moveToElement(To).click().build().perform();
 			forceWait(500);
+			logger.debug("Mail set to: " + email);
 			To.findElement(By.xpath("div/div/div/input")).sendKeys(email);
 			
 			getActions().sendKeys(Keys.RETURN).build().perform();
@@ -673,19 +674,39 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	private WebElement AddImportUpdateDropdown;
 	
 	public boolean isLineActionsDropdownDisplayed(){
-		return LineActionsDropdown.isDisplayed();
+		try{
+			return LineActionsDropdown.isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	public boolean isReorderLinesDisplayed(){
-		return ReorderLines.isDisplayed();
+		try{
+			return ReorderLines.isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	public boolean isAddImportUpdateDropdownDisplayed(){
-		return AddImportUpdateDropdown.isDisplayed();
+		try{
+			return AddImportUpdateDropdown.isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	public boolean isLiveCost(){
-		return LiveCost.isDisplayed();
+		try{
+			return LiveCost.isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	public T selectFromLineActions(LineActions lAction){
@@ -1082,6 +1103,16 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return PageFactory.initElements(driver, AddressPage.class);
 	}
 	
+	public boolean isBillToEnabled(){		
+		try{
+			setBillingAndShippingDiv();
+			return BillingAndShippingDiv.findElement(By.xpath("div[1]/label/a")).isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
+	}
+	
 	public String getShipTo(){
 		setBillingAndShippingDiv();
 		return BillingAndShippingDiv.findElement(By.xpath("div[2]")).getText();
@@ -1091,6 +1122,16 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		setBillingAndShippingDiv();
 		BillingAndShippingDiv.findElement(By.xpath("div[2]/label/a")).click();
 		return PageFactory.initElements(driver, AddressPage.class);
+	}
+	
+	public boolean isShipToEnabled(){		
+		try{		
+			setBillingAndShippingDiv();
+			return BillingAndShippingDiv.findElement(By.xpath("div[2]/label/a")).isDisplayed();
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	
@@ -1106,6 +1147,17 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		acceptAlert();
 
 		return PageFactory.initElements(driver, OrderOptionsPage.class);
+	}
+	
+	public boolean isOrderOptionsEnabled(){		
+		try{
+			setBillingAndShippingDiv();
+			BillingAndShippingDiv.findElement(By.xpath("div[3]/label/a"));
+			return true;
+		}catch(NoSuchElementException e){
+			
+		}
+		return false;
 	}
 	
 	//----------------------------- Organizer - task -----------------------------//

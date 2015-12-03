@@ -531,7 +531,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	@Test
 	public void saveAndCloseOpensNextDocument(){
 		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
-		
+	
 		List<HashMap<Document, String>> allDocuments = quotePage.getAllDocuments();		
 		String first_id = allDocuments.get(1).get(Document.ID);
 		String first_doctype = allDocuments.get(1).get(Document.TYPE);
@@ -543,6 +543,22 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertEquals(first_id, doc.getDocNumber()+"");
 	}
 
+	@Test
+	public void addProductLoadTest(){
+		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa");
+		
+		QuotePage quotePage = currentAccountPage.clickCreateQuote();
+		ProductsPage productPage = quotePage.searchProduct("lenovo").clickCheckAll();
+		
+		long startTime = System.currentTimeMillis();
+		
+		productPage.selectAction(Action.AddToQuote);
+		quotePage = PageFactory.initElements(driver, QuotePage.class);
+	
+		long endTime = System.currentTimeMillis();
+		
+		assertTrue("Time: " + (endTime - startTime) +" ms",endTime - startTime <10000);
+	}
 	
 //	@Test
 //	public void cleanUpCompanies() throws Exception{

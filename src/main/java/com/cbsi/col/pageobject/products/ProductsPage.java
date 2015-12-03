@@ -22,6 +22,9 @@ public class ProductsPage extends ColBasePage{
 	@FindBy(css="a[title href*='item_add']")
 	private WebElement AddToQuote;
 	
+	@FindBy(css="input#check_all")
+	private WebElement CheckAll;
+	
 	public void addProductsToQuote(int...nThCheckBoxes){
 		checkCompareBoxes(nThCheckBoxes);
 		AddToQuote.click();
@@ -37,6 +40,11 @@ public class ProductsPage extends ColBasePage{
 			checkBoxes.get(n-1).click();
 		}
 		
+		return this;
+	}
+	
+	public ProductsPage clickCheckAll(){
+		CheckAll.click();
 		return this;
 	}
 	

@@ -25,6 +25,7 @@ import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
@@ -557,7 +558,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 		long endTime = System.currentTimeMillis();
 		
-		assertTrue("Time: " + (endTime - startTime) +" ms",endTime - startTime <10000);
+		assertTrue("Time: " + (endTime - startTime) +" ms",endTime - startTime <15000);
 	}
 	
 //	@Test

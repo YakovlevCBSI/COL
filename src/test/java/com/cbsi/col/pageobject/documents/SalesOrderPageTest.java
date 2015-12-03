@@ -1,6 +1,7 @@
 package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -13,6 +14,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
+import com.cbsi.col.pageobject.documents.DocumentsPage.Status;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class SalesOrderPageTest extends DocumentsBasePageTest{
@@ -103,7 +105,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	@Test
 	public void salesOrderNoteShowsInPreview(){
 		super.convertToSalesOrder();
-		
+	
 		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
 		orderPage.selectProductFromTable(1);
 		EditProductPage editProductPage = orderPage.editProductFromTable(1);
@@ -132,5 +134,25 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		orderPage = (SalesOrderPage) orderPage.clickShowSerialShipping();
 		
 		assertTrue(orderPage.isShipTrackTableDisplayed());
+	}
+	
+	@Test
+	public void lockedOrderIsUneditable(){
+		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.ORDERS).filterByStatus(Status.ORDERS_SUBMITTED);
+		
+		Long submittedOrder = Long.parseLong(documentPage.getTableAsMaps().get(0).get("doc#"));
+
+		SalesOrderPage orderPage = documentPage.goToOrder(submittedOrder);
+		orderPage = orderPage.clickCompleteThisOrder();
+		
+		assertEquals(DocumentState.Complete.toString(), orderPage.getDocumentState());
+		
+		assertFalse(orderPage.isReorderLinesDisplayed());
+		assertFalse(orderPage.isAddImportUpdateDropdownDisplayed());
+		assertFalse(orderPage.isLiveCost());
+		
+		assertFalse(orderPage.isShipToEnabled());
+		assertFalse(orderPage.isBillToEnabled());
+
 	}
 }

@@ -171,8 +171,9 @@ public class ColBasePage {
 	}
 	
 	public void scrollToView(WebElement element){
-		int elementPosition = element.getLocation().getY();
-	   String js = String.format("window.scroll(0, %s)", elementPosition);
+		int elementPositionX = element.getLocation().getX();
+		int elementPositionY = element.getLocation().getY();
+	   String js = String.format("window.scroll(%s, %s)", elementPositionX, elementPositionY);
 	   ((JavascriptExecutor)driver).executeScript(js);
 	   forceWait(500);
 	}
@@ -302,7 +303,7 @@ public class ColBasePage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	
-	//------------top bar-----------//
+	//---------------------------------------------top bar-------------------------------------------------------//
 	public AccountsPage searchAccount(String searchText){
 		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
 		return searchPopup.searchAccount(searchText);
@@ -311,6 +312,11 @@ public class ColBasePage {
 	public <T> T  searchFor(QueryOption option, boolean containsText,  QueryColumn column, String searchText, Class clazz){		
 		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
 		return searchPopup.searchFor(option, containsText,  column, searchText, clazz);
+	}
+	
+	public <T> T  quickSearchFor(QueryOption option, boolean isKeyword, String searchText, Class clazz){		
+		SearchPopup searchPopup = PageFactory.initElements(driver, SearchPopup.class);
+		return searchPopup.quickSearchFor(option, isKeyword, searchText, clazz);
 	}
 	
 	public OrganizerPopup goToOrganizer(){
@@ -340,8 +346,9 @@ public class ColBasePage {
 	
 	public List<HashMap<Document, String>> getAllDocuments(){
 		List<HashMap<Document, String>> docNumberAndTypes = new LinkedList<HashMap<Document, String>>();
-
-		DocumentDropdown.click();
+		
+//		DocumentDropdown.click();
+		getActions().moveToElement(DocumentDropdown, 10, 10).click().build().perform();
 		List<WebElement> documentLists = DocumentDropdown.findElements(By.xpath("../../div/ul/li/a"));
 		
 		for(WebElement d: documentLists){
@@ -360,6 +367,10 @@ public class ColBasePage {
 		
 		return docNumberAndTypes;
 	}
+	
+	/**
+	 * Store site topbar quick search.
+	 */
 	
 	
 	

@@ -145,8 +145,13 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Caret.click();
 		quickWait();
 		SaveAndClose.click();
-		
+		quickWait();
 		forceWait(500);
+		
+		if(isAlertPresent()){
+			acceptAlert();
+		}
+		
 		return (T)this;
 	}
 	
@@ -191,6 +196,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		forceWait(500);
 
 		ElectronicSignature.click();
+		
+		waitForQuickLoad();
 		
 		if(isAlertPresent()){
 			waitForAlert();

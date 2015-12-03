@@ -146,6 +146,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		quickWait();
 		SaveAndClose.click();
 		
+		forceWait(500);
 		return (T)this;
 	}
 	

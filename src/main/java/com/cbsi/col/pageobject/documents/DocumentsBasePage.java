@@ -197,6 +197,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 
 		ElectronicSignature.click();
 		
+//		forceWait(5000);//delete
+		if(isAlertPresent()){
+			waitForAlert();
+			acceptAlert();
+		}	
+		
 		waitForQuickLoad();
 		
 		if(isAlertPresent()){

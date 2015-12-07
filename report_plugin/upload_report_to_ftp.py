@@ -19,7 +19,7 @@ def scan_folders_in_cur_dir(path, xml_only=False):
 
 def connect_to_ftp():
     ftp = ftplib.FTP()
-    ftp.connect('qeload-master', 21)
+    ftp.connect('qeload-master.local', 21)
     print (ftp.getwelcome())
 
     try:

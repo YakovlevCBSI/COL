@@ -320,7 +320,7 @@ public class BaseTest {
 	public void EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage =null;
-		if (!getURL().contains("fcat.")){
+		if (!getURL().startsWith("fcat.")){
 			homePage = loginPage.loginToHomePage();
 		}
 		else {

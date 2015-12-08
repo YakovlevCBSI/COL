@@ -249,7 +249,12 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		
 		DocumentsBasePage quotePageNew = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(7)).selectFromLineActions(LineActions.Add_Subtotal);
 		ProductsPage productPageNew =quotePageNew.goToProductsPage();
-		productPage.goToLinkText("System & Power Cables");
+		try{
+			productPage.goToLinkText("System & Power Cables");
+		}catch(Exception e){
+			productPage.goToLinkText("Systems");
+			productPage.goToLinkText("System & Power Cables");
+		}
 		productPage.checkCompareBoxes(7).selectAction(Action.AddToQuote);
 		quotePageNew = PageFactory.initElements(driver, quotePagePass.getClass());
 		

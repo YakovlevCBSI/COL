@@ -62,7 +62,8 @@ public class ProductsPage extends ColBasePage{
 	
 	public void goToLinkText(String linkText){
 		driver.findElement(By.linkText(linkText)).click();
-		waitForTextToBeVisible("Products", "h4");
+		forceWait(500);
+		waitForTextToBeVisible("Search By:", "ul li span.nav-title");
 	}
 	
 	@FindBy(css="select#action")
@@ -115,8 +116,8 @@ public class ProductsPage extends ColBasePage{
 	
 	public enum Action{
 		Compare,
-		AddToQuote,
+		AddToQuote, //also use this for add to cart in storesites.
 		AddToCatalogs,
-		AddToFavorites
+		AddToFavorites, 
 	}
 }

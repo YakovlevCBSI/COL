@@ -88,8 +88,11 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		convertToSalesOrder(true, AccountType.PROSPECT);
 		SalesOrderPage salesOrderPage = documentPage.goToOrder(orderNumber);
 
-		assertTrue(salesOrderPage.getBillTo().contains(address));
-		assertTrue(salesOrderPage.getShipTo().contains(address));
+		System.out.println("sales: " + salesOrderPage.getBillTo());
+		System.out.println("bills: " + salesOrderPage.getShipTo());
+
+		assertTrue(salesOrderPage.getBillTo().contains(companyNameCommon));
+		assertTrue(salesOrderPage.getShipTo().contains(companyNameCommon));
 	}
 	
 	@Test

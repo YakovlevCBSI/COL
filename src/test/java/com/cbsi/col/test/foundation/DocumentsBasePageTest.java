@@ -2,6 +2,9 @@ package com.cbsi.col.test.foundation;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import org.junit.Before;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
@@ -130,12 +133,27 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	}
 	
 	public void convertToSalesOrder(boolean createQuote, AccountType type){
+		QuotePage quotePage = null;
+		
 		if(createQuote){
 			createQuote(type);
+			quotePage = documentPage.goToQuote(quoteNumber);
+
+		}else{
+			long docNumber = 0;
+			List<LinkedHashMap<String, String>> tableMaps = documentPage.getTableAsMaps();
+			for(LinkedHashMap<String, String> tableMap: tableMaps){
+				if(tableMap.get("status").equals("Open")){
+					docNumber = Long.parseLong(tableMap.get("doc#"));
+					break;
+				}
+			}
+			
+			quotePage = documentPage.goToQuote(docNumber);
 		}
 		
-		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
+		
 		quotePage = (QuotePage) quotePage.clickSave();
 		
 		quotePage.forceWait(1000);

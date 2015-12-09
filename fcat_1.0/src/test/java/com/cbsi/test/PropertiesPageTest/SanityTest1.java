@@ -84,7 +84,7 @@ public class SanityTest1 extends AllBaseTest{
 	}
 	
 	@Test
-	public void automaticUploadWithInvaludPassword(){
+	public void automaticUploadWithInvalidPassword(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, "bad");
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();

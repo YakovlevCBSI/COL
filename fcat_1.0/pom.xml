@@ -10,7 +10,7 @@
     <junit-version>4.11</junit-version>
     <sikuli-version>1.1.0</sikuli-version>
     <jackson-version>1.9.13</jackson-version>
-    <chromedriver-version>2.18</chromedriver-version>
+    <chromedriver-version>2.20</chromedriver-version>
     <useGrid>false</useGrid>
     <thread>1</thread>
   </properties>

@@ -62,10 +62,8 @@ public class BaseTest {
 	private String browser;
 	private String URL;
 	
-	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.18");
+	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
-//	public boolean isGrid = true ;
-
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
@@ -74,6 +72,7 @@ public class BaseTest {
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
+		System.out.println("chrome drivers: " + chromeDriverVersion);
 	}
 	
 	/**

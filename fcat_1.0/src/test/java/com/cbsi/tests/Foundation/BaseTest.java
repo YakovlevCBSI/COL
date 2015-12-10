@@ -116,7 +116,6 @@ public class BaseTest {
 	}
 	
 	public void insertHeader(){
-		
 		String headerText = "testName: " + testInfo.getMethodName() + "\tURL: " + getURL() + "\tBrowser: " + getBrowser();
 		String separator = new String(new char[headerText.length()]).replace("\0", "-");
 		System.out.println(separator + "\n" + headerText + "\n" + separator);
@@ -319,7 +318,7 @@ public class BaseTest {
 	public void EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage =null;
-		if (!getURL().startsWith("fcat.")){
+		if (!getURL().startsWith("http://fcat.")){
 			homePage = loginPage.loginToHomePage();
 		}
 		else {

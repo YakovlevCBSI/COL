@@ -318,11 +318,12 @@ public class BaseTest {
 	public void EasyLoginToLocal(){
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
 		FCatHomePage homePage =null;
-		if (!getURL().startsWith("http://fcat.")){
+		if (!getURL().contains(GlobalVar.prodServer) && !getURL().contains(GlobalVar.prodServer.replace("http://", "https://"))){
 			homePage = loginPage.loginToHomePage();
 		}
 		else {
 			homePage = loginPage.loginToHomePage(GlobalVar.LocalId, GlobalVar.ProdPw);
+			
 		}
 		catalogsPage = homePage.goToCatalogs();
 		return;

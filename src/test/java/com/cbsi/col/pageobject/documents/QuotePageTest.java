@@ -36,6 +36,7 @@ import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.ColBasePage.Document;
 import com.cbsi.col.pageobject.home.ColBasePage.Table;
 import com.cbsi.col.pageobject.home.HomePage;
+import com.cbsi.col.pageobject.products.AddToCatalogsPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
@@ -162,7 +163,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void priceCalculatorSum() throws InterruptedException{
+	public void priceCalculatorSum(){
 		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa");
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
@@ -413,6 +414,11 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void lineAction_AddToCatalog(){
+		createQuote();
+		
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage.selectProductFromTable(1);
+		AddToCatalogsPage addCatalogsPage= (AddToCatalogsPage) quotePage.selectFromLineActions(LineActions.Add_to_Catalogs);
 		
 	}
 	
@@ -479,7 +485,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void lineActionBarIsSticky() throws InterruptedException{
+	public void lineActionBarIsSticky(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
@@ -518,7 +524,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		quotePage = (QuotePage)quotePage.clickElectronicSignature();
-		
+
 		assertEquals(DocumentState.Out_For_E_Sign.toString(), quotePage.getDocumentState());
 
 		assertFalse(quotePage.isReorderLinesDisplayed());
@@ -533,6 +539,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	public void saveAndCloseOpensNextDocument(){
 		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
 	
+		
 		List<HashMap<Document, String>> allDocuments = quotePage.getAllDocuments();		
 		String first_id = allDocuments.get(1).get(Document.ID);
 		String first_doctype = allDocuments.get(1).get(Document.TYPE);

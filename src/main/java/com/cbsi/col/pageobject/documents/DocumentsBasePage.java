@@ -29,6 +29,7 @@ import com.cbsi.col.pageobject.documents.QuotePage.CopyToNewQuotePage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage.CreatePoPopup;
 import com.cbsi.col.pageobject.home.ColBasePage;
 import com.cbsi.col.pageobject.home.OrganizerPopup;
+import com.cbsi.col.pageobject.products.AddToCatalogsPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.test.util.StringUtil;
@@ -768,6 +769,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		if(lAction == LineActions.Compare){
 			return (T) PageFactory.initElements(driver, ComparisonPage.class);
+		}else if(lAction == LineActions.Add_to_Catalogs){
+			return (T) PageFactory.initElements(driver, AddToCatalogsPage.class);
 		}
 		
 		forceWait(500);
@@ -811,7 +814,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Delete,
 		Compare,
 		Price_History,
-		Add_to_Catalogs,
+		Add_to_Catalogs{
+			public String toString(){
+				return "Add to Catalog(s)";
+			}
+		},
 		Convert_to_Bundle {
 						public String toString(){
 								return "Convert to bundle";

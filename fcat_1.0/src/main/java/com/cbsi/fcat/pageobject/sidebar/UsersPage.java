@@ -1,4 +1,4 @@
-package com.cbsi.test.pageobject.sidebar;
+package com.cbsi.fcat.pageobject.sidebar;
 
 import org.openqa.selenium.WebDriver;
 

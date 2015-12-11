@@ -136,6 +136,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	public T clickSave(){
 		Save.click();
+		
 		waitForQuickLoad();
 		return (T)this;
 	}
@@ -204,9 +205,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}	
 		
 		waitForQuickLoad();
-		
+		waitForAlert();
+
 		if(isAlertPresent()){
-			waitForAlert();
 			acceptAlert();
 		}	
 

@@ -203,8 +203,8 @@ public class ColBasePage {
 	
 	public void waitForAlert(){
 		boolean alertExists = false;
-		
-		while(!alertExists){
+		long start = System.currentTimeMillis();
+		while(!alertExists && (System.currentTimeMillis() - start) < 5000){
 			try{
 				Alert alert = driver.switchTo().alert();
 				alertExists = true;

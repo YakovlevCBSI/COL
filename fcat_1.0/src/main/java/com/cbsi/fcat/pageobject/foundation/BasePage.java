@@ -151,7 +151,7 @@ public abstract class BasePage {
 		}catch(TimeoutException e){
 			
 		}
-		waitForElementToBeInvisible(By.cssSelector("div.splash-image"));
+		waitForElementToBeInvisible(By.cssSelector("div.splash-image"), 5);
 	}
 	
 	protected String tempFileName = getHostname() + System.currentTimeMillis() + "";

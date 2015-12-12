@@ -359,7 +359,11 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		documentPage = documentPage.deleteQuoteByDocNumber(quoteNumber);
 		RecycleBinPage recyclePage = documentPage.clickRecycleBin();
 		recyclePage.restoreByDocNumber(quoteNumber);
+		
 		assertFalse(recyclePage.hasDoc(quoteNumber));
+		
+		DocumentsPage documentPage = (DocumentsPage) recyclePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		documentPage.hasDoc(quoteNumber);
 	}
 	
 	@Test

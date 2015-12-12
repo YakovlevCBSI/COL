@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.home.OrganizerPopup.OrganizerTabs;
+import com.cbsi.col.pageobject.home.OrganizerPopup.SendItemPopup;
 import com.cbsi.col.test.foundation.ColBaseTest;
 
 public class OrganizerPopupTest extends ColBaseTest{
@@ -85,6 +86,28 @@ public class OrganizerPopupTest extends ColBaseTest{
 		
 		organizerPopup = organizerPopup.clickCheckBoxItem(testItem).clickDelete();
 		assertFalse(organizerPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
+	}
+	
+	@Test
+	public void sendEmailForTask(){
+		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddTask();
+		organizerPopup.quickSaveItem(testItem);
+		
+		SendItemPopup sendItem = organizerPopup.clickEmail();
+		sendItem.setTo(companyName+"@email.com").clickSend();
+		
+		organizerPopup.quit();
+	}
+	
+	@Test
+	public void sendEmailForNote(){
+		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddNote();
+		organizerPopup.quickSaveItem(testItem);
+		
+		SendItemPopup sendItem = organizerPopup.clickEmail();
+		sendItem.setTo(companyName+"@email.com").clickSend();
+		
+		organizerPopup.quit();
 	}
 	
 	@Test

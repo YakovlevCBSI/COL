@@ -78,8 +78,16 @@ public class ColBasePage {
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(by));
 	}
 	
+	public void waitForElementToBeClickable(WebElement element){
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(element));
+	}
+	
 	public void waitForElementToBeVisible(By by){
 		waitForElementToBeVisible(by, 30);
+	}
+	
+	public void waitForElementToBeVisible(WebElement element){
+		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(element));
 	}
 	
 	public void waitForElementToBeVisible(By by, long timeInSeconds){
@@ -109,6 +117,7 @@ public class ColBasePage {
 	public void waitForTextToBeVisible(String text, String...tagNames){
 		waitForTextToBeVisible(15000, text, tagNames);
 	}
+	
 	
 	public boolean waitForTextToBeVisible(long milliSeconds, String text, String...tagNames){
 		String[] tags = tagNames;

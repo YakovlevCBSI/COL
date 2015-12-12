@@ -49,12 +49,11 @@ public class OrganizerPopup<T> extends ColBasePage{
 	@FindBy(css="button[id*='confirm-delete']")
 	private WebElement ConfirmDelete;
 	
-	@FindBy(css="button#send-notetask-btn")
+	@FindBy(css="button[title='Email']")
 	private WebElement Email;
 	
 	@FindBy(css="a#org-return-results")
 	private WebElement sidePanelButton;
-	
 	
 	
 	public OrganizerPopup expandSidePanel(){
@@ -181,9 +180,13 @@ public class OrganizerPopup<T> extends ColBasePage{
 		return PageFactory.initElements(driver, OrganizerPopup.class);
 	}
 	
-	public OrganizerPopup clickEmail(){
-		this.Save.click();
-		return this;
+	public SendItemPopup clickEmail(){
+		waitForElementToBeClickable(Email);
+		forceWait(500);
+		Email.click();
+
+		System.out.println("clicked email...");
+		return PageFactory.initElements(driver, SendItemPopup.class);
 	}
 	
 	public OrganizerPopup clickCheckBoxItem(String title){
@@ -245,6 +248,35 @@ public class OrganizerPopup<T> extends ColBasePage{
 		forceWait(500);
 		
 		return this;
+	}
+	
+	public static class SendItemPopup extends ColBasePage{
+
+		public SendItemPopup(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			waitForTextToBeVisible("Send Item", "h3");
+			forceWait(1000);
+		}
+		
+		@FindBy(css="input#mailTo")
+		private WebElement To;
+		
+		private static final String sendPath = "button#organizer-send-item-btn";
+		@FindBy(css=sendPath)
+		private WebElement Send;
+		
+		public SendItemPopup setTo(String email){
+			To.sendKeys(email);
+			return this;
+		}
+		
+		public void clickSend(){
+			Send.click();
+			waitForElementToBeInvisible(By.cssSelector(sendPath));
+		}
+		
+		
 	}
 	
 }

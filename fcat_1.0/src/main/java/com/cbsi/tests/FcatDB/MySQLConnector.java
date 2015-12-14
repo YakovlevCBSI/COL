@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cbsi.fcat.util.GlobalVar;
 import com.cbsi.tests.FCatSqlObject.Catalog;
-import com.cbsi.tests.util.GlobalVar;
 
 public class MySQLConnector {
 	

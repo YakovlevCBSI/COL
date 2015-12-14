@@ -15,10 +15,10 @@ import org.codehaus.jackson.JsonParser.Feature;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.cbsi.fcat.util.GlobalVar;
+import com.cbsi.fcat.util.PropertyUtil;
 import com.cbsi.tests.FCatMongoObject.MongoItem;
 import com.cbsi.tests.FCatMongoObject.Product;
-import com.cbsi.tests.util.GlobalVar;
-import com.cbsi.tests.util.PropertyUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;

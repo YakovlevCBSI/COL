@@ -14,18 +14,18 @@ import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 import com.cbsi.fcat.pageobject.others.DashboardPage;
 import com.cbsi.fcat.pageobject.others.MasterPage;
-import com.cbsi.test.pageobject.sidebar.AttributeTypePage;
-import com.cbsi.test.pageobject.sidebar.CatalogImportTypesPage;
-import com.cbsi.test.pageobject.sidebar.CatalogTypePage;
-import com.cbsi.test.pageobject.sidebar.ContentTypePage;
-import com.cbsi.test.pageobject.sidebar.ItemIdentificationTypePage;
-import com.cbsi.test.pageobject.sidebar.PartiesPage;
-import com.cbsi.test.pageobject.sidebar.PredefinedListsPage;
-import com.cbsi.test.pageobject.sidebar.RolesPage;
-import com.cbsi.test.pageobject.sidebar.SSOUsersPage;
-import com.cbsi.test.pageobject.sidebar.UsersPage;
-import com.cbsi.test.pageobject.sidebar.UsersPartyAssignmentPage;
-import com.cbsi.test.pageobject.sidebar.UsersRoleAssignmentPage;
+import com.cbsi.fcat.pageobject.sidebar.AttributeTypePage;
+import com.cbsi.fcat.pageobject.sidebar.CatalogImportTypesPage;
+import com.cbsi.fcat.pageobject.sidebar.CatalogTypePage;
+import com.cbsi.fcat.pageobject.sidebar.ContentTypePage;
+import com.cbsi.fcat.pageobject.sidebar.ItemIdentificationTypePage;
+import com.cbsi.fcat.pageobject.sidebar.PartiesPage;
+import com.cbsi.fcat.pageobject.sidebar.PredefinedListsPage;
+import com.cbsi.fcat.pageobject.sidebar.RolesPage;
+import com.cbsi.fcat.pageobject.sidebar.SSOUsersPage;
+import com.cbsi.fcat.pageobject.sidebar.UsersPage;
+import com.cbsi.fcat.pageobject.sidebar.UsersPartyAssignmentPage;
+import com.cbsi.fcat.pageobject.sidebar.UsersRoleAssignmentPage;
 
 public class FCatHomePage extends BasePage{
 

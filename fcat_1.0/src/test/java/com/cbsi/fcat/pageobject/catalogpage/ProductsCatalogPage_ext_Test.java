@@ -290,6 +290,7 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.
+		productsCatalogPage = PageFactory.initElements(driver, ProductsCatalogPage.class);
 		assertEquals(noSearchFoundMessage, productsCatalogPage.getProductValue(1).get("message"));
 		assertTrue(hasNoError());
 
@@ -388,6 +389,15 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void mapIconRefreshesOnSecondTimeMapping(){
 		
+	}
+	
+	@Test
+	public void itemPerPageChangesItemContentsNotDisplayed(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		EditProductPopupPage editProduct = productsCatalogPage.selectItemNumberPerPage(50).setProductToUse().clickEdit();
+		editProduct.setData();
+		
+		assertTrue(!editProduct.getManufacturerName().isEmpty() || !editProduct.getManufacturerPartNumber().isEmpty() || !editProduct.getUpcEan().isEmpty());
 	}
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){

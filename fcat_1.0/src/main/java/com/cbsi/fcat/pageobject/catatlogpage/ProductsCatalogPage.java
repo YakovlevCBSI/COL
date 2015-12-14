@@ -204,7 +204,7 @@ public class ProductsCatalogPage extends BasePage{
 	public WebElement UpcEanInput;
 	
 	
-	@FindBy(css="div.page-rows-selector a span.selectBox-label")
+	@FindBy(css="div.page-rows-selector a.selectBox")
 	public WebElement pageSelector;
 	
 	@FindBy(css="div#page-number-container-up.page-number-container")
@@ -225,6 +225,17 @@ public class ProductsCatalogPage extends BasePage{
 	
 	@FindBy(css="span.icon.edit")
 	public WebElement EditFileIcon;
+	
+	public ProductsCatalogPage selectItemNumberPerPage(int num){
+		forceWait(1000);
+		scrollToView(pageSelector);
+		pageSelector.click();
+		driver.findElement(By.cssSelector("li a[rel='" + num + "']")).click();
+		
+		forceWait(500);
+		waitForQuickLoad();
+		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	}
 	
 	
 	//----------------------------- Table Header-------------------------//

@@ -80,8 +80,8 @@ public class MappingPage extends BasePage{
 						}
 						
 						matchIsFound = true;
-						logger.debug(aElement.getText() + " was clicked.");
-						logger.debug(50*scrollCount + "");
+//						logger.debug(aElement.getText() + " was clicked.");
+//						logger.debug(50*scrollCount + "");
 						
 						break;
 						

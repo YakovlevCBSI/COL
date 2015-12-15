@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 
 public class AddCatalogPage extends BasePage {
+	public final Logger logger = LoggerFactory.getLogger(AddCatalogPage.class);
 
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-		System.out.println("Done loading addCatalogs page.");
+		logger.info("Done loading addCatalogs page.");
 	}
 	
 	@Override
@@ -39,9 +39,14 @@ public class AddCatalogPage extends BasePage {
 		return driver.findElements(By.cssSelector("div.logo.en-us a.logo-url")).size() != 0;
 	}
 
-	@FindBy(css="input#Name") private WebElement name;
-	@FindBy(linkText="Next") private WebElement Next;
-	@FindBy(css="select[name='CountryMarket']") private WebElement Market;
+	@FindBy(css="input#Name") 
+	private WebElement name;
+	
+	@FindBy(linkText="Next") 
+	private WebElement Next;
+	
+	@FindBy(css="select[name='CountryMarket']") 
+	private WebElement Market;
 	
 	public UploadPopupPage clickNext(){
 		Next.click();
@@ -56,9 +61,9 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public UploadPopupPage fillInName(){
-		System.out.println("filling out catalog name. Next...");
+		logger.info("filling out catalog name. Next...");
 		//customWait(20);
-		System.out.println("file created: " +tempFileName);
+		logger.info("file created: " +tempFileName);
 		name.sendKeys(tempFileName);
 		customWait(5);
 		Next.click();
@@ -66,7 +71,7 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public void fillInName(String title){
-		System.out.println("filling out catalog name. Next...");
+		logger.info("filling out catalog name. Next...");
 		//customWait(20);
 		name.sendKeys(title);
 		customWait(5);
@@ -164,7 +169,7 @@ public class AddCatalogPage extends BasePage {
 	public String getScheduleResult(){
 		while(scheduleResult.getText().isEmpty()){
 			forceWait(500);
-			System.out.println("waiting for message...");
+			logger.info("waiting for message...");
 		}
 		return scheduleResult.getText();
 	}
@@ -186,14 +191,14 @@ public class AddCatalogPage extends BasePage {
 	
 	public AddCatalogPage clickSetAsDefault(){
 		forceWait(300);
-		System.out.println("Before condition check.");
+		logger.info("Before condition check.");
 		//WebElement tempDefault = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/form/div[1]/div[1]/div[1]/div[9]/div[1]/label[1]"));
 		scrollToView(Default);
 		if(!Default.getAttribute("class").contains("checked")){
-			System.out.println("Not checked...");
+			logger.info("Not checked...");
 			Default.click();
 		}
-		System.out.println("out of loop.");
+		logger.debug("out of loop.");
 		
 		return this;
 	}

@@ -179,9 +179,14 @@ public class AccountsPage extends ColBasePage{
 		return this;
 	}
 	
+	
 	public CurrentAccountTab clickViewCustomer(String companyName){
+		return clickViewCustomer(companyName, AccountType.CUSTOMER);
+	}
+	
+	public CurrentAccountTab clickViewCustomer(String companyName, AccountType type){
 //		setFilterByAccountType(AccountType.CUSTOMER);
-		WebElement dataRow = findDataRowByName(companyName);
+		WebElement dataRow = findDataRowByName(companyName, type);
 		if(dataRow == null){
 			dataRow = findDataRowByName(companyName, AccountType.LEAD);
 		}

@@ -65,16 +65,20 @@ public class DocumentsBasePageTest extends ColBaseTest{
 	
 	public void createQuote(AccountType type, boolean goToDocumentsPage){
 		CurrentAccountTab currentAccountPage = null;
+		
+		if(type != AccountType.CUSTOMER){
+			
+		}
 		try{
-//			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer("Qa_");  //If no qa customer exists, create one.
-			currentAccountPage=  customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);  //If no qa customer exists, create one.
+			currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(type).clickViewCustomer(companyNameCommon, type);  //If no qa customer exists, create one.
+//			currentAccountPage=  customersPage.goToRecentAccountsTab().clickViewCustomer(companyNameCommon);  //If no qa customer exists, create one.
 
 //			AllAccountsTab accountPage= customersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
 //			currentAccountPage = accountPage.clickViewCustomer("Qa_customer_");
 		}catch(NullPointerException e){
 			recentCustomersPage = createAccount(type);
 //			AllAccountsTab  accountPage = recentCustomersPage.goToAllAcountsTab().searchFor(QueryOption.Customers, false, QueryColumn.All, "Qa_customer_", AllAccountsTab.class);
-			currentAccountPage = recentCustomersPage.clickViewCustomer(companyNameCommon);
+			currentAccountPage = recentCustomersPage.clickViewCustomer(companyName, type);
 			
 		}
 		

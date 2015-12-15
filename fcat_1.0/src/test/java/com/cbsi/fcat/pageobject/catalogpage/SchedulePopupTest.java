@@ -15,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.SchedulePopup;
+import com.cbsi.fcat.pageobject.catatlogpage.SchedulePopup.Frequency;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 
 public class SchedulePopupTest extends AllBaseTest {
@@ -24,6 +25,9 @@ public class SchedulePopupTest extends AllBaseTest {
 		// TODO Auto-generated constructor stub
 	}
 	
+	private static String randomDay;
+	private static String[] randomDays;
+	
 	@Override
 	@Before
 	public void startUp(){
@@ -32,17 +36,12 @@ public class SchedulePopupTest extends AllBaseTest {
 		randomDays = SchedulePopup.generateRandomDays();
 	}
 	
-	private static String randomDay;
-	private static String[] randomDays;
-	
-	
-
 	@Test
 	public void checkSelectedDayIsSaved() throws InterruptedException{
 		if(getBrowser().toLowerCase().contains("firefox")) return;
 		SchedulePopup schedulePopup = navigateToSchedule();
 
-		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDay);
+		schedulePopup.selectFrequency(Frequency.Weekly).clearAllCheckBoxes().selectDays(randomDay);
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
 		propertiesPageNew.clickSaveNone();
 
@@ -61,7 +60,7 @@ public class SchedulePopupTest extends AllBaseTest {
 		String[] excludedDays = schedulePopup.ExcludedDays(randomDays);
 		printIncludeExcludeDays(randomDays, excludedDays);
 		
-		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays(randomDays);
+		schedulePopup.selectFrequency(Frequency.Weekly).clearAllCheckBoxes().selectDays(randomDays);
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
 		propertiesPageNew.clickSaveNone();
 
@@ -83,7 +82,7 @@ public class SchedulePopupTest extends AllBaseTest {
 	public void checkAllDaysAreDisplayed(){
 		if(getBrowser().toLowerCase().contains("firefox")) return;
 		SchedulePopup schedulePopup = navigateToSchedule();
-		schedulePopup.selectFrequency("Weekly").clearAllCheckBoxes().selectDays("all");
+		schedulePopup.selectFrequency(Frequency.Weekly).clearAllCheckBoxes().selectDays("all");
 
 		AddCatalogPage propertiesPageNew = schedulePopup.clickOK();
 		propertiesPageNew.clickSaveNone();
@@ -96,7 +95,6 @@ public class SchedulePopupTest extends AllBaseTest {
 				result.toLowerCase().contains(days));
 	}
 
-	
 	public SchedulePopup navigateToSchedule(){
 		if(getBrowser().toLowerCase().contains("firefox")) assertTrue(true);
 		AddCatalogPage propertiesPage = jumpToEdit();
@@ -127,7 +125,4 @@ public class SchedulePopupTest extends AllBaseTest {
 	public void skipFirefox(){
 		if(getBrowser().toLowerCase().contains("firefox")) assertTrue(true);
 	}
-
-	
-
 }

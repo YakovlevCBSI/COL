@@ -53,10 +53,10 @@ public class SchedulePopup extends BasePage {
 	@FindBy(css="input[data-text='Sunday']")
 	private WebElement Sunday;
 	
-	public SchedulePopup selectFrequency(String freq){
+	public SchedulePopup selectFrequency(Frequency freq){
 		Frequency.click();
 		customWait(5);
-		driver.findElement(By.linkText(freq)).click();
+		driver.findElement(By.linkText(freq.toString())).click();
 		quickWait();
 		return this;
 	}
@@ -186,5 +186,11 @@ public class SchedulePopup extends BasePage {
 		
 		return true;
 		
+	}
+	
+	public enum Frequency{
+		Daily,
+		Weekly,
+		Monthly
 	}
 }

@@ -15,11 +15,16 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.cbsi.fcat.pageobject.catatlogpage.CoverageReportPage;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.util.GlobalVar;
 
 public abstract class BasePage {
+	public final static Logger logger = LoggerFactory.getLogger(BasePage.class);
+
 	protected WebDriver driver = null;
 	protected Actions action;
 	protected boolean isGrid = GlobalVar.isGrid;
@@ -59,12 +64,20 @@ public abstract class BasePage {
 
 	}
 	
+	public void waitForElementToClickable(WebElement e){
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(e));
+	}
+	
 	public void waitForElementToClickable(By by){
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(by));
 	}
 	
 	public void waitForElementToBeVisible(By by){
 		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
+	
+	public void waitForElementToBeVisible(WebElement e){
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(e));
 	}
 	
 	public void waitForElementToBeVisible(String path){
@@ -78,6 +91,7 @@ public abstract class BasePage {
 	public void waitForElementToBeInvisible(By by, long timeInMilli){
 		new WebDriverWait(driver, timeInMilli).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
+	
 	public WebElement refreshStaleElement(By by){
 		waitForElementToBeVisible(by);
 		return driver.findElement(by);
@@ -183,7 +197,7 @@ public abstract class BasePage {
 		    hostName = addr.getHostName();
 		}
 		catch (UnknownHostException ex){
-		    System.out.println("Hostname can not be resolved");
+		    logger.info("Hostname can not be resolved");
 		}
 		
 		return hostName;

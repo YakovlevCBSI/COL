@@ -3,7 +3,6 @@ package com.cbsi.fcat.pageobject.catatlogpage;
 import java.io.File;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,11 +11,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 import com.cbsi.fcat.util.ImageNavigation;
 
 public class UploadPopupPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(UploadPopupPage.class);
+
 	public UploadPopupPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
@@ -198,7 +201,7 @@ public class UploadPopupPage extends BasePage{
 		while(System.currentTimeMillis() - startTime < 40000){
 			if (!status.equals(progress.getText())){
 				status = progress.getText();
-				System.out.println(status);
+				logger.info(status);
 				if(status.contains("100")) break;
 			}
 			count++;
@@ -222,9 +225,9 @@ public class UploadPopupPage extends BasePage{
 		WebElement fileInput = null;
 		try{
 			fileInput = driver.findElement(By.cssSelector("input[type='file']"));
-			System.out.println("found input type file");
+			logger.info("found input type file");
 		}catch(NoSuchElementException e){
-			System.out.println("didn't find input type file");
+			logger.info("didn't find input type file");
 		}
 		
 		String pathToFile ="";
@@ -241,19 +244,20 @@ public class UploadPopupPage extends BasePage{
 			}
 		}
 		
-		System.out.println(pathToFile);
+		logger.info(pathToFile);
 		fileInput.sendKeys(pathToFile);
 		
 		return this;
 	}
 	public UploadPopupPage uploadLocalFileFromResource(String fileName) throws InterruptedException{
-		Thread.sleep(1500);
+		forceWait(1500);
 		WebElement fileInput = null;
+		
 		try{
 			fileInput = driver.findElement(By.cssSelector("input[type='file']"));
-			System.out.println("found input type file");
+			logger.info("found input type file");
 		}catch(NoSuchElementException e){
-			System.out.println("didn't find input type file");
+			logger.info("didn't find input type file");
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
@@ -261,7 +265,7 @@ public class UploadPopupPage extends BasePage{
 			pathToFile = "/home/slave/Documents/Catalogs/" + fileName;
 		}
 		
-		System.out.println(pathToFile);
+		logger.info(pathToFile);
 		fileInput.sendKeys(pathToFile);
 		
 		//fileInput.sendKeys(Keys.RETURN);

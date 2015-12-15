@@ -9,14 +9,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 import com.cbsi.fcat.util.GlobalVar;
 
 public class EditProductPopupPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(EditProductPopupPage.class);
 
 	public EditProductPopupPage(WebDriver driver) {
 		super(driver);

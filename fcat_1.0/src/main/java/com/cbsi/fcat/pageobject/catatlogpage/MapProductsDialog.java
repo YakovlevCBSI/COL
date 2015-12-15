@@ -4,14 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.TimeoutException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 public class MapProductsDialog extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(MapProductsDialog.class);
 
 	public MapProductsDialog(WebDriver driver) {
 		super(driver);
@@ -95,12 +97,7 @@ public class MapProductsDialog extends BasePage{
 		//forceWait(3);
 		deleteText();
 		ManufactuererName.sendKeys(searchText);
-//		try{
-//			waitForElementToBeVisible(By.cssSelector("#mapping-table-body"));
-//		}catch(TimeoutException t){
-//			System.out.println("skipping wait for IE.");
-//		}
-//		
+
 		waitForMapSearch();
 		
 		return this;
@@ -142,7 +139,7 @@ public class MapProductsDialog extends BasePage{
 				this.ManufactuererName.sendKeys(Keys.BACK_SPACE);
 			}
 		}catch(NullPointerException e){
-			System.out.println("deleteText is ignored...");
+			logger.info("deleteText is ignored...");
 		}
 	}
 }

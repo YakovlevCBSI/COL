@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
@@ -17,12 +19,11 @@ import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
 
 
 public class CatalogsPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(CatalogsPage.class);
+
 	public CatalogsPage(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad();
-
-		//System.out.println("constructor: "  + myCatalog.getText());
-
 	}
 	
 	//@FindBy(partialLinkText="albert")
@@ -35,7 +36,7 @@ public class CatalogsPage extends BasePage{
 			for(WebElement e: myCatalogs){
 				if(!e.getText().toLowerCase().contains("ftp")  && !e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().equals("0")&& e.getText().toLowerCase().contains("manual")){
 					this.myCatalog = e;
-					System.out.println(e.getText());
+					logger.info(e.getText());
 					break outerLoop;
 				}
 			}
@@ -56,7 +57,7 @@ public class CatalogsPage extends BasePage{
 
 	
 	public void setMyCatalog(){
-		System.out.println("looking for mycatralog eleemtn to use");
+		logger.info("looking for my catalog element to use");
 		List<WebElement> elements = driver.findElements(By.partialLinkText("albert"));
 		WebElement elementToUse = null;
 		int count=0;
@@ -65,7 +66,7 @@ public class CatalogsPage extends BasePage{
 		for(WebElement e: elements){
 			if(!e.getText().toLowerCase().contains("ftp")){
 				elementToUse = e;
-				System.out.println("foudn mycatalog element :"+ e.getText() + " \n count:" + count);
+				logger.info("found my catalog element :"+ e.getText() + " \n count:" + count);
 				break OuterLoop;
 			}
 			count++;
@@ -155,8 +156,8 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public UploadPopupPage clickUpload(){
-		System.out.println(myCatalog == null);
-		System.out.println("text : " + myCatalog.getText());
+		logger.info((myCatalog == null) + "");
+		logger.info("text : " + myCatalog.getText());
 		//setMyCatalog();
 		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
 		//WebElement Upload = myCatalog.findElement(By.xpath("../.."));
@@ -193,7 +194,7 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public CatalogsPage deleteTempFile(String fileToDelete){
-		System.out.println("Deleting test catalog...");
+		logger.info("Deleting test catalog...");
 		CatalogsPage catalogsPage =PageFactory.initElements(driver, CatalogsPage.class);
 		List<WebElement> tempElements = driver.findElements(By.cssSelector("tr[data-id] td.name-column a"));
 		WebElement tempElement= null;
@@ -201,7 +202,7 @@ public class CatalogsPage extends BasePage{
 		for (WebElement e: tempElements){
 			if(e.getText().equals(fileToDelete)){
 				tempElement = e;
-				System.out.println("tempElement: " + tempElement.getText());
+				logger.info("tempElement: " + tempElement.getText());
 				break;
 			}
 		}
@@ -270,7 +271,7 @@ public class CatalogsPage extends BasePage{
 			if(Integer.parseInt(e.getText().trim()) < num2 && Integer.parseInt(e.getText().trim()) > num1 ){
 				if(e.findElement(By.xpath("../../td[@class='name-column']/a")).getText().contains(catalogParitalText)){
 					elementToUse = e.findElement(By.xpath("../../td[@class='name-column']/a"));
-					System.out.println("my catalog: " + elementToUse.getText());
+					logger.info("my catalog: " + elementToUse.getText());
 					return elementToUse;
 				}
 			}

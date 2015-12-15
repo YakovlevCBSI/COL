@@ -10,11 +10,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
-import com.cbsi.fcat.util.ElementConstants;
 
 public class DetailsPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(DetailsPage.class);
+
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
@@ -84,7 +87,7 @@ public class DetailsPage extends BasePage{
 		}
 		scrollToView(status);
 		while(status.getText().equals(UploadStatus.INPROGRESS.toString())){
-			System.out.println("waiting for deatils progress toc complete.");
+			logger.info("waiting for deatils progress toc complete.");
 			refresh();
 			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
 		}

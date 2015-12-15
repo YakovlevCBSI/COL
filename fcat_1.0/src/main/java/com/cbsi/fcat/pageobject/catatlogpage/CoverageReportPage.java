@@ -1,19 +1,18 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 public class CoverageReportPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(CoverageReportPage.class);
 
 	public CoverageReportPage(WebDriver driver) {
 		super(driver);

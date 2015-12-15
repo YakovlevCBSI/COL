@@ -12,12 +12,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 import com.cbsi.fcat.util.ElementConstants;
 
 
 public class ProductsCatalogPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(ProductsCatalogPage.class);
+
 	public ProductsCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
@@ -99,7 +103,7 @@ public class ProductsCatalogPage extends BasePage{
 		}
 		
 		if(productRow == null){
-			System.out.println("navigate to next page.");
+			logger.info("navigate to next page.");
 			clickGoRight();
 			setProductToUse(productName);
 		}
@@ -126,7 +130,7 @@ public class ProductsCatalogPage extends BasePage{
 		//for compound xpath class name, make sure to use @contains!!! otherwise it never finds the element.
 		forceWait(3000);
 		
-		System.out.println("MApped? " + productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("class"));
+		logger.info("MApped? " + productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("class"));
 		return this.productRow.findElement(By.xpath("td[contains(@class,'actions')]/a/div")).getAttribute("class").contains("check");
 	}
 	
@@ -367,12 +371,12 @@ public class ProductsCatalogPage extends BasePage{
 			/*
 			 * **/
 			rowThatWasMapped = MappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
-			System.out.println(rowThatWasMapped);
+			logger.info(rowThatWasMapped);
 			MappedIcon.click();
 		}catch(Exception e){
-			System.out.println("couldn't find mapped icon, finding not mapped instead.");
+			logger.info("couldn't find mapped icon, finding not mapped instead.");
 			rowThatWasMapped = NotMappedIcon.findElement(By.xpath("../../../td[@class='product-id-column']")).getText();
-			System.out.println("icon: " + rowThatWasMapped);
+			logger.info("icon: " + rowThatWasMapped);
 			NotMappedIcon.click();
 		}
 		return PageFactory.initElements(driver, MapProductsDialog.class);
@@ -389,7 +393,7 @@ public class ProductsCatalogPage extends BasePage{
 				e.printStackTrace();
 			}
 			MappedIcon = driver.findElement(By.cssSelector("div[title='Mapped']"));
-			System.out.println(MappedIcon.getCssValue("color"));
+			logger.info(MappedIcon.getCssValue("color"));
 		}catch(NoSuchElementException e){
 			e.printStackTrace();
 		}
@@ -398,7 +402,6 @@ public class ProductsCatalogPage extends BasePage{
 	}
 	
 	public String getRowThatWasMapped(){
-		//System.out.println(row);
 		return rowThatWasMapped;
 	}
 	
@@ -410,7 +413,7 @@ public class ProductsCatalogPage extends BasePage{
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
 		mapProductsDialog.searchName(searchText);
 		mapProductsDialog.selectAnItemFromResult(nthResult);
-		System.out.println("item selected");
+		logger.info("item selected");
 		mapProductsDialog.clickSave();
 
 		return this;
@@ -435,30 +438,30 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public boolean actionIconsRenderCorrectly(){
 		List<WebElement> iconList = driver.findElements(By.cssSelector("tr td.mapped-column.actions"));
-		System.out.println("size: " + iconList.size());
+		logger.info("size: " + iconList.size());
 		String gpicon= "gp-icon ";
 		
 		int count=0;
 		for(WebElement e: iconList){
 			if(e.isDisplayed()){
-				System.out.println(e.getAttribute("class"));
+				logger.info(e.getAttribute("class"));
 				String checkOrPlus = e.findElement(By.xpath("a[1]/div")).getAttribute("class");
-				System.out.println("COP: " + checkOrPlus);
+				logger.info("COP: " + checkOrPlus);
 				if(!(checkOrPlus.contains(gpicon + "check") || checkOrPlus.contains(gpicon + "plus"))){
-					System.out.println("check " + checkOrPlus  + "/ " + count);
+					logger.info("check " + checkOrPlus  + "/ " + count);
 					return false;
 				
 				}
 				
 				String edit = e.findElement(By.xpath("a[2]/div")).getAttribute("class");
 				if(!(edit.equals(gpicon +"edit"))){
-					System.out.println("edit: " + edit + "/ " + count);
+					logger.info("edit: " + edit + "/ " + count);
 					return false;
 				}
 				
 				String trash = e.findElement(By.xpath("a[3]/div")).getAttribute("class");
 				if(!(trash.equals(gpicon + "trash"))){
-					System.out.println("trash; " + trash + "/ " + count);
+					logger.info("trash; " + trash + "/ " + count);
 					return false;
 				}
 			

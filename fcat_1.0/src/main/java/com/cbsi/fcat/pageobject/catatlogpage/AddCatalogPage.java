@@ -16,7 +16,7 @@ import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 
 public class AddCatalogPage extends BasePage {
-	public final Logger logger = LoggerFactory.getLogger(AddCatalogPage.class);
+	public final static Logger logger = LoggerFactory.getLogger(AddCatalogPage.class);
 
 	public AddCatalogPage(WebDriver driver){
 		super(driver);

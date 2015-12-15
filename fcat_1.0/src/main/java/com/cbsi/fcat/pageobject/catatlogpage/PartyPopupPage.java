@@ -9,10 +9,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 public class PartyPopupPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(PartyPopupPage.class);
 
 	public PartyPopupPage(WebDriver driver) {
 		super(driver);
@@ -31,6 +34,7 @@ public class PartyPopupPage extends BasePage{
 	
 	private String searchText;
 	private String searchCode;
+	
 	public PartyPopupPage searchParty(String text){
 		searchText = text;
 		partyNameField.sendKeys(text);
@@ -114,7 +118,7 @@ public class PartyPopupPage extends BasePage{
 		List<WebElement> list = null;
 		if(searchText != null){
 			list = driver.findElements(By.cssSelector("tr td.party-name-column"));
-			System.out.println("party name size: " + list.size());
+			logger.info("party name size: " + list.size());
 			for(WebElement e: list){
 				if(e.getText().toLowerCase().equals(this.searchText.toLowerCase())){
 					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column actions']/a"));
@@ -125,10 +129,10 @@ public class PartyPopupPage extends BasePage{
 		}
 		else if(searchCode != null){
 			list = driver.findElements(By.cssSelector("tr td.party-code-column"));
-			System.out.println("party name size: " + list.size());
+			logger.info("party name size: " + list.size());
 
 			for(WebElement e: list){
-				System.out.println("code: " + e.getText() + "|  search ; " + searchCode );
+				logger.info("code: " + e.getText() + "|  search ; " + searchCode );
 				if(e.getText().toLowerCase().equals(this.searchCode.toLowerCase()) ){
 					WebElement plusIcon = e.findElement(By.xpath("../td[@class='action-column actions']/a"));
 					plusIcon.click();

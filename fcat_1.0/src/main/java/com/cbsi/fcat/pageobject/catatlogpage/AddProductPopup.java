@@ -8,10 +8,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 public class AddProductPopup extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(AddProductPopup.class);
 
 	public AddProductPopup(WebDriver driver) {
 		super(driver);

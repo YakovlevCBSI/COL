@@ -5,17 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
-import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
 public class MappingPage extends BasePage{
+	public final static Logger logger = LoggerFactory.getLogger(MappingPage.class);
+
 	public MappingPage(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad();
@@ -39,23 +41,23 @@ public class MappingPage extends BasePage{
 		List<WebElement> headers = collectHeaders();
 		int scrollCount = 1;
 		for(WebElement e: headers){
-			//System.out.println("header: " + e.getText());
+			logger.debug("header: " + e.getText());
 			String selectThisOption ="";
 			try {
 				selectThisOption = getMatchingCNETFields(e.getText().trim(), isUpcEanMappingOnly, isSkuIdMappingOnly);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				//System.out.println("auto map failed at automap method...");
+				logger.debug("auto map failed at automap method...");
 				e1.printStackTrace();
 			}
-			//System.out.println(e.getText() + " matches -> selected option: " + selectThisOption);
+			logger.debug(e.getText() + " matches -> selected option: " + selectThisOption);
 				
 			WebElement dropdown = e.findElement(By.xpath("../td[contains(@class,'fields-column')]/a/span[@class='selectBox-label']"));
 			dropdown.click();
 			customWait(5);
 			
 			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));
-			//System.out.println("dropdownselections size: " + dropdownSelections.size());
+			logger.debug("dropdownselections size: " + dropdownSelections.size());
 			boolean matchIsFound = false;
 			
 			int yAxis =200;
@@ -63,12 +65,12 @@ public class MappingPage extends BasePage{
 				if(matchingElement.isDisplayed()){
 					WebElement aElement = matchingElement.findElement(By.xpath("a"));
 					if(aElement.getText().toLowerCase().equals(selectThisOption)){
-						//System.out.println(selectThisOption);
+						logger.debug(selectThisOption);
 						try{
 							aElement.click();
 						}catch(WebDriverException ew){
-							System.out.println("element failed to click:" + selectThisOption);
-							System.out.println("scrolling x-axis to gain view.");
+							logger.info("element failed to click:" + selectThisOption);
+							logger.info("scrolling x-axis to gain view.");
 							
 							scrollToView(dropdown);
 							dropdown.click();
@@ -78,8 +80,8 @@ public class MappingPage extends BasePage{
 						}
 						
 						matchIsFound = true;
-						//System.out.println(aElement.getText() + " was clicked.");
-						//System.out.println(50*scrollCount);
+						logger.debug(aElement.getText() + " was clicked.");
+						logger.debug(50*scrollCount + "");
 						
 						break;
 						
@@ -102,7 +104,7 @@ public class MappingPage extends BasePage{
 	
 	public List<WebElement> collectHeaders(){
 		List<WebElement> headers = driver.findElements(By.cssSelector("tr.highlighted td.file-headers-column"));
-		System.out.println("header size; " + headers.size());
+		logger.info("header size; " + headers.size());
 		return headers;
 	}
 	
@@ -148,12 +150,12 @@ public class MappingPage extends BasePage{
 					matchword = sArray[0];
 					hasMatch=true;
 				}
-			//	System.out.println(sArray[0] + " / " + numOfMatch);
+			logger.debug(sArray[0] + " / " + numOfMatch);
 			}
 		}
 		if(!hasMatch){
 			//throw new Exception("no matching word was found.  Auto Mapping will fail now....");
-			System.out.println("no automapping found for " + clientHeader);
+			logger.info("no automapping found for " + clientHeader);
 		}
 		
 		if(isUpcEanMappingOnly){
@@ -230,7 +232,7 @@ public class MappingPage extends BasePage{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(match);
+		logger.info(match);
 		
 		
 
@@ -245,7 +247,7 @@ public class MappingPage extends BasePage{
 	}
 	
 	public boolean isSaveDisabled(){
-		System.out.println("save value; "+ Save.getAttribute("href").trim().toLowerCase());
+		logger.info("save value; "+ Save.getAttribute("href").trim().toLowerCase());
 		return Save.getAttribute("class").trim().toLowerCase().contains("disabled");
 	}
 	
@@ -296,20 +298,20 @@ public class MappingPage extends BasePage{
 				)
 					  
 			{
-				System.out.println("=====================");
-				System.out.println(e.getCssValue("color") );
-				System.out.println(e.getCssValue("font-weight"));
-				System.out.println(e.getCssValue("font-family"));
-				System.out.println(e.getCssValue("font-size") );
-				System.out.println("=====================");
+				logger.info("=====================");
+				logger.info(e.getCssValue("color") );
+				logger.info(e.getCssValue("font-weight"));
+				logger.info(e.getCssValue("font-family"));
+				logger.info(e.getCssValue("font-size") );
+				logger.info("=====================");
 				return false;
 			}
 			
-			System.out.println(count + " / " + e.getText() );
-			System.out.println(e.getCssValue("color") );
-			System.out.println(e.getCssValue("font-weight"));
-			System.out.println(e.getCssValue("font-family"));
-			System.out.println(e.getCssValue("font-size") );
+			logger.info(count + " / " + e.getText() );
+			logger.info(e.getCssValue("color") );
+			logger.info(e.getCssValue("font-weight"));
+			logger.info(e.getCssValue("font-family"));
+			logger.info(e.getCssValue("font-size") );
 			//color = e.getCssValue("color");
 			fontWeight = e.getCssValue("font-weight");
 			fontFamily = e.getCssValue("font-family");
@@ -326,7 +328,7 @@ public class MappingPage extends BasePage{
 		
 		for(WebElement header:collectHeaders()){
 			headersAsString.add(header.getText());
-			System.out.println("header: " + header.getText());
+			logger.info("header: " + header.getText());
 		}
 		
 		return headersAsString;

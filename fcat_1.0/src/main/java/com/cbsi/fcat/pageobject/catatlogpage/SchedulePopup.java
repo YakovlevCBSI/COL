@@ -10,10 +10,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
 
 public class SchedulePopup extends BasePage {
+	public final static Logger logger = LoggerFactory.getLogger(SchedulePopup.class);
 
 	public SchedulePopup(WebDriver driver) {
 		super(driver);
@@ -70,11 +73,11 @@ public class SchedulePopup extends BasePage {
 		}
 		else{
 			for(int i=0; i< days.length; i++){
-				//System.out.println("days contained: " + days[i]);
+				logger.debug("days contained: " + days[i]);
 				for(WebElement e: daysOnPage){
-					//System.out.println("daysOnPage: " + e.getAttribute("id").toLowerCase());
+					logger.debug("daysOnPage: " + e.getAttribute("id").toLowerCase());
 					if(e.getAttribute("id").toLowerCase().contains(days[i].toLowerCase())){
-						//System.out.println("match: " + days[i]);
+						logger.debug("match: " + days[i]);
 						e.click();
 						//forceWait(200);
 					}
@@ -105,7 +108,7 @@ public class SchedulePopup extends BasePage {
 			rand3 = rand3 - days.length;
 		}
 		
-		System.out.println("days random: " + days[rand1] + "/ " + days[rand2] + " /" + days[rand3] );
+		logger.info("days random: " + days[rand1] + "/ " + days[rand2] + " /" + days[rand3] );
 		String[] randArray = {days[rand1], days[rand2], days[rand3]};
 		
 		return randArray;
@@ -127,7 +130,7 @@ public class SchedulePopup extends BasePage {
 			for (int j=0; j<chosenDays.length; j++){
 				if(days[i].equals(chosenDays[j])){
 					notFound=false;
-					//System.out.println("not found false; " + days[i]);
+					logger.debug("not found false; " + days[i]);
 				}
 			}
 			
@@ -167,7 +170,7 @@ public class SchedulePopup extends BasePage {
 	public boolean dayCheckBoxesAreChecked(String...days){
 		
 		List<WebElement> list = driver.findElements(By.cssSelector("label[for ^= 'ScheduleSetting_SelectedWeekDays_']"));
-		System.out.println(list.size());
+		logger.info(list.size() + "");
 		for(String s: days){
 			boolean matchesTheList= false;
 			for(WebElement e: list){

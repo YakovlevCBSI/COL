@@ -16,6 +16,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.EditProductPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MapProductsDialog;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
+import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage.ItemIds;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 import com.cbsi.fcat.util.ElementConstants;
 
@@ -229,7 +230,7 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void searchPidTest() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("pid", "abc");
+		productsCatalogPage.searchFor(ItemIds.ID, "abc");
 		productsCatalogPage.waitForSearch();
 
 		//some wait needed for search loading.
@@ -239,8 +240,8 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void searchPidMfTest() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("pid", "abc");
-		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.searchFor(ItemIds.ID, "abc");
+		productsCatalogPage.searchFor(ItemIds.MF, "abc");
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.
@@ -251,7 +252,7 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void searchMfTest() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.searchFor(ItemIds.MF, "abc");
 		productsCatalogPage.waitForSearch(25000);
 		
 		//some wait needed for search loading.
@@ -261,7 +262,7 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void searchMfpnTest() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("mfPn", "abc");
+		productsCatalogPage.searchFor(ItemIds.MFPN, "abc");
 		productsCatalogPage.waitForSearch(25000);
 		
 		//some wait needed for search loading.
@@ -271,7 +272,7 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void messageShowWhenSearchResultNone() throws Exception{
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		productsCatalogPage.searchFor("pid", "abcdefgh21312321");
+		productsCatalogPage.searchFor(ItemIds.ID, "abcdefgh21312321");
 		productsCatalogPage.waitForSearch(25000);
 		
 		String noResultMsg = productsCatalogPage.getProductValue(1).get("message");
@@ -285,8 +286,8 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 //		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,10);
 
-		productsCatalogPage.searchFor("pid", "00");
-		productsCatalogPage.searchFor("mf", "abc");
+		productsCatalogPage.searchFor(ItemIds.ID, "00");
+		productsCatalogPage.searchFor(ItemIds.MF, "abc");
 		productsCatalogPage.waitForSearch();
 		
 		//some wait needed for search loading.

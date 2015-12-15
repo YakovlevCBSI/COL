@@ -262,18 +262,21 @@ public class ProductsCatalogPage extends BasePage{
 	
 	//---------------------Search fields-----------------------------//
 
-	public ProductsCatalogPage searchFor(String whichType, String searchText){
-		if(whichType.toLowerCase().equals("pid")){
+	public ProductsCatalogPage searchFor(ItemIds field, String searchText){
+		if(field == ItemIds.ID){
 			ProductIDInput.sendKeys(searchText);
 		}
-		else if(whichType.toLowerCase().equals("mf")){
+		else if(field == ItemIds.MF){
 			ManufacturerNameInput.sendKeys(searchText);
 		}
-		else if(whichType.toLowerCase().equals("mfpn")){
+		else if(field == ItemIds.MFPN){
 			ManufacturerParNumberInput.sendKeys(searchText);
 		}
-		else{
+		else if (field == ItemIds.UPCEAN){
 			UpcEanInput.sendKeys(searchText);
+		}
+		else if (field == ItemIds.SKU){
+//			SkuInput.sendKeys(searchText)  Not availble yet.
 		}
 		
 		return this;
@@ -483,6 +486,14 @@ public class ProductsCatalogPage extends BasePage{
 		}
 		
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	}
+	
+	public enum ItemIds{
+		ID,
+		MF,
+		MFPN,
+		UPCEAN,
+		SKU
 	}
 	
 	

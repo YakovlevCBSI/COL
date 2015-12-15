@@ -19,6 +19,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.EditProductPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MapProductsDialog;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
+import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage.ItemIds;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 import com.cbsi.fcat.util.ElementConstants;
 
@@ -193,7 +194,7 @@ public class ProductsCatalogPageTest extends AllBaseTest{
 	public void SpecialCharacterInSearchCausesError_CCSQS1267(){
 		String searchText = "() {} []";
 		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
-		productsCatalogPage.searchFor("pid", searchText);
+		productsCatalogPage.searchFor(ItemIds.ID, searchText);
 		
 		assertTrue(hasNoError());
 	}	

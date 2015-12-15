@@ -29,7 +29,7 @@ public class ParameterFeeder {
 		isProdTest = isProdTesting();
 //		isProdTest = true;
 
-		System.out.println("<------------DEVorPROD: " + isDevTest +" / " + isProdTest +"--------->");
+		System.out.println("//------------DEVorPROD: " + isDevTest +" / " + isProdTest +"---------//");
 	}
 	
 	public boolean isDevTesting(){

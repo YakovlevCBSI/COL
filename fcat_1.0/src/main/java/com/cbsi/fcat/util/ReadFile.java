@@ -44,7 +44,7 @@ public class ReadFile {
 		GlobalVar.ProdPw = (tempVar[4]);
 		GlobalVar.stageServer = (tempVar[5]);
 		
-		System.out.println(GlobalVar.stageServer);
+//		System.out.println(GlobalVar.stageServer);
 		GlobalVar.devServer = (tempVar[6]);
 		GlobalVar.BFPServer = tempVar[7];
 		GlobalVar.prodServer = tempVar[8];
@@ -59,7 +59,7 @@ public class ReadFile {
 		
 		GlobalVar.MongoHost=tempVar[17];
 		GlobalVar.MongoUsername=tempVar[18];
-		System.out.println(GlobalVar.MongoUsername);
+//		System.out.println(GlobalVar.MongoUsername);
 		GlobalVar.MongoPassword= tempVar[19];
 	}
 	
@@ -71,11 +71,11 @@ public class ReadFile {
 		System.out.println(System.getProperty("user.home"));
 		*///System.out.println(GlobalVar.stageServer);
 		ReadFile.setGlobalVars();
-		System.out.println(GlobalVar.BSId + "/ " + GlobalVar.BSAccessKey);
+//		System.out.println(GlobalVar.BSId + "/ " + GlobalVar.BSAccessKey);
 		
 		
-		System.out.println(GlobalVar.dbURL + "\n" + GlobalVar.dbUserName + "\n" + GlobalVar.dbPassword);
-		System.out.println(GlobalVar.prodServer);
+//		System.out.println(GlobalVar.dbURL + "\n" + GlobalVar.dbUserName + "\n" + GlobalVar.dbPassword);
+//		System.out.println(GlobalVar.prodServer);
 	}
 	
 	

@@ -74,7 +74,7 @@ public class BaseTest {
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
-		System.out.println("chrome drivers: " + chromeDriverVersion);
+//		System.out.println("chrome drivers: " + chromeDriverVersion);
 	}
 	
 	/**
@@ -125,7 +125,6 @@ public class BaseTest {
 	
 	public WebDriver configureDrivers(){
 		WebDriver emptyDriver = null;
-		System.out.println("staring conditions");
 		if(!isGrid){
 			if(getBrowser().contains("chrome")){
 				System.out.println("in chromecondition");

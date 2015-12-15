@@ -13,6 +13,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 
 public class MappingPageTest extends AllBaseTest{
@@ -42,7 +43,7 @@ public class MappingPageTest extends AllBaseTest{
 	
 	@Test
 	public void headersAndPreviewColumnsDisplayDoubleByteLanguage(){
-		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", "TXT");
+		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", UploadType.TXT);
 		
 		assertTrue(mappingPage.getHeaders().equals(expectedHeaders));
 		assertTrue(mappingPage.getDataPreviews().equals(expectedPreviews));		
@@ -52,7 +53,7 @@ public class MappingPageTest extends AllBaseTest{
 	
 	@Test
 	public void parseHeaderWithWhiteSpace(){
-		MappingPage mappingPage = UploadFullFile("whitespaceHeader.txt", "TXT");
+		MappingPage mappingPage = UploadFullFile("whitespaceHeader.txt", UploadType.TXT);
 		assertTrue(mappingPage.getHeaders().equals(expectedPreviewsFromWhiteSpace));
 	}
 	

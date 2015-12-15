@@ -28,6 +28,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage.CNetFields;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
 
@@ -131,7 +132,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	@Test
 	public void uploadfullFileExcelManual(){
-		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "Excel");
+		MappingPage mappingPage = UploadFullFile("Excel.xlsx", UploadType.EXCEL);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
@@ -139,7 +140,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	@Test
 	public void uploadFullFileXMLManual(){
-		MappingPage mappingPage = UploadFullFile("XML.xml", "XML");
+		MappingPage mappingPage = UploadFullFile("XML.xml", UploadType.XML);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
@@ -147,7 +148,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	@Test
 	public void uploadFullFileTxtWithDoubleByteCharacter(){
-		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", "TXT");
+		MappingPage mappingPage = UploadFullFile("Korean_Catalog.txt", UploadType.TXT);
 		mappingPage.setCnetField(CNetFields.ProductId, 1);
 		mappingPage.setCnetField(CNetFields.ManufacturerName, 2);
 		mappingPage.setCnetField(CNetFields.ManufacturerPartNumber, 3);

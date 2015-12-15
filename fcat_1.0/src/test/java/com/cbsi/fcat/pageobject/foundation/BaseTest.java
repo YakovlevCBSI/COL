@@ -48,6 +48,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.homepage.BFPLoginPage;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
@@ -64,6 +65,7 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+//	public boolean isGrid = true;
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
@@ -679,12 +681,12 @@ public class BaseTest {
 	}
 	
 	public MappingPage UploadFullFile(String filename){
-		return UploadFullFile(filename,"TXT");
+		return UploadFullFile(filename, UploadType.TXT);
 	}
 	
-	public MappingPage UploadFullFile(String filename, String selectOption){
+	public MappingPage UploadFullFile(String filename, UploadType type){
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
-		uploadPopupPage.selectDropBoxOption(selectOption);
+		uploadPopupPage.selectDropBoxOption(type);
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage, filename).clickNext();
 		

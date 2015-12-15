@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriverException;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllAndSecureBaseTest;
 
 @NotThreadSafe
@@ -26,20 +27,20 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 
 	@Test
 	public void UploadFullFileManualOnExisting() throws InterruptedException{
-		DetailsPage detailsPage = uploadFileWihtoutMapping("full");
+		DetailsPage detailsPage = uploadFileWihtoutMapping(true);
 		assertTrue("Status showed '" + detailsPage.getStatus() + "'",detailsPage.getStatus().equals("DONE"));
 	}
 
 	@Test
 	public void UploadIncrementalManualOnExisting() throws InterruptedException{
-		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
+		DetailsPage detailsPage = uploadFileWihtoutMapping(false);
 		assertTrue("Status showed '" + detailsPage.getStatus() + "'", detailsPage.getStatus().equals("DONE"));
 	}
 	
 	private String lastLoaded = "";
 	@Test
 	public void LastLoadedColumnIsUpdated_1303() throws InterruptedException{
-		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
+		DetailsPage detailsPage = uploadFileWihtoutMapping(false);
 		CatalogsPage catalogsPageNew = detailsPage.clickReturnToList();
 		catalogsPageNew.setMyCatalogToManualCatalog();
 		assertFalse(lastLoaded.equals(catalogsPageNew.getMyCatalogLastLoaded()));
@@ -47,7 +48,7 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 	
 	@Test
 	public void LastLoadedShowsLocalTimeZone_1274() throws InterruptedException{
-		DetailsPage detailsPage = uploadFileWihtoutMapping("incremental");
+		DetailsPage detailsPage = uploadFileWihtoutMapping(false);
 		CatalogsPage catalogsPageNew = detailsPage.clickReturnToList();
 		String time = catalogsPageNew.setMyCatalogToManualCatalog().getMyCatalogLastLoaded().replaceAll("[^\\d]", " ");
 		
@@ -64,7 +65,7 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 	
 	//-------------------------------------------  Helper Method --------------------------------------------//
 	
-	public DetailsPage uploadFileWihtoutMapping(String fullOrIncremental) throws InterruptedException{
+	public DetailsPage uploadFileWihtoutMapping(boolean isFull) throws InterruptedException{
 		//CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		CatalogsPage catalogsPage = new CatalogsPage(driver);
 		catalogsPage.setMyCatalogToManualCatalog();
@@ -72,13 +73,13 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 		 UploadPopupPage uploadPopupPage = catalogsPage.clickUpload();
 
 		//since default is unchecked, check it you wanna upload as FullFile.
-		if(fullOrIncremental.equals("incremental")){
-			uploadPopupPage.selectDropBoxOption("TXT").clickUploadFile();
+		if(!isFull){
+			uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickUploadFile();
 			uploadPopupPage.uploadLocalFileFromFinder("small").clickNext();
 
 		}
-		else if(fullOrIncremental.equals("full")){
-			uploadPopupPage.checkFullFile().selectDropBoxOption("TXT").clickUploadFile();
+		else{
+			uploadPopupPage.checkFullFile().selectDropBoxOption(UploadType.TXT).clickUploadFile();
 			uploadPopupPage.uploadLocalFileFromFinder("big").clickNext();
 		}
 		

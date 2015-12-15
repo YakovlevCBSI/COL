@@ -20,6 +20,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
 
@@ -56,7 +57,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.selectDropBoxOption("Excel");
+		uploadPopupPage.selectDropBoxOption(UploadType.EXCEL);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
@@ -65,7 +66,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){
-		MappingPage mappingPage = UploadFullFile("Excel.xlsx", "TXT");
+		MappingPage mappingPage = UploadFullFile("Excel.xlsx", UploadType.TXT);
 	}
 	
 	@Test
@@ -84,21 +85,21 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.selectDropBoxOption("TXT");
+		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		
 	}
 	
 	@Test
 	public void DelimiterMismatchTxtToCsvManual(){
-		MappingPage mappingPage = UploadFullFile("London.csv", "CSV"); //This csv file is really the txt inside with the extension of csv.
+		MappingPage mappingPage = UploadFullFile("London.csv", UploadType.CSV); //This csv file is really the txt inside with the extension of csv.
 		
 	
 	}
 	
 	@Test
 	public void uploadFileWithCpnMfUpcFails(){
-		MappingPage mappingPage = UploadFullFile("CCSQS1604.txt", "TXT");
+		MappingPage mappingPage = UploadFullFile("CCSQS1604.txt", UploadType.TXT);
 		DetailsPage detailsPage = mappingPage.automap(false, false);
 		assertTrue(detailsPage.FileUploadIsDone());
 	}

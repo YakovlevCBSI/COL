@@ -167,7 +167,7 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="li a[rel='Xml']")
 	private WebElement XML;
 	
-	public UploadPopupPage selectDropBoxOption(String option){
+	public UploadPopupPage selectDropBoxOption(UploadType type){
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -176,12 +176,19 @@ public class UploadPopupPage extends BasePage{
 		}
 		dropbox.click();
 		quickWait();
-		if(option.equals("CSV")) CSV.click();
-		else if(option.equals("TXT")) TXT.click();
-		else if(option.equals("Excel")) Excel.click();
-		else if(option.equals("XML")) XML.click();
+		if(type == UploadType.CSV) CSV.click();
+		else if(type == UploadType.TXT) TXT.click();
+		else if(type == UploadType.EXCEL) Excel.click();
+		else if(type == UploadType.XML) XML.click();
 		
 		return this;
+	}
+	
+	public enum UploadType{
+		CSV,
+		TXT,
+		EXCEL,
+		XML		
 	}
 
 	public String getProgress(){

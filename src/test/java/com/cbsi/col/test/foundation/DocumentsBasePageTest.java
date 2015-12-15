@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -158,7 +159,12 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
 		
-		quotePage = (QuotePage) quotePage.clickSave();
+		try{
+			quotePage = (QuotePage) quotePage.clickSave();
+		}catch(UnhandledAlertException e){
+			quotePage.acceptAlert(); //for expired quote alert, when you save.
+
+		}
 		
 		quotePage.forceWait(1000);
 		SalesOrderPage salesOrderPage = null;

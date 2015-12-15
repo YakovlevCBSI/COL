@@ -9,7 +9,5 @@ public class ElementConstants {
 	public static final String Search = "search";
 	public static final String Donwload = "download";
 	
-	public static final String DONE="DONE";
-	public static final String INPROGRESS="In Progress";
-	public static final String ERROR="ERROR";
+
 }

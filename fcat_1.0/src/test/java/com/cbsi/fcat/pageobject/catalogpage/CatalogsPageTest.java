@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriverException;
 
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
+import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllAndSecureBaseTest;
@@ -28,13 +29,13 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 	@Test
 	public void UploadFullFileManualOnExisting() throws InterruptedException{
 		DetailsPage detailsPage = uploadFileWihtoutMapping(true);
-		assertTrue("Status showed '" + detailsPage.getStatus() + "'",detailsPage.getStatus().equals("DONE"));
+		assertTrue("Status showed '" + detailsPage.getStatus() + "'",detailsPage.getStatus().equals(UploadStatus.DONE.toString()));
 	}
 
 	@Test
 	public void UploadIncrementalManualOnExisting() throws InterruptedException{
 		DetailsPage detailsPage = uploadFileWihtoutMapping(false);
-		assertTrue("Status showed '" + detailsPage.getStatus() + "'", detailsPage.getStatus().equals("DONE"));
+		assertTrue("Status showed '" + detailsPage.getStatus() + "'", detailsPage.getStatus().equals(UploadStatus.DONE.toString()));
 	}
 	
 	private String lastLoaded = "";

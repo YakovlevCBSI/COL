@@ -25,6 +25,7 @@ import org.openqa.selenium.WebElement;
 
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
+import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.foundation.FormBaseTest;
 import com.cbsi.fcat.pageobject.foundation.ParameterFeeder;
@@ -106,7 +107,7 @@ public class XMLRegressionTest extends FormBaseTest{
 			String todayDate =  new SimpleDateFormat("yyyyMMdd").format(new Date());
 			String yesterdayDate = (Integer.parseInt(todayDate) -1) + "";
 	
-			assertEquals(ElementConstants.DONE, status);
+			assertEquals(UploadStatus.DONE.toString(), status);
 			//Check both today and yesterday, incase of the time this test is being ran;
 			assertTrue(modifiedDate + " / " + todayDate, todayDate.equals(modifiedDate) || yesterdayDate.equals(modifiedDate));
 			

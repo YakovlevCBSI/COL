@@ -83,7 +83,7 @@ public class DetailsPage extends BasePage{
 			status = FirstProcessingRow.findElement(By.xpath("//td[contains(@class,'status')]/span"));
 		}
 		scrollToView(status);
-		while(status.getText().equals("In progress")){
+		while(status.getText().equals(UploadStatus.INPROGRESS.toString())){
 			System.out.println("waiting for deatils progress toc complete.");
 			refresh();
 			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
@@ -100,11 +100,11 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public boolean FileUploadIsDone(){
-		while(uploadStatus.equals(ElementConstants.INPROGRESS)){		
+		while(uploadStatus.equals(UploadStatus.INPROGRESS.toString())){		
 			refresh();
 			forceWait(1000);
 		}
-		if(getStatus().equals(ElementConstants.DONE)){
+		if(getStatus().equals(UploadStatus.DONE.toString())){
 			return true;
 		}
 		
@@ -179,6 +179,16 @@ public class DetailsPage extends BasePage{
 	
 	public enum InfoType{
 		MESSAGE, STATUS, MODIFIED;
+	}
+	
+	public enum UploadStatus{
+		DONE,
+		INPROGRESS{
+			public String toString(){
+				return "In Progress";
+			}
+		},
+		ERROR
 	}
 	
 	@FindBy(linkText="Return to List")

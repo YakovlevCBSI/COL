@@ -188,7 +188,7 @@ public class DetailsPage extends BasePage{
 		DONE,
 		INPROGRESS{
 			public String toString(){
-				return "In Progress";
+				return "In progress";
 			}
 		},
 		ERROR

@@ -53,9 +53,10 @@ public class MappingPage extends BasePage{
 			logger.debug(e.getText() + " matches -> selected option: " + selectThisOption);
 				
 			WebElement dropdown = e.findElement(By.xpath("../td[contains(@class,'fields-column')]/a/span[@class='selectBox-label']"));
+			scrollToView(dropdown);
 			dropdown.click();
 			customWait(5);
-			
+//			forceWait(1000);
 			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));
 			logger.debug("dropdownselections size: " + dropdownSelections.size());
 			boolean matchIsFound = false;

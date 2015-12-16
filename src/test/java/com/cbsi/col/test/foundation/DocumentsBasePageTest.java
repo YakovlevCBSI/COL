@@ -155,6 +155,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			}
 			
 			quotePage = documentPage.goToQuote(docNumber);
+			quoteNumber = docNumber;
 		}
 		
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
@@ -194,6 +195,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 					throw new NullPointerException("Convert To Order failed after  10 attempts");
 				}
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
+				 quotePage.goToDocumentsPage().goToQuote(quoteNumber);
 			}
 		}
 		orderNumber = salesOrderPage.getDocNumber();

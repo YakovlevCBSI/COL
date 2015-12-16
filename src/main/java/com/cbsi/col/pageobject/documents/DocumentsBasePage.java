@@ -188,7 +188,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public OrderOptionsPage clickConvertToOrderThenPayment(){
 
 		ConvertToOrder.click();
-		forceWait(500);
+		forceWait(1000);
 		return PageFactory.initElements(driver, OrderOptionsPage.class);
 	}
 	

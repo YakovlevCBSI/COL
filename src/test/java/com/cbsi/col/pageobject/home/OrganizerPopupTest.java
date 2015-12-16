@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.home.OrganizerPopup.OrganizerTabs;
@@ -88,6 +89,7 @@ public class OrganizerPopupTest extends ColBaseTest{
 		assertFalse(organizerPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
 	}
 	
+	@Ignore
 	@Test
 	public void sendEmailForTask(){
 		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddTask();

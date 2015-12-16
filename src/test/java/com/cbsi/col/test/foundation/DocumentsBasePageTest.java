@@ -148,7 +148,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			long docNumber = 0;
 			List<LinkedHashMap<String, String>> tableMaps = documentPage.getTableAsMaps();
 			for(LinkedHashMap<String, String> tableMap: tableMaps){
-				if(tableMap.get("status").equals("Open")){
+				if(tableMap.get("status").equals("Open") && !tableMap.get("total").equals("$0.00")){
 					docNumber = Long.parseLong(tableMap.get("doc#"));
 					break;
 				}
@@ -172,57 +172,26 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		boolean convertOrderSuccess = false;
 		int retry=1;
 		while(!convertOrderSuccess){
-			AddressPage orderPageAdress = null;
 
-			try{
-				orderPageAdress = quotePage.clickConvertToOrder();
-
-				orderPageAdress.setFirstName("Quality");
-				orderPageAdress.setLastName("Assurance");
-				orderPageAdress.setEmail("shefali.ayachit@cbsi.com");
-				orderPageAdress.setAddress(address);
-				orderPageAdress.setCity(city);
-				orderPageAdress.setZip(zip);
-				orderPageAdress.clickCopyToShipping();
-				orderOptionsPage = orderPageAdress.clickSave();
-
-			}catch(NoSuchElementException e){
-				salesOrderPage = PageFactory.initElements(driver, SalesOrderPage.class);
-			}catch(Exception e){
-//				logger.debug(e.printStackTrace());
-	
-				logger.info("cannot focus on element. Moving on...");
-				logger.info("----------------------------------------");
+			orderOptionsPage = quotePage.clickConvertToOrderThenPayment();
 				
-			}
-			
-//			try{
-//				salesOrderPage = salesOrderPage.setPoNumberAndPaymentMethod(123, Payment.MoneyOrder);
-//				salesOrderPage = salesOrderPage.clickSave();
-//				convertOrderSuccess = true;
-//			}catch(NullPointerException e){
-//				e.printStackTrace();
-//				System.out.println("convert order failed... retry "+ retry);
-//				retry ++;
-//				 quotePage = PageFactory.initElements(driver, QuotePage.class);
-//			}
 			try{
-				orderOptionsPage = PageFactory.initElements(driver, OrderOptionsPage.class);
 				if(retry ==1){
 					orderOptionsPage = orderOptionsPage.setPoNumberAndPaymentMethod(123, com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.Terms);
 				}else {
 					orderOptionsPage = orderOptionsPage.setPaymentMethod(com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.COD);
 
 				}
-				Thread.sleep(2000);
+				orderOptionsPage.forceWait(1000);
+				
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){
 //				e.printStackTrace();
 				logger.warn("convert order failed... retry "+ retry);
 				retry ++;
-				if(retry > 4){
-					throw new NullPointerException("Convert To Order failed after  4 attempts");
+				if(retry > 10){
+					throw new NullPointerException("Convert To Order failed after  10 attempts");
 				}
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 			}

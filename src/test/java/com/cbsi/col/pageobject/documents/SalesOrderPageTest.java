@@ -129,7 +129,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void showSerialShippingIsDisplayed(){
-		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).filterByStatus(Status.QUOTES_OPEN);
 		
 		super.convertToSalesOrderOnly();
 		

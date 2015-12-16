@@ -185,6 +185,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return PageFactory.initElements(driver, AddressPage.class);
 	}	
 	
+	public OrderOptionsPage clickConvertToOrderThenPayment(){
+
+		ConvertToOrder.click();
+		return PageFactory.initElements(driver, OrderOptionsPage.class);
+	}
+	
 	public SendPage clickSend(){
 		Send.click();
 		waitForQuickLoad();

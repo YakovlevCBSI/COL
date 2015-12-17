@@ -165,7 +165,7 @@ public abstract class BasePage {
 	
 	public void waitForQuickLoad(int second){
 		try{
-			waitForElementToBeVisible(By.cssSelector("div.splash-image"));
+			waitForElementToBeVisible(5, By.cssSelector("div.splash-image"));
 		}catch(TimeoutException e){
 			
 		}

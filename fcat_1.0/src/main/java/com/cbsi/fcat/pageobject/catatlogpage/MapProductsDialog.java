@@ -107,7 +107,7 @@ public class MapProductsDialog extends BasePage{
 		String loadText = "tbody#mapping-table-body tr td div.overlay-body.splash div.splash-image";
 
 		try{
-			waitForElementToBeVisible(By.cssSelector(loadText));
+			waitForElementToBeVisible(5, By.cssSelector(loadText));
 		}catch(TimeoutException e){
 			
 		}

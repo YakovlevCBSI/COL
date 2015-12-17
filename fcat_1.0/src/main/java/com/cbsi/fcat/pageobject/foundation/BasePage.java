@@ -73,7 +73,11 @@ public abstract class BasePage {
 	}
 	
 	public void waitForElementToBeVisible(By by){
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(by));
+		waitForElementToBeVisible(30, by);
+	}
+	
+	public void waitForElementToBeVisible(long time, By by){
+		new WebDriverWait(driver, time).until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 	
 	public void waitForElementToBeVisible(WebElement e){

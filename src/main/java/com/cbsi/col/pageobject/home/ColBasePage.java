@@ -420,7 +420,7 @@ public class ColBasePage {
 	public void waitForQuickLoad(int second){
 		try{
 			waitForElementToBeVisible(By.cssSelector("div#loading-modal"), second);
-		}catch(TimeoutException e){
+		}catch(Exception e){
 			
 		}
 		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"), 15);

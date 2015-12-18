@@ -212,7 +212,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			acceptAlert();
 		}	
 		
-		waitForQuickLoad();
+		waitForQuickLoad(10);
 		waitForAlert();
 
 		if(isAlertPresent()){

@@ -489,7 +489,7 @@ public class BaseTest {
                         } finally{
                         	 if(driver!=null){
                         		 System.out.println("quit the driver");
-                             	driver.quit();
+//                             	driver.quit();
                              }  
                         }
                     }
@@ -512,7 +512,7 @@ public class BaseTest {
 		protected void failed(Throwable e, Description description){
 //			takeScreenshot();
 			if(driver != null){
-				driver.quit();
+//				driver.quit();
 			}
 			//System.out.println(driver == null);
 			
@@ -521,7 +521,7 @@ public class BaseTest {
 		@Override
 		protected void finished(Description description){
 			if(driver != null){
-				driver.quit();
+//				driver.quit();
 			}
 			if(isAutoRun()){
 				runCommand("killall firefox");

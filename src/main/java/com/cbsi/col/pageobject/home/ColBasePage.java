@@ -305,6 +305,7 @@ public class ColBasePage {
 			logger.debug("Home is enabled");	
 			return PageFactory.initElements(driver, HomePage.class);
 		}catch(Exception e){
+			e.printStackTrace();
 			if(driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).isDisplayed()){
 				driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).click();
 			}

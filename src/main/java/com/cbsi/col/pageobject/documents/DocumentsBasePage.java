@@ -212,7 +212,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			acceptAlert();
 		}	
 		
-		waitForQuickLoad(10);
+		try{
+			waitForQuickLoad(10);
+		}catch(Exception e){
+			logger.debug("quickLoad wait method is skipped.");
+		}
 		waitForAlert();
 
 		if(isAlertPresent()){

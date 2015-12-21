@@ -28,7 +28,11 @@ public class DocumentsPage extends ColBasePage{
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("div h1"));
 //		waitForTextToBeVisible("Documents","h1");
+		try{
 		waitForTextToBeVisible("Recycle Bin", "ul li.last.pull-right a");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		waitForTextToBeVisible("Quotes", "ul li a");
 	}
 	

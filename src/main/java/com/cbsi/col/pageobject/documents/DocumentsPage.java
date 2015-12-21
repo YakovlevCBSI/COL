@@ -105,7 +105,7 @@ public class DocumentsPage extends ColBasePage{
 			goToDocument(docNumber);
 			return PageFactory.initElements(driver, QuotePage.class);
 
-		}catch(Exception e){
+		}catch(UnhandledAlertException e){
 			logger.debug("handle expired alert");
 			acceptAlert();			
 		}
@@ -183,6 +183,7 @@ public class DocumentsPage extends ColBasePage{
 //		forceWait(1000);
 		for(WebElement del:driver.findElements(By.cssSelector("button[id^='delete-'][id*='-btn']"))){
 			if(del.isDisplayed()){
+				scrollToView(del);
 				del.click();
 				break;
 			}

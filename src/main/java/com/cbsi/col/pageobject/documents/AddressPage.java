@@ -38,10 +38,12 @@ public class AddressPage extends ColBasePage{
 	private WebElement Zip;
 
 	public void setFirstName(String firstName) {
+		FirstName.clear();
 		FirstName.sendKeys(firstName);
 	}
 
 	public void setLastName(String  lastName) {
+		LastName.clear();
 		LastName.sendKeys(lastName);
 	}
 
@@ -51,14 +53,17 @@ public class AddressPage extends ColBasePage{
 	}
 
 	public void setAddress(String address) {
+		Address.clear();
 		Address.sendKeys(address);
 	}
 
 	public void setCity(String city) {
+		City.clear();
 		City.sendKeys(city);
 	}
 
 	public void setZip(String zip) {
+		Zip.clear();
 		Zip.sendKeys(zip);;
 	}
 	
@@ -78,5 +83,10 @@ public class AddressPage extends ColBasePage{
 	public OrderOptionsPage clickSave(){
 		Save.click();
 		return PageFactory.initElements(driver, OrderOptionsPage.class);
+	}
+	
+	public <T>T clickSave(Class clazz){
+		Save.click();
+		return (T)PageFactory.initElements(driver, clazz);
 	}
 }

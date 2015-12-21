@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.documents;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -473,11 +474,26 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void editShipTo(){
+	public void editShipToSavesNewContactAndAddress(){
 //		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
 		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+		
+		String billTo = quotePage.getBillTo();
+		String shipTo = quotePage.getShipTo();
 
-		quotePage.clickShipTo();
+		AddressPage addressPage = quotePage.clickShipTo();
+		addressPage.setFirstName("qa"+ System.currentTimeMillis());
+		addressPage.setLastName("test"+System.currentTimeMillis());
+		addressPage.setAddress(address);
+		addressPage.setCity(city);
+		addressPage.setZip(zip);
+
+		addressPage.clickCopyToShipping();		
+		quotePage = addressPage.clickSave(QuotePage.class);
+
+		assertNotEquals(billTo + " / " + quotePage.getBillTo(), billTo, quotePage.getBillTo());
+		assertNotEquals(shipTo + " / " + quotePage.getShipTo(),shipTo, quotePage.getShipTo());
+		
 	}
 	
 	@Test

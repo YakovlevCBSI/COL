@@ -89,7 +89,6 @@ public class OrganizerPopupTest extends ColBaseTest{
 		assertFalse(organizerPopup.hasItem(OrganizerPopup.SUBJECT, testItem));
 	}
 	
-	@Ignore
 	@Test
 	public void sendEmailForTask(){
 		OrganizerPopup organizerPopup = homePage.fromTopbar().clickAddTask();

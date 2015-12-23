@@ -474,26 +474,24 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void editShipToSavesNewContactAndAddress(){
-//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+	public void editShipToSaveNewAddress(){
+		documentPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
+		QuotePage quotePage = documentPage.goToQuote(Integer.parseInt(documentPage.getTableAsMaps().get(0).get("doc#")));
+		
+		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
 		
 		String billTo = quotePage.getBillTo();
 		String shipTo = quotePage.getShipTo();
 
 		AddressPage addressPage = quotePage.clickShipTo();
 		addressPage.setFirstName("qa"+ System.currentTimeMillis());
-		addressPage.setLastName("test"+System.currentTimeMillis());
-		addressPage.setAddress(address);
-		addressPage.setCity(city);
-		addressPage.setZip(zip);
-
-		addressPage.clickCopyToShipping();		
+		addressPage.setLastName("test"+System.currentTimeMillis());		
+		addressPage.clickCopyToShipping();
+		
 		quotePage = addressPage.clickSave(QuotePage.class);
 
 		assertNotEquals(billTo + " / " + quotePage.getBillTo(), billTo, quotePage.getBillTo());
 		assertNotEquals(shipTo + " / " + quotePage.getShipTo(),shipTo, quotePage.getShipTo());
-		
 	}
 	
 	@Test

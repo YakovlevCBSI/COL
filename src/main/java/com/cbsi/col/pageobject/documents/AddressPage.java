@@ -38,32 +38,32 @@ public class AddressPage extends ColBasePage{
 	private WebElement Zip;
 
 	public void setFirstName(String firstName) {
-		FirstName.clear();
+//		FirstName.clear();
 		FirstName.sendKeys(firstName);
 	}
 
 	public void setLastName(String  lastName) {
-		LastName.clear();
+//		LastName.clear();
 		LastName.sendKeys(lastName);
 	}
 
 	public void setEmail(String email) {
-		Email.clear();
+//		Email.clear();
 		Email.sendKeys(email);
 	}
 
 	public void setAddress(String address) {
-		Address.clear();
+//		Address.clear();
 		Address.sendKeys(address);
 	}
 
 	public void setCity(String city) {
-		City.clear();
+//		City.clear();
 		City.sendKeys(city);
 	}
 
 	public void setZip(String zip) {
-		Zip.clear();
+//		Zip.clear();
 		Zip.sendKeys(zip);;
 	}
 	

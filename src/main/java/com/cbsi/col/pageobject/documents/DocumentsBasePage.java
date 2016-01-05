@@ -1026,7 +1026,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	}
 	
 	public enum DocStatus{
-		Submitted;
+		Submitted, 
+		OutForESign{
+			public String toString(){
+				return "Out For E-Sign";
+			}
+		}
 	}
 	
 	//----------------------------- QuickAddProduct-----------------------------//

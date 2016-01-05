@@ -179,7 +179,9 @@ public class DocumentsPage extends ColBasePage{
 		}
 		
 		System.out.println("deleting " + company.getText());
-		company.findElement(By.xpath("../../td/input[contains(@id,'delete')]")).click();
+		WebElement doc = company.findElement(By.xpath("../../td/input[contains(@id,'delete')]"));
+		scrollToView(doc);
+		doc.click();
 	
 //		acceptAlert();
 		
@@ -198,7 +200,9 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public DocumentsPage deleteQuoteByDocNumber(long docNumber){
-		findDataRowByName(docNumber).findElement(By.xpath("../../td[14]/input")).click();
+//		findDataRowByName(docNumber).findElement(By.xpath("../../td[14]/input")).click();
+		findDataRowByName(docNumber).findElement(By.xpath("../../td/input[contains(@id, 'delete')]")).click();
+
 		
 		logger.info("deleting " + docNumber);	
 
@@ -281,8 +285,10 @@ public class DocumentsPage extends ColBasePage{
 		
 		try{
 			driver.findElement(By.cssSelector("li a[href*='" + (tab.toString()))).click();
+			forceWait(500);
 		}catch(NoSuchElementException e){
 			driver.findElement(By.cssSelector("li a[href*='" + (tab.toStringAlt()))).click();
+			forceWait(500);
 		}
 		try{
 			waitForElementToBeInvisible(By.cssSelector("select#time_limit"), 5);

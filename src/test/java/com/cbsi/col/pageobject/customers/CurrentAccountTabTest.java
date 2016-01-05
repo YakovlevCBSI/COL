@@ -2,11 +2,16 @@ package com.cbsi.col.pageobject.customers;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.test.foundation.ColBaseTest;
@@ -35,6 +40,7 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void deleteQuoteFromAccountView(){
+
 		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);;
 		if(!documentsPage.hasQuote(1)){
 			homePage = currentAccount.exitDocumentsPage().goToHomePage();
@@ -42,7 +48,20 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 			createQuote();
 			documentsPage = documentsPage.goToAccountsPage().goToCurrentAccountTab().getDocumentsPage();
 		}
-		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES).deleteDocumentByCompanyName("Qa");
+		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES);
+		
+		Long quoteNumber = null;
+		
+		List<LinkedHashMap<String, String>> quoteList = documentsPage.getTableAsMaps();
+		for(LinkedHashMap<String, String> m: quoteList){
+			if (!m.get("status").equals(DocStatus.OutForESign.toString())){
+				quoteNumber = Long.parseLong(m.get("doc#"));
+				break;
+			}
+		}
+		
+		logger.info("deleting " + quoteNumber);
+		documentsPage.deleteQuoteByDocNumber(quoteNumber);
 	}
 	
 	@Test
@@ -53,9 +72,9 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		documentsPage.deleteDocumentByCompanyName("Qa");
 	}
 	
-	@Test
-	public void purchaseOrderLinkRedirectsPage(){
-
-	}
+//	@Test
+//	public void purchaseOrderLinkRedirectsPage(){
+//
+//	}
 
 }

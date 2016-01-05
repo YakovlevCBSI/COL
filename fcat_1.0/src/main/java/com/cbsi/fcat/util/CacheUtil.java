@@ -92,7 +92,8 @@ public class CacheUtil {
 		return env.getServer() + "/fcat-fastmap/querypn?"
 				+ "mfr=" + StringUtil.cleanUrl(mf)
 				+"&pn="+ StringUtil.cleanUrl(mfPn) 
-				+ "&upc=" + StringUtil.cleanUrl(upcEan);
+				+ "&upc=" + StringUtil.cleanUrl(upcEan)
+				+ "&skuId=";
 	}
 	
 	public static void main(String[] args){

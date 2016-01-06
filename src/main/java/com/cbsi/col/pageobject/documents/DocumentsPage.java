@@ -205,8 +205,8 @@ public class DocumentsPage extends ColBasePage{
 		
 		logger.info("deleting " + docNumber);	
 
+		forceWait(1000);
 		WebElement del = driver.findElement(By.cssSelector("button[id^='delete-'][id*='-btn']"));
-		scrollToView(del);
 		del.click();
 	
 		forceWait(700);

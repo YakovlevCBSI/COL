@@ -470,7 +470,6 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
 
 		quotePage.clickBillTo();
-
 	}
 	
 	@Test
@@ -488,6 +487,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		addressPage.setLastName("test"+System.currentTimeMillis());		
 		addressPage.clickCopyToShipping();
 		
+		addressPage = addressPage.clickAddShipping();
+		
+		assertNotEquals(shipTo, addressPage.getSelectedShippingAddress());
 		quotePage = addressPage.clickSave(QuotePage.class);
 
 		assertNotEquals(billTo + " / " + quotePage.getBillTo(), billTo, quotePage.getBillTo());

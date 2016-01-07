@@ -37,6 +37,12 @@ public class AddressPage extends ColBasePage{
 	@FindBy(css="#billing_Zip")
 	private WebElement Zip;
 
+	@FindBy(css="a#btn-add-shipping-address")
+	private WebElement Add;
+	
+	@FindBy(css="select#shipping_list option[selected='selected']")
+	private WebElement selectedShippingAddress;
+	
 	public void setFirstName(String firstName) {
 //		FirstName.clear();
 		FirstName.sendKeys(firstName);
@@ -75,6 +81,15 @@ public class AddressPage extends ColBasePage{
 		return this;
 	}
 	
+	public AddressPage clickAddShipping(){
+		Add.click();
+		forceWait(500);
+		return PageFactory.initElements(driver, AddressPage.class);
+	}
+	
+	public String getSelectedShippingAddress(){
+		return selectedShippingAddress.getText();
+	}
 	
 	//-----------------------Bottom bar options---------------------//
 	@FindBy(linkText="Save")

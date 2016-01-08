@@ -100,6 +100,7 @@ public class QuotePage extends DocumentsBasePage{
 			Create.click();
 			
 			switchBack();
+			waitForQuickLoad();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}
 		

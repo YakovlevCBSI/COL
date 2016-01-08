@@ -176,6 +176,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		CopyToNewQuote.click();
 		CopyToNewQuotePage copyToNewQuotePage = PageFactory.initElements(driver, CopyToNewQuotePage.class);
 
+		waitForQuickLoad();
 		return copyToNewQuotePage.clickCreate();
 	}
 	

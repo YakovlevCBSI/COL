@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 
 import com.cbsi.fcat.pageobject.catatlogpage.CoverageReportPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
@@ -81,7 +82,7 @@ public class CovreageReportPageTest extends FormBaseTest{
 		while((System.currentTimeMillis() - startTime) < 10000){
 			try{
 				h2Message = driver.findElement(By.cssSelector("h2")).getText();
-			}catch(NoSuchElementException e){
+			}catch(NoSuchElementException | StaleElementReferenceException e ){
 				
 			}
 			if(!h2Message.isEmpty()){

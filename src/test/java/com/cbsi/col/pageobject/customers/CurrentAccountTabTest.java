@@ -54,7 +54,7 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		
 		List<LinkedHashMap<String, String>> quoteList = documentsPage.getTableAsMaps();
 		for(LinkedHashMap<String, String> m: quoteList){
-			if (!m.get("status").equals(DocStatus.OutForESign.toString())){
+			if (m.get("status").contains(DocStatus.Open.toString())){
 				quoteNumber = Long.parseLong(m.get("doc#"));
 				break;
 			}

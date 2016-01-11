@@ -1032,7 +1032,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			public String toString(){
 				return "Out For E-Sign";
 			}
-		}
+		},
+		Open
 	}
 	
 	//----------------------------- QuickAddProduct-----------------------------//

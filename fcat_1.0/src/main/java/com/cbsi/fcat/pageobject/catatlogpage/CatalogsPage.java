@@ -142,14 +142,14 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public DetailsPage clickDetails(){
-		WebElement Info = myCatalog.findElement(By.xpath("../../td[6]/a[1]"));
+		WebElement Info = myCatalog.findElement(By.xpath("../../td[6]/div/a[1]"));
 		customWait(3);
 		Info.click();
 		return PageFactory.initElements(driver, DetailsPage.class);
 	}
 	
 	public AddCatalogPage clickEdit(){
-		WebElement Edit = myCatalog.findElement(By.xpath("../../td[6]/a[2]"));
+		WebElement Edit = myCatalog.findElement(By.xpath("../../td[6]/div/a[2]"));
 		customWait(3);
 		Edit.click();
 		return PageFactory.initElements(driver, AddCatalogPage.class);
@@ -159,7 +159,7 @@ public class CatalogsPage extends BasePage{
 		logger.info((myCatalog == null) + "");
 		logger.info("text : " + myCatalog.getText());
 		//setMyCatalog();
-		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
+		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/div/a[3]"));
 		//WebElement Upload = myCatalog.findElement(By.xpath("../.."));
 
 		customWait(3);
@@ -169,14 +169,14 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public CatalogsPage clickDelete(){
-		WebElement Delete = myCatalog.findElement(By.xpath("../../td[6]/a[4]"));
+		WebElement Delete = myCatalog.findElement(By.xpath("../../td[6]/div/a[4]"));
 		customWait(3);
 		Delete.click();
 		return this;
 	}
 	
 	public CoverageReportPage clickCoverageReport(){
-		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[6]/a[5]"));
+		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[6]/div/a[5]"));
 		customWait(3);
 		CoverageReport.click();
 		return PageFactory.initElements(driver, CoverageReportPage.class);
@@ -206,7 +206,7 @@ public class CatalogsPage extends BasePage{
 				break;
 			}
 		}
-		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));
+		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/div/a[4]"));
 //		waitForElementToClickable(By.xpath("../../td[6]/a[4]"));
 		tempElementDeleteButton.click();
 		customWait(5);

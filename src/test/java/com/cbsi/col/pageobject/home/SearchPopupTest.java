@@ -50,7 +50,9 @@ public class SearchPopupTest extends ColBaseTest{
 	
 	@Test
 	public void searchAccountEmailContains(){
-		String keyword = "a\\_";
+//		String keyword = "a\\_";
+		String keyword = "qa";
+
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.Email, keyword, AccountsPage.class);
 		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps, "email",keyword, false));
@@ -66,7 +68,9 @@ public class SearchPopupTest extends ColBaseTest{
 	
 	@Test
 	public void searchAccountCompanyContains(){
-		String keyword = "a\\_";
+//		String keyword = "a\\_";
+		String keyword = "qa";
+
 		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, true, QueryColumn.Company, keyword, AccountsPage.class);
 		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps,"companylocationcode", keyword, false));

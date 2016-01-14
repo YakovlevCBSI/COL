@@ -418,6 +418,8 @@ public class ColBaseTest {
 			createNewCustomerPage.setContactInfo_LastName("customer");
 			createNewCustomerPage.setDefaultContact();
 			createNewCustomerPage.setState("ca");
+			
+			createNewCustomerPage.setEmail("cbsiqa@gmail.com");
 //			createNewCustomerPage = createNewCustomerPage.clickNext();
 //			//----------------------------------------------------------------------------
 

@@ -184,7 +184,6 @@ public class DocumentsBasePageTest extends ColBaseTest{
 
 				}
 				orderOptionsPage.forceWait(1000);
-				orderOptionsPage.waitForTextToBeVisible(3000, "Sales Order (", "h1 span");
 				
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;

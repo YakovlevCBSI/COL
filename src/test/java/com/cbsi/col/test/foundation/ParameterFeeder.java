@@ -52,6 +52,8 @@ public class ParameterFeeder {
 				colUrl
 			};
 		
+		System.out.println("envUrl: " + System.getProperty("environment"));
+		
 		return urls;
 	}
 	

@@ -28,9 +28,6 @@
 	            <artifactId>maven-compiler-plugin</artifactId>
 	            <version>2.4</version>
 	            <configuration>
-	           		<systemPropertyVariables>
-         				<environment>${env}</environment>
-         			</systemPropertyVariables>
 	                <source>${java.version}</source>
 	                <target>${java.version}</target>
 	                <encoding>${project.build.sourceEncoding}</encoding>
@@ -41,6 +38,9 @@
 	           <artifactId>maven-surefire-plugin</artifactId>
 	           <version>${mvn-plugin-version}</version>
 	           <configuration>
+	           	    <systemPropertyVariables>
+         				<environment>${env}</environment>
+         			</systemPropertyVariables>
 	           		<excludes>
 	           			 <exclude>**/*Base*.java</exclude>
 	           			 <exclude>**/DocumentsBasePageTest.java</exclude>

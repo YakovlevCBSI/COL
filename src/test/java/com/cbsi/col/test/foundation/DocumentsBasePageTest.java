@@ -184,6 +184,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 
 				}
 				orderOptionsPage.forceWait(1000);
+				orderOptionsPage.waitForTextToBeVisible(3000, "Sales Order (", "h1 span");
 				
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
@@ -196,6 +197,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				}
 				 quotePage = PageFactory.initElements(driver, QuotePage.class);
 				 quotePage.goToDocumentsPage().goToQuote(quoteNumber);
+				 quotePage.forceWait(1000);
 			}
 		}
 		orderNumber = salesOrderPage.getDocNumber();

@@ -119,7 +119,7 @@ public class ColBaseTest {
 		driver = configureDrivers();
 		driver.get(url);
 //		driver.manage().window().maximize();
-		driver.manage().window().setSize(new Dimension(1600, 700));
+		driver.manage().window().setSize(new Dimension(1200, 700));
 		navigatetoLoginPage();
 
 	}
@@ -259,7 +259,7 @@ public class ColBaseTest {
 	public void insertHeader(){		
 		String headerText = "TestName: " + testInfo.getMethodName() + "\nURL: " + getUrl() + "\nBrowser: " + getBrowser();
 		String separator = new String(new char[headerText.length()]).replace("\0", "-");
-		System.out.println(separator + "\n" + headerText + "\n" + separator);
+		System.out.println(separator + "\n" + headerText + "\n" + separator + "\n");
 	}
 	
 	//************************************** inner retry class *****************************************//
@@ -372,12 +372,14 @@ public class ColBaseTest {
 	public void navigatetoLoginPage(){
 		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
 		if(isGrid){
-			userCheckedOut=true;
-			login = new LoginUtil();
-			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
+//			userCheckedOut=true;
+//			login = new LoginUtil();
+//			homePage =  loginPage.loginToHomePage(login.checkOutUser(), LoginProperty.testPassword);
+			homePage = loginPage.loginToHomePage(getUsername(),getPassword());
+
 		}
 		else{		
-			homePage = loginPage.loginToHomePage(getUsername(),LoginProperty.testPassword);
+			homePage = loginPage.loginToHomePage(getUsername(),getPassword());
 //			homePage = loginPage.loginToHomePage();
 			logger.info("logged in as a user " + getUsername());
 		}
@@ -460,11 +462,28 @@ public class ColBaseTest {
 	}
 	
 	public String getUsername(){
-		if(getHostname().endsWith("1")) return LoginProperty.testUser1;
-		else if (getHostname().endsWith("2")) return LoginProperty.testUser2;
-		else if (getHostname().endsWith("3")) return LoginProperty.testUser3;
+		if(!GlobalProperty.isProd){
+			if(getHostname().endsWith("1")) return LoginProperty.testUser1;
+			else if (getHostname().endsWith("2")) return LoginProperty.testUser2;
+			else if (getHostname().endsWith("3")) return LoginProperty.testUser3;
+			
+			return LoginProperty.testUser_manual;
+		}
+		else{
+			if(getHostname().endsWith("1")) return LoginProperty.testUser1_prod;
+			else if (getHostname().endsWith("2")) return LoginProperty.testUser2_prod;
+			else if (getHostname().endsWith("3")) return LoginProperty.testUser3_prod;
+			
+			return LoginProperty.testUser4_prod;
+		}
 		
-		return LoginProperty.testUser_manual;
+	}
+	
+	public String getPassword(){
+		if(!GlobalProperty.isProd) return LoginProperty.testPassword;
+		
+		return LoginProperty.testPassword_prod;
+
 	}
 	
 	

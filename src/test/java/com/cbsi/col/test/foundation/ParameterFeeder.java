@@ -5,10 +5,11 @@ import com.cbsi.col.test.util.GlobalProperty;
 public class ParameterFeeder {
 //	private static final String staticUrl="https://usmb.channelonline.com/acme/home/";
 	private static final String staticUrl="https://stage.channelonline.com/colqa_sanity/home";
+	private static final String staticUrlProd = "https://usmb.channelonline.com/kmojica/home/";
 
 //	private String colUrl = GlobalProperty.URL==null?staticUrl:GlobalProperty.URL;
-	private String colUrl = GlobalProperty.getProperty(GlobalProperty.URL, staticUrl);
-
+	private String colUrl;
+	public boolean isProd = GlobalProperty.isProd;
 	
 	public Object[][] configureTestParams(){
 		String[] URLs = null;
@@ -42,9 +43,15 @@ public class ParameterFeeder {
 	}
 		
 	public String[] getColUrls(){
+		if(isProd) 
+			colUrl = staticUrlProd;
+		else 
+			colUrl = staticUrl;
+		
 		String[] urls = {
 				colUrl
 			};
+		
 		return urls;
 	}
 	

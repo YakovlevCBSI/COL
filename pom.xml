@@ -16,6 +16,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <url></url>
         <username></username>
+        <grid></grid>
+       <!--  <thread>3</thread>-->
+        
   </properties>
                 
 	<build>
@@ -25,6 +28,9 @@
 	            <artifactId>maven-compiler-plugin</artifactId>
 	            <version>2.4</version>
 	            <configuration>
+	           		<systemPropertyVariables>
+         				<environment>${env}</environment>
+         			</systemPropertyVariables>
 	                <source>${java.version}</source>
 	                <target>${java.version}</target>
 	                <encoding>${project.build.sourceEncoding}</encoding>
@@ -40,6 +46,13 @@
 	           			 <exclude>**/DocumentsBasePageTest.java</exclude>
 	           			 <exclude>**/SuppliersPageTest.java</exclude>
 	           		</excludes>
+               	 	   	
+             	
+           <!--  -  for some odd reason, jenkins fails to run with executor error in jenkins log. 
+             <parallel>all</parallel>
+             <threadCount>${thread}</threadCount>
+           
+           -->
 	           </configuration>
           	</plugin>
           <plugin>

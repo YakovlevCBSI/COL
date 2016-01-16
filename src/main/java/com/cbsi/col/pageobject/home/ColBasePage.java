@@ -142,7 +142,7 @@ public class ColBasePage {
 //			for(int i=headers.size()-1; i>=0 ; i--){
 			for(int i=0; i<headers.size() ; i++){
 
-				logger.debug("collected search Text:  " + headers.get(i).getText());
+//				logger.debug("collected search Text:  " + headers.get(i).getText());
 				try{
 					if(headers.get(i).getText().isEmpty()) continue;
 					
@@ -421,10 +421,11 @@ public class ColBasePage {
 	public void waitForQuickLoad(int second){
 		try{
 			waitForElementToBeVisible(By.cssSelector("div#loading-modal"), second);
+		
+			waitForElementToBeInvisible(By.cssSelector("div#loading-modal"), 15);
 		}catch(Exception e){
 			
 		}
-		waitForElementToBeInvisible(By.cssSelector("div#loading-modal"), 15);
 	}
 	
 	

@@ -310,4 +310,11 @@ public class AccountsPage extends ColBasePage{
 		forceWait(500);
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
+	
+	@FindBy(css="tfoot tr td")
+	private WebElement Found;
+	
+	public int getFound(){
+		return Integer.parseInt(Found.getText().split("\\s")[1]);
+	}
 }

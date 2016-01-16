@@ -616,7 +616,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 
 		AddProductSearchBox.sendKeys(productName);
 		Search.click();
-		waitForQuickLoad(10);
+		try{
+			waitForQuickLoad(10);
+		}catch(Exception e){
+			
+		}
 		return PageFactory.initElements(driver, ProductsPage.class);
 	}
 	

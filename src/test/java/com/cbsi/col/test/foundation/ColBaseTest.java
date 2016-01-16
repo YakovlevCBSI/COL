@@ -431,8 +431,9 @@ public class ColBaseTest {
 			
 			createNewCustomerPage.clickCopy().clickFinish();
 //
-			createNewCustomerPage.waitForAlert();
-			createNewCustomerPage.acceptAlert();
+			if(createNewCustomerPage.isAlertPresent()){
+				createNewCustomerPage.acceptAlert();
+			}
 		
 			recentCustomersPage = createNewCustomerPage.goToAccountsPage().goToRecentCustomersTab();
 		}else{

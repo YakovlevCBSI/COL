@@ -393,19 +393,22 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
 		
 		quotePage = (QuotePage) quotePage.selectProductFromTable(1);
-		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
 		List<LinkedHashMap<String,String>> maps = quotePage.getTableAsMaps();
+
+		quotePage = (QuotePage) quotePage.selectFromLineActions(LineActions.Copy_Line);
+		List<LinkedHashMap<String,String>> mapsCopied = quotePage.getTableAsMaps();
 
 		int count =0;
 		
-		for(LinkedHashMap<String, String> LinkedHashMap: maps){	//after copy line action, count how many of copied item exists in product table.
-			if(LinkedHashMap.get("mfrpart#").contains("34355AU")){
+		for(LinkedHashMap<String, String> LinkedHashMap: mapsCopied){	
+			//after copy line action, count how many of copied item exists in product table.
+			if(LinkedHashMap.get("mfrpart#").contains(maps.get(0).get("mfrpart#"))){
 				count++;
 			}		
 		}
 		
 		assertTrue(count==2);
-		assertTrue(maps.size() ==4);
+		assertTrue(mapsCopied.size() ==4);
 	}
 	
 	@Test

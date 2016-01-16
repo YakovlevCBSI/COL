@@ -32,6 +32,7 @@ import com.cbsi.col.pageobject.home.OrganizerPopup;
 import com.cbsi.col.pageobject.products.AddToCatalogsPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
+import com.cbsi.col.test.util.GlobalProperty;
 import com.cbsi.col.test.util.StringUtil;
 
 public class DocumentsBasePage<T> extends ColBasePage{
@@ -374,6 +375,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 		
 		public double getExpectedTaxedSubTotal(){
+			if(GlobalProperty.isProd)
+				return round(getTaxableItems() + ((getTaxableItems()+getShippingAmount()) * (getTaxOn()*0.01)),2);
+			
 			return round(getTaxableItems() + (getTaxableItems() * (getTaxOn()*0.01)),2);
 		}
 		

@@ -23,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
+import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
@@ -165,7 +166,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void priceCalculatorSum(){
-		CurrentAccountTab currentAccountPage=  customersPage.clickViewCustomer("Qa");
+		CurrentAccountTab currentAccountPage=  customersPage.goToAllAcountsTab().setFilterByAccountType(AccountType.CUSTOMER).clickViewCustomer("Qa");
 		
 		QuotePage quotePage = currentAccountPage.clickCreateQuote();
 		quotePage.searchProduct("lenovo").checkCompareBoxes(1,2,3).selectAction(Action.AddToQuote);;

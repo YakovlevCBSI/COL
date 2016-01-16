@@ -115,7 +115,6 @@ public class ColBaseTest {
 	
 	@Before
 	public void startUp(){
-		System.out.println("environmentVar: " + System.getProperty("environment"));
 		insertHeader();
 		driver = configureDrivers();
 		driver.get(url);

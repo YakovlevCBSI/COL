@@ -259,6 +259,8 @@ public class ColBaseTest {
 	public void insertHeader(){		
 		String headerText = "TestName: " + testInfo.getMethodName() + "\nURL: " + getUrl() + "\nBrowser: " + getBrowser();
 		String separator = new String(new char[headerText.length()]).replace("\0", "-");
+		System.out.println(getUsername() + " / " + getPassword());
+
 		System.out.println(separator + "\n" + headerText + "\n" + separator + "\n");
 	}
 	
@@ -484,7 +486,9 @@ public class ColBaseTest {
 //			else if (getHostname().endsWith("3")) return LoginProperty.testUser3_prod;
 			else if (getHostUserName().startsWith("slave1")) return LoginProperty.testUser3_prod;
 			
-			return LoginProperty.testUser4_prod;
+//			return LoginProperty.testUser4_prod;
+			return LoginProperty.testUserManual_prod;
+
 		}
 		
 	}

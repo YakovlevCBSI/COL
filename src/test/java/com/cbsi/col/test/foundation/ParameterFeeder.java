@@ -5,7 +5,9 @@ import com.cbsi.col.test.util.GlobalProperty;
 public class ParameterFeeder {
 //	private static final String staticUrl="https://usmb.channelonline.com/acme/home/";
 	private static final String staticUrl="https://stage.channelonline.com/colqa_sanity/home";
-	private static final String staticUrlProd = "https://usmb.channelonline.com/kmojica/home/";
+	private static final String staticUrlProd = "https://wax1usm.channelonline.com/kmojica/home/";
+//	private static final String staticUrlProd = "https://usmb.channelonline.com/acme/home/";
+
 
 //	private String colUrl = GlobalProperty.URL==null?staticUrl:GlobalProperty.URL;
 	private String colUrl;

@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -28,10 +29,15 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 
 	public ScratchPadPage scratchPad;
 	
+	@Before
+	public void startUp(){
+		super.startUp();
+		
+		scratchPad = homePage.goToScratchPadPage(); 
+	}
+	
 	@Test
 	public void canAddThenDeleteProduct(){
-		scratchPad = homePage.goToScratchPadPage(); 
-		
 		scratchPad = (ScratchPadPage) scratchPad.removeAllProducts();
 			
 		ProductsPage productsPage = scratchPad.searchProduct("Lenovo");
@@ -44,7 +50,6 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void emptyDocCleansProducts(){
-		scratchPad = homePage.goToScratchPadPage(); 		
 		addProductIfEmpty();
 
 		scratchPad = scratchPad.clickEmptyDoc();
@@ -63,7 +68,6 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 //	
 	@Test
 	public void copyToCustomer(){
-		scratchPad = homePage.goToScratchPadPage(); 
 		addProductIfEmpty();
 		
 		int productNumBefore = scratchPad.getTableAsMaps().size();
@@ -74,10 +78,16 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void previewWithoutError(){
-		scratchPad = homePage.goToScratchPadPage(); 
 		addProductIfEmpty();
 		
 		scratchPad.clickSend();
+	}
+	
+	@Test
+	public void liveCostRefreshes(){
+		addProductIfEmpty();
+		
+		scratchPad = (ScratchPadPage) scratchPad.clickLiveCost();
 	}
 	
 	public void addProductIfEmpty(){
@@ -88,4 +98,5 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 			scratchPad = PageFactory.initElements(driver, ScratchPadPage.class);		
 		}
 	}
+	
 }

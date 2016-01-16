@@ -481,7 +481,8 @@ public class ColBaseTest {
 		else{
 			if(getHostname().endsWith("1")) return LoginProperty.testUser1_prod;
 			else if (getHostname().endsWith("2")) return LoginProperty.testUser2_prod;
-			else if (getHostname().endsWith("3")) return LoginProperty.testUser3_prod;
+//			else if (getHostname().endsWith("3")) return LoginProperty.testUser3_prod;
+			else if (getHostUserName().startsWith("slave1")) return LoginProperty.testUser3_prod;
 			
 			return LoginProperty.testUser4_prod;
 		}

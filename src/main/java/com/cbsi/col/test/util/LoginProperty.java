@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 public class LoginProperty {
 //	public static final String testUser_manual = "shefali.ayachit@cbsinteractive.com";
-//	public static final String testUser_manual = "albert.park@cbsinteractive.com";
-	public static final String testUser_manual = "cbsiqa0@gmail.com";
+//	public static final String testUser_manual = "cbsiqa0@gmail.com";
 
 	public static final String testUser = "cbsiqa@gmail.com";
 
@@ -13,7 +12,7 @@ public class LoginProperty {
 	public static final String testUser2 = "cbsiqa0@gmail.com";
 	public static final String testUser3 = "cbsiqa1@gmail.com";
 	public static final String testUser4= "cbsiqa+1@gmail.com";
-
+	public static final String testUser_manual = "albert.park@cbsinteractive.com";
 	
 	public static final String testUser1_prod = "cbsiqa+1@gmail.com";
 	public static final String testUser2_prod = "cbsiqa+2@gmail.com";

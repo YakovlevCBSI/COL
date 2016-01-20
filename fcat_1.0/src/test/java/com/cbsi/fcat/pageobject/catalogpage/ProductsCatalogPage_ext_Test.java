@@ -160,8 +160,13 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		
 		DetailsPage detailsPage = UploadFullFile().automap();
 		CatalogsPage catalogsPage = detailsPage.clickReturnToList();
-		productPage = catalogsPage.goToCatalogByName(tempFile);
 		
+		while(catalogsPage.getProductNumberByCatalog(tempFile) <=0){
+			catalogsPage.refresh();
+			catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		}
+		
+		productPage = catalogsPage.goToCatalogByName(tempFile);
 		assertTrue(productPage.getTotalProducts() == 7);
 		assertTrue(productPage.getMapped() == 6);
 		assertTrue(productPage.getNotMapped() == 1);	

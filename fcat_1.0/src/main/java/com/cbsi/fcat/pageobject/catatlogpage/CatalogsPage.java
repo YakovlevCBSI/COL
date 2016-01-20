@@ -377,5 +377,16 @@ public class CatalogsPage extends BasePage{
 		Logout.click();
 		return PageFactory.initElements(driver, FCatLoginPage.class);
 	}
+	
+	public int getProductNumberByCatalog(String catalogName){
+		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
+		for(WebElement c:catalogNames){
+			if(c.getText().equalsIgnoreCase(catalogName)){
+				return Integer.parseInt(c.findElement(By.xpath("../../td[@class ='number-column']/span")).getText());
+			}
+		}
+		
+		return -1;
+	}
 
 }

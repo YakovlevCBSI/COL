@@ -15,7 +15,7 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 	public OrderOptionsPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Order Options", "h1");
+		waitForTextToBeVisible("Verify your customer's payment", "p.lead");
 	}
 	
 	//-----------------------Sales order payment page---------------------//
@@ -83,7 +83,8 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 			return this;
 		}
 		
-		@FindBy(css="#crm-main-pane-body > font > a:nth-child(1)")
+//		@FindBy(css="#crm-main-pane-body > font > a:nth-child(1)")
+		@FindBy(css="div#footer-actions div a.btn")
 		private WebElement Save;
 		
 		public <T> T clickSave(Class clazz){

@@ -183,7 +183,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 					orderOptionsPage = orderOptionsPage.setPaymentMethod(com.cbsi.col.pageobject.documents.OrderOptionsPage.Payment.COD);
 
 				}
-				orderOptionsPage.forceWait(1000);
+//				orderOptionsPage.forceWait(2000);
 				
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;

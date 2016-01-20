@@ -17,6 +17,8 @@ import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryColumn;
 import com.cbsi.col.pageobject.home.SearchPopup.QueryOption;
 import com.cbsi.col.test.foundation.ColBaseTest;
@@ -100,5 +102,12 @@ public class SearchPopupTest extends ColBaseTest{
 		assertTrue(TableUtil.tableMapHasWord(maps,"city", keyword, false));
 	}
 	
-	
+	@Test
+	public void filterContainsMatchesPartialString(){
+		String keyword = "qa_t user";
+		DocumentsPage documentsPage = homePage.searchFor(QueryOption.QuotesAndOrders, true, QueryColumn.All, keyword, DocumentsPage.class);
+		List<LinkedHashMap<String, String>> maps = documentsPage.getTableAsMaps();
+		assertTrue(maps.size() >=1);
+
+	}
 }

@@ -31,7 +31,8 @@ public class SearchPopup extends ColBasePage{
 		dropdown.click();
 		return this;
 	}
-	@FindBy(css="input.decor-searchbutton")
+//	@FindBy(css="input.decor-searchbutton")
+	@FindBy(css="div[class^='span'] input[name='search_button']")
 	private WebElement Search;
 	
 	@FindBy(css="input[value='contains']")
@@ -80,7 +81,11 @@ public class SearchPopup extends ColBasePage{
 		Products, 
 		ServiceAndLabor, 
 		Paragraphs, 
-		QuotesAndOrders, 
+		QuotesAndOrders{
+			public String toString(){
+				return "quotesorders";
+			}
+		}, 
 		Proposals, 
 		PurchaseOrders, 
 		Customers, 
@@ -133,6 +138,30 @@ public class SearchPopup extends ColBasePage{
 		return driver.findElement(By.cssSelector("option[id^='ds_" +option.toLowerCase() +  "']"));
 	}
 	
+	//--------------------------- quick search for storestie goes here ------------------------//
+	
+	@FindBy(css="select[id *='_search_type']")
+	private WebElement searchDropdown;
+	
+	public <T> T quickSearchFor(QueryOption queryOption, boolean isKeyword, String text,  Class clazz){
+		searchDropdown.click();
+		forceWait(500);
+		
+		List<WebElement> options = searchDropdown.findElements(By.xpath("option"));
+		for(WebElement option: options){
+			if(option.getText().equalsIgnoreCase(queryOption.toString())){
+				option.click();
+				break;
+			}
+		}
+		
+		searchField.sendKeys(text);
+		Search.click();
+		
+		return (T) PageFactory.initElements(driver, clazz);
+		
+	}
+
 	
 	
 }

@@ -1221,8 +1221,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public OrderOptionsPage clickOrderOptions(){
 		setBillingAndShippingDiv();
 		BillingAndShippingDiv.findElement(By.xpath("div[3]/label/a")).click();
-		waitForAlert();
-		acceptAlert();
+		
+		if(isAlertPresent())
+			acceptAlert();
 
 		return PageFactory.initElements(driver, OrderOptionsPage.class);
 	}

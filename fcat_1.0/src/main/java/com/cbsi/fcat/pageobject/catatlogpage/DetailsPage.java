@@ -5,6 +5,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -115,8 +116,18 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public DetailsPage expandDetails(){
-		FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
-		FirstProcessingRow.click();
+		boolean isClickable = false;
+
+		while(!isClickable){
+			try{
+				FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
+				FirstProcessingRow.click();
+				isClickable = true;
+			}catch(WebDriverException e){
+				forceWait(500);
+				refresh();
+			}
+		}
 		return this;
 	}
 	

@@ -320,7 +320,10 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	@Test
 	public void companyLinkRedirectsToCurrentAccount(){
 //		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
+		long quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
+		QuotePage quotePage = documentsPage.goToQuote(quoteNumber);
 
 	
 		String expectedName = quotePage.getCompanyName();
@@ -561,8 +564,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void saveAndCloseOpensNextDocument(){
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
-	
+		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
+		long quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
+		QuotePage quotePage = documentsPage.goToQuote(quoteNumber);	
 		
 		List<HashMap<Document, String>> allDocuments = quotePage.getAllDocuments();		
 		String first_id = allDocuments.get(1).get(Document.ID);

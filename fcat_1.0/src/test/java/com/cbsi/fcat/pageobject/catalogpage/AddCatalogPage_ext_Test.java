@@ -125,6 +125,8 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		detailsPage.FileUploadIsDone();
 		detailsPage.expandDetails();
+		
+		detailsPage.customWait(3);
 
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.STORE, InfoType.MESSAGE)),"7");
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.MAP, InfoType.MESSAGE)),"7");

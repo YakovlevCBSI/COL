@@ -633,6 +633,8 @@ public class QuotePageTest extends DocumentsBasePageTest{
 //	}
 	
 	public Class<?> getDocumentClassByName(String name){
+		name = name.replaceAll("\\s", "");
+		
 		try {
 			return Class.forName("com.cbsi.col.pageobject.documents."+name + "Page");
 		} catch (ClassNotFoundException e) {

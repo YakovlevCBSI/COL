@@ -117,8 +117,9 @@ public class DetailsPage extends BasePage{
 	
 	public DetailsPage expandDetails(){
 		boolean isClickable = false;
-
-		while(!isClickable){
+		long startTime = System.currentTimeMillis();
+		
+		while(!isClickable && System.currentTimeMillis()- startTime <15000){
 			try{
 				FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
 				FirstProcessingRow.click();

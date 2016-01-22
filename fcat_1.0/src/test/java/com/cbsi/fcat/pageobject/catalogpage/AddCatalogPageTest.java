@@ -140,7 +140,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	@Test
 	public void uploadFullfileExcelXlsManual(){
-		MappingPage mappingPage = UploadFullFile("Excel.xls", UploadType.EXCEL);
+		MappingPage mappingPage = UploadFullFile("Xls.xls", UploadType.EXCEL);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());

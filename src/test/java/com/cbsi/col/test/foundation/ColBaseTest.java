@@ -119,8 +119,8 @@ public class ColBaseTest {
 		logger.debug(getUsername() + "/ " +  getPassword());
 		driver = configureDrivers();
 		driver.get(url);
-//		driver.manage().window().maximize();
-		driver.manage().window().setSize(new Dimension(1200, 700));
+		driver.manage().window().maximize();
+//		driver.manage().window().setSize(new Dimension(1200, 700));
 		navigatetoLoginPage();
 
 	}

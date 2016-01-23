@@ -60,7 +60,8 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
-	private String ExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
+	private String xlsUrl= GlobalVar.ftpURL + "Test/Xls.xls";
+	private String xlsxUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 
@@ -139,8 +140,30 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 	
 	@Test
-	public void uploadFullfileExcelXlsManual(){
+	public void uploadFullfileManualExcelXls(){
 		MappingPage mappingPage = UploadFullFile("Xls.xls", UploadType.EXCEL);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullfileAutomaticlExcelXlsx(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.typeFileAndUserInfoAll(xlsxUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullfileAutomaticlExcelXls(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.typeFileAndUserInfoAll(xlsUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());

@@ -1,6 +1,8 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,9 +20,17 @@ public class MapProductsDialog extends BasePage{
 	public MapProductsDialog(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad(By.cssSelector("div#mappingDialog div.content.catalog"));
-		// TODO Auto-generated constructor stub
+//		forceWait(3000);
 		
-		//waitforpage to Load.
+		resizeMapDialog();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void resizeMapDialog(){
+		int numheight = 720;
+		JavascriptExecutor js =(JavascriptExecutor)(driver);
+		js.executeScript("document.getElementsByClassName(\"fancybox-inner\")[0].style.width=\"" + numheight + "px\";");
+//		js.executeScript("document.getElementsByClassName(\"ui-dialog-content\")[0].style.height=\"" + (numheight-100) +"px\";");
 	}
 	
 	@FindBy(css="#mappedFlag")

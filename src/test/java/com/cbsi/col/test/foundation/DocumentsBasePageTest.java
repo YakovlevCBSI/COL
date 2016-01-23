@@ -225,9 +225,14 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		productPage.checkCompareBoxes(1,2,3, 5).selectAction(Action.AddToQuote);
 		
 		quotePage = PageFactory.initElements(driver, quotePagePass.getClass());
+
+		quotePage = quotePage.goToDocumentsPage().goToQuote(quoteNumber);
 		
-		quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(1)).selectFromLineActions(LineActions.Add_Subtotal);
-		quotePage = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(3, 4)).selectFromLineActions(LineActions.Convert_to_Bundle);
+		quotePage = (DocumentsBasePage) quotePage.selectProductFromTable(1);
+		quotePage = (DocumentsBasePage) quotePage.selectFromLineActions(LineActions.Add_Subtotal);
+		
+		quotePage =  (DocumentsBasePage) quotePage.selectProductFromTable(3, 4);
+		quotePage = (DocumentsBasePage) quotePage.selectFromLineActions(LineActions.Convert_to_Bundle);
 		
 		DocumentsBasePage quotePageNew = (DocumentsBasePage) ((DocumentsBasePage) quotePage.selectProductFromTable(7)).selectFromLineActions(LineActions.Add_Subtotal);
 		ProductsPage productPageNew =quotePageNew.goToProductsPage();

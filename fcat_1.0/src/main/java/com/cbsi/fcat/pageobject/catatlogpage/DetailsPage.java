@@ -217,11 +217,11 @@ public class DetailsPage extends BasePage{
 	public CatalogsPage clickReturnToList(){
 		try{
 			waitForElementToClickable(By.linkText("Return to List"));
-		}catch(TimeoutException e){
+			ReturnToList.click();
+		}catch(Exception e){
 			
 		}
 		
-		ReturnToList.click();
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 }

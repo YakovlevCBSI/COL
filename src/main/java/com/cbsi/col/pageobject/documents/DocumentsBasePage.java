@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -79,7 +80,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="a#contact-edit")
 	private WebElement ContactEdit;
 	
-	
+	@FindBy(css="input#description")
+	private WebElement Description;
+
 	public T setContact(){
 		if(getContact() == null) ContactEdit.click();
 		
@@ -90,6 +93,17 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		if(Contact.getText().toLowerCase().contains("n/a")) return null;
 		
 		return Contact.getText();
+	}
+	
+	public String getDescription(){
+		return Description.getAttribute("value");
+	}
+	
+	public T setDescription(String desc){
+		Description.clear();
+		Description.sendKeys(desc);
+		
+		return (T)this;
 	}
 	
 	//--------------------------  Bottom bar---------------------------//
@@ -128,6 +142,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	@FindBy(css="button[id*='live_cost_']")
 	private WebElement LiveCost;
+	
+	@FindBy(css="")
+	private WebElement CustomButtonTest;
+	
+	@FindBy(css="Exp")
+	private WebElement ExportToAutoTask;
 	
 	public T clickLiveCost(){
 		LiveCost.click();
@@ -645,13 +665,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 //			productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input")).click();
 			waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype][\"+ nth + \"]/td/label/input"));
 			WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype]["+ nth + "]/td/label/input"));
-			scrollToView(input);
-			
+
+			forceWait(500);
 			boolean clickable = false;
 			int retry = 0;
 			
 			while(!clickable && retry <=5){
 				try{
+					
 					input.click();
 					clickable = true;
 				}catch(Exception e){
@@ -826,6 +847,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		waitForQuickLoad();
 		if(add == AddImportUpdates.Merge_into_this_Document) return (T) PageFactory.initElements(driver, MergePopup.class);
 		else if(add == AddImportUpdates.Quick_Add_Product) return (T) PageFactory.initElements(driver, QuickAddProductPopup.class);
+		else if (add == AddImportUpdates.Import_Config) return (T) PageFactory.initElements(driver, ImportConfigPopup.class);
 		
 		return (T) PageFactory.initElements(driver, this.getClass());	
 	}
@@ -867,7 +889,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		UpdateMarginMarkup,
 		AddManualLineItem,
 		Merge_into_this_Document,
-		ImportConfig,
+		Import_Config,
 		ImportFromAutoAsk
 	}
 	
@@ -1310,4 +1332,58 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public void setInternalDocumentNotes(String text){
 		InternalDocumentNotes.sendKeys(text);
 	}	
+	
+	//----------------------------- Import config -----------------------------//
+	public static class ImportConfigPopup<T> extends ColBasePage{
+		public ImportConfigPopup(WebDriver driver){
+			super(driver);
+			switchFrame();
+			waitForQuickLoad();
+			waitForTextToBeVisible("Please browse to the file you want to upload as your config file.", "td");
+		}
+		
+		@FindBy(css="input[value='generic']")
+		private WebElement GenericImport;
+		
+		@FindBy(css="input[id='image_file'][name='upload_file']")
+		private WebElement ChooseFile;
+		
+		public ImportConfigPopup clickGenericImport(){
+			GenericImport.click();
+			return this;
+		}
+		
+		public ImportConfigPopup clickChooseFile(String fileName){
+			ChooseFile.click();
+			inputFilePath(fileName);
+			getActions().sendKeys(Keys.RETURN);
+
+			return this;
+		}
+
+		public T clickSave(){
+			ChooseFile.findElement(By.xpath("../../../tr/td/a[contains(@href, 'check_and_submit()')]")).click();
+			
+			forceWait(500);
+			
+			waitForTextToBeVisible("Importing Config", "h1");
+			switchBack();
+			waitForElementToBeInvisible(By.cssSelector("div.popup-content table tbody tr td h1"));
+			
+			return (T) PageFactory.initElements(driver, QuotePage.class);
+		}
+		
+		public void inputFilePath(String fileName){
+			String pathToFile = System.getProperty("user.dir") + "/src/test/resources/Files/";
+			WebElement fileInput = driver.findElement(By.cssSelector("input[type='file']"));
+			
+			logger.debug("using file path: " + pathToFile + fileName);
+			
+			fileInput.sendKeys(pathToFile + fileName);
+		}
+		
+		
+		
+	}
+
 }

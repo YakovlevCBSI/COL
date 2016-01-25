@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -53,6 +54,9 @@ import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
+import com.cbsi.col.pageobject.documents.DocumentsPage;
+import com.cbsi.col.pageobject.documents.QuotePage;
+import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.home.HomePage;
 import com.cbsi.col.pageobject.home.LoginPage;
 import com.cbsi.col.test.util.GlobalProperty;
@@ -500,5 +504,21 @@ public class ColBaseTest {
 
 	}
 	
-	
+	public QuotePage goToFirstOpenQuote(){
+		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
+		Long quoteNumber = null;
+
+		for(LinkedHashMap<String, String> map: documentsPage.getTableAsMaps()){
+			if(map.get("status").toLowerCase().equals("open")){
+				quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
+				break;
+			}
+		}
+		
+		if(quoteNumber == null){
+			throw new NullPointerException("There is not quote document to use for test");
+		}
+		
+		return documentsPage.goToQuote(quoteNumber);	
+	}
 }

@@ -25,6 +25,7 @@ import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.ImportConfigPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
@@ -206,11 +207,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void addTaskInQuote(){
-//		createQuote();
-//		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		
-//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
-		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
+		QuotePage quotePage = goToFirstOpenQuote();
 
 		int oldTaskNum = quotePage.getTasks();
 		
@@ -319,13 +316,8 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void companyLinkRedirectsToCurrentAccount(){
-//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).goToQuote(1);
-//		QuotePage quotePage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All").goToQuote(1);
-		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
-		long quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
-		QuotePage quotePage = documentsPage.goToQuote(quoteNumber);
+		QuotePage quotePage = goToFirstOpenQuote();
 
-	
 		String expectedName = quotePage.getCompanyName();
 		CurrentAccountTab currentAccountPage = quotePage.clickCompanyLink();
 		String companyName = currentAccountPage.getCompany();
@@ -378,7 +370,17 @@ public class QuotePageTest extends DocumentsBasePageTest{
 
 		PriceCalculator priceCalculator = ((DocumentsBasePage) addSubtotalBundleWorkFlow(quotePage).clickSave()).getPriceCalculator();
 		logger.debug("subTotal: " + priceCalculator.getTaxedSubTotal());
-		assertTrue( 3200.00 == priceCalculator.getSubtotal());
+		List<LinkedHashMap<String, String>> maps = quotePage.getTableAsMaps();
+		
+		double actualTotal = 0;
+		
+		for(LinkedHashMap<String, String> map: maps){
+			if(!map.get("price").isEmpty()){
+				actualTotal = Double.parseDouble(map.get("price")) * Integer.parseInt(map.get("qty"));
+			}
+		}
+		
+		assertTrue(actualTotal + " : " + priceCalculator.getSubtotal(),  actualTotal == priceCalculator.getSubtotal());
 	}
 	
 	@Test
@@ -481,8 +483,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void editShipToSaveNewAddress(){
-		documentPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
-		QuotePage quotePage = documentPage.goToQuote(Integer.parseInt(documentPage.getTableAsMaps().get(0).get("doc#")));
+		QuotePage quotePage = goToFirstOpenQuote();
 		
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
 		
@@ -564,9 +565,7 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void saveAndCloseOpensNextDocument(){
-		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
-		long quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
-		QuotePage quotePage = documentsPage.goToQuote(quoteNumber);	
+		QuotePage quotePage = goToFirstOpenQuote();
 		
 		List<HashMap<Document, String>> allDocuments = quotePage.getAllDocuments();		
 		String first_id = allDocuments.get(1).get(Document.ID);
@@ -594,6 +593,25 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		long endTime = System.currentTimeMillis();
 		
 		assertTrue("Time: " + (endTime - startTime) +" ms",endTime - startTime <15000);
+	}
+	
+	@Ignore("in progress")
+	@Test
+	public void exportToAutoTaskShowAlert(){
+		QuotePage quotePage = goToFirstOpenQuote();
+//		q
+		
+	}
+	
+	@Ignore("in progress")
+	@Test
+	public void importCustomConfig(){
+		QuotePage quotePage = goToFirstOpenQuote();
+		ImportConfigPopup importConfig = (ImportConfigPopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Import_Config);
+		importConfig.clickGenericImport().clickChooseFile("ImportConfig.xls");
+		quotePage = (QuotePage) importConfig.clickSave();
+		
+		///add validation logic here.
 	}
 	
 //	@Test

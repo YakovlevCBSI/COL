@@ -20,8 +20,9 @@ import com.cbsi.col.pageobject.suppliers.SuppliersPage;
 public class HomePage extends ColBasePage{
 	public HomePage(WebDriver driver){
 		super(driver);
-		waitForPageToLoad(By.cssSelector("#tab-home"));
-		waitForTextToBeVisible("My Channel", "ul li.active a");
+//		waitForPageToLoad(By.cssSelector("#tab-home"));
+//		waitForTextToBeVisible("My Channel", "ul li.active a");
+		waitForElementToBeVisible(By.cssSelector("li[class*='tab-bar'] 	a[id*='tab-home']"));
 	}
 	
 	@CacheLookup
@@ -36,7 +37,10 @@ public class HomePage extends ColBasePage{
 	@FindBy(css="#crm-controlpanesectionlink-favorites")
 	private WebElement Favorite;
 	
-	@FindBy(css="#crm-controlpaneaccordionlink-customers")
+	@FindBy(css="#crm-controlpanesectionlink-storesites")
+	private WebElement StoreSite;
+	
+	@FindBy(css="#crm-controlpanesectionlink-storesites")
 	private WebElement RecentCustomers;
 	
 	public AccountsPage goToRecentCustomer(String customerName){
@@ -118,7 +122,9 @@ public class HomePage extends ColBasePage{
 	}
 	
 	public ScratchPadPage goToScratchPadPage(){
-		RecentDocDropdown.click();
+//		RecentDocDropdown.click();
+		getActions().moveToElement(RecentDocDropdown, 5, 5).click().build().perform();		
+
 		forceWait(500);
 		
 		List<WebElement> dropdowns = driver.findElements(By.cssSelector("li#crm-tab-bar-right ul li div ul li a"));
@@ -213,6 +219,16 @@ public class HomePage extends ColBasePage{
 		return (T) PageFactory.initElements(driver, clazz);
 	}
 	
+	public <T> T  navigateToSideBar(StoreSites page, Class<?> clazz){
+		if(!StoreSite.findElement(By.xpath("../../div[2]")).getAttribute("class").contains("in")) 
+			StoreSite.click();
+
+		By by = null;
+		by = getLinkText(page.toString());		
+		driver.findElement(by).click();
+		return (T) PageFactory.initElements(driver, clazz);
+	}
+	
 	public enum Admin{
 		Account_Services,
 		Catalog_Admin,
@@ -245,6 +261,11 @@ public class HomePage extends ColBasePage{
 	public enum Favorites{
 		Quote_Hot_List,
 		Quote_Hot_List_Setting
+	}
+	
+	public enum StoreSites{
+		Default_Store,
+		Preview_Store
 	}
 	
 	public enum AllCatalogs{

@@ -123,7 +123,9 @@ public class DetailsPage extends BasePage{
 		while(!isClickable && System.currentTimeMillis()- startTime <15000){
 			try{
 				FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
+				scrollToView(FirstProcessingRow);
 				FirstProcessingRow.click();
+				
 				isClickable = true;
 			}catch(WebDriverException e){
 				forceWait(500);
@@ -141,7 +143,7 @@ public class DetailsPage extends BasePage{
 		
 		//check if element is staled.
 		FirstProcessingRow = refreshStaleElement(By.cssSelector("tbody tr:nth-child(1)"));
-				
+		
 		if(!FirstProcessingRow.getTagName().equals("tr"))
 			FirstProcessingRow = FirstProcessingRow.findElement(By.xpath("../../../tr[1]"));
 		

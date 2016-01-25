@@ -11,7 +11,7 @@
    	 	<mvn-compiler-plugin-version>2.3.2</mvn-compiler-plugin-version>
     	<mvn-plugin-version>2.18</mvn-plugin-version>
         <junit-version>4.11</junit-version>
-    	<selenium-version>2.47.1</selenium-version>
+    	<selenium-version>2.49.0</selenium-version>
         <project-version>0.0.1-SNAPSHOT</project-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <url></url>

@@ -123,10 +123,11 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	public void validateProcessingQueueMessageExists() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();
 		DetailsPage detailsPage = mappingPage.automap();
-		detailsPage.FileUploadIsDone();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
 		detailsPage.expandDetails();
 		
-		detailsPage.customWait(3);
+		detailsPage.customWait(20);
 
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.STORE, InfoType.MESSAGE)),"7");
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.MAP, InfoType.MESSAGE)),"7");

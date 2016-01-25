@@ -139,6 +139,9 @@ public class DetailsPage extends BasePage{
 		WebElement whichDetailedMessageRow = null;
 		String rowNum="";
 		
+		//check if element is staled.
+		FirstProcessingRow = refreshStaleElement(By.cssSelector("tbody tr:nth-child(1)"));
+				
 		if(!FirstProcessingRow.getTagName().equals("tr"))
 			FirstProcessingRow = FirstProcessingRow.findElement(By.xpath("../../../tr[1]"));
 		

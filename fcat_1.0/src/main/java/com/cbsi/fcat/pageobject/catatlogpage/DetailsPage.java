@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -209,7 +210,12 @@ public class DetailsPage extends BasePage{
 	@FindBy(linkText="Return to List")
 	private WebElement ReturnToList;
 	public CatalogsPage clickReturnToList(){
-		waitForElementToClickable(By.linkText("Return to List"));
+		try{
+			waitForElementToClickable(By.linkText("Return to List"));
+		}catch(TimeoutException e){
+			
+		}
+		
 		ReturnToList.click();
 		return PageFactory.initElements(driver, CatalogsPage.class);
 	}

@@ -129,7 +129,8 @@ public class HomePage extends ColBasePage{
 		
 		List<WebElement> dropdowns = driver.findElements(By.cssSelector("li#crm-tab-bar-right ul li div ul li a"));
 		if(!dropdowns.get(0).getText().toLowerCase().contains("scratch pad")){
-			dropdowns.get(dropdowns.size()-1).click();
+//			dropdowns.get(dropdowns.size()-1).click();
+			getActions().moveToElement(dropdowns.get(dropdowns.size()-1), 10, 10).click().build().perform();
 		}
 		else{
 			dropdowns.get(0).click();

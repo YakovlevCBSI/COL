@@ -55,6 +55,7 @@ public class DocumentsPageTest extends ColBaseTest{
 		assertTrue(TableUtil.tableMapHasWord(maps,"status", "Due", false));
 	}
 	
+	@Ignore
 	@Test
 	public void FilterByModifiedUser(){
 		String userName = "Park, Albert";
@@ -76,5 +77,7 @@ public class DocumentsPageTest extends ColBaseTest{
 		documentsPage = documentsPage.setFilterByModifiedBy("Modified By (All)");
 		assertEquals("Modified By (All)", documentsPage.getFilterByModified());
 	}
+	
+	
 }
 	

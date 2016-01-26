@@ -145,6 +145,7 @@ public class AddCatalogPage extends BasePage {
 		return this;
 	}
 	public AddCatalogPage typeUserName(String username){
+		waitForElementToBeVisible(Username);
 		Username.sendKeys(username);
 		return this;
 	}

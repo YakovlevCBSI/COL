@@ -71,6 +71,7 @@ public class OrganizerPopup<T> extends ColBasePage{
 	}
 	
 	public void setSubject(String subject){
+		waitForElementToBeVisible(Subject);
 		Subject.sendKeys(subject);
 	}
 	

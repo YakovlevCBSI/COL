@@ -594,15 +594,33 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		
 	}
 	
-	@Ignore("in progress")
+//	@Ignore("in progress")
 	@Test
 	public void importCustomConfig(){
 		QuotePage quotePage = goToFirstOpenQuote();
+		int productTableSize = quotePage.getTableAsMaps().size();
+		
 		ImportConfigPopup importConfig = (ImportConfigPopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Import_Config);
 		importConfig.clickGenericImport().clickChooseFile("ImportConfig.xls");
 		quotePage = (QuotePage) importConfig.clickSave();
 		
-		///add validation logic here.
+		List<LinkedHashMap<String, String>> tableMaps = quotePage.getTableAsMaps();
+		LinkedHashMap<String, String> lastTableMap = tableMaps.get(tableMaps.size()-1);
+		
+		assertTrue(productTableSize + 1 == tableMaps.size());
+		assertTrue(lastTableMap.get("mfrpart#").equals("GLC-T="));
+		assertFalse(lastTableMap.get("description").isEmpty());
+		assertFalse(lastTableMap.get("listprice").isEmpty());
+		assertFalse(lastTableMap.get("qty").isEmpty());
+		assertFalse(lastTableMap.get("price").isEmpty());
+		assertFalse(lastTableMap.get("total").isEmpty());
+
+
+	}
+	
+	@Test
+	public void copyToNewQuoteHasLineActionItems(){
+		
 	}
 	
 //	@Test

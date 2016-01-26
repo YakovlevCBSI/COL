@@ -1366,10 +1366,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			
 			forceWait(500);
 			
-			waitForTextToBeVisible("Importing Config", "h1");
-			switchBack();
-			waitForElementToBeInvisible(By.cssSelector("div.popup-content table tbody tr td h1"));
-			
+//			waitForTextToBeVisible("Importing Config", "h1");
+//			switchBack();
+			waitForElementToBeInvisible(By.cssSelector("div#import-config-modal"));
+			forceWait(1000);
 			return (T) PageFactory.initElements(driver, QuotePage.class);
 		}
 		

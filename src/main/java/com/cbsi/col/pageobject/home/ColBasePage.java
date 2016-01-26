@@ -537,6 +537,12 @@ public class ColBasePage {
 					String data =null;
 					try{
 						data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+						if(data.isEmpty()){
+							String id = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getAttribute("id");
+							if(id.contains("quantity") || id.contains("customerPrice")){
+								data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]/div/div/input")).getAttribute("value");
+							}
+						}
 					}catch(NoSuchElementException e){
 						return maps;
 					}

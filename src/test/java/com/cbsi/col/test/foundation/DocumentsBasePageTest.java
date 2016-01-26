@@ -224,9 +224,15 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		}
 		productPage.checkCompareBoxes(1,2,3, 5).selectAction(Action.AddToQuote);
 		
+		
 		quotePage = PageFactory.initElements(driver, quotePagePass.getClass());
 
-		quotePage = quotePage.goToDocumentsPage().goToQuote(quoteNumber);
+		if(quotePagePass instanceof QuotePage)
+			quotePage = quotePage.goToDocumentsPage().goToQuote(quoteNumber);
+		else if (quotePagePass instanceof SalesOrderPage){
+			quotePage = quotePage.goToDocumentsPage().goToOrder(quoteNumber);
+
+		}
 		
 		quotePage = (DocumentsBasePage) quotePage.selectProductFromTable(1);
 		quotePage = (DocumentsBasePage) quotePage.selectFromLineActions(LineActions.Add_Subtotal);

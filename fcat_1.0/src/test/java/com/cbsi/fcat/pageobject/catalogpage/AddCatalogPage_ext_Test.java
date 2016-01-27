@@ -55,7 +55,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void uploadFullFileExcelAutomaticFromScratch(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.selectDropBoxOption(UploadType.EXCEL);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
@@ -83,7 +83,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	@Test
 	public void DelimiterMismatchAutomaticTxtToExcel(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
@@ -135,6 +135,21 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE)),"7");
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE)),"1");	
 	}
+	
+	@Test
+	public void errorWhenYouSwitchConnectors(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll("ftp://something.com/file.txt", USERNAME, PASSWORD);
+		UploadPopupPage uploadPopup = addCatalogPage.fillInName();
+		
+		addCatalogPage = uploadPopup.clickCancel();
+		addCatalogPage.setFileLocation("http://google.com/file.txt");
+		
+		addCatalogPage = addCatalogPage.clickNext().clickCancel();
+		
+		assertTrue(hasNoError());
+	}
+	
 	//----------------------------com methods---------------//
 	public String getProcessedNumber(String queueMessage){
 		System.out.println(queueMessage);

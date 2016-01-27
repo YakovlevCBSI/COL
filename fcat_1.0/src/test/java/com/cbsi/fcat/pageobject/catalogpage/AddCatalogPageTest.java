@@ -68,7 +68,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
 		addCatalogPage.fillInName().clickGetFile();
 		try{ } catch(RuntimeException e){}
 		
@@ -78,7 +78,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void automaticUploadWithInvalidUsername(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, "bad", PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(URL, "bad", PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.clickGetFile();
 		
@@ -88,7 +88,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void automaticUploadWithInvalidPassword(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, "bad");
+		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, "bad");
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.clickGetFile();
 		
@@ -99,7 +99,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	public void UploadFullFileAutomaticFromScratch(){
 //		driver.manage().window().setSize(new Dimension(570, 500));
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
@@ -150,7 +150,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void uploadFullfileAutomaticlExcelXlsx(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(xlsxUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(xlsxUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
@@ -161,7 +161,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void uploadFullfileAutomaticlExcelXls(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(xlsUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(xlsUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();

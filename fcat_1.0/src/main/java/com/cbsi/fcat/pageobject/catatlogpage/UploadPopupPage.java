@@ -23,6 +23,9 @@ public class UploadPopupPage extends BasePage{
 	public UploadPopupPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+//		logger.debug("wait for page load done.");
+		waitForTextToBeVisible("Upload Catalog", "div.overlay-header.dialog");
+
 		forceWait(500);
 	}
 	
@@ -49,7 +52,8 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div.tab-panel p a.next-button")
 	private WebElement Next;
 	
-	@FindBy(linkText="Cancel")
+	private static final String CancelPath = "p a.x-cancel";
+	@FindBy(css=CancelPath)
 	private WebElement Cancel;
 
 	private WebElement Title;
@@ -59,6 +63,14 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div.overlay-upload-catalog-body.dialog")
 	private WebElement dialogBody;
 		
+	public AddCatalogPage clickCancel(){
+		waitForElementToBeVisible(Cancel);
+		Cancel.click();
+		waitForElementToBeInvisible(By.cssSelector(CancelPath));
+		
+		return PageFactory.initElements(driver, AddCatalogPage.class);
+	}
+	
 	public boolean isTitleDisplayed(){
 		Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));	
 		return Title.isDisplayed() && !Title.getText().isEmpty();
@@ -241,6 +253,8 @@ public class UploadPopupPage extends BasePage{
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
 			if(isGrid){
 				pathToFile = "/home/slave/Documents/Catalogs/London.csv";
+//				pathToFile = "/home/qe/Documents/London.csv";
+
 			}
 		}
 		
@@ -261,8 +275,9 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
+		
 		if(isGrid){
-			pathToFile = "/home/slave/Documents/Catalogs/" + fileName;
+			pathToFile = "/home/qe/Documents" + fileName;
 		}
 		
 		logger.info(pathToFile);

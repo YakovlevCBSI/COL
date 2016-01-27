@@ -140,17 +140,19 @@ public class AddCatalogPage extends BasePage {
 	@FindBy(css="input#FileLocation_Password")
 	private WebElement Password;
 	
-	public AddCatalogPage typeFileLocation(String fileLocal){
+	public AddCatalogPage setFileLocation(String fileLocal){
+		waitForElementToBeVisible(FileLocation);
+		FileLocation.clear();
 		FileLocation.sendKeys(fileLocal);
 		return this;
 	}
-	public AddCatalogPage typeUserName(String username){
+	public AddCatalogPage setUserName(String username){
 		waitForElementToBeVisible(Username);
 		Username.sendKeys(username);
 		return this;
 	}
 	
-	public AddCatalogPage typePassword(String password){
+	public AddCatalogPage setPassword(String password){
 		Password.sendKeys(password);
 		return this;
 	}
@@ -203,8 +205,8 @@ public class AddCatalogPage extends BasePage {
 		
 		return this;
 	}
-	public AddCatalogPage typeFileAndUserInfoAll(String fileLocation, String username, String password){
-		return typeFileLocation(fileLocation).typeUserName(username).typePassword(password);
+	public AddCatalogPage setFileAndUserInfoAll(String fileLocation, String username, String password){
+		return setFileLocation(fileLocation).setUserName(username).setPassword(password);
 		
 	}
 	

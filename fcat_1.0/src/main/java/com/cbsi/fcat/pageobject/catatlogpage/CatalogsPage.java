@@ -381,6 +381,7 @@ public class CatalogsPage extends BasePage{
 	public int getProductNumberByCatalog(String catalogName){
 		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
 		for(WebElement c:catalogNames){
+			logger.info("looking for " + catalogName);
 			if(c.getText().equalsIgnoreCase(catalogName)){
 				return Integer.parseInt(c.findElement(By.xpath("../../td[@class ='number-column']/span")).getText());
 			}

@@ -91,7 +91,7 @@ public abstract class BasePage {
 	public void waitForElementToBeInvisible(By by){
 		waitForElementToBeInvisible(by, 30000);
 	}
-	
+
 	public void waitForElementToBeInvisible(By by, long timeInMilli){
 		new WebDriverWait(driver, timeInMilli).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
@@ -172,7 +172,7 @@ public abstract class BasePage {
 		waitForElementToBeInvisible(By.cssSelector("div.splash-image"), 5);
 	}
 	
-	protected String tempFileName = getHostname() + System.currentTimeMillis() + "";
+	protected String tempFileName = getHostUserName() + System.currentTimeMillis() + "";
 	public String getTempFileName(){
 		return tempFileName;
 	}
@@ -188,23 +188,34 @@ public abstract class BasePage {
 		   forceWait(500);
 	}
 	
+	public void scrollToViewXAndY(WebElement element){
+		int elmenentPositionX = element.getLocation().getX();
+		int elementPositionY = element.getLocation().getY();
+	   String js = String.format("window.scroll(%s, %s)", elmenentPositionX, elementPositionY);
+	   ((JavascriptExecutor)driver).executeScript(js);
+	   forceWait(500);
+}
+	
 	public String escapeHtml(String text){
 		return text.replace("<", "&lt;").replace(">","&gt;");
 	}
 	
 	
-	public static String getHostname(){
-		String hostName="";
-		try{
-		    InetAddress addr;
-		    addr = InetAddress.getLocalHost();
-		    hostName = addr.getHostName();
-		}
-		catch (UnknownHostException ex){
-		    logger.info("Hostname can not be resolved");
-		}
-		
-		return hostName;
+//	public static String getHostname(){
+//		String hostName="";
+//		try{
+//		    InetAddress addr;
+//		    addr = InetAddress.getLocalHost();
+//		    hostName = addr.getHostName();
+//		}
+//		catch (UnknownHostException ex){
+//		    logger.info("Hostname can not be resolved");
+//		}
+//		
+//		return hostName;
+//	}
+//	
+	public String getHostUserName(){
+		return System.getProperty("user.name");
 	}
-	
 }

@@ -43,6 +43,7 @@ import com.cbsi.col.pageobject.products.AddToCatalogsPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
+import com.cbsi.col.test.util.GlobalProperty;
 
 
 public class QuotePageTest extends DocumentsBasePageTest{
@@ -192,12 +193,14 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		quotePage.clickSave();
 	}
 	
-	private String warrantyMfpn = "SYS-2027R-N3RF4+-EW2";
+	private static final String warrantyMfpn = "SYS-2027R-N3RF4+-EW2";
+	private static final String warranyMfPnProd = "ACCX020-A1OK";
+	
 	@Test //#5569
 	public void addServiceItem(){
 		createQuote();
 		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
-		quotePage = (QuotePage) quotePage.searchExactProduct(warrantyMfpn);
+		quotePage = (QuotePage) quotePage.searchExactProduct(GlobalProperty.isProd?warranyMfPnProd:warrantyMfpn);
 		
 		quotePage.clickSave();
 //		DocumentsPage documnetsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);

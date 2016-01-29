@@ -48,16 +48,33 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
-	private String ExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
+	private String FtpExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 	
 	@Test
-	public void uploadFullFileExcelAutomaticFromScratch(){
+	public void uploadFullFileExcelAutomaticFtpFromScratch(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.setFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(FtpExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.selectDropBoxOption(UploadType.EXCEL);
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullFileTxtAutomaticHttpFromScratch(){
+		UploadPopupPage uploadPopup = catalogsPage.setMyCatalogToManualCatalog().clickUpload();
+		String sampleFileLocation = uploadPopup.getSampleFileUrl();
+		
+		uploadPopup.refresh();
+		catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(sampleFileLocation , USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
@@ -81,9 +98,9 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	}
 	
 	@Test
-	public void DelimiterMismatchAutomaticTxtToExcel(){
+	public void DelimiterMismatchAutomaticFtpTxtToExcel(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.setFileAndUserInfoAll(ExceUrl, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(FtpExceUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);

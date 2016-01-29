@@ -56,6 +56,9 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css=CancelPath)
 	private WebElement Cancel;
 
+	@FindBy(linkText="Sample File")
+	private WebElement SampleFile;
+	
 	private WebElement Title;
 
 	private WebElement Cross;
@@ -69,6 +72,15 @@ public class UploadPopupPage extends BasePage{
 		waitForElementToBeInvisible(By.cssSelector(CancelPath));
 		
 		return PageFactory.initElements(driver, AddCatalogPage.class);
+	}
+	
+	public String getSampleFileUrl(){
+		return SampleFile.getAttribute("href");
+	}
+	
+	public UploadPopupPage clickSampleFile(){
+		SampleFile.click();
+		return this;
 	}
 	
 	public boolean isTitleDisplayed(){

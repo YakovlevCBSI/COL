@@ -96,7 +96,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 
 	@Test
-	public void UploadFullFileAutomaticFromScratch(){
+	public void UploadFullFileAutomaticFtpFtpFromScratch(){
 //		driver.manage().window().setSize(new Dimension(570, 500));
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, PASSWORD);
@@ -148,7 +148,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 	
 	@Test
-	public void uploadFullfileAutomaticlExcelXlsx(){
+	public void uploadFullfileAutomaticFtplExcelXlsx(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(xlsxUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
@@ -159,7 +159,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 	
 	@Test
-	public void uploadFullfileAutomaticlExcelXls(){
+	public void uploadFullfileAutomaticFtplExcelXls(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(xlsUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -20,6 +21,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
+import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
@@ -151,6 +153,22 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.DIFFERENCE, InfoType.MESSAGE)),"7");
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE)),"7");
 		assertEquals(getProcessedNumber(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE)),"1");	
+	}
+	
+	@Test
+	public void emptyFileStopsAtParsing() throws InterruptedException{
+		needsCleanUp=false;
+
+		catalogsPage.setMyCatalog();
+		UploadPopupPage uploadPopup = catalogsPage.clickUpload();
+		DetailsPage detailsPage = (DetailsPage) uploadPopup.uploadLocalFileFromResource("emptyFile.txt").selectDropBoxOption(UploadType.TXT).clickNext().clickNextAfterUpload(false);
+		detailsPage.expandDetails();
+		
+		assertTrue(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE).contains("Total processed: No records."));
+		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.STATUS), UploadStatus.DONE.toString());
+		assertTrue( detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE).contains("Total processed: 1."));
+		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.STATUS), UploadStatus.DONE.toString());
+
 	}
 	
 	@Test

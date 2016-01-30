@@ -1,6 +1,9 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -135,7 +138,8 @@ public class DetailsPage extends BasePage{
 		return this;
 	}
 	
-	public static Boolean storeAndMapExists;
+	public static Boolean storeAndMapExist;
+	public static Boolean diffExists;
 	
 	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
 		WebElement whichDetailedMessageRow = null;
@@ -150,28 +154,36 @@ public class DetailsPage extends BasePage{
 		rowNum = FirstProcessingRow.getAttribute("name").split("-")[1].trim();
 	
 		//check if this is full or upload catalog by counting status columns.
-		if(storeAndMapExists == null){
-			List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
+		List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
+
+		if(storeAndMapExist == null){
 			if(statusList.size() ==5){
-				storeAndMapExists = true;
+				storeAndMapExist = true;
+				diffExists = true;
+			}else if(statusList.size() ==2){
+				storeAndMapExist= false;
+				diffExists = false;
 			}else{
-				storeAndMapExists= false;
+				storeAndMapExist= false;
+				diffExists = true;
 			}
 		}
 
 		String details ="";
 		if(DifferenceParseOrFileUpload.equals(ProcessingQueue.DIFFERENCE)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+			if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
 			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
 		
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.PARSE)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+			if(!diffExists && !storeAndMapExist)  whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+			else if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
 			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));
 			
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.FILEUPLOAD)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+			if(!diffExists && !storeAndMapExist)  whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+			else if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
 			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[6]"));
 		}
 		else if (DifferenceParseOrFileUpload.equals(ProcessingQueue.STORE)){
@@ -185,7 +197,7 @@ public class DetailsPage extends BasePage{
 			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'name-column')]")).getText();
 		}
 		else if(messageOrStatusOrModified.equals(InfoType.STATUS)){
-			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'status-column']/span")).getText();
+			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'status-column')]/span")).getText();
 		}
 		else if(messageOrStatusOrModified.equals(InfoType.MODIFIED)){
 			details = whichDetailedMessageRow.findElement(By.xpath("td[@class='date-column']/span")).getText();
@@ -193,7 +205,7 @@ public class DetailsPage extends BasePage{
 		
 		return details;
 	}
-	
+
 	public enum ProcessingQueue{
 		DIFFERENCE, PARSE, FILEUPLOAD, MAP, STORE;
 	}

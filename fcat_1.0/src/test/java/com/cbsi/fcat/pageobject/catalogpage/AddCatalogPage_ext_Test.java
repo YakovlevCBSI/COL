@@ -162,6 +162,8 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		catalogsPage.setMyCatalog();
 		UploadPopupPage uploadPopup = catalogsPage.clickUpload();
 		DetailsPage detailsPage = (DetailsPage) uploadPopup.uploadLocalFileFromResource("emptyFile.txt").selectDropBoxOption(UploadType.TXT).clickNext().clickNextAfterUpload(false);
+		
+		assertTrue(detailsPage.FileUploadIsDone());
 		detailsPage.expandDetails();
 		
 		assertTrue(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE).contains("Total processed: No records."));

@@ -65,7 +65,7 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
-//	public boolean isGrid = true;
+//	public boolean isGrid = false;
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
@@ -314,6 +314,7 @@ public class BaseTest {
 	
 	public void setDisplayToVm(){
 		driver.manage().window().setSize(new Dimension(1024, 768));
+
 	}
 	
 	public void EasyLoginToLocal(){
@@ -544,7 +545,7 @@ public class BaseTest {
 	}
 	
 	public boolean isAutoRun(){
-		if(username.equals("jenkins") || username.contains("slave")) return true;
+		if(username.equals("jenkins") || getHostname().toLowerCase().contains("qe")) return true;
 		return false;
 	}
 	//------------------------------------------common methods-----------------------------------//
@@ -695,6 +696,7 @@ public class BaseTest {
 	
 	protected static List<String> tempFiles;
 	public String tempFile;
+	
 	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
 		tempFiles= new ArrayList<String>();
 		//System.out.println("drive rnull? " + driver == null);
@@ -766,5 +768,19 @@ public class BaseTest {
 	
 	public String getRandomNumber(){
 		return System.currentTimeMillis() + "";
+	}
+	
+	public static String getHostname(){
+		String hostName="";
+		try{
+		    InetAddress addr;
+		    addr = InetAddress.getLocalHost();
+		    hostName = addr.getHostName();
+		}
+		catch (UnknownHostException ex){
+		    System.out.println("Hostname can not be resolved");
+		}
+		
+		return hostName;
 	}
 }

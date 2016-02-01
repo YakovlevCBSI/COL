@@ -406,6 +406,21 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		assertTrue(!editProduct.getManufacturerName().isEmpty() || !editProduct.getManufacturerPartNumber().isEmpty() || !editProduct.getUpcEan().isEmpty());
 	}
 	
+	@Test
+	public void wrongUrlRedirectsToCatalogPage(){
+		String url = "";
+		String id = "";
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		
+		url = productsCatalogPage.getCurrentURL();
+		id = url.substring(url.lastIndexOf("#")+1);
+		
+		driver.get(url.replace(id, "junk123"));
+		
+		catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);	
+		
+	}
+	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
 		ProductsCatalogPage productsCatalogPageNew= null;
 		
@@ -420,4 +435,6 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		
 		return productsCatalogPageNew;
 	}
+	
+	
 }

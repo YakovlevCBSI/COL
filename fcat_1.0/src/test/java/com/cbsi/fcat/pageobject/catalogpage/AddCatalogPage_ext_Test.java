@@ -166,10 +166,14 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 		detailsPage.expandDetails();
 		
-		assertTrue(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE).contains("Total processed: No records."));
-		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.STATUS), UploadStatus.DONE.toString());
-		assertTrue( detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE).contains("Total processed: 1."));
-		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.STATUS), UploadStatus.DONE.toString());
+		assertTrue(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE), 
+				detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE).contains("Total processed: No records."));
+		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.STATUS),
+				detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.STATUS), UploadStatus.DONE.toString());
+		assertTrue(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE), 
+				detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.MESSAGE).contains("Total processed: 1."));
+		assertEquals(detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.STATUS),
+				detailsPage.getProcessingQueueMessage(ProcessingQueue.FILEUPLOAD, InfoType.STATUS), UploadStatus.DONE.toString());
 
 	}
 	

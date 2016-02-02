@@ -169,6 +169,8 @@ public class DetailsPage extends BasePage{
 			}
 		}
 
+		logger.info("storeAndMapExists: " + storeAndMapExist + "\n" + "diffExists: " + diffExists);
+		
 		String details ="";
 		if(DifferenceParseOrFileUpload.equals(ProcessingQueue.DIFFERENCE)){
 			if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
@@ -176,6 +178,8 @@ public class DetailsPage extends BasePage{
 		
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.PARSE)){
+			logger.info("ProcessingQueue Parse condition at work");
+			
 			if(!diffExists && !storeAndMapExist)  whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
 			else if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
 			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));

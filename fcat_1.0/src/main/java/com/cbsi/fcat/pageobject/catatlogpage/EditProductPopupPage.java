@@ -136,6 +136,9 @@ public class EditProductPopupPage extends BasePage{
 		}catch(NoSuchElementException error){
 			return;
 		}
+		
+		e.clear();
+		
 		if(driver instanceof FirefoxDriver){
 			e.click();
 			if(new GlobalVar().isJenkins()){

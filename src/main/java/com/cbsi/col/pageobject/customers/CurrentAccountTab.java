@@ -1,5 +1,8 @@
 package com.cbsi.col.pageobject.customers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -58,11 +61,11 @@ public class CurrentAccountTab extends ColBasePage{
 		return PageFactory.initElements(driver, EditAccountPage.class);
 	}
 	
-	public ContactInfoPage clickAddAContact(){
+	public CreateAccountPage clickAddAContact(){
 		AddAContact.click();
 		forceWait(500);
 		
-		return PageFactory.initElements(driver, ContactInfoPage.class);
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
 	public MergeCustomerPage clickMerge(){
@@ -190,6 +193,24 @@ public class CurrentAccountTab extends ColBasePage{
 		return CompanyName.getText();
 	}
 	
+	//--------------------------- Contact pane ----------------------------//
+	
+	@FindBy(css="select#contactcnamedropdown")
+	private WebElement ContactDropdown;
+	
+	public CurrentAccountTab clickContactDropdown(){
+		ContactDropdown.click();
+		return this;
+	}
+	
+	public List<String> getContacts(){
+		List<String> contacts = new ArrayList<String>();
+		for(WebElement w: ContactDropdown.findElements(By.xpath("option"))){
+			contacts.add(w.getText());
+		}
+		
+		return contacts;
+	}
 	//-------------------------- Go to iframe ---------------------------//
 	
 	public DocumentsPage getDocumentsPage(){

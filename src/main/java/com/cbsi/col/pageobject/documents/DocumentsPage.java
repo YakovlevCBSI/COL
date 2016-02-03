@@ -340,7 +340,7 @@ public class DocumentsPage extends ColBasePage{
 	public List<String> getContactList(){
 		List<String> contacts = new ArrayList<String>();
 		for(WebElement w: ContactList.findElements(By.xpath("option"))){
-			contacts.add(w.getText());
+			contacts.add(w.getText().toLowerCase());
 		}
 		
 		return contacts;
@@ -356,7 +356,7 @@ public class DocumentsPage extends ColBasePage{
 		List<WebElement> modifiedBys = ModifiedBy.findElements(By.xpath("option"));
 		
 		for(int i=1; i<modifiedBys.size(); i++){
-			modifiedBysNames.add(modifiedBys.get(i).getText());
+			modifiedBysNames.add(modifiedBys.get(i).getText().toLowerCase());
 		}
 		
 		return modifiedBysNames;

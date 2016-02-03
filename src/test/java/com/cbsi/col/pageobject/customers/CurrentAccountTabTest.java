@@ -79,8 +79,8 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		//check if contact size is more than two.
 		while(currentAccount.getContacts().size() <= 2){
 			CreateAccountPage contactPage = currentAccount.clickAddAContact();
-			contactPage.setFirstName("qa");
-			contactPage.setLastName(contactPage.getRamdomLetter() + "abc");
+			contactPage.setContactInfo_FirstName("qa");
+			contactPage.setContactInfo_LastName(contactPage.getRamdomLetter() + "abc");
 			contactPage.clickSave();
 			currentAccount = contactPage.goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		}

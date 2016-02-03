@@ -195,6 +195,9 @@ public class CurrentAccountTab extends ColBasePage{
 	
 	//--------------------------- Contact pane ----------------------------//
 	
+	@FindBy(css="td#contactcname a.ctrl-icon-edit")
+	private WebElement ContactNameEdit;
+	
 	@FindBy(css="select#contactcnamedropdown")
 	private WebElement ContactDropdown;
 	
@@ -203,7 +206,14 @@ public class CurrentAccountTab extends ColBasePage{
 		return this;
 	}
 	
+	public CurrentAccountTab clickContactNameEdit(){
+		ContactNameEdit.click();
+		return this;
+	}
+	
 	public List<String> getContacts(){
+		clickContactNameEdit();
+		waitForElementToBeVisible(ContactDropdown);
 		List<String> contacts = new ArrayList<String>();
 		for(WebElement w: ContactDropdown.findElements(By.xpath("option"))){
 			contacts.add(w.getText());

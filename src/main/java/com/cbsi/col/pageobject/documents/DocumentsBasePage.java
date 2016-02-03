@@ -695,7 +695,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public <T>T selectProductFromTable(int...n){
 		for(int nth: n){
 //			productTable.findElement(By.xpath("tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input")).click();
-			waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype][\"+ nth + \"]/td/label/input"));
+//			waitForElementToBeClickable(By.xpath("//tbody/tr[@data-itemtype='product'][" + nth + "]/td/label/input"));
 			WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype]["+ nth + "]/td/label/input"));
 
 			forceWait(500);
@@ -1021,7 +1021,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public <T>T removeAllProducts(){
 		List<LinkedHashMap<String, String>> beforeProducts = getTableAsMaps();
 
-		if(beforeProducts == null || beforeProducts.size() ==0){
+		logger.debug("beforeProducts size: " + beforeProducts.size());
+		if(beforeProducts == null || beforeProducts.size() <=1){
 			return (T)this;
 		}
 		else{

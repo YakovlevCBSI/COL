@@ -88,6 +88,13 @@ public class OrderOptionsPage<T> extends DocumentsBasePage{
 		private WebElement Save;
 		
 		public <T> T clickSave(Class clazz){
+			System.out.println("save size : " +driver.findElements(By.cssSelector("div#footer-actions div a[href*='submit_page(\\'save\\')']")).size());
+			for(WebElement w:driver.findElements(By.cssSelector("div#footer-actions div a[href*='submit_page(\\'save\\')']"))){
+				if(w.isDisplayed()){
+					Save = w;
+					break;
+				}
+			}
 			Save.click();
 			System.out.println("Clicked on save. Invoking " + clazz.getName() + " now");
 			return (T) PageFactory.initElements(driver, clazz);

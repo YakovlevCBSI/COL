@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jetty.websocket.api.SuspendToken;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,6 +32,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup.DocList;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.ShippingTypes;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.UpdateMarginMarkupPopup;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
@@ -619,6 +621,40 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		assertFalse(lastTableMap.get("total").isEmpty());
 
 
+	}
+	
+	@Test
+	public void markUpNotAppliedOnBundleAndSubTotalProduct(){
+		String price1 = "";
+		String price2 = "";
+		String price3 = "";
+		
+		createQuote();
+		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+		quotePage = (QuotePage) ((QuotePage) quotePage.selectProductFromTable(2)).selectFromLineActions(LineActions.Convert_to_Bundle);
+		quotePage.setBundleHeader("123");
+		quotePage.setBundleDesc("desc");
+				
+		quotePage = (QuotePage) ((QuotePage)quotePage.selectProductFromTable(5)).selectFromLineActions(LineActions.Add_Subtotal);
+		
+		List<LinkedHashMap<String, String>> tableBeforeMarkup = quotePage.getTableAsMaps();
+		
+		price1 = tableBeforeMarkup.get(0).get("total");
+		price2 = tableBeforeMarkup.get(2).get("total");
+		price3 = tableBeforeMarkup.get(4).get("total");
+		
+		quotePage.clickCheckAll();
+		UpdateMarginMarkupPopup updateMarginPopup = (UpdateMarginMarkupPopup) quotePage.selectFromAddImportUpdate(AddImportUpdates.Update_MarginMarkup);
+		quotePage = updateMarginPopup.setApply(10).clickApplyMarkup(QuotePage.class);
+		
+		List<LinkedHashMap<String, String>> tableAfterMarkedUp = quotePage.getTableAsMaps();
+
+		quotePage.printTable(tableBeforeMarkup);
+		quotePage.printTable(tableAfterMarkedUp);
+		
+		assertNotEquals(price1, tableAfterMarkedUp.get(0).get("total"));
+		assertNotEquals(price2, tableAfterMarkedUp.get(2).get("total"));
+		assertNotEquals(price3, tableAfterMarkedUp.get(4).get("total"));
 	}
 	
 	@Test

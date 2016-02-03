@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.openqa.selenium.Point;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
@@ -70,6 +71,7 @@ public class RMAPageTest extends DocumentsBasePageTest{
 		rmaPage.clickSave();
 		System.out.println("RAM Number: " + rmaNumber);
 		
+		
 //		Something is up with switchign tab.
 //		documentPage = rmaPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
 //		rmaPage.goToSuppliersPage().switchToTab(SupplierTabs.View_POs).switchToTab(SupplierTabs.SupplierRMAs);
@@ -78,6 +80,18 @@ public class RMAPageTest extends DocumentsBasePageTest{
 		
 	}
 	
+	@Test//CCSCOL-6626
+	public void productTableIsInCenter(){
+		DocumentsPage documentsPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
+		String rmaNumber = documentsPage.getTableAsMaps().get(0).get("doc#");
+		RMAPage rmaPage = documentsPage.goToRma(Long.parseLong(rmaNumber));
+		
+		Point point = rmaPage.getProductTableLocation();	
+		assertTrue(point.getX() + "", point.getX() < 500);
+	}
 	
-
+	@Test
+	public void salesOrderLinkExists(){
+		
+	}
 }

@@ -320,9 +320,43 @@ public class DocumentsPage extends ColBasePage{
 	
 	@FindBy(css="select#saved_by_id")
 	private WebElement ModifiedBy;
+	
+	@FindBy(css="select#contactList")
+	private WebElement ContactList;
+	
+	public DocumentsPage clickContactList(){
+		ContactList.click();
+		return this;
+	}
+	
+	public List<String> getContactList(){
+		List<String> contacts = new ArrayList<String>();
+		for(WebElement w: ContactList.findElements(By.xpath("option"))){
+			contacts.add(w.getText());
+		}
+		
+		return contacts;
+	}
+	
+	public DocumentsPage clickModifiedBy(){
+		ModifiedBy.click();
+		return this;
+	}
+	
+	public List<String> getModifiedByList(){
+		List<String> modifiedBysNames = new ArrayList<String>();
+		List<WebElement> modifiedBys = ModifiedBy.findElements(By.xpath("option"));
+		
+		for(int i=1; i<modifiedBys.size(); i++){
+			modifiedBysNames.add(modifiedBys.get(i).getText());
+		}
+		
+		return modifiedBysNames;
+	}
+	
 	public DocumentsPage setFilterByModifiedBy(String person){
 		WebElement userOption = null;
-		ModifiedBy.click();
+		clickModifiedBy();
 		List<WebElement> persons = ModifiedBy.findElements(By.xpath("option"));
 		
 		for(WebElement p: persons){

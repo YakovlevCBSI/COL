@@ -7,9 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -164,6 +166,11 @@ public class ColBasePage {
 		}
 		
 		return false;
+	}
+	
+	public void clickNthElement(By by, int nth){
+		List<WebElement> webelements = driver.findElements(by);
+		webelements.get(nth-1).click();
 	}
 	
 	public WebElement refreshStaleElement(By by){
@@ -512,12 +519,11 @@ public class ColBasePage {
 			logger.debug("NO RESULT FOUND");
 			return maps;
 		}
-		
 
 		for(int j=0; j<trs.size(); j++){
 			logger.debug("trs class = '"+trs.get(j).getAttribute("class") + "'");
 //			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
-			if(trs.get(j).getAttribute("class").contains("collapsible") ) {	//skip collapsible columns on product table.
+			if((trs.get(j).getAttribute("class").contains("collapsible") && trs.get(j).getAttribute("data-itemtype")== null)) {	//skip collapsible columns on product table.
 				continue; 
 			}
 
@@ -525,13 +531,13 @@ public class ColBasePage {
 			String tr =null;
 			
 			if((tr = trs.get(j).getAttribute("data-itemtype"))!= null && tr.contains("line")){
-				logger.warn("Passing first line item conditioin: "+ tr);
+//				logger.warn("Passing first line item conditioin: "+ tr);
 				map.put(Table.Other.toString(), trs.get(j).getAttribute("data-itemtype"));
 			}
 			else{
-				for(int i=0; i< headerElements.size(); i++){		
+				for(int i=0; i< headerElements.size(); i++){	
 					if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
-						logger.debug("skipping column " + i);
+//						logger.debug("skipping column " + i);
 						continue;
 					}
 					String data =null;
@@ -544,8 +550,10 @@ public class ColBasePage {
 							}
 						}
 					}catch(NoSuchElementException e){
-						return maps;
+//						logger.debug("Skipped a line item...");
 					}
+					
+//					System.out.print(data==null?"n/a":data +StringUtils.repeat(" ", headerElements.size() - data.length()) + "\t");
 					logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
 					map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 				}
@@ -638,5 +646,23 @@ public class ColBasePage {
 	public enum Document{
 		ID,
 		TYPE
+	}
+	
+	public char getRamdomLetter(){
+		Random r = new Random();
+		char c = (char)(r.nextInt(26) + 'a');
+		return c;
+	}
+	
+	public void printTable(List<LinkedHashMap<String, String>> maps){
+		int count =0;
+		for(LinkedHashMap<String, String> map: maps){
+			System.out.println("row #" + count);
+			for(String key: map.keySet()){
+				System.out.print(key + " : " + map.get(key) + " || ");
+			}
+			System.out.println();
+			count++;
+		}
 	}
 }

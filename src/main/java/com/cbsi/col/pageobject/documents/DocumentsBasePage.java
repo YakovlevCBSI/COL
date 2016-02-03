@@ -15,6 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -760,6 +761,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="button#addImportUpdate")
 	private WebElement AddImportUpdateDropdown;
 	
+	@FindBy(css="input#cb-checkall")
+	private WebElement CheckAll;
+	
+	public <T>T clickCheckAll(){
+		CheckAll.click();
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
 	public boolean isLineActionsDropdownDisplayed(){
 		try{
 			return LineActionsDropdown.isDisplayed();
@@ -848,6 +857,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		if(add == AddImportUpdates.Merge_into_this_Document) return (T) PageFactory.initElements(driver, MergePopup.class);
 		else if(add == AddImportUpdates.Quick_Add_Product) return (T) PageFactory.initElements(driver, QuickAddProductPopup.class);
 		else if (add == AddImportUpdates.Import_Config) return (T) PageFactory.initElements(driver, ImportConfigPopup.class);
+		else if (add == AddImportUpdates.Update_MarginMarkup) return (T) PageFactory.initElements(driver, UpdateMarginMarkupPopup.class);
 		
 		return (T) PageFactory.initElements(driver, this.getClass());	
 	}
@@ -886,7 +896,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	public enum AddImportUpdates{
 		Quick_Add_Product,
-		UpdateMarginMarkup,
+		Update_MarginMarkup{
+			public String toString(){
+				return "Update_Margin/Markup";
+			}
+		},
 		AddManualLineItem,
 		Merge_into_this_Document,
 		Import_Config,
@@ -1035,6 +1049,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		forceWait(1000);
 		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
+	public Point getProductTableLocation(){
+		Point point = productTable.getLocation();
+		
+		return point;
 	}
 	//----------------------------- RMA popup for SO and PO-----------------------------//
 	public static class CreateRmaPopup extends ColBasePage{
@@ -1381,9 +1401,46 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			
 			fileInput.sendKeys(pathToFile + fileName);
 		}
+	}
+	//----------------------------- Update margin mark up -----------------------------//
+	public static class UpdateMarginMarkupPopup extends ColBasePage{
+		public UpdateMarginMarkupPopup(WebDriver driver){
+			super(driver);
+			waitForQuickLoad();
+			waitForTextToBeVisible("Update Margin/Markup", "h3");
+		}
 		
+		@FindBy(css="div.ajax-content div div div div div input#markup_value")
+		private WebElement Apply;
 		
+		public UpdateMarginMarkupPopup setApply(int n){
+			Apply.sendKeys(n +"");
+			return this;
+		}
 		
+		@FindBy(css="select#markup_type")
+		private WebElement markupType;
+		
+		public UpdateMarginMarkupPopup selectMarkUpOrMargin(ProfitType type){
+			markupType.click();
+			markupType.findElement(By.xpath("option[@value='" + type.toString().toLowerCase() + "']")).click();
+			
+			return this;
+		}
+		
+		private static final String ApplyMarkupPath = "button.apply-markup-btn";
+		@FindBy(css=ApplyMarkupPath)
+		private WebElement ApplyMarkup;
+		
+		public <T>T clickApplyMarkup(Class clazz){
+			clickNthElement(By.cssSelector(ApplyMarkupPath), 2);
+			return (T)PageFactory.initElements(driver, clazz);
+		}
+		
+		public enum ProfitType{
+			Margin,
+			Markup
+		}
 	}
 
 }

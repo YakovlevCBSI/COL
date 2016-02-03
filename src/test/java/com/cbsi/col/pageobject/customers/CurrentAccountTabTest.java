@@ -1,7 +1,9 @@
 package com.cbsi.col.pageobject.customers;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -70,6 +72,37 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
 			
 		documentsPage.deleteDocumentByCompanyName("Qa");
+	}
+	
+	@Test
+	public void contactDropdownSorted(){
+		//check if contact size is more than two.
+		while(currentAccount.getContacts().size() <= 2){
+			CreateAccountPage contactPage = currentAccount.clickAddAContact();
+			contactPage.setFirstName("qa");
+			contactPage.setLastName(contactPage.getRamdomLetter() + "abc");
+			contactPage.clickSave();
+			currentAccount = contactPage.goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
+		}
+		
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		List<String> contactList = documentsPage.clickContactList().getContactList();
+		Collections.sort(contactList);
+		
+		List<String> contactListActual = documentsPage.getContactList();
+		
+		assertEquals(contactList, contactListActual);		
+	}
+	
+	@Test
+	public void ModifiedyByDropdownSorted(){
+		 DocumentsPage documentsPage = currentAccount.getDocumentsPage();
+		 List<String> modifiedBys = documentsPage.clickModifiedBy().getModifiedByList();
+		 Collections.sort(modifiedBys);
+		
+		 List<String> modifiedBysActual = documentsPage.getModifiedByList();
+		
+		assertEquals(modifiedBys, modifiedBysActual);
 	}
 	
 //	@Test

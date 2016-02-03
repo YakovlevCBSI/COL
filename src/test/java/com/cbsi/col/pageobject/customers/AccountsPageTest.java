@@ -13,7 +13,7 @@ public class AccountsPageTest extends ColBaseTest{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Test
+	@Test//(CCSCOL-6410)
 	public void currentUserIsSelectedAfterSwitchingTab(){
 		AllAccountsTab allAccountsTab = homePage.goToAccountsPage().goToAllAcountsTab();
 		int found = allAccountsTab.getFound();

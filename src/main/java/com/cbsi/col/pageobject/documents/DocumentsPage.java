@@ -342,7 +342,7 @@ public class DocumentsPage extends ColBasePage{
 		for(WebElement w: ContactList.findElements(By.xpath("option"))){
 			contacts.add(w.getText().toLowerCase());
 		}
-		
+		contacts.remove(0);
 		return contacts;
 	}
 	

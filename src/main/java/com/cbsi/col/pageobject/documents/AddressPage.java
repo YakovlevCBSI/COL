@@ -16,7 +16,7 @@ public class AddressPage extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 		logger.info(getClass().getName());
-		waitForTextToBeVisible(5000, "Addresses", "b");
+		waitForTextToBeVisible(5000, "Addresses", "h1");
 	}
 
 	@FindBy(css="#billing_FirstName")

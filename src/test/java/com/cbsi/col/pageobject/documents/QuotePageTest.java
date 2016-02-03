@@ -658,8 +658,17 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	}
 	
 	@Test
-	public void copyToNewQuoteHasLineActionItems(){
+	public void copyToNewQuoteHasLineActionItemsAndProductTable(){
+		QuotePage quotePage = goToFirstOpenQuote();
+		int productSize = quotePage.getTableAsMaps().size();
 		
+		quotePage = quotePage.clickCopyToNewQuote();
+		
+		assertTrue(productSize == quotePage.getTableAsMaps().size());
+		
+		assertTrue(quotePage.isLineActionsDropdownDisplayed());
+		assertTrue(quotePage.isReorderLinesDisplayed());
+		assertTrue(quotePage.isAddImportUpdateDropdownDisplayed());
 	}
 	
 //	@Test

@@ -144,6 +144,14 @@ public class DocumentsPage extends ColBasePage{
 		docLink.click();
 	}
 	
+	public <T>T goToDoc(long docNumber, Class clazz){
+		logger.info("Go to doc #" + docNumber);
+		WebElement docLink = findDataRowByName(docNumber);
+		docLink.click();
+		
+		return (T)PageFactory.initElements(driver, clazz);
+	}
+	
 //	public DocumentsPage deleteQuotesByCompnayName(String companyName){
 ////		WebElement docLink = findDataRowByName(quoteNumber);
 //		forceWait(300);

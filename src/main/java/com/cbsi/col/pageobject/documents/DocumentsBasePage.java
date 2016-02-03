@@ -107,6 +107,33 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		return (T)this;
 	}
 	
+	private static final String ViewInClassicStylePath = "in classic style";
+	@FindBy(partialLinkText= ViewInClassicStylePath)
+	private WebElement ViewInClassicStyle;
+	
+	protected static boolean legacyDocument = false;
+	
+	public void setLegacyDocument(boolean legacy){
+		legacyDocument = legacy;
+	}
+	
+	public boolean isLegacyDocument(){
+		return legacyDocument;
+	}
+	
+	public <T>T clickViewInClassicStyle(){
+		setLegacyDocument(true);
+		
+		ViewInClassicStyle.click();
+		forceWait(500);
+		waitForElementToBeInvisible(By.partialLinkText(ViewInClassicStylePath));
+		
+		if(isAlertPresent()) 
+			acceptAlert();
+		
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
 	//--------------------------  Bottom bar---------------------------//
 	@FindBy(css="button#next-action_save")
 	private WebElement Save;
@@ -137,6 +164,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	
 	@FindBy(css="div button[id *= '_convertToInvoice']")
 	private WebElement ConvertToInvoice;
+	
+	@FindBy(css="a[title='Convert to Invoice']")
+	private WebElement ConvertToInvoiceLegacy;
 	
 	@FindBy(css="li a[id *= '_completeInvoice']")
 	private WebElement CompletInvoice;
@@ -207,7 +237,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		ConvertToOrder.click();
 		return PageFactory.initElements(driver, AddressPage.class);
 	}	
-	
+
 	public OrderOptionsPage clickConvertToOrderThenPayment(){
 
 		ConvertToOrder.click();
@@ -262,9 +292,10 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	public InvoicePage clickConvertToInvoice(){
 //			CancelThisOrder.findElement(By.xpath("../button[@id='ld-nextaction-caret']")).click();
 		try{
-			ConvertToInvoice.click(); //this is legacy.
-		}catch(NoSuchElementException e){
-			selectCreateDoc(Doc.CreateInvoiceAll);
+			ConvertToInvoice.click(); 
+		}catch(WebDriverException e){
+			ConvertToInvoiceLegacy.click(); //this is legacy.
+//			selectCreateDoc(Doc.CreateInvoiceAll);
 			waitForQuickLoad();
 			switchFrame();
 			waitForTextToBeVisible("Create Invoice", "h3");
@@ -1083,7 +1114,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 				return "Out For E-Sign";
 			}
 		},
-		Open
+		Open, 
+		Paid
 	}
 	
 	//----------------------------- QuickAddProduct-----------------------------//

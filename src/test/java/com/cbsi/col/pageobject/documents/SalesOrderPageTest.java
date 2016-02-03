@@ -157,9 +157,4 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		assertFalse(orderPage.isShipToEnabled());
 		assertFalse(orderPage.isBillToEnabled());
 	}
-	
-	@Test
-	public void invoiceLinkExists(){
-		
-	}
 }

@@ -54,6 +54,7 @@ import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
@@ -502,6 +503,24 @@ public class ColBaseTest {
 		
 		return LoginProperty.testPassword_prod;
 
+	}
+	
+	public <T>T goToFirstDocument(DocumentTabs documentType, DocStatus status, Class clazz){
+		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(documentType).setFilterByModifiedBy("All");
+		Long docNumber = null;
+
+		for(LinkedHashMap<String, String> map: documentsPage.getTableAsMaps()){
+			if(map.get("status").toLowerCase().equals(status.toString().toLowerCase())){
+				docNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
+				break;
+			}
+		}
+		
+		if(docNumber == null){
+			throw new NullPointerException("There is no document to use for test");
+		}
+		
+		return documentsPage.goToDoc(docNumber, clazz);
 	}
 	
 	public QuotePage goToFirstOpenQuote(){

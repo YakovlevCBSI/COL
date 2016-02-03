@@ -21,7 +21,10 @@ public class SalesOrderPage extends DocumentsBasePage{
 		// TODO Auto-generated constructor stub
 		
 //		waitForMultiHeader();
-		waitForTextToBeVisible(7000, "Sales Order (", "h1 span");
+		if(!isLegacyDocument())
+			waitForTextToBeVisible(7000, "Sales Order (", "h1 span");
+		else 
+			waitForTextToBeVisible(7000, "Sales Order (", "h1");
 	}
 	
 	public void waitForMultiHeader() throws Exception{		
@@ -164,5 +167,17 @@ public class SalesOrderPage extends DocumentsBasePage{
 			switchBack();
 			return PageFactory.initElements(driver, PurchaseOrdersTab.class);
 		}
+	}
+	
+	@FindBy(css="a.icon-doc-invoice")
+	private WebElement InvoiceLink;
+	
+	public InvoicePage clickInvoiceLink(){
+		InvoiceLink.click();
+		return PageFactory.initElements(driver, InvoicePage.class);
+	}
+	
+	public boolean isInvoiceLinkDisplayed(){
+		return InvoiceLink.isDisplayed();
 	}
 }

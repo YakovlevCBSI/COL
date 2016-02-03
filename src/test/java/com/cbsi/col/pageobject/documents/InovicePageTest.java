@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
@@ -43,6 +44,18 @@ public class InovicePageTest extends DocumentsBasePageTest{
 		orderPage.clickSave();
 		
 		InvoicePage invoicePage = orderPage.clickConvertToInvoice();
+	}
+	
+	@Test
+	public void salesOrderLinkExistsAndInvoiceLinkExists(){
+		SalesOrderPage salesOrderPage = goToFirstDocument(DocumentTabs.ORDERS, DocStatus.Submitted, SalesOrderPage.class);
+		salesOrderPage = (SalesOrderPage) salesOrderPage.clickViewInClassicStyle();
+		InvoicePage invoicePage = salesOrderPage.clickConvertToInvoice();
+		
+		assertTrue(invoicePage.isSalesOrderLinkDisplayed());
+		
+		salesOrderPage = invoicePage.clickSalesOrderLink();
+		assertTrue(salesOrderPage.isInvoiceLinkDisplayed());
 	}
 	
 }

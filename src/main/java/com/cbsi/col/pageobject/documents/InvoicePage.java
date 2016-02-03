@@ -12,7 +12,11 @@ public class InvoicePage extends DocumentsBasePage{
 	public InvoicePage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Invoice", "h1 span");
+		if(!isLegacyDocument())
+			waitForTextToBeVisible("Invoice", "h1 span");
+		else
+			waitForTextToBeVisible("Invoice", "h1");
+
 	}
 	
 	@FindBy(css="input[name='quoteNumber']")
@@ -34,6 +38,18 @@ public class InvoicePage extends DocumentsBasePage{
 		DueDate.clear();
 		waitForQuickLoad();
 		return (InvoicePage) super.clickSave();
+	}
+	
+	@FindBy(css="a.icon-doc-SalesOrder")
+	private WebElement SalesOrderLink;
+	
+	public SalesOrderPage clickSalesOrderLink(){
+		SalesOrderLink.click();
+		return PageFactory.initElements(driver, SalesOrderPage.class);
+	}
+	
+	public boolean isSalesOrderLinkDisplayed(){
+		return SalesOrderLink.isDisplayed();
 	}
 	
 	public static class DocSendPopup extends ColBasePage{

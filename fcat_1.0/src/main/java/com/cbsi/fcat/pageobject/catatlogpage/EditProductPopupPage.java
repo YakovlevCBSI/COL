@@ -163,37 +163,39 @@ public class EditProductPopupPage extends BasePage{
 	private WebElement msrp;
 	
 	public EditProductPopupPage setData(){
-		String fieldValueXpath = "../td[@class ='field-value']/input";
+		String fieldValueXpathInput = "../td[@class ='field-value']/input";
+		String fieldValueXpathTextArea = "../td[@class ='field-value']/textarea";
+
 		
 		List<WebElement> list = driver.findElements(By.cssSelector("#editProductForm > table > tbody > tr > td.field-name"));
 		
 		for(WebElement e: list){
 			if(e.getText().toLowerCase().contains("product id")){
-				productId = reverseFindElement(e, fieldValueXpath);
+				productId = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("manufacturer name")){
-				manufacturerName =reverseFindElement(e, fieldValueXpath);
+				manufacturerName =reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("manufacturer part number")){
-				manufacturerPartNumber = reverseFindElement(e, fieldValueXpath);
+				manufacturerPartNumber = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("cnet sku id")){
-				cnetSkuId = reverseFindElement(e, fieldValueXpath);
+				cnetSkuId = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("product url")){
-				productUrl = reverseFindElement(e, fieldValueXpath);
+				productUrl = reverseFindElement(e, fieldValueXpathTextArea);
 			}
 			else if(e.getText().toLowerCase().contains("inventory")){
-				inventory = reverseFindElement(e, fieldValueXpath);
+				inventory = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("price")){
-				price = reverseFindElement(e, fieldValueXpath);
+				price = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("msrp")){
-				msrp = reverseFindElement(e, fieldValueXpath);
+				msrp = reverseFindElement(e, fieldValueXpathInput);
 			}
 			else if(e.getText().toLowerCase().contains("upc/ean")){
-				upcEan = reverseFindElement(e, fieldValueXpath);
+				upcEan = reverseFindElement(e, fieldValueXpathInput);
 			}
 		}
 		

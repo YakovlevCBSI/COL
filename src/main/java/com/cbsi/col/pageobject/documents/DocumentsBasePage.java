@@ -844,6 +844,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			LineActionsDropdown.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()) + "']")).click();
 		}catch(NoSuchElementException e){
 			LineActionsDropdown.findElement(By.xpath("../ul/li/a[@title='" + StringUtil.cleanElementName(lAction.toString()).toLowerCase() + "']")).click();
+			
+			if(isAlertPresent()) //for deleting a bundle js confirmation.
+				acceptAlert();
 		}
 		
 		waitForQuickLoad();

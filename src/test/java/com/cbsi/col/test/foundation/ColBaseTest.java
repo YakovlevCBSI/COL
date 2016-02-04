@@ -507,15 +507,8 @@ public class ColBaseTest {
 	
 	public <T>T goToFirstDocument(DocumentTabs documentType, DocStatus status, Class clazz){
 		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(documentType).setFilterByModifiedBy("All");
-		Long docNumber = null;
+		Long docNumber = Long.parseLong(documentsPage.getTableAsMaps("status", status.toString()).get(0).get("doc#"));
 
-		for(LinkedHashMap<String, String> map: documentsPage.getTableAsMaps()){
-			if(map.get("status").toLowerCase().equals(status.toString().toLowerCase())){
-				docNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
-				break;
-			}
-		}
-		
 		if(docNumber == null){
 			throw new NullPointerException("There is no document to use for test");
 		}

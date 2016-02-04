@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -277,6 +278,29 @@ public class MappingPage extends BasePage{
 		
 	}
 	
+	@FindBy(css="td.cnet-fields-column a")
+	private WebElement CnetFieldDropdown;
+	
+	@FindBy(css="div.panel")
+	private WebElement MapPanel;
+	
+	public int getCnetFieldDropdownUpperRightX(){
+		int startPoint = CnetFieldDropdown.getLocation().getX();
+		int width = CnetFieldDropdown.getSize().width;
+		
+		int rightX = startPoint + width;
+		
+		return rightX;		
+	}
+	
+	public int getPanelUpperRightX(){
+		int startPoint = MapPanel.getLocation().getX();
+		int width = MapPanel.getSize().getWidth();
+		
+		int rightX = startPoint + width;
+		
+		return rightX;
+	}
 	/**
 	 * If list contains elements with styles that are different from one anther
 	 * return false;

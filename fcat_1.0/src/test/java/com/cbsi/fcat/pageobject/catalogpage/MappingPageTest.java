@@ -57,6 +57,13 @@ public class MappingPageTest extends AllBaseTest{
 		assertTrue(mappingPage.getHeaders().equals(expectedPreviewsFromWhiteSpace));
 	}
 	
+	@Test
+	public void longTextPushesCnetDropdownToRight(){
+		MappingPage mappingPage = UploadFullFile("ProductUrlLong.txt", UploadType.TXT);
+		
+		assertTrue(mappingPage.getCnetFieldDropdownUpperRightX() < mappingPage.getPanelUpperRightX());
+	}
+	
 	@After
 	public void cleanUp(){
 		driver.close();

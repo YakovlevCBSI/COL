@@ -87,7 +87,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quoteNumber = quotePage.getQuoteNumber();
 		logger.info("Looking for quote#:  " + quoteNumber );
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");
-		productPage.checkCompareBoxes(1,2,3);
+		productPage.checkCompareBoxes(1,2,5);
 		productPage.selectAction(Action.AddToQuote);
 		
 		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);
@@ -188,7 +188,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 				salesOrderPage = (SalesOrderPage) orderOptionsPage.clickSave(SalesOrderPage.class);
 				convertOrderSuccess = true;
 			}catch(Exception e){
-//				e.printStackTrace();
+				e.printStackTrace();
 				logger.warn("convert order failed... retry "+ retry);
 				retry ++;
 				if(retry > 10){
@@ -222,7 +222,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			productPage.goToLinkText("Systems");
 			productPage.goToLinkText("System & Power Cables");
 		}
-		productPage.checkCompareBoxes(1,2,3, 5).selectAction(Action.AddToQuote);
+		productPage.checkCompareBoxes(1,2,5, 6).selectAction(Action.AddToQuote);
 		
 		
 		quotePage = PageFactory.initElements(driver, quotePagePass.getClass());

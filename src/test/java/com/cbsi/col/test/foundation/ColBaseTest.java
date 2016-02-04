@@ -525,14 +525,7 @@ public class ColBaseTest {
 	
 	public QuotePage goToFirstOpenQuote(){
 		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).setFilterByModifiedBy("All");
-		Long quoteNumber = null;
-
-		for(LinkedHashMap<String, String> map: documentsPage.getTableAsMaps()){
-			if(map.get("status").toLowerCase().equals("open")){
-				quoteNumber = Long.parseLong(documentsPage.getTableAsMaps().get(0).get("doc#"));
-				break;
-			}
-		}
+		Long quoteNumber = Long.parseLong(documentsPage.getTableAsMaps("status", "open").get(0).get("doc#"));
 		
 		if(quoteNumber == null){
 			throw new NullPointerException("There is not quote document to use for test");

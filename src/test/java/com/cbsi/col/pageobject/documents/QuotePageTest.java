@@ -479,6 +479,9 @@ public class QuotePageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void editShipToSaveNewAddress(){
+		String firstName = "qa"+ System.currentTimeMillis();
+		String lastName = "test"+System.currentTimeMillis();
+		
 		QuotePage quotePage = goToFirstOpenQuote();
 		
 		quotePage.getPriceCalculator().setShipingType(ShippingTypes.Manual);
@@ -487,11 +490,14 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		String shipTo = quotePage.getShipTo();
 
 		AddressPage addressPage = quotePage.clickShipTo();
-		addressPage.setFirstName("qa"+ System.currentTimeMillis());
-		addressPage.setLastName("test"+System.currentTimeMillis());		
+		
+		addressPage.setFirstName(firstName);
+		addressPage.setLastName(lastName);		
 		addressPage.clickCopyToShipping();
 		
 		addressPage = addressPage.clickAddShipping();
+		
+		assertTrue(addressPage.getSelectedShippingAddress()+ "|" + firstName ,addressPage.getSelectedShippingAddress().startsWith(firstName));
 		
 		assertNotEquals(shipTo, addressPage.getSelectedShippingAddress());
 		quotePage = addressPage.clickSave(QuotePage.class);

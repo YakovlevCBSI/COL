@@ -500,6 +500,10 @@ public class ColBasePage {
 	}
 	
 	public List<LinkedHashMap<String, String>> getTableAsMaps(int getNthTdElement, WebElement table, int...skipColumnNums){
+		return getTableAsMaps(getNthTdElement, table, null, null, skipColumnNums);
+	}
+	
+	public List<LinkedHashMap<String, String>> getTableAsMaps(int getNthTdElement, WebElement table, String key, String value, int...skipColumnNums){
 		
 		//collect headers and table rows to use.
 		ArrayList<WebElement> headerElements = (ArrayList<WebElement>) table.findElements(By.xpath("thead/tr/th"));	
@@ -520,6 +524,7 @@ public class ColBasePage {
 			return maps;
 		}
 
+		keyValueLoop:
 		for(int j=0; j<trs.size(); j++){
 			logger.debug("trs class = '"+trs.get(j).getAttribute("class") + "'");
 //			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
@@ -556,6 +561,12 @@ public class ColBasePage {
 //					System.out.print(data==null?"n/a":data +StringUtils.repeat(" ", headerElements.size() - data.length()) + "\t");
 					logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
 					map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
+					if(key != null){
+						if(headerElements.get(i).getText().equalsIgnoreCase(key) && data.equalsIgnoreCase(value)){
+							maps.add(map);
+							break keyValueLoop;
+						}
+					}
 				}
 			}
 			System.out.println();

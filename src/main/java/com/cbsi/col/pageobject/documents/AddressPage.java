@@ -1,5 +1,6 @@
 package com.cbsi.col.pageobject.documents;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,17 +40,14 @@ public class AddressPage extends ColBasePage{
 
 	@FindBy(css="a#btn-add-shipping-address")
 	private WebElement Add;
-	
-	@FindBy(css="select#shipping_list option[selected='selected']")
-	private WebElement selectedShippingAddress;
-	
+
 	public void setFirstName(String firstName) {
-//		FirstName.clear();
+		FirstName.clear();
 		FirstName.sendKeys(firstName);
 	}
 
 	public void setLastName(String  lastName) {
-//		LastName.clear();
+		LastName.clear();
 		LastName.sendKeys(lastName);
 	}
 
@@ -76,6 +74,9 @@ public class AddressPage extends ColBasePage{
 	@FindBy(css="input[name='copy_b_to_s']")
 	private WebElement CopyToShipping;
 	
+	@FindBy(css="select#shipping_list")
+	private WebElement ShppingAddressDropdown;
+	
 	public AddressPage clickCopyToShipping(){
 		CopyToShipping.click();
 		return this;
@@ -83,14 +84,21 @@ public class AddressPage extends ColBasePage{
 	
 	public AddressPage clickAddShipping(){
 		Add.click();
-		forceWait(500);
+		forceWait(1500);
 		return PageFactory.initElements(driver, AddressPage.class);
 	}
-	
+
 	public String getSelectedShippingAddress(){
-		return selectedShippingAddress.getText();
+		for(WebElement w: ShppingAddressDropdown.findElements(By.xpath("option"))){
+			if(w.getAttribute("value").equals("-1")) continue;
+			
+			if(w.getAttribute("selected") != null){
+				return w.getText().trim();
+			}
+		}
+		
+		return null;
 	}
-	
 	//-----------------------Bottom bar options---------------------//
 	@FindBy(linkText="Save")
 	private WebElement Save;

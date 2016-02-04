@@ -417,7 +417,11 @@ public class DocumentsPage extends ColBasePage{
 	}
 	
 	public List<LinkedHashMap<String, String>> getTableAsMaps() {
-		return getTableAsMaps(Table, 0,12);
+		return this.getTableAsMaps(Table, 0,12);
+	}
+	
+	public List<LinkedHashMap<String, String>> getTableAsMaps(String key, String value) {
+		return getTableAsMaps(1,Table, key, value,  0,12);
 	}
 
 	

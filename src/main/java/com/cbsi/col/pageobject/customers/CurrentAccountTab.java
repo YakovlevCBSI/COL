@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
 import com.cbsi.col.pageobject.customers.AccountsPage.CreateAccountPopup;
+import com.cbsi.col.pageobject.documents.AddressPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.pageobject.documents.QuotePage;
@@ -49,6 +50,9 @@ public class CurrentAccountTab extends ColBasePage{
 	
 	@FindBy(linkText="Convert Account Type")
 	private WebElement ConvertAccountType;
+	
+	@FindBy(css="a[id ^= 'billing']")
+	private WebElement BillingAndShipping;
 	
 	public EditAccountPage  clickConvertAccountType(AccountType accountType){
 		ConvertAccountType.click();
@@ -119,6 +123,12 @@ public class CurrentAccountTab extends ColBasePage{
 		//-----------------------------------------------------------------/
 		
 		return PageFactory.initElements(driver, ProposalPage.class);
+	}
+	
+	public CreateAccountPage clickBillingAndShipping(){
+		AccountBasePage.IsFromBillingAndShippingLink = true;
+		BillingAndShipping.click();
+		return PageFactory.initElements(driver, CreateAccountPage.class);
 	}
 	
 //	@FindBy(css="button#delete-doc-btn")

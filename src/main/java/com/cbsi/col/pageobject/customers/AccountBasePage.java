@@ -16,15 +16,25 @@ public class AccountBasePage extends ColBasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	protected static boolean IsFromCompanyInfoLink = false;
+	protected static boolean IsFromContactInfoLink = false;
+	protected static boolean IsFromBillingAndShippingLink = false;
+	
 	@FindBy(css="#company")
 	protected WebElement CompanyName;
 	
 	@FindBy(css="#address1")
 	protected WebElement Address;
 	
+	@FindBy(css="#s_address1")
+	protected WebElement Address_s;
+	
 	@FindBy(css="#city")
 	protected WebElement City;
+	
+	@FindBy(css="#s_city")
+	protected WebElement City_s;
 	
 	@FindBy(css="select[id*='state']")
 	private WebElement State;
@@ -70,16 +80,24 @@ public class AccountBasePage extends ColBasePage{
 	@FindBy(css="input[name='copy_b_to_s']")
 	private WebElement Copy;
 	
-	//----------------------Lead-speicifc fields-------------------------//
+	//----------------------Lead-speicifc fields // also could be used for billing and shipping-------------------------//
 	@FindBy(css="input[id*='firstname']")
 	private WebElement ContactInfo_FirstName;
 	
 	@FindBy(css="input[id*='lastname']")
 	private WebElement ContactInfo_LastName;
 	
+	@FindBy(css="input[id*='s_firstname']")
+	private WebElement ContactInfo_FirstName_S;
+	
+	@FindBy(css="input[id*='s_lastname']")
+	private WebElement ContactInfo_LastName_s;
+	
 	@FindBy(css="input#default")
 	protected WebElement DesignateThisPerson;
 
+	@FindBy(css="input#s_description")
+	private WebElement Description_S;
 	//--------------------------------------------------------------------//
 	
 	
@@ -100,6 +118,7 @@ public class AccountBasePage extends ColBasePage{
 	}
 	
 	public AccountBasePage setCompanyName(String companyName){
+		CompanyName.clear();
 		CompanyName.sendKeys(companyName);
 		return this;
 	}
@@ -109,8 +128,20 @@ public class AccountBasePage extends ColBasePage{
 		return this;
 	}
 	
+	public AccountBasePage setAddress_s(String address){
+		Address_s.clear();
+		Address_s.sendKeys(address);
+		return this;
+	}
+	
 	public AccountBasePage setCity(String city){
 		City.sendKeys(city);
+		return this;
+	}
+	
+	public AccountBasePage setCity_s(String city){
+		City_s.clear();
+		City_s.sendKeys(city);
 		return this;
 	}
 	
@@ -153,6 +184,28 @@ public class AccountBasePage extends ColBasePage{
 	public AccountBasePage setContactInfo_LastName(String lastName){
 		ContactInfo_LastName.sendKeys(lastName);
 		return this;
+	}
+	
+	public AccountBasePage setContactInfo_FirstName_s(String firstName){
+		ContactInfo_FirstName_S.clear();
+		ContactInfo_FirstName_S.sendKeys(firstName);
+		return this;
+	}
+	
+	public AccountBasePage setContactInfo_LastName_s(String lastName){
+		ContactInfo_LastName_s.clear();
+		ContactInfo_LastName_s.sendKeys(lastName);
+		return this;
+	}
+	
+	public AccountBasePage setDescription_S(String desc){
+		Description_S.clear();
+		Description_S.sendKeys(desc);
+		return this;
+	}
+	
+	public String getDescription_S(){
+		return Description_S.getAttribute("value");
 	}
 	
 	public AccountBasePage setEmail(String email){

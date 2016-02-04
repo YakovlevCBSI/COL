@@ -9,16 +9,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.AddressPage;
 import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class CreateAccountPage extends AccountBasePage{
 	public CreateAccountPage(WebDriver driver){
 		super(driver);
-		
-		try{
-			waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
-		}catch(Exception e){
-			waitForTextToBeVisible("Contact Info","fieldset legend"); //if lead page, wait for this.
+
+		if(IsFromCompanyInfoLink){
+			waitForTextToBeVisible("Company Info", "h2");
+		}
+		else if(IsFromContactInfoLink){
+			waitForTextToBeVisible("Contact Info", "h1");
+		}
+		else if(IsFromBillingAndShippingLink){
+			waitForTextToBeVisible("Edit Billing & Shipping", "h1");
+		}
+		else{
+			try{
+				waitForPageToLoad(By.cssSelector("ul.nav.nav-pipes"));
+			}catch(Exception e){
+				waitForTextToBeVisible("Contact Info","fieldset legend"); //if lead page, wait for this.
+			}
 		}
 	}
 	
@@ -30,8 +42,6 @@ public class CreateAccountPage extends AccountBasePage{
 		}
 		
 	}
-
-	
 
 	public CreateAccountPage setDefaultContact(){
 		DesignateThisPerson.click();
@@ -61,5 +71,43 @@ public class CreateAccountPage extends AccountBasePage{
 		
 		return this;
 	}
+	
+	@FindBy(css="select[name='shipping_address_id'")
+	private WebElement ShppingAddressDropdown;
+	
+	@FindBy(css="input[name='s_option'][value='new']")
+	private WebElement New;
+	
+	@FindBy(css="input[name='s_option'][value='edit']")
+	private WebElement Edit;
 
+	public CreateAccountPage setNew(){
+		New.click();
+		return this;
+	}
+	
+	public CreateAccountPage setEdit(){
+		Edit.click();
+		return this;
+	}
+	
+	public String getSelectedShippingAddress(){
+		for(WebElement w: ShppingAddressDropdown.findElements(By.xpath("option"))){
+			if(w.getAttribute("value").equals("-1")) continue;
+			
+			if(w.getAttribute("selected") != null){
+				return w.getText().trim();
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public CurrentAccountTab clickSave(){
+		Save.click();
+		return PageFactory.initElements(driver, CurrentAccountTab.class);
+	}
+
+	
 }

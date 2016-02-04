@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 
+import com.cbsi.col.pageobject.documents.AddressPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
@@ -105,6 +106,21 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		assertEquals(modifiedBys, modifiedBysActual);
 	}
 	
+	@Test
+	public void billingAndShippingAutogenerate(){
+		String firstName = System.currentTimeMillis() + "";
+		
+		CreateAccountPage billingAndShppingPage = currentAccount.clickBillingAndShipping();
+		billingAndShppingPage.setContactInfo_FirstName_s(firstName);
+		billingAndShppingPage.setContactInfo_LastName_s("customer");
+		billingAndShppingPage.setAddress_s(address).setCity_s(city);		
+		billingAndShppingPage.setNew();
+
+		currentAccount = billingAndShppingPage.clickSave();		
+		billingAndShppingPage = currentAccount.clickBillingAndShipping();
+
+		assertEquals(firstName +", "+ "customer, " + address + ", " + city + "*", billingAndShppingPage.getSelectedShippingAddress());
+	}
 //	@Test
 //	public void purchaseOrderLinkRedirectsPage(){
 //

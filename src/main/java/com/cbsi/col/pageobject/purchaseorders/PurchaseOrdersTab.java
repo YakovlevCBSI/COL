@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.home.ColBasePage;
@@ -35,6 +36,11 @@ public class PurchaseOrdersTab extends ColBasePage{
 	
 	}
 	
+	public PurchaseOrderPage clickViewPo(long poNumber){
+		 findDataRowByName(poNumber, true).click();
+		 return PageFactory.initElements(driver, PurchaseOrderPage.class);
+	}
+	
 	public PurchaseOrderPage clickViewPoNumberLinkedToSo(long salesOrderNumber){
 		 findDataRowByName(salesOrderNumber).findElement(By.xpath("../../td[3]/a")).click();
 		 return PageFactory.initElements(driver, PurchaseOrderPage.class);
@@ -45,11 +51,18 @@ public class PurchaseOrdersTab extends ColBasePage{
 		 return PageFactory.initElements(driver, SalesOrderPage.class);
 	}
 	
-	public WebElement findDataRowByName(long quoteNumber){
-		dataColumns = Table.findElements(By.xpath("tbody/tr/td[13]/a"));
-
+	public WebElement findDataRowByName(long orderNumber){
+		return findDataRowByName(orderNumber, false);
+	}
+	
+	public WebElement findDataRowByName(long orderNumber, boolean isPoNumber){
+		if(!isPoNumber)
+			dataColumns = Table.findElements(By.xpath("tbody/tr/td[13]/a"));
+		else
+			dataColumns = Table.findElements(By.xpath("tbody/tr/td[3]/a"));
+			
 		for(WebElement dataColumn: dataColumns){
-			if(dataColumn.getText().contains(quoteNumber+"")){
+			if(dataColumn.getText().contains(orderNumber+"")){
 				return dataColumn;
 			}
 		}
@@ -67,7 +80,7 @@ public class PurchaseOrdersTab extends ColBasePage{
 			pageList.get(0).click();
 			waitForTextToBeVisible("Documents", "h1");
 			dataColumns=null;
-			return findDataRowByName(quoteNumber);
+			return findDataRowByName(orderNumber);
 		}
 		
 		System.out.println("did not find orderNumber in purchaseOrderTab...");
@@ -127,6 +140,16 @@ public class PurchaseOrdersTab extends ColBasePage{
 	public boolean hasDoc(int docNumber){
 		setFilterByBuyerToDefault();
 		return findDataRowByName(docNumber)==null?false:true;
+	}
+	
+	@FindBy(css="tbody tr:nth-child(4) td table")
+	private WebElement PoTable;
+	
+	@FindBy(css="a#polink_1")
+	private WebElement poLink;
+	public PurchaseOrderPage goToFirstDocument(){
+		poLink.click();		
+		return PageFactory.initElements(driver, PurchaseOrderPage.class);
 	}
 	
 	

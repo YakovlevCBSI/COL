@@ -11,6 +11,7 @@ import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab;
 import com.cbsi.col.pageobject.purchaseorders.PurchaseOrderPage.PoType;
+import com.cbsi.col.pageobject.purchaseorders.PurchaseOrdersTab.PoTabs;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 
 public class PurchaseOrderPageTest extends DocumentsBasePageTest{
@@ -40,5 +41,12 @@ public class PurchaseOrderPageTest extends DocumentsBasePageTest{
 		purchaseOrderPage = purchaseOrderPage.setPoType(PoType.Manual).clickSave().clickConvertToSubmittedPo();
 		
 		assertEquals(purchaseOrderPage.getPoStatus(), DocStatus.Submitted.toString());
+	}
+	
+	@Test
+	public void purchaseOrderLinksToSalesOrder(){
+		purchaseOrderTab = customersPage.goToPurchaseOrdersPage().switchToTab(PoTabs.View_POs);
+		PurchaseOrderPage purchaseOrderPage = purchaseOrderTab.goToFirstDocument();
+		purchaseOrderPage.clickSOLink().clickViewSalesOrder();
 	}
 }

@@ -7,8 +7,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage;
+import com.cbsi.col.pageobject.documents.InvoicePage;
 import com.cbsi.col.pageobject.documents.RMAPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.CreateRmaPopup;
+import com.cbsi.col.pageobject.documents.SalesOrderPage;
 import com.cbsi.col.pageobject.home.ColBasePage;
 
 public class PurchaseOrderPage extends DocumentsBasePage{
@@ -37,6 +39,14 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 	
 	@FindBy(css= "span#StatusSpan")
 	private WebElement PoStatus;
+	
+	@FindBy(css="td font a[title ^='Linked to SO']")
+	private WebElement SOLink;
+	
+	public SalesOrderLinkPage clickSOLink(){
+		SOLink.click();
+		return PageFactory.initElements(driver, SalesOrderLinkPage.class);
+	}
 	
 	public String getPoStatus(){
 		return PoStatus.getText();
@@ -76,6 +86,27 @@ public class PurchaseOrderPage extends DocumentsBasePage{
 	public enum PoType{
 		Manual,
 		Autofulfill
+	}
+	
+	public static class SalesOrderLinkPage extends ColBasePage{
+
+		public SalesOrderLinkPage(WebDriver driver) {
+			super(driver);
+			// TODO Auto-generated constructor stub
+			waitForTextToBeVisible("Sales Order Links", "p.lead");
+		}
+		
+		@FindBy(css="td font a font")
+		private WebElement saleslink;
+		
+		public <T>T clickViewSalesOrder(){
+			saleslink.click();
+			waitForElementToBeVisible(By.cssSelector("div.page-header h1 span"));
+			if(driver.findElement(By.cssSelector("h1 span")).getText().trim().startsWith("Sales"))
+				return (T) PageFactory.initElements(driver, SalesOrderPage.class);
+			
+			return (T) PageFactory.initElements(driver, InvoicePage.class);
+		}
 	}
 	
 

@@ -524,7 +524,8 @@ public class ColBasePage {
 			return maps;
 		}
 
-		keyValueLoop:
+		boolean isKeyValueFound = false;
+
 		for(int j=0; j<trs.size(); j++){
 			logger.debug("trs class = '"+trs.get(j).getAttribute("class") + "'");
 //			if(trs.get(j).getAttribute("class").contains("collapsible") || (trs.get(j).getAttribute("data-itemtype") !=null && !trs.get(j).getAttribute("data-itemtype").contains("product"))) {	//skip collapsible columns on product table.
@@ -540,6 +541,7 @@ public class ColBasePage {
 				map.put(Table.Other.toString(), trs.get(j).getAttribute("data-itemtype"));
 			}
 			else{
+
 				for(int i=0; i< headerElements.size(); i++){	
 					if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
 //						logger.debug("skipping column " + i);
@@ -561,16 +563,22 @@ public class ColBasePage {
 //					System.out.print(data==null?"n/a":data +StringUtils.repeat(" ", headerElements.size() - data.length()) + "\t");
 					logger.debug(StringUtil.cleanTableKey(headerElements.get(i).getText()) + " : " + data  + " | ");
 					map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
+
 					if(key != null){
 						if(headerElements.get(i).getText().equalsIgnoreCase(key) && data.equalsIgnoreCase(value)){
-							maps.add(map);
-							break keyValueLoop;
+							isKeyValueFound = true;
 						}
-					}
+					}			
 				}
 			}
 			System.out.println();
 			maps.add(map);
+			
+			if(isKeyValueFound) {
+				List<LinkedHashMap<String, String>> keyValuemaps = new ArrayList<LinkedHashMap<String, String>>();
+				keyValuemaps.add(map);
+				return keyValuemaps;
+			}
 		}
 			
 		

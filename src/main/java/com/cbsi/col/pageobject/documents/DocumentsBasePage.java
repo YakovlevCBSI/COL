@@ -126,10 +126,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		ViewInClassicStyle.click();
 		forceWait(500);
-		waitForElementToBeInvisible(By.partialLinkText(ViewInClassicStylePath));
 		
 		if(isAlertPresent()) 
 			acceptAlert();
+		
+		waitForElementToBeInvisible(By.partialLinkText(ViewInClassicStylePath));
+
 		
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}

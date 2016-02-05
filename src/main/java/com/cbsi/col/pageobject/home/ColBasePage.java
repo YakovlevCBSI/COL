@@ -581,7 +581,7 @@ public class ColBasePage {
 			}
 		}
 			
-		if(!isKeyValueFound && key== null) 
+		if(!isKeyValueFound && key!= null) 
 			return null;
 		
 		return maps;

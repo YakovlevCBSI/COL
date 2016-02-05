@@ -138,8 +138,8 @@ public class DetailsPage extends BasePage{
 		return this;
 	}
 	
-	public static Boolean storeAndMapExist;
-	public static Boolean diffExists;
+	public Boolean storeAndMapExist;
+	public Boolean diffExists;
 	
 	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
 		WebElement whichDetailedMessageRow = null;

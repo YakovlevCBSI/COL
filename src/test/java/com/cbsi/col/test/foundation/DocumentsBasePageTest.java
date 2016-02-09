@@ -87,7 +87,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quoteNumber = quotePage.getQuoteNumber();
 		logger.info("Looking for quote#:  " + quoteNumber );
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");
-		productPage.checkCompareBoxes(1,2,5);
+		productPage.checkCompareBoxes(1,2,4);
 		productPage.selectAction(Action.AddToQuote);
 		
 		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);
@@ -223,7 +223,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			productPage.goToLinkText("Systems");
 			productPage.goToLinkText("System & Power Cables");
 		}
-		productPage.checkCompareBoxes(1,2,5, 6).selectAction(Action.AddToQuote);
+		productPage.checkCompareBoxes(1,2,4, 8).selectAction(Action.AddToQuote);
 		
 		
 		quotePage = PageFactory.initElements(driver, quotePagePass.getClass());
@@ -249,7 +249,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 			productPage.goToLinkText("Systems");
 			productPage.goToLinkText("System & Power Cables");
 		}
-		productPage.checkCompareBoxes(7).selectAction(Action.AddToQuote);
+		productPage.checkCompareBoxes(10).selectAction(Action.AddToQuote);
 		quotePageNew = PageFactory.initElements(driver, quotePagePass.getClass());
 		
 		quotePageNew.setQtyInTable(1, 1);

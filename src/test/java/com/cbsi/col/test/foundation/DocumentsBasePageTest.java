@@ -92,6 +92,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		
 		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);
 		quotePageNew.clickSave();
+		quotePageNew.waitForQuickLoad();
 		
 		if(goToDocumentsPage){
 //			documentPage = quotePageNew.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES);		

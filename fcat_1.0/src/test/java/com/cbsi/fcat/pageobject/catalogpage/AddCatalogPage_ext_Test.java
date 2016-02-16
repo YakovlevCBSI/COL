@@ -82,6 +82,36 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
+	
+	public String timeStampUrl = "ftp://janus.cnetdata.com/download/fcat/qa/diff/CatalogFile_[Y]_[M]_[D]_[h]_[m].txt";
+	@Test
+	public void uploadFullFileTimestampFromScartch(){
+		int workflowSize = 3;
+		String filename = "";
+
+		//open up ftp connection, change the timestamp to today's value.
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(timeStampUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
+		
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		for(int i=0; i<workflowSize; i++){
+
+			while(filename.equals(detailsPage.getFileName())){
+				detailsPage.refresh();
+				detailsPage.forceWait(500);
+
+				detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
+			}
+			
+			filename = detailsPage.getFileName();		
+			
+			assertTrue(detailsPage.FileUploadIsDone());
+		}
+	}
 
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){

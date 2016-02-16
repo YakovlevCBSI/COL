@@ -26,6 +26,7 @@ public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+		waitForTextToBeVisible("Processing Queue", "div");
 	}
 	
 	public static final String AUTOMATIC= "Automatic";
@@ -80,6 +81,10 @@ public class DetailsPage extends BasePage{
 	
 	@FindBy(xpath="//tbody/tr[1]")
 	private WebElement FirstProcessingRow;
+	
+	public String getFileName(){
+		return FirstProcessingRow.findElement(By.xpath("td[1]/span[2]")).getText();
+	}
 	
 	private static String uploadStatus = "";
 	public String getStatus(){

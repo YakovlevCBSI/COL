@@ -674,7 +674,7 @@ public class BaseTest {
 	public MappingPage UploadFullFile() throws InterruptedException{
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).selectDropBoxOption(UploadType.TXT).clickNext();
 		
 		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
 		return mappingPage;

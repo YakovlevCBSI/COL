@@ -102,10 +102,24 @@ public class MapProductsDialog extends BasePage{
 	@FindBy(css="input[id='manufacturer-name-mapper']")
 	private WebElement ManufactuererName;
 	
+	@FindBy(css="input#manufacturer-pn-mapper")
+	private WebElement ManufacturerPartNumber;
+	
 	public MapProductsDialog searchName(String searchText){	
 		waitForElementToClickable(By.cssSelector("input[id='manufacturer-name-mapper']"));
 		//forceWait(3);
 		deleteText();
+		ManufactuererName.sendKeys(searchText);
+
+		waitForMapSearch();
+		
+		return this;
+	}
+	
+	public MapProductsDialog searchMfPn(String searchText){	
+		waitForElementToClickable(By.cssSelector("input[id='manufacturer-name-mapper']"));
+		//forceWait(3);
+		deleteTextMfPn();
 		ManufactuererName.sendKeys(searchText);
 
 		waitForMapSearch();
@@ -152,4 +166,16 @@ public class MapProductsDialog extends BasePage{
 			logger.info("deleteText is ignored...");
 		}
 	}
+	
+	public void deleteTextMfPn(){
+		try{
+			int wordLength = this.ManufacturerPartNumber.getAttribute("value").length();
+			for(int i=0; i<wordLength; i++){
+				this.ManufactuererName.sendKeys(Keys.BACK_SPACE);
+			}
+		}catch(NullPointerException e){
+			logger.info("deleteText is ignored...");
+		}
+	}
+	
 }

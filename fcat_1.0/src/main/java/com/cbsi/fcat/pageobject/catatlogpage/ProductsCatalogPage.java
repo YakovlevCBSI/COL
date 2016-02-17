@@ -268,6 +268,7 @@ public class ProductsCatalogPage extends BasePage{
 
 	public ProductsCatalogPage searchFor(ItemIds field, String searchText){
 		if(field == ItemIds.ID){
+			ProductIDInput.clear();
 			ProductIDInput.sendKeys(searchText);
 		}
 		else if(field == ItemIds.MF){
@@ -411,7 +412,7 @@ public class ProductsCatalogPage extends BasePage{
 	
 	public ProductsCatalogPage mapUnmappedItem(String searchText, int nthResult){
 		MapProductsDialog mapProductsDialog = clickNotMappedOrMappedIcon();
-		mapProductsDialog.searchName(searchText);
+		mapProductsDialog.searchName(searchText).searchMfPn("");
 		mapProductsDialog.selectAnItemFromResult(nthResult);
 		logger.info("item selected");
 		mapProductsDialog.clickSave();

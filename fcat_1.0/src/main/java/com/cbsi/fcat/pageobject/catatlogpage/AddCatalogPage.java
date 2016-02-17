@@ -65,7 +65,7 @@ public class AddCatalogPage extends BasePage {
 		//customWait(20);
 		logger.info("file created: " +tempFileName);
 		name.sendKeys(tempFileName);
-		customWait(5);
+		customWait(20);
 		Next.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);
 	}

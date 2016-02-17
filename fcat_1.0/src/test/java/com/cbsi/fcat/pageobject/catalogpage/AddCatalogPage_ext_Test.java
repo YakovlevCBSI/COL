@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -24,6 +27,7 @@ import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.util.FtpUtil;
 import com.cbsi.fcat.util.GlobalVar;
 
 public class AddCatalogPage_ext_Test extends AllBaseTest{
@@ -53,6 +57,8 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	private String FtpExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
+	public String timeStampUrl = GlobalVar.ftpURL + "qa/diff/CatalogFile_[Y]_[M]_[D]_[h]_[m].txt";
+
 	
 	@Test
 	public void uploadFullFileExcelAutomaticFtpFromScratch(){
@@ -83,13 +89,13 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
-	public String timeStampUrl = "ftp://janus.cnetdata.com/download/fcat/qa/diff/CatalogFile_[Y]_[M]_[D]_[h]_[m].txt";
 	@Test
 	public void uploadFullFileTimestampFromScartch(){
-		int workflowSize = 3;
+		int workflowSize = 4;
 		String filename = "";
-
-		//open up ftp connection, change the timestamp to today's value.
+		
+		updateFtpFileNames();
+	
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(timeStampUrl, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
@@ -99,14 +105,16 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		for(int i=0; i<workflowSize; i++){
+			System.out.println(filename + " : " + detailsPage.getFileName());
 
-			while(filename.equals(detailsPage.getFileName())){
-				detailsPage.refresh();
-				detailsPage.forceWait(500);
-
-				detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
+			if(i != workflowSize-1){
+				while(filename.equals(detailsPage.getFileName())){
+					detailsPage.refresh();
+					detailsPage.forceWait(500);
+	
+					detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
+				}
 			}
-			
 			filename = detailsPage.getFileName();		
 			
 			assertTrue(detailsPage.FileUploadIsDone());
@@ -246,6 +254,35 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		return stringList;
 	}
 	
+	public String getTodaysFileName(String filename){
+		String[] filenames = filename.split("_");
+		
+		Date date = new Date();
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		String newFile = filename.replaceFirst(filenames[1], cal.get(Calendar.YEAR)+"")
+					.replaceFirst(filenames[2], (cal.get(Calendar.MONTH)+1)+"")
+					.replaceFirst(filenames[3], cal.get(Calendar.DAY_OF_MONTH) +"");
+		
+		return newFile;
+	}
+	
+	public void updateFtpFileNames(){
+		FtpUtil ftpUtil = new FtpUtil();
+		ftpUtil.login();
+		List<String> list = ftpUtil.listFilesInDir("download/fcat/qa/diff");
+		
+		
+		for(String s: list){
+			System.out.println(s);
+			ftpUtil.renameFileNameInCurDir(s,getTodaysFileName(s));
+		}
+		
+		ftpUtil.quit();
+		
+	}
 	
 	
 }

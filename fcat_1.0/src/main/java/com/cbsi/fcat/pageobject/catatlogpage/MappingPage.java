@@ -99,7 +99,7 @@ public class MappingPage extends BasePage{
 		scrollToView(Save);
 		clickSave();
 		
-		customWait(15);
+		customWait(30);
 		return PageFactory.initElements(driver, DetailsPage.class);
 
 	}

@@ -90,7 +90,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	}
 	
 	@Test
-	public void uploadFullFileTimestampFromScartch(){
+	public void uploadIncrementalFileTimestampFromScartch(){
 		int workflowSize = 4;
 		String filename = "";
 		
@@ -120,6 +120,33 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 			assertTrue(detailsPage.FileUploadIsDone());
 		}
 	}
+	
+	@Test
+	public void uploadFullFileTimestampFromScartch(){
+		String filename = "";
+		
+		updateFtpFileNames();
+	
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(timeStampUrl, USERNAME, PASSWORD).setFullFile();
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		uploadPopupPage.selectDropBoxOption(UploadType.TXT);
+		
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+		
+		filename = detailsPage.getFileName();
+		
+		detailsPage.forceWait(5000);
+		detailsPage.refresh();
+
+		detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
+		
+		assertEquals(filename, detailsPage.getFileName());
+	}
+
 
 	@Test
 	public void DelimiterMismatchManualTxtToExcel(){

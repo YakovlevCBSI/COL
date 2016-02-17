@@ -48,6 +48,14 @@ public class AddCatalogPage extends BasePage {
 	@FindBy(css="select[name='CountryMarket']") 
 	private WebElement Market;
 	
+	@FindBy(css="label[for='FullFile']")
+	private WebElement FullFile;
+	
+	public AddCatalogPage setFullFile(){
+		FullFile.click();
+		return this;
+	}
+	
 	public UploadPopupPage clickNext(){
 		Next.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);

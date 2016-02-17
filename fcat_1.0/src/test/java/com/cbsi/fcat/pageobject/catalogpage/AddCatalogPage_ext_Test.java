@@ -91,7 +91,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	
 	@Test
 	public void uploadIncrementalFileTimestampFromScartch(){
-		int workflowSize = 4;
+		int workflowSize = 6;
 		String filename = "";
 		
 		updateFtpFileNames();
@@ -105,12 +105,13 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		for(int i=0; i<workflowSize; i++){
-			System.out.println(filename + " : " + detailsPage.getFileName());
+			System.out.println(filename + " : " + detailsPage.getFileName() + " : " + i);
 
 			if(i != workflowSize-1){
+				System.out.println("in waiting for next workflow condition");
 				while(filename.equals(detailsPage.getFileName())){
 					detailsPage.refresh();
-					detailsPage.forceWait(500);
+//					detailsPage.forceWait(50);
 	
 					detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
 				}

@@ -101,7 +101,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());

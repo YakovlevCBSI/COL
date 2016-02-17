@@ -26,7 +26,8 @@ public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-		waitForTextToBeVisible("Processing Queue", "div");
+//		waitForTextToBeVisible("Processing Queue", "div");
+		forceWait(500);
 	}
 	
 	public static final String AUTOMATIC= "Automatic";
@@ -118,6 +119,7 @@ public class DetailsPage extends BasePage{
 			forceWait(1000);
 		}
 		if(getStatus().equals(UploadStatus.DONE.toString())){
+			logger.info("file status shows DONE");
 			return true;
 		}
 		

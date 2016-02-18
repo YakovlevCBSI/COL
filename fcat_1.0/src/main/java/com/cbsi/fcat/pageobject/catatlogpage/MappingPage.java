@@ -98,8 +98,6 @@ public class MappingPage extends BasePage{
 		
 		scrollToView(Save);
 		clickSave();
-		
-		customWait(30);
 		return PageFactory.initElements(driver, DetailsPage.class);
 
 	}
@@ -246,6 +244,7 @@ public class MappingPage extends BasePage{
 	public MappingPage clickSave(){
 		waitForElementToBeVisible("a#save_mappings_button");
 		Save.click();
+		waitForElementToBeInvisible(By.cssSelector("a#save_mappings_button"));
 		return this;
 	}
 	

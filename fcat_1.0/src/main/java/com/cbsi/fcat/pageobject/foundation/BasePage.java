@@ -106,11 +106,15 @@ public abstract class BasePage {
 	}
 	
 	public void waitForTextToBeVisible(String text, String...tagNames){
+		waitForTextToBeVisible(10, text, tagNames);
+	}
+	public void waitForTextToBeVisible(int seconds, String text, String...tagNames){
 		String[] tags = tagNames;
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
 	
-		while(headerOnWait== null && (System.currentTimeMillis() - start < 10000)){
+		logger.debug("waiting for text [" + text + "]");
+		while(headerOnWait== null && (System.currentTimeMillis() - start < (seconds*1000))){
 			
 			List<WebElement> headers  = null;
 			
@@ -119,9 +123,12 @@ public abstract class BasePage {
 				
 				if(tags.length >=2 && headers != null) headers = ListUtils.union(headers, header1s);
 				else headers =header1s;
+				
+				logger.debug("tag size found: " + headers.size());
 			}
 			
 			for(WebElement h: headers){
+				logger.debug("inner text: " + h.getText());
 				try{
 					if(h.getText().contains(text)){
 						headerOnWait = h;

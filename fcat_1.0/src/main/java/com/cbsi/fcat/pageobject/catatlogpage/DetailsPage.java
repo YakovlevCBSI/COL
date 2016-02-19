@@ -26,7 +26,7 @@ public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-//		waitForTextToBeVisible("Processing Queue", "div");
+		waitForTextToBeVisible(20, "Processing Queue", "div");
 		forceWait(500);
 	}
 	
@@ -87,7 +87,7 @@ public class DetailsPage extends BasePage{
 		return FirstProcessingRow.findElement(By.xpath("td[1]/span[2]")).getText();
 	}
 	
-	private static String uploadStatus = "";
+//	private static String uploadStatus = "";
 	public String getStatus(){
 		WebElement status=null;
 		try{
@@ -102,8 +102,9 @@ public class DetailsPage extends BasePage{
 			refresh();
 			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
 		}
-		uploadStatus =status.getText();
-		return uploadStatus;
+//		uploadStatus =status.getText();
+//		return uploadStatus;
+		return status.getText();
 	}
 	
 	@FindBy(css="span.text.current")
@@ -114,7 +115,7 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public boolean FileUploadIsDone(){
-		while(uploadStatus.equals(UploadStatus.INPROGRESS.toString())){		
+		while(getStatus().equals(UploadStatus.INPROGRESS.toString())){		
 			refresh();
 			forceWait(1000);
 		}

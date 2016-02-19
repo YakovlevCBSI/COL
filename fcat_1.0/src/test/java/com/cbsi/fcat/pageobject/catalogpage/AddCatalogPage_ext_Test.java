@@ -58,19 +58,6 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
 	public String timeStampUrl = GlobalVar.ftpURL + "qa/diff/CatalogFile_[Y]_[M]_[D]_[h]_[m].txt";
-
-	
-	@Test
-	public void uploadFullFileExcelAutomaticFtpFromScratch(){
-		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.setFileAndUserInfoAll(FtpExceUrl, USERNAME, PASSWORD);
-		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.selectDropBoxOption(UploadType.EXCEL);
-		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
-		DetailsPage detailsPage = mappingPage.automap();
-		
-		assertTrue(detailsPage.FileUploadIsDone());
-	}
 	
 	@Test
 	public void uploadFullFileTxtAutomaticHttpFromScratch(){
@@ -111,8 +98,8 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 				System.out.println("in waiting for next workflow condition");
 				while(filename.equals(detailsPage.getFileName())){
 					detailsPage.refresh();
-//					detailsPage.forceWait(50);
-	
+					
+//					detailsPage.waitForTextToBeVisible("Processing Queue", "div");
 					detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
 				}
 			}

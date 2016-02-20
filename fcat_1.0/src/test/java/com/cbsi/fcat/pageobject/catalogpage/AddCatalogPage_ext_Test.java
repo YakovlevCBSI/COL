@@ -76,11 +76,10 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
+	public static String lastFilename;
+	
 	@Test
 	public void uploadIncrementalFileTimestampFromScartch(){
-		int workflowSize = 6;
-		String filename = "";
-		
 		updateFtpFileNames();
 	
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -91,28 +90,21 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
-		for(int i=0; i<workflowSize; i++){
-			System.out.println(filename + " : " + detailsPage.getFileName() + " : " + i);
 
-			if(i != workflowSize-1){
-				System.out.println("in waiting for next workflow condition");
-				while(filename.equals(detailsPage.getFileName())){
-					detailsPage.refresh();
-					
-//					detailsPage.waitForTextToBeVisible("Processing Queue", "div");
-					detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
-				}
-			}
-			filename = detailsPage.getFileName();		
-			
+		while(!detailsPage.getFileName().equals(lastFilename)){
 			assertTrue(detailsPage.FileUploadIsDone());
+			
+			detailsPage.refresh();
+			detailsPage.forceWait(500);
+			detailsPage.waitForTextToBeVisible("Processing Queue", "div");
+			detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
 		}
+		
+		assertTrue(detailsPage.FileUploadIsDone());
 	}
 	
 	@Test
-	public void uploadFullFileTimestampFromScartch(){
-		String filename = "";
-		
+	public void uploadFullFileTimestampFromScartch(){		
 		updateFtpFileNames();
 	
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
@@ -124,15 +116,8 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
-		
-		filename = detailsPage.getFileName();
-		
-		detailsPage.forceWait(5000);
-		detailsPage.refresh();
 
-		detailsPage = PageFactory.initElements(driver, DetailsPage.class);	
-		
-		assertEquals(filename, detailsPage.getFileName());
+		assertEquals(lastFilename, detailsPage.getFileName());
 	}
 
 
@@ -289,11 +274,14 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		ftpUtil.login();
 		List<String> list = ftpUtil.listFilesInDir("download/fcat/qa/diff");
 		
+		lastFilename = getTodaysFileName(list.get(list.size()-1));
 		
 		for(String s: list){
 			System.out.println(s);
 			ftpUtil.renameFileNameInCurDir(s,getTodaysFileName(s));
 		}
+		
+		
 		
 		ftpUtil.quit();
 		

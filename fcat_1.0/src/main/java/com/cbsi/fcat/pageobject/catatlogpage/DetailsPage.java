@@ -146,10 +146,14 @@ public class DetailsPage extends BasePage{
 		return this;
 	}
 	
+	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
+		return getProcessingQueueMessage(DifferenceParseOrFileUpload, messageOrStatusOrModified, false);
+	}
+	
 	public Boolean storeAndMapExist;
 	public Boolean diffExists;
 	
-	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
+	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified, boolean detailedMessage){
 		WebElement whichDetailedMessageRow = null;
 		String rowNum="";
 		
@@ -165,48 +169,83 @@ public class DetailsPage extends BasePage{
 		List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
 
 		if(storeAndMapExist == null){
-			if(statusList.size() ==5){
+			if(statusList.size() >=5){
+				logger.debug("size 5 condition");
 				storeAndMapExist = true;
 				diffExists = true;
 			}else if(statusList.size() ==2){
+				logger.debug("size 2 condition");
 				storeAndMapExist= false;
 				diffExists = false;
 			}else{
+				logger.debug("last condition");
 				storeAndMapExist= false;
 				diffExists = true;
 			}
 		}
 
 		logger.info("storeAndMapExists: " + storeAndMapExist + "\n" + "diffExists: " + diffExists);
-		
+		int nthTr= 0;
 		String details ="";
 		if(DifferenceParseOrFileUpload.equals(ProcessingQueue.DIFFERENCE)){
-			if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+			if(!storeAndMapExist) {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+				nthTr= 2;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+				nthTr= 4;
+			}
 		
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.PARSE)){
 			logger.info("ProcessingQueue Parse condition at work");
 			
-			if(!diffExists && !storeAndMapExist)  whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
-			else if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));
+			if(!diffExists && !storeAndMapExist)  {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+				nthTr= 2;
+			}
+			else if(!storeAndMapExist){
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+				nthTr= 3;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));
+				nthTr= 5;
+			}
 			
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.FILEUPLOAD)){
-			if(!diffExists && !storeAndMapExist)  whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
-			else if(!storeAndMapExist) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[6]"));
+			if(!diffExists && !storeAndMapExist)  {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+				nthTr= 3;
+			}
+			else if(!storeAndMapExist) {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+				nthTr= 4;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[6]"));
+				nthTr= 6;
+			}
 		}
 		else if (DifferenceParseOrFileUpload.equals(ProcessingQueue.STORE)){
 			whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+			nthTr= 2;
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.MAP)){
 			whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+			nthTr= 3;
 		}
 
 		if(messageOrStatusOrModified.equals(InfoType.MESSAGE)){
-			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'name-column')]")).getText();
+			if(detailedMessage){
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[" + (nthTr+1)+ "]"));
+				details = whichDetailedMessageRow.findElement(By.xpath("td/p")).getText();
+			}
+			else{
+				details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'name-column')]")).getText();
+			}
 		}
 		else if(messageOrStatusOrModified.equals(InfoType.STATUS)){
 			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'status-column')]/span")).getText();

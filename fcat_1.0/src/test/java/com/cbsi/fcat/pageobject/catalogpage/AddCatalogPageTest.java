@@ -193,6 +193,22 @@ public class AddCatalogPageTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 
+	@Test
+	public void dataValidationOnItemIds(){
+		MappingPage mappingPage = UploadFullFile("validation.txt", UploadType.TXT);
+		DetailsPage detailsPage = mappingPage.automap();
+		assertTrue(detailsPage.FileUploadIsDone());
+
+		detailsPage.expandDetails();
+		String message = detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE, true);
+
+		assertTrue(message.contains("Product ID must be at most 100 characters long"));
+		assertTrue(message.contains("CNET SKU ID must be at most 50 characters long"));
+		assertTrue(message.contains("UPC/EAN must be at most 50 characters long"));
+		assertTrue(message.contains("Manufacturer Name must be at most 100 characters long"));
+		assertTrue(message.contains("Manufacturer Part Number must be at most 100 characters long"));
+
+	}
 
 	public String getProcessedNumber(String queueMessage){
 		System.out.println(queueMessage);

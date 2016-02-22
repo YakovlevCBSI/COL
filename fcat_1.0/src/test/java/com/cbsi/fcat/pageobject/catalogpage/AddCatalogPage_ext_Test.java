@@ -254,6 +254,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		return stringList;
 	}
 	
+	public static final String DELIMITER="_";
 	public String getTodaysFileName(String filename){
 		String[] filenames = filename.split("_");
 		
@@ -261,10 +262,10 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		
-		String newFile = filename.replaceFirst(filenames[1], cal.get(Calendar.YEAR)+"")
-					.replaceFirst(filenames[2], (cal.get(Calendar.MONTH)+1)+"")
-					.replaceFirst(filenames[3], cal.get(Calendar.DAY_OF_MONTH) +"");
+
+		String newFile = filename.replaceFirst(DELIMITER+filenames[1]+DELIMITER, DELIMITER+ cal.get(Calendar.YEAR)+DELIMITER)
+					.replaceFirst(DELIMITER+ filenames[2] + DELIMITER, DELIMITER + (cal.get(Calendar.MONTH)+1)+DELIMITER)
+					.replaceFirst(DELIMITER + filenames[3] + DELIMITER, DELIMITER + cal.get(Calendar.DAY_OF_MONTH) +DELIMITER);
 		
 		return newFile;
 	}

@@ -2,8 +2,8 @@ package com.cbsi.fcat.util;
 
 public class GlobalVar {
 	public static final String JENKINS = "jenkins";
-	public static boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
-//	public static boolean isGrid = false;
+//	public static boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+	public static boolean isGrid = false;
 	
 	public static String BFPId = "";
 	public static String BFPPw= "";
@@ -30,6 +30,8 @@ public class GlobalVar {
 	public static String ftpURL= "";
 	public static String ftpUserName = "";
 	public static String ftpPassword = "";
+	
+	public static String sftpURL = "sftp://sftp.cnetcontentsolutions.com/download/fcat/";
 	
 	public static String MongoHost="";
 	public static String MongoUsername="";

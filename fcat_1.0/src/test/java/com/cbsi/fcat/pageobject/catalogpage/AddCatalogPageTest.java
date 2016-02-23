@@ -60,6 +60,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
+	private String sURL=GlobalVar.sftpURL + "Test/myFullFile.txt";
 	private String xlsUrl= GlobalVar.ftpURL + "Test/Xls.xls";
 	private String xlsxUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
@@ -96,10 +97,21 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 
 	@Test
-	public void UploadFullFileAutomaticFtpFtpFromScratch(){
+	public void UploadFullFileAutomaticFtpFromScratch(){
 //		driver.manage().window().setSize(new Dimension(570, 500));
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void UploadFullFilAutomaticSftpFromScratch(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(sURL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();

@@ -135,6 +135,7 @@ public abstract class BasePage {
 				try{
 					if(h.getText().contains(text)){
 						headerOnWait = h;
+						logger.debug("found text [" + text + "]");
 						break;
 					}
 				}catch(Exception e){

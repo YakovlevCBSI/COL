@@ -1,5 +1,6 @@
 package com.cbsi.fcat.pageobject.catalogpage;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +12,7 @@ import net.jcip.annotations.NotThreadSafe;
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
 
+import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
@@ -60,6 +62,23 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 		System.out.println("displayed time: " + time);
 		
 		assertTrue(time.contains(localTime));
+	}
+
+	@Test
+	public void marketLableIsDisplayed(){
+		String market = "";
+		String code = "";
+		
+		AddCatalogPage propertyPage = catalogsPage.setMyCatalogToManualCatalog().clickEdit();
+		market = propertyPage.pickRandomMarket();
+		code = propertyPage.getCodeByCountry(market);
+
+		System.out.println(market);
+		CatalogsPage catalogsPage = propertyPage.setMarket(market).clickSave();
+		catalogsPage.setMyCatalog();
+		
+		assertEquals(code, catalogsPage.getMarketByCatalog(catalogsPage.getMyCatalog()));
+		
 	}
 	
 

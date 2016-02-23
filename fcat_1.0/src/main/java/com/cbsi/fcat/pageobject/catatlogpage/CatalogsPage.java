@@ -54,7 +54,6 @@ public class CatalogsPage extends BasePage{
 		
 		return this;
 	}
-
 	
 	public void setMyCatalog(){
 		logger.info("looking for my catalog element to use");
@@ -73,6 +72,11 @@ public class CatalogsPage extends BasePage{
 		}
 		myCatalog = elementToUse;
 	}
+		
+	public String getMyCatalog(){
+		return myCatalog.getText();
+	}
+
 	/**
 	 * switched the css path due to catalogs 
 	 */
@@ -389,6 +393,10 @@ public class CatalogsPage extends BasePage{
 		}
 		
 		return -1;
+	}
+	
+	public String getMarketByCatalog(String catalog){
+		return myCatalog.findElement(By.xpath("../../td[@class='market-column']/span")).getText();
 	}
 
 }

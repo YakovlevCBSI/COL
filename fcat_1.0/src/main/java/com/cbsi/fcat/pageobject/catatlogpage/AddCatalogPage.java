@@ -2,13 +2,13 @@ package com.cbsi.fcat.pageobject.catatlogpage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +21,7 @@ public class AddCatalogPage extends BasePage {
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+		waitForTextToBeVisible("Properties", "h1");
 		logger.info("Done loading addCatalogs page.");
 	}
 	
@@ -89,8 +90,8 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage setMarket(String country){
-		Market.click();
-		List<WebElement> list = Market.findElements(By.cssSelector("option"));
+		Market.findElement(By.xpath("../a")).click();
+		List<WebElement> list = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li a"));
 		
 		for(WebElement e: list){
 			if(e.getText().toLowerCase().equals(country.toLowerCase())){
@@ -120,6 +121,24 @@ public class AddCatalogPage extends BasePage {
 		return errorSpan.isDisplayed();	
 	}
 	
+	public String[] countries = new String[] {"Belgium (Dutch)", "El Salvador", "Switzerland (English)", "United Kingdom", "World Wide"};
+	public String[] code = new String[] {"NL-BEL", "SLV", "EN-CHE","GBR", "WW"};
+	public String pickRandomMarket(){
+		int randomNumber = new Random().nextInt(countries.length);
+		return countries[randomNumber];
+	}
+	
+	public String getCodeByCountry(String country){
+		int index=-1;
+		for(int i=0; i<countries.length; i++){
+			if(countries[i].equals(country)){
+				index = i;
+				break;
+			}
+		}
+		
+		return code[index];
+	}
 	//=================================== Automatic components ==========================================//
 	
 	@FindBy(css="label#lb_UploadMode_Manual")

@@ -274,17 +274,4 @@ public class DetailsPage extends BasePage{
 		},
 		ERROR
 	}
-	
-	@FindBy(linkText="Return to List")
-	private WebElement ReturnToList;
-	public CatalogsPage clickReturnToList(){
-		try{
-			waitForElementToClickable(By.linkText("Return to List"));
-			ReturnToList.click();
-		}catch(Exception e){
-			
-		}
-		
-		return PageFactory.initElements(driver, CatalogsPage.class);
-	}
 }

@@ -211,6 +211,20 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
+	@FindBy(css="a.selectBox span.selectBox-label")
+	private WebElement selectedFileType;
+	
+	public UploadType getFileType(){
+		String fileType = selectedFileType.getText();
+		
+		if(fileType.equalsIgnoreCase(UploadType.CSV.toString())) return UploadType.CSV;
+		else if(fileType.toUpperCase().contains(UploadType.TXT.toString())) return UploadType.TXT;
+		else if(fileType.toUpperCase().contains(UploadType.EXCEL.toString())) return UploadType.EXCEL;
+		else if(fileType.toUpperCase().contains(UploadType.XML.toString())) return UploadType.XML;
+
+		return null;
+	}
+	
 	public enum UploadType{
 		CSV,
 		TXT,

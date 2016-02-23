@@ -12,13 +12,16 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CoverageReportPage;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.util.GlobalVar;
 
@@ -225,4 +228,28 @@ public abstract class BasePage {
 	public String getHostUserName(){
 		return System.getProperty("user.name");
 	}
+	
+	//-------------------- Bottome Bar ----------------//
+	@FindBy(linkText="Return to List")
+	private WebElement ReturnToList;
+	
+	public CatalogsPage clickReturnToList(){
+		try{
+			waitForElementToClickable(By.linkText("Return to List"));
+			ReturnToList.click();
+		}catch(Exception e){
+			
+		}
+		
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
+	@FindBy(css="a#upload-file")
+	private WebElement UploadFile;
+	
+	public UploadPopupPage clickUploadFile(){
+		UploadFile.click();
+		return PageFactory.initElements(driver, UploadPopupPage.class);
+	}
+	
 }

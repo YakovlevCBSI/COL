@@ -219,9 +219,18 @@ public class AddCatalogPageTest extends AllBaseTest{
 		assertTrue(message.contains("UPC/EAN must be at most 50 characters long"));
 		assertTrue(message.contains("Manufacturer Name must be at most 100 characters long"));
 		assertTrue(message.contains("Manufacturer Part Number must be at most 100 characters long"));
-
 	}
 
+	@Test
+	public void deliemiterIsSavedDependsOnFileType(){
+		uploadFullFileXMLManual();
+		DetailsPage detailsPage = PageFactory.initElements(driver, DetailsPage.class);
+		UploadPopupPage uploadPopup = detailsPage.clickUploadFile();
+		
+		assertTrue(uploadPopup.getFileType()+"", uploadPopup.getFileType() == UploadType.XML);
+		
+	}
+	
 	public String getProcessedNumber(String queueMessage){
 		System.out.println(queueMessage);
 		String numInString = queueMessage.split(": ")[1].replace(".", "");

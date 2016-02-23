@@ -3,10 +3,12 @@ package com.cbsi.fcat.pageobject.others;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -80,11 +82,18 @@ public class DashboardPage extends BasePage{
 	}
 	
 	public static String getCurrentDate(){
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		
-		return dateFormat.format(date);
+		int YEAR = cal.get(Calendar.YEAR);
+		int MONTH = (cal.get(Calendar.MONTH)+1);
+		int DAY = cal.get(Calendar.DAY_OF_MONTH);
+
+		return YEAR+ "-" + (MONTH <10?"0"+MONTH:MONTH) + "-" + (DAY <10 ? "0"+DAY:DAY);
 	}
+	
 	public void printStatus(String id){
 		clickExpandButton(id);
 		

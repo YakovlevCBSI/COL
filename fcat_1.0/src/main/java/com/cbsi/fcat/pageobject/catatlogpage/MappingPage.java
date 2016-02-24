@@ -23,7 +23,7 @@ public class MappingPage extends BasePage{
 		super(driver);
 		waitForPageToLoad();
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("Headers", "table thead tr th");
+		waitForTextToBeVisible("(Mapping)", "h1");
 	}
 	
 	@Override

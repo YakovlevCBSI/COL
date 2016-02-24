@@ -65,7 +65,6 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
-//	public boolean isGrid = false;
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
@@ -495,9 +494,9 @@ public class BaseTest {
                         }
                     }
                     if(isAutoRun()){
-                    	System.out.println("killed all driver instances");
-        				runCommand("killall firefox");
-        				runCommand("killall chrome");
+//                    	System.out.println("killed all driver instances");
+//        				runCommand("killall firefox");
+//        				runCommand("killall chrome");
         			}
                     System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
                     throw caughtThrowable;

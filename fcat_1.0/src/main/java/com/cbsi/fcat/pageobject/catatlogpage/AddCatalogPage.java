@@ -21,7 +21,7 @@ public class AddCatalogPage extends BasePage {
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-		waitForTextToBeVisible("Properties", "h1");
+//		waitForTextToBeVisible("Properties", "h1");
 		logger.info("Done loading addCatalogs page.");
 	}
 	
@@ -123,6 +123,7 @@ public class AddCatalogPage extends BasePage {
 	
 	public String[] countries = new String[] {"Belgium (Dutch)", "El Salvador", "Switzerland (English)", "United Kingdom", "World Wide"};
 	public String[] code = new String[] {"NL-BEL", "SLV", "EN-CHE","GBR", "WW"};
+	
 	public String pickRandomMarket(){
 		int randomNumber = new Random().nextInt(countries.length);
 		return countries[randomNumber];

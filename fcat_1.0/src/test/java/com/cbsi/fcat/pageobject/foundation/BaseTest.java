@@ -65,6 +65,7 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+//	public boolean isGrid = GlobalVar.isGrid;
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
@@ -587,7 +588,6 @@ public class BaseTest {
 			for(LogEntry e: logEntries){
 				if(e.getLevel().toString().contains("SEVERE") ){
 					//System.out.println(e.getLevel());
-					if(e.toString().contains("$.url is not a function")) continue;  // CCSQS-1921 REMOVE THIS ONCE FIXED.
 					System.err.println(e.toString());
 					return false;
 				}

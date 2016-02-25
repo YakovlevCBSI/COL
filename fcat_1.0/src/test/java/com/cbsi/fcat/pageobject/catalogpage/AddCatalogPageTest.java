@@ -225,9 +225,16 @@ public class AddCatalogPageTest extends AllBaseTest{
 	public void deliemiterIsSavedDependsOnFileType(){
 		uploadFullFileXMLManual();
 		DetailsPage detailsPage = PageFactory.initElements(driver, DetailsPage.class);
-		UploadPopupPage uploadPopup = detailsPage.clickUploadFile();
+		UploadPopupPage uploadPopupInDetails = detailsPage.clickUploadFile();
 		
-		assertTrue(uploadPopup.getFileType()+"", uploadPopup.getFileType() == UploadType.XML);
+		assertTrue(uploadPopupInDetails.getFileType()+"", uploadPopupInDetails.getFileType() == UploadType.XML);
+		
+		uploadPopupInDetails.clickCancel();
+		
+		CatalogsPage catalogsPage = detailsPage.clickReturnToList();
+		UploadPopupPage uploadPopupInCatalogs = catalogsPage.setMyCatalog(tempFile).clickUpload();
+		
+		assertTrue(uploadPopupInCatalogs.getFileType()+"", uploadPopupInCatalogs.getFileType() == UploadType.XML);
 		
 	}
 	

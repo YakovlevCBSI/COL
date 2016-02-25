@@ -66,12 +66,10 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div.overlay-upload-catalog-body.dialog")
 	private WebElement dialogBody;
 		
-	public AddCatalogPage clickCancel(){
+	public void clickCancel(){
 		waitForElementToBeVisible(Cancel);
 		Cancel.click();
 		waitForElementToBeInvisible(By.cssSelector(CancelPath));
-		
-		return PageFactory.initElements(driver, AddCatalogPage.class);
 	}
 	
 	public String getSampleFileUrl(){
@@ -278,7 +276,7 @@ public class UploadPopupPage extends BasePage{
 		}else{
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
 			if(isGrid){
-				pathToFile = "/home/slave/Documents/Catalogs/London.csv";
+				pathToFile = "/home/qe/Documents/Catalogs/London.csv";
 //				pathToFile = "/home/qe/Documents/London.csv";
 
 			}

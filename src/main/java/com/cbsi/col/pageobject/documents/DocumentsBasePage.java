@@ -370,6 +370,70 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="span#subtotal")
 		private WebElement SubTotal;
 		
+		//-------------------------- Profit Box---------------------//
+		@FindBy(css="div#itemProfit")
+		private WebElement ItemProfit;
+		
+		@FindBy(css="div#itemCost")
+		private WebElement ItemCost;
+		
+		@FindBy(css="div#ItemMargin")
+		private WebElement ItemGP;
+		
+		@FindBy(css="div#shippingProfit")
+		private WebElement ShippingProfit;
+		
+		@FindBy(css="div#shippingCostLabel")
+		private WebElement ShippingCost;
+		
+		@FindBy(css="div#shippingMargin")
+		private WebElement ShippingGP;
+		
+		@FindBy(css="div#grossProfit")
+		private WebElement Profit;
+		
+		@FindBy(css="div#totalCost")
+		private WebElement Cost;
+		
+		@FindBy(css="div#totalMargin")
+		private WebElement GP;
+		
+		public String getItemProfit(){
+			return ItemProfit.getText();
+		}
+		
+		public String getItemCost(){
+			return ItemCost.getText();
+		}
+		
+		public String getItemGP() {
+			return ItemGP.getText();
+		}
+
+		public String getShippingProfit() {
+			return ShippingProfit.getText();
+		}
+
+		public String getShippingCost() {
+			return ShippingCost.getText();
+		}
+
+		public String getShippingGP() {
+			return ShippingGP.getText();
+		}
+
+		public String getProfit() {
+			return Profit.getText();
+		}
+
+		public String getCost() {
+			return Cost.getText();
+		}
+
+		public String getGP() {
+			return GP.getText();
+		}
+
 		public double getTaxOn() {
 			return Double.parseDouble(TaxOn.getAttribute("value"));
 		}

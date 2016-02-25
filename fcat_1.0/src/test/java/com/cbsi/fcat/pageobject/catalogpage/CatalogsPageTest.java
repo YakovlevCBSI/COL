@@ -75,7 +75,7 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 
 		System.out.println(market);
 		CatalogsPage catalogsPage = propertyPage.setMarket(market).clickSave();
-		catalogsPage.setMyCatalog();
+		catalogsPage.setMyCatalogToManualCatalog();
 		
 		assertEquals(code, catalogsPage.getMarketByCatalog(catalogsPage.getMyCatalog()));
 		

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,15 +92,12 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage setMarket(String country){
-		Market.findElement(By.xpath("../a")).click();
-		List<WebElement> list = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li a"));
+		WebElement dropdown = Market.findElement(By.xpath("../a"));
+		dropdown.click();
 		
-		for(WebElement e: list){
-			if(e.getText().toLowerCase().equals(country.toLowerCase())){
-				e.click();
-				break;
-			}
-		}
+		WebElement countryFromDropdown = driver.findElement(By.cssSelector("ul.selectBox-dropdown-menu li a[rel='" + getCodeByCountry(country) + "']"));
+		
+		countryFromDropdown.click();
 		return this;
 	}
 	

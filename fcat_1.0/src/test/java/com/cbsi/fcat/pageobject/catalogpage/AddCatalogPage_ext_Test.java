@@ -52,7 +52,6 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		}
 	}
 	
-	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
 	private String FtpExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
@@ -221,10 +220,10 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		addCatalogPage.setFileAndUserInfoAll("ftp://something.com/file.txt", USERNAME, PASSWORD);
 		UploadPopupPage uploadPopup = addCatalogPage.fillInName();
 		
-		addCatalogPage = uploadPopup.clickCancel();
+		uploadPopup.clickCancel();
 		addCatalogPage.setFileLocation("http://google.com/file.txt");
 		
-		addCatalogPage = addCatalogPage.clickNext().clickCancel();
+		addCatalogPage.clickNext().clickCancel();
 		
 		assertTrue(hasNoError());
 	}

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -56,7 +55,16 @@ public class MappingPage extends BasePage{
 				
 			WebElement dropdown = e.findElement(By.xpath("../td[contains(@class,'fields-column')]/a/span[@class='selectBox-label']"));
 			scrollToView(dropdown);
-			dropdown.click();
+			
+			//work around for firefox having issues not able to click what is not visible in dropdown. Needs scrolling.
+			try{
+				dropdown.click();
+			}catch(WebDriverException ex){
+				//failed, due to a dropdown being open
+				getActions().moveToElement(dropdown, -200, 0).click().build().perform();
+				dropdown.click();
+			}
+			
 			customWait(5);
 //			forceWait(1000);
 			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));

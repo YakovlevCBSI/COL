@@ -81,6 +81,11 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
+	public UploadPopupPage clickHasHeader(){
+		FirstRow.click();
+		return this;
+	}
+	
 	public boolean isTitleDisplayed(){
 		Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));	
 		return Title.isDisplayed() && !Title.getText().isEmpty();

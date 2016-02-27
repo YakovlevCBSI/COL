@@ -577,7 +577,7 @@ public class BaseTest {
 				return false;
 			}
 			String js = (String) ((JavascriptExecutor)driver).executeScript("return window.javascript_errors ");
-			System.out.println("message:" + js);
+c			System.out.println("message:" + js);
 			
 		}
 		 */
@@ -685,7 +685,15 @@ public class BaseTest {
 	}
 	
 	public MappingPage UploadFullFile(String filename, UploadType type){
+		return UploadFullFile(filename, type, true);
+	}
+	
+	public MappingPage UploadFullFile(String filename, UploadType type, boolean hasHeader){
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
+		
+		if(!hasHeader){
+			uploadPopupPage.clickHasHeader();
+		}
 		uploadPopupPage.selectDropBoxOption(type);
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage, filename).clickNext();

@@ -118,6 +118,16 @@ public class MappingPage extends BasePage{
 		return headers;
 	}
 	
+	public List<String> collectHeadersAsString(){
+		List<String> headersAsString = new ArrayList<String>();
+		
+		for(WebElement e: collectHeaders()){
+			if(!e.findElement(By.xpath("input")).getText().isEmpty())
+				headersAsString.add(e.findElement(By.xpath("input")).getText());
+		}
+		
+		return headersAsString;
+	}
 	public List<WebElement> collectDataPreviews(){
 		List<WebElement> dataPreviews = driver.findElements(By.cssSelector("tr.highlighted td.data-preview-column"));
 		return dataPreviews;

@@ -20,10 +20,15 @@ public class cleanUpCompanies extends ColBaseTest{
 	
 	@Test
 	public void cleanUpCompanies() throws InterruptedException{
+		int count =0;
+
 		customersPage = customersPage.goToAllAcountsTab();
 		while(true){
 			customersPage.deleteCompany("Qa");
-//			Thread.sleep(300);
+			if(count %10 ==0){
+				logger.info("deleted " + count  + " accounts");
+			}
+			count++;
 		}
 	}
 }

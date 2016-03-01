@@ -148,6 +148,7 @@ public class AccountsPage extends ColBasePage{
 				return dataColumn;
 			}
 			else if(type == null && dataColumn.getText().toLowerCase().contains(companyName.toLowerCase())){
+				logger.info("Found the text: " + dataColumn.getText());
 				return dataColumn;
 			}
 		}

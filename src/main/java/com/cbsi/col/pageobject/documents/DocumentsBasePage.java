@@ -623,6 +623,7 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public SendPage clickEmail(){
 			Email.click();
 			waitForElementToBeVisible(By.cssSelector("div#email-options"));
+			waitForTextToBeVisible("To:", "label.control-label");
 			return this;
 		}
 		

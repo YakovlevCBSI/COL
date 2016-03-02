@@ -53,7 +53,7 @@ public class QuotePage extends DocumentsBasePage{
 		return false;
 	}
 	
-	@FindBy(css="td a[title*='revertToRevision']")
+	@FindBy(css="td a[href*='revertToRevision']")
 	private WebElement Revert;
 	public QuotePage clickRevert(String description){
 		List<WebElement> descriptionColumns = Table.findElements(By.xpath("tbody/tr/td[7]"));
@@ -61,6 +61,7 @@ public class QuotePage extends DocumentsBasePage{
 		for(WebElement e: descriptionColumns){
 			if(e.getText().toLowerCase().contains(description.toLowerCase())){
 				Revert = e.findElement(By.xpath("../td[4]/a"));
+				logger.debug("found a matching revert element");
 				break;
 			}
 		}

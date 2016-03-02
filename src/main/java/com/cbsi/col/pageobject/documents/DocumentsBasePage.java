@@ -216,14 +216,20 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		Caret.click();
 		quickWait();
 		SaveAsNewRevision.click();
-		
+	
 		waitForAlert();	//wait for firrst alert to input descrption.
-		Alert alert = driver.switchTo().alert();
-		alert.sendKeys(description);
-		alert.accept();
+		if(isAlertPresent()){
+			waitForAlert();	//wait for firrst alert to input descrption.
+			Alert alert = driver.switchTo().alert();
+			alert.sendKeys(description);
+			alert.accept();
+		}
+		
+		quickWait();
 		
 		waitForAlert(); //wait for second alert to confirmation.
-		acceptAlert();
+		if(isAlertPresent())
+			acceptAlert();
 		return (T)this;
 	}
 	public QuotePage clickCopyToNewQuote(){
@@ -926,6 +932,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		
 		forceWait(500);
 		
+		//for bundle delete.
+		if(isAlertPresent())
+			acceptAlert();
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	

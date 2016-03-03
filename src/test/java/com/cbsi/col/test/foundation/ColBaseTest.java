@@ -477,10 +477,10 @@ public class ColBaseTest {
 	
 	public String getUsername(){
 		if(!GlobalProperty.isProd){
-			if(getHostUserName().startsWith("slave1")) return LoginProperty.testUser1;
-			else if (getHostUserName().startsWith("slave2")) return LoginProperty.testUser2;
+			if(getHostUserName().startsWith("slave4")) return LoginProperty.testUser1;
+			else if (getHostUserName().startsWith("slave5")) return LoginProperty.testUser2;
 //			else if (getHostname().endsWith("3")) return LoginProperty.testUser3;
-			else if (getHostUserName().startsWith("slave3")) return LoginProperty.testUser3;
+			else if (getHostUserName().startsWith("slave6")) return LoginProperty.testUser3;
 //			else if (getHostname().startsWith("slave1")) return LoginProperty.testUser4;
 			
 			return LoginProperty.testUser_manual;

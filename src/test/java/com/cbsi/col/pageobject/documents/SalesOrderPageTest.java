@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.EditProductPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
@@ -141,7 +142,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void lockedOrderIsUneditable(){
-		SalesOrderPage orderPage = goToExistingOrder(Status.ORDERS_SUBMITTED);;
+		SalesOrderPage orderPage = goToFirstDocument(DocumentTabs.ORDERS, DocStatus.Submitted, SalesOrderPage.class);
 		orderPage = orderPage.clickCompleteThisOrder();
 		
 		assertEquals(DocumentState.Complete.toString(), orderPage.getDocumentState());
@@ -156,7 +157,8 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void discountOptionChangedNontaxableSubtotal(){
-		SalesOrderPage orderPage = goToExistingOrder(Status.ORDERS_SUBMITTED);
+		SalesOrderPage orderPage = goToFirstDocument(DocumentTabs.ORDERS, DocStatus.Submitted, SalesOrderPage.class);
+
 		PriceCalculator priceCalculator = orderPage.getPriceCalculator();
 		priceCalculator.setDiscount(50, true);
 		priceCalculator.setDiscountType(false);
@@ -173,12 +175,5 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 				subTotal== orderPage.getPriceCalculator().getNonTaxableSubTotal());
 
 
-	}
-	
-	public SalesOrderPage goToExistingOrder(Status status){
-		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.ORDERS).filterByStatus(status);
-		Long orderWithSetStatus = Long.parseLong(documentPage.getTableAsMaps().get(0).get("doc#"));
-
-		return documentPage.goToOrder(orderWithSetStatus);
 	}
 }

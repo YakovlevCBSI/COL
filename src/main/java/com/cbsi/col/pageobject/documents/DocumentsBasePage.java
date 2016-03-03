@@ -376,6 +376,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="span#subtotal")
 		private WebElement SubTotal;
 		
+		@FindBy(css="input#discount")
+		private WebElement Discount;
+		
+		@FindBy(css="select#discountType")
+		private WebElement discountType;
+		
 		//-------------------------- Profit Box---------------------//
 		@FindBy(css="div#itemProfit")
 		private WebElement ItemProfit;
@@ -520,6 +526,18 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public double getSubtotal(){
 			System.out.println("SubTotal: " + SubTotal.getText());
 			return Double.parseDouble(StringUtil.cleanCurrency(SubTotal.getText()));
+		}
+		
+		public void setDiscount(double amount, boolean isDollar){
+			Discount.clear();
+			Discount.sendKeys(amount+"");
+			discountType.click();
+			discountType.findElement(By.xpath("option[@value='" + (isDollar==true?"dollar":"percent") + "']")).click();
+		}
+		
+		public void setDiscountType(boolean isDollar){
+			discountType.click();
+			discountType.findElement(By.xpath("option[@value='" + (isDollar==true?"dollar":"percent") + "']")).click();
 		}
 		
 		public void setShipingType(ShippingTypes type){

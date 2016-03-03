@@ -141,11 +141,7 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void lockedOrderIsUneditable(){
-		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.ORDERS).filterByStatus(Status.ORDERS_SUBMITTED);
-		
-		Long submittedOrder = Long.parseLong(documentPage.getTableAsMaps().get(0).get("doc#"));
-
-		SalesOrderPage orderPage = documentPage.goToOrder(submittedOrder);
+		SalesOrderPage orderPage = goToExistingOrder(Status.ORDERS_SUBMITTED);;
 		orderPage = orderPage.clickCompleteThisOrder();
 		
 		assertEquals(DocumentState.Complete.toString(), orderPage.getDocumentState());
@@ -156,5 +152,33 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 		
 		assertFalse(orderPage.isShipToEnabled());
 		assertFalse(orderPage.isBillToEnabled());
+	}
+	
+	@Test
+	public void discountOptionChangedNontaxableSubtotal(){
+		SalesOrderPage orderPage = goToExistingOrder(Status.ORDERS_SUBMITTED);
+		PriceCalculator priceCalculator = orderPage.getPriceCalculator();
+		priceCalculator.setDiscount(50, true);
+		priceCalculator.setDiscountType(false);
+		priceCalculator.setDiscountType(true);
+		
+		double subTotal = priceCalculator.getNonTaxableSubTotal();
+		
+		orderPage = orderPage.clickSave();
+		
+		System.out.println("subTotal amount: " + subTotal);
+		
+		assertTrue(subTotal !=0);
+		assertTrue(subTotal + ":" + orderPage.getPriceCalculator().getNonTaxableSubTotal(), 
+				subTotal== orderPage.getPriceCalculator().getNonTaxableSubTotal());
+
+
+	}
+	
+	public SalesOrderPage goToExistingOrder(Status status){
+		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.ORDERS).filterByStatus(status);
+		Long orderWithSetStatus = Long.parseLong(documentPage.getTableAsMaps().get(0).get("doc#"));
+
+		return documentPage.goToOrder(orderWithSetStatus);
 	}
 }

@@ -25,6 +25,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.cbsi.col.pageobject.customers.AccountsPage;
 import com.cbsi.col.pageobject.customers.CurrentAccountTab;
 import com.cbsi.col.pageobject.customers.AccountsPage.AccountType;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.ImportConfigPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.MergePopup;
@@ -33,6 +34,7 @@ import com.cbsi.col.pageobject.documents.DocumentsBasePage.PriceCalculator.Shipp
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.QuickAddProductPopup;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.SendPage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.UpdateMarginMarkupPopup;
+import com.cbsi.col.pageobject.documents.DocumentsPage.Status;
 import com.cbsi.col.pageobject.documents.QuotePage;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.AddImportUpdates;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.LineActions;
@@ -45,6 +47,7 @@ import com.cbsi.col.pageobject.products.AddToCatalogsPage;
 import com.cbsi.col.pageobject.products.ProductsPage;
 import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
+import com.cbsi.col.test.util.Constants;
 import com.cbsi.col.test.util.GlobalProperty;
 
 
@@ -328,6 +331,28 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		String companyName = currentAccountPage.getCompany();
 		
 		assertTrue(companyName.contains(expectedName));
+	}
+	
+	@Test
+	public void originalQuotePreservesLastModifiedAfterCopyToNew(){
+		Long quoteNumber = null;
+		String timeStamp = "";
+		
+		QuotePage quotePage = goToFirstDocument(DocumentTabs.QUOTES, DocStatus.Open, false, QuotePage.class);
+		quoteNumber = quotePage.getQuoteNumber();
+		
+		DocumentsPage documentsPage = quotePage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).filterByStatus(Status.QUOTES_OPEN);
+		List<LinkedHashMap<String, String>> columnMaps = documentsPage.getTableAsMaps(Constants.DOCNUMBER, quoteNumber+"");
+		timeStamp = columnMaps.get(0).get(Constants.LASTMODIFIED);
+		
+		quotePage = documentsPage.goToQuote(quoteNumber);
+		QuotePage copiedQuote = quotePage.clickCopyToNewQuote();
+		
+		copiedQuote.goToDocumentsPage().goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).filterByStatus(Status.QUOTES_OPEN);
+		List<LinkedHashMap<String, String>> columnMapsNew  = documentsPage.getTableAsMaps(Constants.DOCNUMBER, quoteNumber.toString());
+		
+		System.out.println(timeStamp + " : " + columnMapsNew.get(0).get(Constants.LASTMODIFIED));
+		assertEquals(timeStamp, columnMapsNew.get(0).get(Constants.LASTMODIFIED));
 	}
 
 //	@Test

@@ -565,7 +565,8 @@ public class ColBasePage {
 					map.put(StringUtil.cleanTableKey(headerElements.get(i).getText()), data==null?"":data);
 
 					if(key != null){
-						if(headerElements.get(i).getText().equalsIgnoreCase(key) && data.equalsIgnoreCase(value)){
+//						System.out.println(headerElements.get(i).getText() + " : " + key + " |||" + data + " : " + value);
+						if(StringUtil.cleanTableKey(headerElements.get(i).getText()).equalsIgnoreCase(key) && data.equalsIgnoreCase(value)){
 							isKeyValueFound = true;
 						}
 					}			
@@ -581,8 +582,10 @@ public class ColBasePage {
 			}
 		}
 			
-		if(!isKeyValueFound && key!= null) 
+		if(!isKeyValueFound && key!= null) {
+			logger.warn("Key value was not found");
 			return null;
+		}
 		
 		return maps;
 	}

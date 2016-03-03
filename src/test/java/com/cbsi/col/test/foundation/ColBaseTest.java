@@ -506,7 +506,18 @@ public class ColBaseTest {
 	}
 	
 	public <T>T goToFirstDocument(DocumentTabs documentType, DocStatus status, Class clazz){
-		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(documentType).setFilterByModifiedBy("All");
+		return goToFirstDocument(documentType, status, true, clazz);
+	}
+	
+	public <T>T goToFirstDocument(DocumentTabs documentType, DocStatus status, boolean setFilterByAll, Class clazz){
+		
+		DocumentsPage documentsPage = homePage.goToDocumentsPage().switchToTab(documentType);
+		
+		if(setFilterByAll){
+			documentsPage = documentsPage.setFilterByModifiedBy("All");
+		}
+		
+		System.out.println("answer: " + documentsPage.getTableAsMaps("status", status.toString()).get(0).get("doc#"));
 		Long docNumber = Long.parseLong(documentsPage.getTableAsMaps("status", status.toString()).get(0).get("doc#"));
 
 		if(docNumber == null){

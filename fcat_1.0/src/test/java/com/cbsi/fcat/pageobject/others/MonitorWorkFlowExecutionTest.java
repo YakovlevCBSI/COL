@@ -27,7 +27,7 @@ public class MonitorWorkFlowExecutionTest extends FormBaseTest{
 	public void ErrorReport(){
 		Assume.assumeTrue(getBrowser().contains("chrome"));
 		navigateToDashBoardPageFromCatalogs();
-		dashboardPage.pickStatus(STATUS.Error);
+		dashboardPage.pickStatus(STATUS.ERROR);
 		
 //		expect.expect(NullPointerException.class);
 //		expect.expectMessage("no available data");

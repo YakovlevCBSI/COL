@@ -47,13 +47,13 @@ public class DashboardPage extends BasePage{
 		forceWait(500);
 		
 		WebElement optionToPick = null;
-		if(status == STATUS.Pending)
+		if(status == STATUS.PENDING)
 			optionToPick = Pending;
-		else if(status == STATUS.Completed)
+		else if(status == STATUS.COMPLETED)
 			optionToPick = Completed;
-		else if(status == STATUS.InProgress)
+		else if(status == STATUS.INPROGRESS)
 			optionToPick = InProgress;
-		else if(status == STATUS.Error)
+		else if(status == STATUS.ERROR)
 			optionToPick = Error;
 		
 		if(optionToPick != null)
@@ -147,6 +147,36 @@ public class DashboardPage extends BasePage{
 		return workflows;		
 	}
 	
+	public List<Map<String, String>> getMainWorkFlowInfoByCatId(long id){
+		List<Map<String, String>> workflows = new ArrayList<Map<String, String>>();
+		Map<String, String> workflow = new HashMap<String, String>();
+		
+		List<String> headers = getMainHeaders();
+		
+		WebElement Table = driver.findElement(By.cssSelector("td[title='" + id + "']")).findElement(By.xpath("../../.."));
+		List<WebElement> tds = Table.findElements(By.xpath("tbody/tr[2]/td"));
+		
+		for(int i=1; i< tds.size(); i++){ //skip first empty column.
+//			System.out.println(headers.get(i) + " : " + tds.get(i).getText());
+			workflow.put(headers.get(i), tds.get(i).getText());
+		}
+		
+		workflows.add(workflow);
+		
+		return workflows;
+	}
+	
+	public List<String> getMainHeaders(){
+		List<String> headersToString = new ArrayList<String>();
+		List<WebElement> headers =  driver.findElements(By.cssSelector("table[aria-labelledby = 'gbox_maingrid'] thead tr th div"));
+		for(WebElement e: headers){
+			headersToString.add(e.getText().toLowerCase());
+//			System.out.println(e.getText());
+		}
+		
+		return headersToString;
+	}
+	
 	WebElement expandButton;
 	public void clickExpandButton(String id){
 		expandButton = driver.findElement(By.cssSelector("tr[id='" + id + "'] td a"));
@@ -154,9 +184,9 @@ public class DashboardPage extends BasePage{
 	}
 	
 	public enum STATUS{
-		Pending, 
-		Completed, 
-		InProgress, 
-		Error;
+		PENDING, 
+		COMPLETED, 
+		INPROGRESS, 
+		ERROR;
 	}
 }

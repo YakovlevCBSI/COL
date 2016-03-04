@@ -2,6 +2,8 @@ package com.cbsi.fcat.pageobject.catatlogpage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,5 +79,33 @@ public class CoverageReportPage extends BasePage{
 	public CoverageReportPage downloadReport(){
 		Download.click();
 		return this;
+	}
+	
+	public void waitForCoverageToGenerate(){
+		while(isCoverageNotificationDisplayed()){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean isCoverageNotificationDisplayed(){
+		String h2Message="";
+		long startTime = System.currentTimeMillis();
+		while((System.currentTimeMillis() - startTime) < 10000){
+			try{
+				h2Message = driver.findElement(By.cssSelector("h2")).getText();
+			}catch(NoSuchElementException | StaleElementReferenceException e ){
+				
+			}
+			if(!h2Message.isEmpty()){
+				System.out.println(h2Message);
+				return true;
+			}
+		}
+		return false;
 	}
 }

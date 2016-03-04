@@ -1,6 +1,10 @@
 package com.cbsi.fcat.pageobject.catalogpage;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -14,6 +18,8 @@ import com.cbsi.fcat.pageobject.catatlogpage.CoverageReportPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
 import com.cbsi.fcat.pageobject.foundation.FormBaseTest;
+import com.cbsi.fcat.pageobject.others.DashboardPage;
+import com.cbsi.fcat.pageobject.others.DashboardPage.STATUS;
 
 public class CovreageReportPageTest extends FormBaseTest{
 
@@ -36,10 +42,7 @@ public class CovreageReportPageTest extends FormBaseTest{
 		uploadFullFileThenReturnToCatalogsPage();
 		navigateToCR();
 		coverageReport.generateCoverageReport();
-		while(isCoverageNotificationDisplayed()){
-			Thread.sleep(1000);
-		}
-		
+		coverageReport.waitForCoverageToGenerate();
 		navigateToCR();
 		coverageReport.generateCoverageReport();
 		
@@ -54,6 +57,19 @@ public class CovreageReportPageTest extends FormBaseTest{
 		coverageReport.downloadReport();
 		
 		assertTrue(hasNoError());
+	}
+	
+	@Test
+	public void dashboardShowsCompleteAfterCoverageRun() throws InterruptedException{
+		uploadFullFileThenReturnToCatalogsPage();
+		
+		navigateToCR();
+		catalogsPage = coverageReport.generateCoverageReport();
+		coverageReport.waitForCoverageToGenerate();
+		
+		DashboardPage dashboardPage = catalogsPage.goBack().goToDashboard();
+		List<Map<String, String>> workflowMaps = dashboardPage.getMainWorkFlowInfoByCatId(catalogId);
+		assertEquals(workflowMaps.get(0).get("status"), STATUS.COMPLETED.toString());	
 	}
 
 	@Test
@@ -72,25 +88,17 @@ public class CovreageReportPageTest extends FormBaseTest{
 	public void uploadFullFileThenReturnToCatalogsPage() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile("sampleFile.txt");
 		DetailsPage detailsPage = mappingPage.automap();
+		catalogId = getCatIdByCatalogName(tempFiles.get(0));
+		System.out.println("catalog ID under search is " + catalogId);
 		catalogsPage = detailsPage.clickReturnToList();
 	}
 	
+	public Long catalogId;
 	
-	public boolean isCoverageNotificationDisplayed(){
-		String h2Message="";
-		long startTime = System.currentTimeMillis();
-		while((System.currentTimeMillis() - startTime) < 10000){
-			try{
-				h2Message = driver.findElement(By.cssSelector("h2")).getText();
-			}catch(NoSuchElementException | StaleElementReferenceException e ){
-				
-			}
-			if(!h2Message.isEmpty()){
-				System.out.println(h2Message);
-				return true;
-			}
-		}
-		return false;
-		
+	public Long getCatIdByCatalogName(String fileName){
+		String url = driver.getCurrentUrl();
+		return Long.parseLong(url.substring(url.indexOf("=")+1));
 	}
+	
+	
 }

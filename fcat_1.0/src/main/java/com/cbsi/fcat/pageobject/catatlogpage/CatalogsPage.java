@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
-import com.cbsi.fcat.pageobject.foundation.ParameterFeeder;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
 
@@ -146,7 +145,7 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	public static int tdAciton = ParameterFeeder.isProdTest?6:7; //DIRTIEST WORKAROUND...
+	public static int tdAciton = isProdTesting()?6:7; //DIRTIEST WORKAROUND...
 //	public static int tdAciton = 7; 
 
 	public DetailsPage clickDetails(){
@@ -405,4 +404,15 @@ public class CatalogsPage extends BasePage{
 		return myCatalog.findElement(By.xpath("../../td[@class='market-column']/span")).getText();
 	}
 
+	/**
+	 * DELETE THIS
+	 */
+	  	public static boolean isProdTesting(){
+		String system="";
+		if((system = System.getProperty("environment")) != null){
+			if(system.equals("prod")) return true;
+		}
+		 return false;
+	}
+	 
 }

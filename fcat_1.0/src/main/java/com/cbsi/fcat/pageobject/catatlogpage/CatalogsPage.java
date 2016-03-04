@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cbsi.fcat.pageobject.foundation.BasePage;
+import com.cbsi.fcat.pageobject.foundation.ParameterFeeder;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
 
@@ -145,7 +146,9 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	public static final int tdAciton = 7;
+	public static int tdAciton = ParameterFeeder.isProdTest?6:7; //DIRTIEST WORKAROUND...
+//	public static int tdAciton = 7; 
+
 	public DetailsPage clickDetails(){
 		WebElement Info = myCatalog.findElement(By.xpath("../../td["+tdAciton+"]/div/a[1]"));
 		customWait(3);
@@ -212,6 +215,8 @@ public class CatalogsPage extends BasePage{
 			}
 		}
 		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[" +tdAciton+ "]/div/a[4]"));
+//		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[@class='actions-column']/div/a[4]"));
+
 //		waitForElementToClickable(By.xpath("../../td[6]/a[4]"));
 		tempElementDeleteButton.click();
 		customWait(5);
@@ -344,6 +349,7 @@ public class CatalogsPage extends BasePage{
 		refresh();
 		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
 		for(WebElement catalogName: catalogNames){
+			System.out.println(catalogName.getText());
 			catalogNamesToString.add(catalogName.getText());
 		}
 		

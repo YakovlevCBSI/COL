@@ -293,8 +293,4 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		}
 		ftpUtil.quit();
 	}	
-	
-	public static void main(String[] args){
-		System.out.println(getTodaysFileName("CatalogFile_2016_3_6_00_37.txt"));
-	}
 }

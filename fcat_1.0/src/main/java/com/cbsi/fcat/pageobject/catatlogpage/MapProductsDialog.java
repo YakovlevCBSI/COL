@@ -66,6 +66,7 @@ public class MapProductsDialog extends BasePage{
 	private WebElement Cancel;
 	
 	public ProductsCatalogPage clickCancel(){
+		scrollToView(Cancel);
 		Cancel.click();
 		waitForElementToBeInvisible(By.cssSelector("div#mappingDialog div.content.catalog"));
 		forceWait(500);

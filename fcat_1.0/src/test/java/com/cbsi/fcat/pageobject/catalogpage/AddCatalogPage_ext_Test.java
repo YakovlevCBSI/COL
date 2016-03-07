@@ -262,11 +262,22 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 
-		String newFile = filename.replaceFirst(DELIMITER+filenames[1]+DELIMITER, DELIMITER+ cal.get(Calendar.YEAR)+DELIMITER)
-					.replaceFirst(DELIMITER+ filenames[2] + DELIMITER, DELIMITER + (cal.get(Calendar.MONTH)+1)+DELIMITER)
-					.replaceFirst(DELIMITER + filenames[3] + DELIMITER, DELIMITER + cal.get(Calendar.DAY_OF_MONTH) +DELIMITER);
+//		String newFile = filename.replaceFirst(DELIMITER+filenames[1]+DELIMITER, DELIMITER+ cal.get(Calendar.YEAR)+DELIMITER)
+//					.replaceFirst(DELIMITER+ filenames[2] + DELIMITER, DELIMITER + (cal.get(Calendar.MONTH)+1)+DELIMITER)
+//					.replaceFirst(DELIMITER + filenames[3] + DELIMITER, DELIMITER + cal.get(Calendar.DAY_OF_MONTH) +DELIMITER);
+//		
+		String currentYear = cal.get(Calendar.YEAR) + "";
+		String currentMonth = cal.get(Calendar.MONTH)+1 +"";
+		String currentDay = cal.get(Calendar.DAY_OF_MONTH) + "";
 		
-		return newFile;
+		String updatedFileName = filenames[0] + DELIMITER + 
+				currentYear + DELIMITER + 
+				currentMonth + DELIMITER + 
+				currentDay + DELIMITER + 
+				filenames[4] + DELIMITER + 
+				filenames[5];
+		
+		return updatedFileName;
 	}
 	
 	public void updateFtpFileNames(){
@@ -280,12 +291,10 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 			System.out.println(s);
 			ftpUtil.renameFileNameInCurDir(s,getTodaysFileName(s));
 		}
-		
-		
-		
 		ftpUtil.quit();
-		
+	}	
+	
+	public static void main(String[] args){
+		System.out.println(getTodaysFileName("CatalogFile_2016_3_6_00_37.txt"));
 	}
-	
-	
 }

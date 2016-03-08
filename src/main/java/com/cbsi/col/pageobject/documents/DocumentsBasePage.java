@@ -1213,7 +1213,8 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			}
 		},
 		Open, 
-		Paid
+		Paid,
+		Approved
 	}
 	
 	//----------------------------- QuickAddProduct-----------------------------//

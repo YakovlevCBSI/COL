@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.openqa.selenium.Point;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
+import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocStatus;
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.DocumentState;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.RMAPage.Reasons;
@@ -76,16 +77,13 @@ public class RMAPageTest extends DocumentsBasePageTest{
 //		documentPage = rmaPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
 //		rmaPage.goToSuppliersPage().switchToTab(SupplierTabs.View_POs).switchToTab(SupplierTabs.SupplierRMAs);
 //		documentPage = documentPage.setFilterByModifiedBy(getUserName());
-//		assertTrue(documentPage.hasRma(rmaNumber));
+//		assertTrue(documentPage.hasRma(rmaNumber));R
 		
 	}
 	
 	@Test//CCSCOL-6626
 	public void productTableIsInCenter(){
-		DocumentsPage documentsPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.RMAS);
-		String rmaNumber = documentsPage.getTableAsMaps().get(0).get("doc#");
-		RMAPage rmaPage = documentsPage.goToRma(Long.parseLong(rmaNumber));
-		
+		RMAPage rmaPage = goToFirstDocument(DocumentTabs.RMAS, DocStatus.Approved, true, RMAPage.class);
 		Point point = rmaPage.getProductTableLocation();	
 		assertTrue(point.getX() + "", point.getX() < 500);
 	}

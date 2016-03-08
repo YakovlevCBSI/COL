@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.customers.AccountsPage;
+import com.cbsi.col.pageobject.customers.AllAccountsTab;
 import com.cbsi.col.pageobject.customers.RecentAccountsTab;
 import com.cbsi.col.pageobject.documents.DocumentsPage;
 import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
@@ -63,8 +64,22 @@ public class SearchPopupTest extends ColBaseTest{
 	
 	@Test
 	public void searchAccountEmailStartsWith(){
-		String keyword = "qa";
-		AccountsPage accountsPage = homePage.searchFor(QueryOption.Customers, false, QueryColumn.Email, keyword, AccountsPage.class);
+		String keyword = "";
+	
+		AllAccountsTab allAccountsPage = homePage.goToAccountsPage().goToAllAcountsTab();
+		
+		List<LinkedHashMap<String, String>> accountMaps = allAccountsPage.getTableAsMaps();
+		for(LinkedHashMap<String, String> accountMap: accountMaps){
+			if(!accountMap.get("email").isEmpty()){
+				keyword = accountMap.get("email");
+				break;
+			}
+		}
+	
+		System.out.println(keyword);
+		keyword = keyword.substring(0, keyword.indexOf("@")-1);
+		
+		AccountsPage accountsPage = allAccountsPage.searchFor(QueryOption.Customers, false, QueryColumn.Email, keyword, AccountsPage.class);
 		List<LinkedHashMap<String, String>> maps = accountsPage.getTableAsMaps();
 		assertTrue(TableUtil.tableMapHasWord(maps, "email",keyword, true));
 	}

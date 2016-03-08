@@ -92,6 +92,7 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage setMarket(String country){
+		forceWait(500);
 		WebElement dropdown = Market.findElement(By.xpath("../a"));
 		dropdown.click();
 		

@@ -49,6 +49,7 @@ import com.cbsi.col.pageobject.products.ProductsPage.Action;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
 import com.cbsi.col.test.util.Constants;
 import com.cbsi.col.test.util.GlobalProperty;
+import com.cbsi.col.test.util.StringUtil;
 
 
 public class QuotePageTest extends DocumentsBasePageTest{
@@ -393,6 +394,17 @@ public class QuotePageTest extends DocumentsBasePageTest{
 		documentPage.hasDoc(quoteNumber);
 	}
 	
+//	@Test
+//	public void addSubTotalAndBundleSubTotal_old(){
+//		createQuote();
+//		QuotePage quotePage = documentPage.goToQuote(quoteNumber);
+//
+//		PriceCalculator priceCalculator = ((DocumentsBasePage) addSubtotalBundleWorkFlow(quotePage).clickSave()).getPriceCalculator();
+//		logger.debug("subTotal: " + priceCalculator.getTaxedSubTotal());
+//
+//		assertTrue(priceCalculator.getSubtotal() + "", 3200 == priceCalculator.getSubtotal() || 2509.50 == priceCalculator.getSubtotal());
+//	}
+	
 	@Test
 	public void addSubTotalAndBundleSubTotal(){
 		createQuote();
@@ -400,8 +412,51 @@ public class QuotePageTest extends DocumentsBasePageTest{
 
 		PriceCalculator priceCalculator = ((DocumentsBasePage) addSubtotalBundleWorkFlow(quotePage).clickSave()).getPriceCalculator();
 		logger.debug("subTotal: " + priceCalculator.getTaxedSubTotal());
+		List<LinkedHashMap<String, String>> maps = quotePage.getTableAsMaps();
+		
+		double taxedSubTotalWithoutBundle = 0;
+		double taxedSubTotal = 0;
 
-		assertTrue(priceCalculator.getSubtotal() + "", 3200 == priceCalculator.getSubtotal() || 2509.50 == priceCalculator.getSubtotal());
+		double bundleSubTotalActual = 0;
+		double bundleSubTotalExepcted = 0;
+		double bundleSubTotalSinglePriceActual = 0;
+		
+		boolean isInBundle = false;
+		
+		for(LinkedHashMap<String, String> map: maps){
+				
+			if(!isInBundle && map.get("description").contains("Bundle Header")) {
+				isInBundle = true;
+			}
+			
+			else if(isInBundle && map.get("description").contains("Bundle Subtotal")){
+				bundleSubTotalActual = Double.parseDouble(StringUtil.cleanCurrency(map.get("total")));
+				bundleSubTotalSinglePriceActual = Double.parseDouble(map.get("price"));
+				System.out.println("bunel subtotalActual: " + bundleSubTotalActual);
+				isInBundle = false;
+			}
+			
+			else if(isInBundle){
+				bundleSubTotalExepcted += Integer.parseInt(map.get("qty")) * Double.parseDouble(map.get("price"));
+				System.out.println("is in bundle condition." + bundleSubTotalExepcted);
+			}
+			
+			else if (!map.get("qty").isEmpty() && !isInBundle){
+				taxedSubTotalWithoutBundle += Integer.parseInt(map.get("qty")) * Double.parseDouble(map.get("price"));
+				System.out.println("last condition: "+ taxedSubTotalWithoutBundle);
+			}
+		}
+		
+		taxedSubTotal = taxedSubTotalWithoutBundle + bundleSubTotalActual;
+		
+				
+		System.out.println("calculated taxedsubtotal is " + taxedSubTotal);
+
+		assertTrue(priceCalculator.getSubtotal() + " : " + taxedSubTotal, 
+				priceCalculator.getSubtotal()==taxedSubTotal);
+		
+		assertTrue(bundleSubTotalSinglePriceActual + ": " + bundleSubTotalExepcted, 
+				bundleSubTotalSinglePriceActual == bundleSubTotalExepcted);
 	}
 	
 	@Test

@@ -91,7 +91,7 @@ public class ScratchPadTest extends DocumentsBasePageTest{
 	}
 	
 	public void addProductIfEmpty(){
-		if(scratchPad.getTableAsMaps().size() ==0){
+		if(scratchPad.getTableAsMaps().size() <=1){
 			ProductsPage productsPage = scratchPad.searchProduct("Lenovo");
 			productsPage.checkCompareBoxes(1,2).selectAction(Action.AddToQuote);
 			

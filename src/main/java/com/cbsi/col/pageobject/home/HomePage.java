@@ -3,6 +3,7 @@ package com.cbsi.col.pageobject.home;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -382,11 +383,23 @@ public class HomePage extends ColBasePage{
 	}
 	
 	public boolean isOrganizerNotesTableDisplayed(){
-		return getTable("Organizer Notes").isDisplayed();
+		try{
+			return getTable("Organizer Notes").isDisplayed();
+		}catch(NoSuchElementException e){
+			logger.info("unable to find \"Organizer Notes\" table, incase prod, return \"Notes\" table");
+		}
+		
+		return getTable("Notes").isDisplayed();
 	}
 	
 	public boolean isOrganizerTasksTableDisplayed(){
-		return getTable("Organizer Tasks").isDisplayed();
+		try{
+			return getTable("Organizer Tasks").isDisplayed();
+		}catch(NoSuchElementException e){
+			logger.info("unable to find \"Organizer Tasks\" table, incase prod, return \"Tasks\" table");
+		}
+
+		return getTable("Tasks").isDisplayed();
 	}
 	
 	public By getLinkText(String text){

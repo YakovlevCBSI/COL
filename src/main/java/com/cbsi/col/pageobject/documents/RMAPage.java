@@ -41,7 +41,8 @@ public class RMAPage extends DocumentsBasePage{
 	public RMAPage clickFinalize(){
 		Finalize.click();
 		waitForQuickLoad();
-		
+		forceWait(500);
+
 		return PageFactory.initElements(driver, RMAPage.class);
 	}
 	

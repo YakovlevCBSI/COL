@@ -2,6 +2,7 @@ package com.cbsi.col.pageobject.documents;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.cbsi.col.pageobject.documents.DocumentsBasePage.Doc;
@@ -46,6 +47,7 @@ public class InovicePageTest extends DocumentsBasePageTest{
 		InvoicePage invoicePage = orderPage.clickConvertToInvoice();
 	}
 	
+	@Ignore("legacy")
 	@Test
 	public void salesOrderLinkExistsAndInvoiceLinkExists(){
 		SalesOrderPage salesOrderPage = goToFirstDocument(DocumentTabs.ORDERS, DocStatus.Submitted, SalesOrderPage.class);

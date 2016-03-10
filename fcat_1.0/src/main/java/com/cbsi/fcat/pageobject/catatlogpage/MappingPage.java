@@ -61,7 +61,7 @@ public class MappingPage extends BasePage{
 				dropdown.click();
 			}catch(WebDriverException ex){
 				//failed, due to a dropdown being open
-				getActions().moveToElement(dropdown, -200, 0).click().build().perform();
+				getActions().moveToElement(dropdown, -400, 0).click().build().perform();
 				dropdown.click();
 			}
 			

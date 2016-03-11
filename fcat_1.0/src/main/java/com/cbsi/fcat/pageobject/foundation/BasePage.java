@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.ListUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
@@ -43,6 +44,14 @@ public abstract class BasePage {
 	}
 	
 	public FCatHomePage goToHomePage(){
+		return goToHomePage(false);
+	}
+	
+	public FCatHomePage goToHomePage(boolean clickLinkToGo){
+		if(clickLinkToGo){
+			driver.findElement(By.cssSelector("a[href='/fcat/']")).click();
+		}
+		
 		return PageFactory.initElements(driver, FCatHomePage.class);
 	}
 
@@ -205,7 +214,7 @@ public abstract class BasePage {
 	   String js = String.format("window.scroll(%s, %s)", elmenentPositionX, elementPositionY);
 	   ((JavascriptExecutor)driver).executeScript(js);
 	   forceWait(500);
-}
+	}
 	
 	public String escapeHtml(String text){
 		return text.replace("<", "&lt;").replace(">","&gt;");
@@ -251,6 +260,16 @@ public abstract class BasePage {
 	public UploadPopupPage clickUploadFile(){
 		UploadFile.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);
+	}
+	
+	public void acceptAlert(){
+		forceWait(500);
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+	}
+	
+	public void navigateBack(){
+		driver.navigate().back();
 	}
 	
 }

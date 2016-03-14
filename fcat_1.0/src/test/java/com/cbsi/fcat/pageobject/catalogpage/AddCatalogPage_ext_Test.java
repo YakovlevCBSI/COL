@@ -56,7 +56,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	private String FtpExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
-	public String timeStampUrl = GlobalVar.ftpURL + "qa/diff/CatalogFile_[Y]_[M]_[D]_[h]_[m].txt";
+	public String timeStampUrl = GlobalVar.ftpURL + "qa/diff/CatalogFile_[Y]*[M]*[D]*[h]*[m].txt";
 	
 	@Test
 	public void uploadFullFileTxtAutomaticHttpFromScratch(){
@@ -145,7 +145,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
 		
 	}
-	
+
 	@Test
 	public void DelimiterMismatchTxtToCsvManual(){
 		MappingPage mappingPage = UploadFullFile("London.csv", UploadType.CSV); //This csv file is really the txt inside with the extension of csv.

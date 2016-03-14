@@ -87,7 +87,7 @@ public class DocumentsBasePageTest extends ColBaseTest{
 		quoteNumber = quotePage.getQuoteNumber();
 		logger.info("Looking for quote#:  " + quoteNumber );
 		ProductsPage productPage = quotePage.searchProduct("Lenovo");
-		productPage.checkCompareBoxes(1,2,4);
+		productPage.checkCompareBoxes(2,4,8);
 		productPage.selectAction(Action.AddToQuote);
 		
 		QuotePage quotePageNew =  PageFactory.initElements(driver, QuotePage.class);

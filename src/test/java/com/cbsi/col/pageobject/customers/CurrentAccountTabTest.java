@@ -19,6 +19,7 @@ import com.cbsi.col.pageobject.documents.DocumentsPage.DocumentTabs;
 import com.cbsi.col.pageobject.documents.ProposalPage;
 import com.cbsi.col.test.foundation.ColBaseTest;
 import com.cbsi.col.test.foundation.DocumentsBasePageTest;
+import com.cbsi.col.test.util.Constants;
 
 public class CurrentAccountTabTest extends DocumentsBasePageTest{
 
@@ -44,8 +45,9 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 	@Test
 	public void deleteQuoteFromAccountView(){
 
-		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);;
-		if(!documentsPage.hasQuote(1)){
+		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.QUOTES);
+				
+		if(documentsPage.getTableAsMaps().size() <=0){
 			homePage = currentAccount.exitDocumentsPage().goToHomePage();
 			navigateToCustomersPage();
 			createQuote();
@@ -53,12 +55,10 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 		}
 		documentsPage = documentsPage.switchToTab(DocumentTabs.QUOTES);
 		
-		Long quoteNumber = null;
-		
 		List<LinkedHashMap<String, String>> quoteList = documentsPage.getTableAsMaps();
 		for(LinkedHashMap<String, String> m: quoteList){
-			if (m.get("status").contains(DocStatus.Open.toString())){
-				quoteNumber = Long.parseLong(m.get("doc#"));
+			if (m.get(Constants.STATUS).contains(DocStatus.Open.toString())){
+				quoteNumber = Long.parseLong(m.get(Constants.DOCNUMBER));
 				break;
 			}
 		}

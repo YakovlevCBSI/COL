@@ -109,7 +109,7 @@ public class HomePage extends ColBasePage{
 	
 	public DocumentsPage goToDocumentsPage(){
 		Documents.click();
-		waitForQuckLoad();
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	

@@ -146,6 +146,8 @@
 		<groupId>com.microsoft.sqlserver</groupId>
 		<artifactId>sqljdbc4</artifactId>
 		<version>4.0</version>
+	    <scope>system</scope>
+	    <systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>    
 	</dependency>
   </dependencies>
   

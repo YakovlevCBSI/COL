@@ -111,7 +111,7 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void UploadFullFilAutomaticSftpFromScratch(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.setFileAndUserInfoAll(sURL, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(sURL, USERNAME, PASSWORD).setFullFile();
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();

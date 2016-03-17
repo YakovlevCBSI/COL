@@ -43,6 +43,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.fcat.database.mongo.Product;
+import com.cbsi.fcat.database.sql.Catalog;
 import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
@@ -54,8 +56,6 @@ import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
 import com.cbsi.fcat.pageobject.others.EmbedPage;
 import com.cbsi.fcat.util.GlobalVar;
-import com.cbsi.tests.FCatMongoObject.Product;
-import com.cbsi.tests.FCatSqlObject.Catalog;
 
 public class BaseTest {
 	public WebDriver driver;

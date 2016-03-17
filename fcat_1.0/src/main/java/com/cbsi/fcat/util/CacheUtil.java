@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.cbsi.tests.FCatMongoObject.MongoItem;
+import com.cbsi.fcat.database.mongo.MongoItem;
 
 public class CacheUtil {
 	private String mf;

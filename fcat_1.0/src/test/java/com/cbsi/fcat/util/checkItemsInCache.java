@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cbsi.fcat.database.mongo.ItemDao;
+import com.cbsi.fcat.database.mongo.MongoItem;
 import com.cbsi.fcat.util.CacheUtil;
 import com.cbsi.fcat.util.CacheUtil.Env;
-import com.cbsi.tests.FCatMongoObject.ItemDao;
-import com.cbsi.tests.FCatMongoObject.MongoItem;
 
 public class checkItemsInCache {
 
@@ -21,7 +21,7 @@ public class checkItemsInCache {
 	public CacheUtil cacheUtil;
 	@Before
 	public void startUp(){
-		 cacheUtil = new CacheUtil(Env.STAGE);
+		 cacheUtil = new CacheUtil(Env.PROD);
 	}
 	
 	@Test
@@ -65,6 +65,11 @@ public class checkItemsInCache {
 		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf2, mfPn2).get(MongoItem.MASTERID));
 		Assert.assertNotEquals("null", cacheUtil.getCacheByMfMfpn(mf3, mfPn3).get(MongoItem.MASTERID));
 
+	}
+	
+	@Test
+	public void checkMasterDeletedIsNotLoaded(){
+		cacheUtil.getCacheByMfMfpn("ATI", "1024F149").get(MongoItem.MASTERID);
 	}
 	
 	@Test

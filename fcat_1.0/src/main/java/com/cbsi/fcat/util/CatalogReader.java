@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cbsi.fcat.database.mongo.Product;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
-import com.cbsi.tests.FCatMongoObject.Product;
 
 public class CatalogReader {
 

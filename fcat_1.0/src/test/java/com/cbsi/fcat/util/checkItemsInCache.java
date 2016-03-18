@@ -21,7 +21,7 @@ public class checkItemsInCache {
 	public CacheUtil cacheUtil;
 	@Before
 	public void startUp(){
-		 cacheUtil = new CacheUtil(Env.PROD);
+		 cacheUtil = new CacheUtil(Env.STAGE);
 	}
 	
 	@Test

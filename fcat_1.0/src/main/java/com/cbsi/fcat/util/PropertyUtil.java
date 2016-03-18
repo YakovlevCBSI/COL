@@ -7,17 +7,20 @@ import java.util.Properties;
 
 public class PropertyUtil {
 	
+//	public final static String filePath = "src/main/resources/database_prod.properties";
+	public final static String filePath = "src/main/resources/database.properties";
+
 	private static Properties prop;
 	private static InputStream input;
-	
+
 	public static void openInputStream(){
 		prop = new Properties();
 		
 		input = null;
 		
 		try{
-			input = new FileInputStream("src/main/resources/mongo.properties");
-//			input = new FileInputStream("src/main/resources/mongo.properties");
+			input = new FileInputStream(filePath);
+//			input = new FileInputStream();
 
 			prop.load(input);
 

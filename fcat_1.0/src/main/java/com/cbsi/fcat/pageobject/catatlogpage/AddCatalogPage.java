@@ -245,6 +245,7 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage clickDoNotUseSchedule(){
+		forceWait(500);
 		DoNotUseSchedule.click();
 		return this;
 	}

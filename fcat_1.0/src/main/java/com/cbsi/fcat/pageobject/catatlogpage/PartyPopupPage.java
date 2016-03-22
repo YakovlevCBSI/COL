@@ -1,7 +1,9 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -111,6 +113,20 @@ public class PartyPopupPage extends BasePage{
 			textList.add(e.getText());
 		}
 		return textList;
+	}
+	
+	public List<HashMap<String, String>> getSearchResultAsMap(){
+		List<HashMap<String, String>> partyMaps = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> partyMap = new HashMap<String, String>();
+		
+		for(WebElement partyName: getSearchResult()){
+			partyMap.put("partyname", partyName.getText());
+			partyMap.put("partycode", partyName.findElement(By.xpath("../td[@class='party-code-column']")).getText());
+		}
+		
+		partyMaps.add(partyMap);
+		
+		return partyMaps;
 	}
 	
 	public CatalogsPage pickFromResult(){

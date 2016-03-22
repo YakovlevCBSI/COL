@@ -1,5 +1,7 @@
 package com.cbsi.fcat.pageobject.sidebar;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +15,13 @@ public class PartiesPage extends BasePage{
 	public PartiesPage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		waitForTextToBeVisible("List all Partys", "span");
+		if(getCurrentURL().toLowerCase().contains("/partys?")){
+			waitForTextToBeVisible("List all Partys", "span");
+		}
+		else{
+			waitForTextToBeVisible("Show Party", "div span");
+		}
+		
 	}
 
 	@FindBy(css="a[href*='partys?form']")
@@ -37,30 +45,26 @@ public class PartiesPage extends BasePage{
 	
 	public static final String showPartyXPath = "td[@class='utilbox']/a[@title='Show Party']";
 	public static final String updatePartyXPath = "td[@class='utilbox']/a[@title='Update Party']";
-	public static final String deletePartyXPath = "td[@class='utilbox']/form/input[@value='DELETE']";
+	public static final String deletePartyXPath = "td[@class='utilbox'][3]/form/input[2]";
 	
-	public PartiesPage clickFirstPage(){
+	public void clickFirstPage(){
 		FirstPage.click();
 		forceWait(500);
-		return PageFactory.initElements(driver, PartiesPage.class);
 	}
 	
-	public PartiesPage clickPreviousPage(){
+	public void clickPreviousPage(){
 		PreviousPage.click();
 		forceWait(500);
-		return PageFactory.initElements(driver, PartiesPage.class);
 	}
 	
-	public PartiesPage clickNextPage(){
+	public void clickNextPage(){
 		NextPage.click();
 		forceWait(500);
-		return PageFactory.initElements(driver, PartiesPage.class);
 	}
 	
-	public PartiesPage clickLastPage(){
+	public void clickLastPage(){
 		LastPage.click();
 		forceWait(500);
-		return PageFactory.initElements(driver, PartiesPage.class);
 	}
 	
 	public UpdatePartyPage clickCreateNewParty(){
@@ -80,7 +84,9 @@ public class PartiesPage extends BasePage{
 	}
 	
 	public PartiesPage deleteParty(String partyName){
+		System.out.println("delete partyName: " + partyName);
 		findPartyRowByName(partyName).findElement(By.xpath(deletePartyXPath)).click();
+
 		acceptAlert();
 		
 		return PageFactory.initElements(driver, PartiesPage.class);
@@ -88,27 +94,26 @@ public class PartiesPage extends BasePage{
 	}
 	
 	public static boolean isOnLastPage = false;
-	
 	public WebElement findPartyRowByName(String partyName){
-		WebElement tr = null;
-		for(WebElement td: Table.findElements(By.xpath("td[1])"))){
+		
+		for(WebElement td: Table.findElements(By.xpath("tbody/tr/td[1]"))){
+			System.out.println("td.getText: " + td.getText());
 			if(td.getText().equalsIgnoreCase(partyName)){
-				tr =  td.findElement(By.xpath(".."));
-				return tr;
+				System.out.println("found text: " + td.getText());
+				return td.findElement(By.xpath(".."));
 			}
 		}
 		
-		if(tr == null){
-			if(!isOnLastPage){
+		forceWait(500);		
+		if(!isOnLastPage){
 				clickLastPage();
 				isOnLastPage = true;
-			}else{
-				clickPreviousPage();
-			}
-			findPartyRowByName(partyName);
+		}else{
+			clickPreviousPage();
 		}
 		
-		return null;
+		forceWait(500);
+		return findPartyRowByName(partyName);
 	}
 	
 	//---------------- show party page elements -------------------//
@@ -181,14 +186,15 @@ public class PartiesPage extends BasePage{
 		public PartiesPage clickSave(){
 			Save.click();
 			waitForTextToBeVisible("Show Party", "span");
+			forceWait(500);
 			
-			return clickListAllPartys();
-		}
-		
-		public PartiesPage clickListAllPartys(){
-			ListAllPartys.click();
 			return PageFactory.initElements(driver, PartiesPage.class);
 		}
+		
+//		public PartiesPage clickListAllPartys(){
+//			ListAllPartys.click();
+//			return PageFactory.initElements(driver, PartiesPage.class);
+//		}
 		
 	}
 }

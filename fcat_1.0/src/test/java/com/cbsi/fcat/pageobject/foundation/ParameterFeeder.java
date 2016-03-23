@@ -6,11 +6,12 @@ import java.util.Collection;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.cbsi.fcat.util.GlobalVar;
+import com.cbsi.fcat.util.GlobalVar.Env;
 import com.cbsi.fcat.util.ReadFile;
 
 
 public class ParameterFeeder {
-	public static boolean isDevTest = true;
+	public static boolean isDevTest = false;
 //	public static boolean isProdTest = false;
 //	private boolean isDevTest = true;
 	public static boolean isProdTest = false;
@@ -49,22 +50,22 @@ public class ParameterFeeder {
 		 return false;
 	}
 	
-	public Object[][] configureTestParams(String whichURLArray){
+	public Object[][] configureTestParams(Env env){
 		String[] URLs = null;
 		
-		if(whichURLArray.equals("all")){
+		if(env == Env.ALL){
 			URLs= getAllURL();
 		}
-		else if(whichURLArray.equals("embed")){
+		else if(env == Env.EMBED){
 			URLs = getEmbedURL();
 		}
-		else if(whichURLArray.equals("form")){
+		else if(env == Env.FORM){
 			URLs = getFormURL();
 		}
-		else if(whichURLArray.equals("stage")){
+		else if(env == Env.STAGE){
 			URLs = getStageURL();
 		}
-		else if(whichURLArray.equals("allAndSecure")){
+		else if(env == Env.ALLSECURE){
 			URLs = doubleArrayUrlWithHttps(getAllURL());
 		}
 		
@@ -190,6 +191,13 @@ public class ParameterFeeder {
 					GlobalVar.devServer
 			};
 			URLFinal = URLsDev;
+		}
+		else if (isProdTest){
+			String[] URLsProd= {
+					GlobalVar.prodServer
+			};
+			URLFinal = URLsProd;
+
 		}
 		
 		return URLFinal;

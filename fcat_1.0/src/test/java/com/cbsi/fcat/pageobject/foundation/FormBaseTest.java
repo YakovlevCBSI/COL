@@ -17,7 +17,7 @@ public class FormBaseTest extends BaseTest{
 	@Parameterized.Parameters
 	public static Collection testParam(){
 		return Arrays.asList(
-				new ParameterFeeder().configureTestParams("form")
+				new ParameterFeeder().configureTestParams(Env.FORM)
 				);
 	}
 }

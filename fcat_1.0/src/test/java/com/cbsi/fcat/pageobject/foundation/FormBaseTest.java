@@ -6,6 +6,8 @@ import java.util.Collection;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import com.cbsi.fcat.util.GlobalVar.Env;
+
 @RunWith(Parameterized.class)
 public class FormBaseTest extends BaseTest{
 

@@ -227,7 +227,7 @@ public class ParameterFeeder {
 	}
 	
 	public static void pritnParams(){
-		Object[][] objects =  new ParameterFeeder().configureTestParams("allAndSecure");
+		Object[][] objects =  new ParameterFeeder().configureTestParams(Env.ALLSECURE);
 		int count=0;
 		for(int i= 0; i< objects.length; i++){
 //			for (int j=0; j<objects[i].length; j++){

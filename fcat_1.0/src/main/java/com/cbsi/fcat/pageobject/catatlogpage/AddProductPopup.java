@@ -69,12 +69,17 @@ public class AddProductPopup extends BasePage{
 	public ProductsCatalogPage clickSave(){
 		Save.click();
 		forceWait(1000);
+		
+		/**
+		 * Javascript alert is removed from UI.
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         if(alert.getText().contains("be mapped")){
         	throw new NullPointerException("Unable to add product: " + alert.getText());
         }
         alert.accept();
+        */
+		
         forceWait(1000); //change this to wait for splash screen.
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
 	}

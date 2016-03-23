@@ -38,6 +38,12 @@ public class AddProductPopup extends BasePage{
 	
 	@FindBy(css="table.fcat-tbl tbody tr td input[name='skuId']")
 	private WebElement cnetSkuId;
+		
+	@FindBy(linkText="Save")
+	private WebElement Save;
+	
+	@FindBy(css="div#errorMsg")
+	private WebElement ErrorMessage;
 	
 	private WebElement inventory;
 	private WebElement price;
@@ -63,9 +69,6 @@ public class AddProductPopup extends BasePage{
 		cnetSkuId.sendKeys(text);
 	}
 	
-	@FindBy(linkText="Save")
-	private WebElement Save;
-	
 	public ProductsCatalogPage clickSave(){
 		Save.click();
 		forceWait(1000);
@@ -87,11 +90,14 @@ public class AddProductPopup extends BasePage{
 	public String clickSaveFail(){
 		Save.click();
 		forceWait(1000);
+		/**
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertText=  alert.getText();
         alert.accept();
-        return alertText;
+        */
+		
+		return ErrorMessage.getText();
 	}
 	
 	@FindBy(linkText="Cancel")

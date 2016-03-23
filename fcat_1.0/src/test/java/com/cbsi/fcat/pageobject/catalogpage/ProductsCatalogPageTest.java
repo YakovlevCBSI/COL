@@ -3,15 +3,9 @@ package com.cbsi.fcat.pageobject.catalogpage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.fcat.pageobject.catatlogpage.AddProductPopup;
@@ -20,10 +14,10 @@ import com.cbsi.fcat.pageobject.catatlogpage.EditProductPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MapProductsDialog;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage.ItemIds;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
 import com.cbsi.fcat.util.ElementConstants;
 
-public class ProductsCatalogPageTest extends AllBaseTest{
+public class ProductsCatalogPageTest extends EmbedBaseTest{
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();

@@ -17,10 +17,10 @@ import com.cbsi.fcat.pageobject.catatlogpage.EditProductPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MapProductsDialog;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage.ItemIds;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
 import com.cbsi.fcat.util.ElementConstants;
 
-public class ProductsCatalogPage_ext_Test extends AllBaseTest{
+public class ProductsCatalogPage_ext_Test extends EmbedBaseTest{
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();

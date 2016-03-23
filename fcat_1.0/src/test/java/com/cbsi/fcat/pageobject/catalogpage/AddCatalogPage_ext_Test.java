@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -26,11 +24,11 @@ import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.UploadStatus;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
 import com.cbsi.fcat.util.FtpUtil;
 import com.cbsi.fcat.util.GlobalVar;
 
-public class AddCatalogPage_ext_Test extends AllBaseTest{
+public class AddCatalogPage_ext_Test extends EmbedBaseTest{
 	private boolean needsCleanUp=true;
 	
 	public AddCatalogPage_ext_Test(String URL, String browser) {
@@ -258,7 +256,7 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 		String[] filenames = filename.split("_");
 		
 		Date date = new Date();
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 
@@ -281,9 +279,12 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 	}
 	
 	public void updateFtpFileNames(){
+		updateFtpFileNames("download/fcat/qa/diff");
+	}	
+	public void updateFtpFileNames(String path){
 		FtpUtil ftpUtil = new FtpUtil();
 		ftpUtil.login();
-		List<String> list = ftpUtil.listFilesInDir("download/fcat/qa/diff");
+		List<String> list = ftpUtil.listFilesInDir(path);
 		
 		lastFilename = getTodaysFileName(list.get(list.size()-1));
 		
@@ -292,5 +293,5 @@ public class AddCatalogPage_ext_Test extends AllBaseTest{
 			ftpUtil.renameFileNameInCurDir(s,getTodaysFileName(s));
 		}
 		ftpUtil.quit();
-	}	
+	}
 }

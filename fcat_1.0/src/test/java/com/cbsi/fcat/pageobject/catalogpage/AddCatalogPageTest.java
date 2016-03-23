@@ -1,38 +1,27 @@
 package com.cbsi.fcat.pageobject.catalogpage;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.InvocationTargetException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import net.jcip.annotations.NotThreadSafe;
-
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Ignore;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
-import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage.CNetFields;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
 
-public class AddCatalogPageTest extends AllBaseTest{
+public class AddCatalogPageTest extends EmbedBaseTest{
 
 	public AddCatalogPageTest(String URL, String browser) {
 		super(URL, browser);

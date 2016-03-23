@@ -99,6 +99,7 @@ public class PartiesPage extends BasePage{
 		for(WebElement td: Table.findElements(By.xpath("tbody/tr/td[1]"))){
 			System.out.println("td.getText: " + td.getText());
 			if(td.getText().equalsIgnoreCase(partyName)){
+				isOnLastPage = false;
 				System.out.println("found text: " + td.getText());
 				return td.findElement(By.xpath(".."));
 			}

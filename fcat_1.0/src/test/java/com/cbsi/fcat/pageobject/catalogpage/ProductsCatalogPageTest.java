@@ -40,6 +40,7 @@ public class ProductsCatalogPageTest extends AllBaseTest{
 	
 	@Test
 	public void TableRenderIssue_CCSQ1246(){
+		
 		CatalogsPage catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
 		ProductsCatalogPage productsCatalogPage = catalogsPage.goToCatalogWithSomeNumberOfProducts(30, 1500);
 		productsCatalogPage.clickGoRight();
@@ -100,9 +101,9 @@ public class ProductsCatalogPageTest extends AllBaseTest{
 		addProductPopup.setId("");
 		addProductPopup.setMf("blah");
 		addProductPopup.setMfpn("blah");
-		
-		exception.expect(NullPointerException.class);
-		addProductPopup.clickSave();
+
+		String errorMessage = addProductPopup.clickSaveFail();
+		assertEquals("Columns 'Product ID' should always be mapped.", errorMessage);
 	}
 	
 	@Test
@@ -112,11 +113,11 @@ public class ProductsCatalogPageTest extends AllBaseTest{
 		addProductPopup.setId("blah");
 		addProductPopup.setMf("");
 		addProductPopup.setMfpn("blah");
-		
-		exception.expect(NullPointerException.class);
-		addProductPopup.clickSave();
+
+		String errorMessage = addProductPopup.clickSaveFail();
+		assertEquals("Columns 'Manufacturer Name' should always be mapped.", errorMessage);
 	}
-	
+		
 	@Test
 	public void addProductWithNoMfpnValue(){
 		productsCatalogPage = navigateToProductsCatalogPage();
@@ -125,8 +126,8 @@ public class ProductsCatalogPageTest extends AllBaseTest{
 		addProductPopup.setMf(getRandomNumber());
 		addProductPopup.setMfpn("");
 		
-		exception.expect(NullPointerException.class);
-		addProductPopup.clickSave();
+		String errorMessage = addProductPopup.clickSaveFail();
+		assertEquals("Columns 'Manufacturer Part Number' should always be mapped.", errorMessage);
 	}
 	
 	@Test

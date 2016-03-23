@@ -110,6 +110,11 @@ public class AddressPage extends ColBasePage{
 	
 	public <T>T clickSave(Class clazz){
 		Save.click();
+		
+		if(isAlertPresent()){
+			acceptAlert();
+		}
+		
 		return (T)PageFactory.initElements(driver, clazz);
 	}
 }

@@ -125,7 +125,7 @@ public class UploadPopupPage extends BasePage{
 	private WebElement NextAfterUpload;
 	public BasePage clickNextAfterUpload(boolean noMappingDefined){
 		//customWait(30);
-		waitForElementToBeVisible(By.cssSelector("div#backButtonContainer a#progressNextButton"));
+		waitForQuickLoad(30);		
 		NextAfterUpload.click();
 		if(noMappingDefined){
 			return PageFactory.initElements(driver, MappingPage.class);		

@@ -9,6 +9,7 @@ import java.util.Date;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriverException;
 
@@ -103,9 +104,10 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 			uploadPopupPage.uploadLocalFileFromFinder("big").clickNext();
 		}
 		
-		if(!uploadPopupPage.getProgress().contains("100%")){
-			throw new WebDriverException("failed at file upload...");
-		}
+		uploadPopupPage.waitForProgress();
+//		if(!uploadPopupPage.getProgress().contains("100%")){
+//			throw new WebDriverException("failed at file upload...");
+//		}
 		
 		return (DetailsPage)uploadPopupPage.clickNextAfterUpload(false);
 	

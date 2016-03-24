@@ -235,26 +235,31 @@ public class UploadPopupPage extends BasePage{
 		XML		
 	}
 
-	public String getProgress(){
-		int count =0;
-		String status= "";
-		long startTime= System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < 40000){
-			if (!status.equals(progress.getText())){
-				status = progress.getText();
-				logger.info(status);
-				if(status.contains("100")) break;
-			}
-			count++;
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return progress.getText();
+//	public String getProgress(){
+//		int count =0;
+//		String status= "";
+//		long startTime= System.currentTimeMillis();
+//		while(System.currentTimeMillis() - startTime < 40000){
+//			if (!status.equals(progress.getText())){
+//				status = progress.getText();
+//				logger.info(status);
+//				if(status.contains("100")) break;
+//			}
+//			count++;
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return progress.getText();
+//	}
+	
+	public void waitForProgress(){
+		waitForQuickLoad(30);
+
 	}
 	
 	public UploadPopupPage uploadLocalFileFromFinder() throws InterruptedException{

@@ -145,8 +145,7 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
-	public static int tdAciton = isProdTesting()?6:7; //DIRTIEST WORKAROUND...
-//	public static int tdAciton = 7; 
+	public static int tdAciton = 7; 
 
 	public DetailsPage clickDetails(){
 		WebElement Info = myCatalog.findElement(By.xpath("../../td["+tdAciton+"]/div/a[1]"));
@@ -402,17 +401,5 @@ public class CatalogsPage extends BasePage{
 	
 	public String getMarketByCatalog(String catalog){
 		return myCatalog.findElement(By.xpath("../../td[@class='market-column']/span")).getText();
-	}
-
-	/**
-	 * DELETE THIS
-	 */
-	  	public static boolean isProdTesting(){
-		String system="";
-		if((system = System.getProperty("environment")) != null){
-			if(system.equals("prod")) return true;
-		}
-		 return false;
-	}
-	 
+	}	 
 }

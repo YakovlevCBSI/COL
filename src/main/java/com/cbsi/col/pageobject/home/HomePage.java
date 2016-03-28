@@ -98,11 +98,13 @@ public class HomePage extends ColBasePage{
 	}
 
 	public ProductsPage goToProductsPage(){
+		forceWait(1000);
 		Products.click();
 		return PageFactory.initElements(driver, ProductsPage.class);
 	}
 	
 	public ServicesPage goToServicesPage(){
+		forceWait(1000);
 		Services.click();
 		return PageFactory.initElements(driver, ServicesPage.class);
 	}
@@ -115,6 +117,7 @@ public class HomePage extends ColBasePage{
 	}
 	
 	public SuppliersPage goToSuppliersPage(){
+		forceWait(1000);
 		Suppliers.click();
 		return PageFactory.initElements(driver, SuppliersPage.class);
 	}

@@ -71,8 +71,8 @@ public class CurrentAccountTabTest extends DocumentsBasePageTest{
 	public void deleteProposalFromAccountview(){
 		currentAccount = ((ProposalPage) currentAccount.clickCreateProposal().setContact()).clickSave().goToAccountsPage().goToRecentAccountsTab().clickViewCustomer(companyNameCommon);
 		DocumentsPage documentsPage = currentAccount.getDocumentsPage().switchToTab(DocumentTabs.PROPOSALS);
-			
-		documentsPage.deleteDocumentByCompanyName("Qa");
+	    documentsPage.deleteDocument(Long.parseLong((documentsPage.getTableAsMaps().get(0).get(Constants.DOCNUMBER))));
+	    
 	}
 	
 	@Test

@@ -224,6 +224,20 @@ public class DocumentsPage extends ColBasePage{
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
+	public DocumentsPage deleteDocument(long docNumber){
+		findDataRowByName(docNumber, false).findElement(By.xpath("../../td/input[contains(@id, 'delete')]")).click();
+		logger.info("deleting " + docNumber);	
+
+		waitForTextToBeVisible("Are you sure","p");
+		WebElement del = driver.findElement(By.cssSelector("button[id^='delete-']"));
+
+		del.click();
+	
+		forceWait(700);
+		
+		return PageFactory.initElements(driver, DocumentsPage.class);
+	}
+	
 	private WebElement ViewQuote;
 	
 	static int currentPage=0;

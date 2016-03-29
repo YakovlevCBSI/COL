@@ -312,6 +312,25 @@ public class AccountsPage extends ColBasePage{
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 	
+	@FindBy(css="select#owner_id")
+	private WebElement OwnerId;
+	
+	public <T>T SetFilterByUser(String username){
+		OwnerId.click();
+		forceWait(500);
+
+		List<WebElement> users = OwnerId.findElements(By.xpath("option"));
+		
+		for(WebElement user: users){
+			System.out.println(user.getText() + " :"  + username);
+			if(user.getText().equalsIgnoreCase(username)){
+				user.click();
+				break;
+			}
+		}
+		return (T)PageFactory.initElements(driver, this.getClass());
+	}
+	
 	@FindBy(css="tfoot tr td")
 	private WebElement Found;
 	

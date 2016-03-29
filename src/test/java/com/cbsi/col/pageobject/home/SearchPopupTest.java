@@ -66,11 +66,11 @@ public class SearchPopupTest extends ColBaseTest{
 	public void searchAccountEmailStartsWith(){
 		String keyword = "";
 	
-		AllAccountsTab allAccountsPage = homePage.goToAccountsPage().goToAllAcountsTab();
+		AllAccountsTab allAccountsPage = (AllAccountsTab) homePage.goToAccountsPage().goToAllAcountsTab().SetFilterByUser("Account Managers (All)");
 		
 		List<LinkedHashMap<String, String>> accountMaps = allAccountsPage.getTableAsMaps();
 		for(LinkedHashMap<String, String> accountMap: accountMaps){
-			if(!accountMap.get("email").isEmpty()){
+			if(!accountMap.get("email").isEmpty() && accountMap.get("email").contains("@")){
 				keyword = accountMap.get("email");
 				break;
 			}

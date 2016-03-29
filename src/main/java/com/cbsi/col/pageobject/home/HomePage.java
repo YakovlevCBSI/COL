@@ -92,37 +92,39 @@ public class HomePage extends ColBasePage{
 	private WebElement RecentDocDropdown;
 	
 	public  AccountsPage goToAccountsPage(){
-		forceWait(500); //wait for message alert to load.
+		forceWait(500);
+		scrollToView(Accounts);//wait for message alert to load.
 		Accounts.click();
 		return PageFactory.initElements(driver, AccountsPage.class);
 	}
 
 	public ProductsPage goToProductsPage(){
-		forceWait(1000);
+		scrollToView(Products);
 		Products.click();
 		return PageFactory.initElements(driver, ProductsPage.class);
 	}
 	
 	public ServicesPage goToServicesPage(){
-		forceWait(1000);
+		scrollToView(Services);
 		Services.click();
 		return PageFactory.initElements(driver, ServicesPage.class);
 	}
 	
 	public DocumentsPage goToDocumentsPage(){
-		forceWait(1000);
+		scrollToView(Documents);
 		Documents.click();
 		waitForQuickLoad();
 		return PageFactory.initElements(driver, DocumentsPage.class);
 	}
 	
 	public SuppliersPage goToSuppliersPage(){
-		forceWait(1000);
+		scrollToView(Suppliers);
 		Suppliers.click();
 		return PageFactory.initElements(driver, SuppliersPage.class);
 	}
 	
 	public PurchaseOrdersTab goToPurchaseOrdersPage(){
+		scrollToView(PurhcaseOrders);
 		PurhcaseOrders.click();
 		return PageFactory.initElements(driver, PurchaseOrdersTab.class);
 	}

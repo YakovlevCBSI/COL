@@ -309,6 +309,7 @@ public class ColBasePage {
 		Home = refreshStaleElement(By.cssSelector("a#tab-home span"));
 		Home.click();	
 		try{
+			forceWait(500);
 			logger.debug("Home is enabled");	
 			return PageFactory.initElements(driver, HomePage.class);
 		}catch(Exception e){
@@ -544,12 +545,14 @@ public class ColBasePage {
 
 				for(int i=0; i< headerElements.size(); i++){	
 					if(Arrays.asList(skipColumnNums).contains(i)){	//skip data that is explicitly set to exclude
-//						logger.debug("skipping column " + i);
+						logger.debug("skipping column " + i);
 						continue;
 					}
 					String data =null;
 					try{
+						logger.debug(""+(i+getNthTdElement));
 						data = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getText();
+						System.out.println("DATA: " + data);
 						if(data.isEmpty()){
 							String id = trs.get(j).findElement(By.xpath("td[" + (i+getNthTdElement) + "]")).getAttribute("id");
 							if(id.contains("quantity") || id.contains("customerPrice")){

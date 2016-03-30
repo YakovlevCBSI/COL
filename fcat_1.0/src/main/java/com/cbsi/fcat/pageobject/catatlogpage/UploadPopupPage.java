@@ -174,6 +174,10 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
+	public boolean isFullFile(){
+		return FullFile.isSelected();
+	}
+	
 	@FindBy(css="lb_ChangeImportSettings")
 	private WebElement SetUpColumnMapping;
 	public void clickSetUpColumnMapping(){

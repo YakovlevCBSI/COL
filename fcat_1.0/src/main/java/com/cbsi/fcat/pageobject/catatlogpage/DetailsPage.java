@@ -26,7 +26,8 @@ public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
-		waitForTextToBeVisible(20, "Processing Queue", "div");
+		waitForTextToBeVisible(20, "Processing Queue", "div.processing-queue-achor"); //look for a specific path, in case there is a large workflow.
+
 		forceWait(500);
 	}
 	

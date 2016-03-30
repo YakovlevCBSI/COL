@@ -318,6 +318,8 @@ public class ColBasePage {
 				driver.findElement(By.cssSelector("button#navigate-away-confirm-btn")).click();
 			}
 		}
+		
+		waitForQuickLoad();
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	

@@ -23,7 +23,7 @@ public class HomePage extends ColBasePage{
 		super(driver);
 //		waitForPageToLoad(By.cssSelector("#tab-home"));
 //		waitForTextToBeVisible("My Channel", "ul li.active a");
-		waitForElementToBeVisible(By.cssSelector("li[class*='tab-bar'] 	a[id*='tab-home']"));
+		waitForElementToBeVisible(By.cssSelector("li[class*='tab-bar'] 	a[id*='tab-home'][class='on']"));
 	}
 	
 	@CacheLookup
@@ -99,20 +99,16 @@ public class HomePage extends ColBasePage{
 	}
 
 	public ProductsPage goToProductsPage(){
-		scrollToView(Products);
 		Products.click();
 		return PageFactory.initElements(driver, ProductsPage.class);
 	}
 	
 	public ServicesPage goToServicesPage(){
-		scrollToView(Services);
 		Services.click();
 		return PageFactory.initElements(driver, ServicesPage.class);
 	}
 	
 	public DocumentsPage goToDocumentsPage(){
-		scrollToView(Documents);
-		waitForQuickLoad();
 		Documents.click();
 		waitForQuickLoad();
 		return PageFactory.initElements(driver, DocumentsPage.class);

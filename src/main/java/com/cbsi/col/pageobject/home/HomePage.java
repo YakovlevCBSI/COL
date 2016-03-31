@@ -112,6 +112,7 @@ public class HomePage extends ColBasePage{
 	
 	public DocumentsPage goToDocumentsPage(){
 		scrollToView(Documents);
+		waitForQuickLoad();
 		Documents.click();
 		waitForQuickLoad();
 		return PageFactory.initElements(driver, DocumentsPage.class);

@@ -173,11 +173,9 @@ public class SalesOrderPageTest extends DocumentsBasePageTest{
 	
 	@Test
 	public void showSerialShippingIsDisplayed(){
-		documentPage = customersPage.goToDocumentsPage().switchToTab(DocumentTabs.QUOTES).filterByStatus(Status.QUOTES_OPEN);
-		
-		super.convertToSalesOrderOnly();
-		
-		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
+		SalesOrderPage orderPage = goToFirstDocument(DocumentTabs.ORDERS, DocStatus.Submitted, SalesOrderPage.class);
+				
+//		SalesOrderPage orderPage= documentPage.goToOrder(orderNumber);
 		orderPage = (SalesOrderPage) orderPage.clickShowSerialShipping();
 		
 		assertTrue(orderPage.isShipTrackTableDisplayed());

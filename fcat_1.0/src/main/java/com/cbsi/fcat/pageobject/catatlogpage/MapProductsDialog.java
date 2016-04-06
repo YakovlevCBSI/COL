@@ -22,7 +22,7 @@ public class MapProductsDialog extends BasePage{
 		waitForPageToLoad(By.cssSelector("div#mappingDialog div.content.catalog"));
 //		forceWait(3000);
 		
-		resizeMapDialog();
+//		resizeMapDialog();  This issue is resolved.
 		// TODO Auto-generated constructor stub
 	}
 	

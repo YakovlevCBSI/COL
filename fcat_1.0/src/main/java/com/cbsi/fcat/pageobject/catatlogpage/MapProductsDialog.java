@@ -20,10 +20,9 @@ public class MapProductsDialog extends BasePage{
 	public MapProductsDialog(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad(By.cssSelector("div#mappingDialog div.content.catalog"));
-//		forceWait(3000);
 		
-//		resizeMapDialog();  This issue is resolved.
-		// TODO Auto-generated constructor stub
+		// Firefox loads slow.  Wait for the navi button that might be cut off until visible.
+		waitForPageToLoad(By.cssSelector("div#mappingDialog div div div.nav-bar.actions a.nav-button"));
 	}
 	
 	public void resizeMapDialog(){

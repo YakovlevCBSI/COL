@@ -45,6 +45,10 @@ public class AddProductPopup extends BasePage{
 	@FindBy(css="div#errorMsg")
 	private WebElement ErrorMessage;
 	
+	@FindBy(css="div#addProductConfirm a")
+	private WebElement OK;
+	
+	
 	private WebElement inventory;
 	private WebElement price;
 	private WebElement productUrl;
@@ -83,8 +87,15 @@ public class AddProductPopup extends BasePage{
         alert.accept();
         */
 		
-        forceWait(1000); //change this to wait for splash screen.
+//        forceWait(1000); //change this to wait for splash screen.
+        confirmAddProductDialog();
+        
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	}
+	
+	public void confirmAddProductDialog(){
+		waitForPageToLoad(By.cssSelector("div.overlay-header.dialog"));
+		OK.click();		
 	}
 	
 	public String clickSaveFail(){

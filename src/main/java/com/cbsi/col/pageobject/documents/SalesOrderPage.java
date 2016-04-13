@@ -156,15 +156,16 @@ public class SalesOrderPage extends DocumentsBasePage{
 		public CreatePoPopup(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
-			switchFrame(By.cssSelector("iframe"));
-			waitForTextToBeVisible("Create POs", "h3");
+			waitForTextToBeVisible("Create PO", "h3");
+//			switchFrame(By.cssSelector("iframe"));
+			waitForQuickLoad();
 		}
-		@FindBy(css="span.btn-save")
+		@FindBy(css="button#save-createpo-btn")
 		private WebElement CreatePos;
 		
 		public PurchaseOrdersTab clickCreatePos(){
+//			switchBack();
 			CreatePos.click();
-			switchBack();
 			return PageFactory.initElements(driver, PurchaseOrdersTab.class);
 		}
 	}

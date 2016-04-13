@@ -77,8 +77,9 @@ public class QuotePage extends DocumentsBasePage{
 			super(driver);
 			// TODO Auto-generated constructor stub
 			waitForElementToBeVisible(By.cssSelector("iframe"));
-			switchFrame();
 			waitForTextToBeVisible("Copy to New Quote", "h3");
+			waitForQuickLoad();
+			switchFrame();
 		}
 		
 		@FindBy(css="input[name='refresh']")

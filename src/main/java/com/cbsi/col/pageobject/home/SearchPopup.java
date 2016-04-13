@@ -32,7 +32,7 @@ public class SearchPopup extends ColBasePage{
 		return this;
 	}
 //	@FindBy(css="input.decor-searchbutton")
-	@FindBy(css="div[class^='span'] input[name='search_button']")
+	@FindBy(css="div.dropdown input[name='search_button']")
 	private WebElement Search;
 	
 	@FindBy(css="input[value='contains']")

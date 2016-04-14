@@ -3,6 +3,10 @@ package com.cbsi.fcat.util;
 public class GlobalVar {
 	public static final String JENKINS = "jenkins";
 	public static boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
+	
+	public static boolean isDev = false;
+	public static boolean isProd = false;
+	
 //	public static boolean isGrid = true;
 	
 	public static String BFPId = "";

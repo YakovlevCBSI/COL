@@ -135,6 +135,11 @@ public class UploadPopupPage extends BasePage{
 		}
 	}
 	
+	public String getMessage(){
+		waitForElementToBeVisible(By.cssSelector("div.upload-result"));
+		return driver.findElement(By.cssSelector("div.upload-result")).getText();
+	}
+	
 	@FindBy(css="div.upload-result")
 	private WebElement uploadResult;
 	

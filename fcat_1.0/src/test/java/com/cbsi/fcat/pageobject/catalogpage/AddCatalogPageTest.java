@@ -1,9 +1,9 @@
 package com.cbsi.fcat.pageobject.catalogpage;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -54,13 +54,32 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 	private String xlsxUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
+	
+	public static final String ConnectionError = "Cannot connect to the specified ftp server.";
+	public static final String UrlError = "Invalid File URL.";
+	
+	
 
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
-		addCatalogPage.fillInName().clickGetFile();
-		try{ } catch(RuntimeException e){}
+		UploadPopupPage uploadPage = addCatalogPage.fillInName().clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPage.getMessage());
+		
+		assertTrue(hasNoError());
+	}
+	
+	@Test
+	public void automaticUploadInvalidFilePath(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(URL+"a", USERNAME, PASSWORD);
+		UploadPopupPage uploadPage = addCatalogPage.fillInName().clickGetFile();
+		
+		//GetMessage
+		assertEquals(UrlError, uploadPage.getMessage());
 		
 		assertTrue(hasNoError());
 	}
@@ -70,7 +89,10 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
 		addCatalogPage.setFileAndUserInfoAll(URL, "bad", PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.clickGetFile();
+		UploadPopupPage uploadPage = uploadPopupPage.clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPage.getMessage());
 		
 		assertTrue(hasNoError());		
 	}
@@ -81,6 +103,9 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, "bad");
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPopupPage.getMessage());
 		
 		assertTrue(hasNoError());
 	}
@@ -114,6 +139,22 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void UploadFullFileOptionStaysChecked() throws InterruptedException{
+		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		detailsPage.FileUploadIsDone();
+		
+		UploadPopupPage uploadPopup = detailsPage.clickUploadFile();
+		assertTrue(uploadPopup.isFullFile());
+		uploadPopup.clickCancel();
+		
+		detailsPage.clickUploadFile();
+		assertTrue(uploadPopup.isFullFile());
+
 	}
 	
 	@Test

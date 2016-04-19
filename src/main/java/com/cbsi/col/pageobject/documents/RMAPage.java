@@ -27,6 +27,7 @@ public class RMAPage extends DocumentsBasePage{
 	public RMAPage clickSubmit(){
 		Submit.click();
 		waitForQuickLoad();
+		forceWait(500);
 		
 		return PageFactory.initElements(driver, RMAPage.class);
 	}

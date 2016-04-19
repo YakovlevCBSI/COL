@@ -1191,11 +1191,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public CreateRmaPopup(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
-			switchFrame(By.cssSelector("iframe"));
+//			switchFrame(By.cssSelector("iframe"));
 			waitForTextToBeVisible("RMA", "h3");
 		}
 		
-		@FindBy(css="a[href*='createRma();']")
+//		@FindBy(css="a[href*='createRma();']")
+		@FindBy(css="button#create-createrma-btn")
 		private WebElement CreateRMA;
 		
 		public RMAPage clickCreateRMA(){

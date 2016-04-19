@@ -79,7 +79,6 @@ public class QuotePage extends DocumentsBasePage{
 			waitForElementToBeVisible(By.cssSelector("iframe"));
 			waitForTextToBeVisible("Copy to New Quote", "h3");
 			waitForQuickLoad();
-			switchFrame();
 		}
 		
 		@FindBy(css="input[name='refresh']")
@@ -91,17 +90,16 @@ public class QuotePage extends DocumentsBasePage{
 		@FindBy(css="input#open_old")
 		private WebElement CopyAndRemainInTheOldQuote;
 		
-		@FindBy(css="a[href*='submit_page']")
+		@FindBy(css="button#create-copynewquote-btn")
 		private WebElement Create;
 		
-		@FindBy(css="a[href*='java_close']")
+		@FindBy(css="button#cancel-copynewquote-btn")
 		private WebElement Cancel;
 		
 		public QuotePage clickCreate(){
 			logger.debug("Clicking Create");
 			Create.click();
 			
-			switchBack();
 			waitForQuickLoad();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}

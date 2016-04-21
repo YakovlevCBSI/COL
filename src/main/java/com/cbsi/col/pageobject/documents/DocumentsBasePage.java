@@ -1536,6 +1536,9 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		@FindBy(css="input[id='image_file'][name='upload_file']")
 		private WebElement ChooseFile;
 		
+		@FindBy(css="button#save-importconfig-btn")
+		private WebElement Save;
+		
 		public ImportConfigPopup clickGenericImport(){
 			GenericImport.click();
 			return this;
@@ -1550,12 +1553,11 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		}
 
 		public T clickSave(){
-			ChooseFile.findElement(By.xpath("../../../tr/td/a[contains(@href, 'check_and_submit()')]")).click();
-			
+			switchBack();
+			Save.click();
 			forceWait(500);
 			
-//			waitForTextToBeVisible("Importing Config", "h1");
-//			switchBack();
+//			waitForTextToBeVisible("Import Config", "h3");
 			waitForElementToBeInvisible(By.cssSelector("div#import-config-modal"));
 			forceWait(1000);
 			return (T) PageFactory.initElements(driver, QuotePage.class);

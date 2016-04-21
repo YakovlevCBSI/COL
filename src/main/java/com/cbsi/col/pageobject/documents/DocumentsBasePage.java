@@ -1,5 +1,8 @@
 package com.cbsi.col.pageobject.documents;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -779,7 +782,14 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		waitForQuickLoad();
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
-			
+	
+	public Robot robot;
+	public Robot getRobot() throws AWTException{
+		if(robot == null){
+			robot = new Robot();
+		}
+		return robot;
+	}
 	//--------------------------------  product table-----------------------------------//
 	@FindBy(css="table.line-item-reorder")
 	private WebElement productTable;
@@ -790,27 +800,40 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			WebElement input = productTable.findElement(By.xpath("tbody/tr[@data-itemtype]["+ nth + "]/td/label/input"));
 
 			forceWait(500);
-			boolean clickable = false;
-			int retry = 0;
-			
-			int scrollCount = 0;
-			while(!clickable && retry <=5){
-				try{
-					scrollToView(input);
-					input.click();
-					clickable = true;
-				}catch(Exception e){
-//					scrollCount +=300;
-//					scroll(scrollCount);
-					logger.warn("Clicking input failed...");
-					this.refresh();
-					forceWait(1000);
-					retry++;
-				}
-			}
 
+			scrollToView(input);
+			boolean isScrolledToElement = false;
+
+			while(!isScrolledToElement){
+				try{
+					input.click();
+					isScrolledToElement = true;
+				}catch(Exception e){
+					logger.warn("Clicking input failed...");
+					productTable.click();
+					getActions().sendKeys(Keys.TAB).build().perform();
+					while(!input.isDisplayed() || CheckAllOnToolbar.isDisplayed()){  //if input box is not displayed, and toolbar is gone.
+						
+						scrollUpByRobot();
+					}
+				}
+				
+			}
 		}
 		return (T)this;
+	}
+	
+	public void scrollUpByRobot(){
+		Robot robot;
+		try {
+			robot = getRobot();
+			robot.mouseWheel(-1);
+//			robot.keyPress(KeyEvent.VK_PAGE_UP);
+//			robot.keyRelease(KeyEvent.VK_PAGE_UP);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public EditProductPage editProductFromTable(int nth){
@@ -1204,12 +1227,12 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public CreateRmaPopup(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
-//			switchFrame(By.cssSelector("iframe"));
+			switchFrame();
 			waitForTextToBeVisible("RMA", "h3");
 		}
 		
-//		@FindBy(css="a[href*='createRma();']")
-		@FindBy(css="button#create-createrma-btn")
+		@FindBy(css="a[href*='createRma();']")
+//		@FindBy(css="button#create-createrma-btn")
 		private WebElement CreateRMA;
 		
 		public RMAPage clickCreateRMA(){

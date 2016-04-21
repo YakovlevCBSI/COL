@@ -107,9 +107,13 @@ public class QuotePage extends DocumentsBasePage{
 		@FindBy(css="td input[type='text']")
 		private WebElement CustomerAndContactSearch;
 		public QuotePage setCustomerAndContactSearch(String text){
+			switchFrame();
+			
 			CustomerAndContactSearch.sendKeys(text);
 			forceWait(300);
 			getActions().sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.RETURN).build().perform();
+			
+			switchBack();
 			return PageFactory.initElements(driver, QuotePage.class);
 		}
 	}

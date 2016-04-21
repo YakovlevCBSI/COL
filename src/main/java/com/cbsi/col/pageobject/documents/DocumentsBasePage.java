@@ -793,13 +793,18 @@ public class DocumentsBasePage<T> extends ColBasePage{
 			boolean clickable = false;
 			int retry = 0;
 			
+			int scrollCount = 0;
 			while(!clickable && retry <=5){
 				try{
-					
+					scrollToView(input);
 					input.click();
 					clickable = true;
 				}catch(Exception e){
-					forceWait(500);
+//					scrollCount +=300;
+//					scroll(scrollCount);
+					logger.warn("Clicking input failed...");
+					this.refresh();
+					forceWait(1000);
 					retry++;
 				}
 			}
@@ -886,8 +891,16 @@ public class DocumentsBasePage<T> extends ColBasePage{
 	@FindBy(css="input#cb-checkall")
 	private WebElement CheckAll;
 	
+	@FindBy(css="input#cb-toolbar-checkall")
+	private WebElement CheckAllOnToolbar;
+	
 	public <T>T clickCheckAll(){
-		CheckAll.click();
+		try{
+			CheckAll.click();
+		}catch(WebDriverException e){
+			logger.debug("Toolbar activated. Click the element on toolbar.");
+			CheckAllOnToolbar.click();
+		}
 		return (T)PageFactory.initElements(driver, this.getClass());
 	}
 	

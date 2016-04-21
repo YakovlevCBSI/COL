@@ -187,9 +187,9 @@ public class ColBasePage {
 	}
 	
 	public void scrollToView(WebElement element){
-		int elementPositionX = element.getLocation().getX();
-		int elementPositionY = element.getLocation().getY();
-	   String js = String.format("window.scroll(%s, %s)", elementPositionX, elementPositionY);
+//		int elementPositionX = element.getLocation().getX();
+		int elementPositionY = (element.getLocation().getY()-500) ;
+	   String js = String.format("window.scroll(0, %s)", elementPositionY);
 	   ((JavascriptExecutor)driver).executeScript(js);
 	   forceWait(500);
 	}

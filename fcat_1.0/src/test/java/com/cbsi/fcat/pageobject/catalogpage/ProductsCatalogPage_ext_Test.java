@@ -420,6 +420,13 @@ public class ProductsCatalogPage_ext_Test extends EmbedBaseTest{
 		catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);	
 		
 	}
+
+	@Test
+	public void setItemsPerPage(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage = productsCatalogPage.selectItemNumberPerPage(50);
+		assertTrue(productsCatalogPage.getDataRows().size() == 50);
+	}
 	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
 		ProductsCatalogPage productsCatalogPageNew= null;
@@ -435,6 +442,5 @@ public class ProductsCatalogPage_ext_Test extends EmbedBaseTest{
 		
 		return productsCatalogPageNew;
 	}
-	
 	
 }

@@ -1227,18 +1227,29 @@ public class DocumentsBasePage<T> extends ColBasePage{
 		public CreateRmaPopup(WebDriver driver) {
 			super(driver);
 			// TODO Auto-generated constructor stub
-			waitForTextToBeVisible("RMA", "h3");
-			switchFrame();
+			try{
+				waitForTextToBeVisible("RMA", "h3");
+				switchFrame();
+			}catch(Exception e){
+				switchFrame();
+				waitForTextToBeVisible("RMA", "h3");
+			}
 
 		}
 		
-//		@FindBy(css="a[href*='createRma();']")
+		@FindBy(css="a[href*='createRma();']")
+		private WebElement CreatRMA_Legacy;
+		
 		@FindBy(css="button#create-createrma-btn")
 		private WebElement CreateRMA;
 		
 		public RMAPage clickCreateRMA(){
-			switchBack();
-			CreateRMA.click();
+			try{
+				CreatRMA_Legacy.click();
+			}catch(Exception e){
+				switchBack();
+				CreateRMA.click();
+			}
 			return PageFactory.initElements(driver, RMAPage.class);
 		}
 	}

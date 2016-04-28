@@ -62,7 +62,7 @@ public class CatalogsPageTest extends AllAndSecureBaseTest{
 		System.out.println("localtime: " + localTime);
 		System.out.println("displayed time: " + time);
 		
-		assertTrue(time.contains(localTime));
+		assertTrue(time.contains(localTime) || localTime.split("\\s")[3].equals("23"));  //check if the date is different by one minute.
 	}
 
 	@Test

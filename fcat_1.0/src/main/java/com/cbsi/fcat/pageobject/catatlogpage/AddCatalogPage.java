@@ -98,6 +98,7 @@ public class AddCatalogPage extends BasePage {
 		
 		WebElement countryFromDropdown = driver.findElement(By.cssSelector("ul.selectBox-dropdown-menu li a[rel='" + getCodeByCountry(country) + "']"));
 		
+		waitForElementToBeVisible(countryFromDropdown);
 		countryFromDropdown.click();
 		return this;
 	}

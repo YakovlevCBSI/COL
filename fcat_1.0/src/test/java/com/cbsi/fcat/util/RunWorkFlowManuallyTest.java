@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -18,7 +19,6 @@ import com.cbsi.fcat.pageobject.catatlogpage.PartyPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.foundation.FormBaseTest;
 import com.cbsi.fcat.pageobject.others.DashboardPage;
-import com.cbsi.fcat.pageobject.others.DashboardPage.STATUS;
 import com.cbsi.fcat.util.ElementConstants;
 import com.cbsi.fcat.util.GlobalVar;
 
@@ -35,7 +35,17 @@ public class RunWorkFlowManuallyTest extends FormBaseTest{
 	private final static String CATALOG_NAME = "execute_workflow1";
 	private final static long catId = 54641;
 	private final static String bloblFileName = "remap_test.txt";
+	
+	public static final String blobPath = "src/test/resources/Remap/" + bloblFileName;
+
 	private static long workflowId;
+	
+	@BeforeClass
+	public static void setUpBlob(){
+		BlobUtil.getContainer();
+		BlobUtil.uploadFile(blobPath);
+	}
+	
 	@Test
 	public void wf1_unmapOneProductInFront() throws InterruptedException{
 		PartyPopupPage partyPopup = catalogsPage.clickPartyChooserIcon();
@@ -102,6 +112,7 @@ public class RunWorkFlowManuallyTest extends FormBaseTest{
 	
 	public long runRemapJob(long catId, String blobFileName){
 		String backUrl = GlobalVar.stageServer.replace("6600/fcat/", "6800/fcat-back/") + "services/workflow/runWorkflow?catalogid=" + catId+ "&flowid=1&filePath=" + blobFileName;
+		
 		System.out.println(backUrl);
 		driver.get(backUrl);
 		

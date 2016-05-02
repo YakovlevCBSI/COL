@@ -1,6 +1,7 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import java.io.File;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -170,9 +171,10 @@ public class UploadPopupPage extends BasePage{
 	}
 	
 	@FindBy(css="label#lb_Full_File")
+//	@FindBy(css="input#Full_File")
 	private WebElement FullFile;
 	public UploadPopupPage checkFullFile(){
-		if(!FullFile.isSelected()){
+		if(!isFullFile()){
 			FullFile.click();
 		}
 		
@@ -180,30 +182,40 @@ public class UploadPopupPage extends BasePage{
 	}
 	
 	public boolean isFullFile(){
-		return FullFile.isSelected();
+		return FullFile.getAttribute("class").contains("checked")?true:false;
 	}
 	
-	@FindBy(css="lb_ChangeImportSettings")
+	@FindBy(css="label#lb_ChangeImportSettings")
 	private WebElement SetUpColumnMapping;
-	public void clickSetUpColumnMapping(){
-		if(!SetUpColumnMapping.isEnabled()){
+	public UploadPopupPage clickSetUpColumnMapping(){
+		if(!isColumnMappingEnabled()){
 			SetUpColumnMapping.click();
 		}
+		
+		return this;
+	}
+	
+	public boolean isColumnMappingEnabled(){
+		return SetUpColumnMapping.getAttribute("class").contains("checked")?true:false;
 	}
 	
 	@FindBy(css="div.tab-panel div a.selectBox span.selectBox-arrow")
 	private WebElement dropbox;
 	
-	@FindBy(css="li a[rel='Comma']")
+	private final static String CsvPath = "li a[rel='Comma']";
+	@FindBy(css=CsvPath)
 	private WebElement CSV;
 	
-	@FindBy(css="li a[rel='Tab']")
+	private final static String TxtPath = "li a[rel='Tab']";
+	@FindBy(css=TxtPath)
 	private WebElement TXT;
 	
-	@FindBy(css="li a[rel='Excel']")
+	private final static String ExcelPath = "li a[rel='Excel']";
+	@FindBy(css=ExcelPath)
 	private WebElement Excel;
 	
-	@FindBy(css="li a[rel='Xml']")
+	private final static String XmlPath = "li a[rel='Xml']";
+	@FindBy(css=XmlPath)
 	private WebElement XML;
 	
 	public UploadPopupPage selectDropBoxOption(UploadType type){
@@ -214,6 +226,15 @@ public class UploadPopupPage extends BasePage{
 			e.printStackTrace();
 		}
 		dropbox.click();
+		
+		List<WebElement> FileTypes = driver.findElements(By.cssSelector("ul[class*='selectBox-dropdown-menu']"));
+		WebElement lastFileType = FileTypes.get(FileTypes.size() -1);
+		
+		CSV = lastFileType.findElement(By.cssSelector(CsvPath));
+		TXT = lastFileType.findElement(By.cssSelector(TxtPath));
+		Excel = lastFileType.findElement(By.cssSelector(ExcelPath));
+		XML = lastFileType.findElement(By.cssSelector(XmlPath));
+		
 		quickWait();
 		if(type == UploadType.CSV) CSV.click();
 		else if(type == UploadType.TXT) TXT.click();
@@ -222,6 +243,10 @@ public class UploadPopupPage extends BasePage{
 		
 		return this;
 	}
+	
+//	public void setupCheckBoxes(){
+//		CSV = driver.findElements(By.cssSelector(CsvPath)).get(index);
+//	}
 	
 	@FindBy(css="a.selectBox span.selectBox-label")
 	private WebElement selectedFileType;

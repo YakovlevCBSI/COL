@@ -13,15 +13,18 @@ import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
+import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage.CNetFields;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
 import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
+import com.cbsi.fcat.pageobject.foundation.FormBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
 
-public class AddCatalogPageTest extends EmbedBaseTest{
+//public class AddCatalogPageTest extends EmbedBaseTest{
+public class AddCatalogPageTest extends FormBaseTest{
 
 	public AddCatalogPageTest(String URL, String browser) {
 		super(URL, browser);
@@ -142,7 +145,7 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 	}
 	
 	@Test
-	public void UploadFullFileOptionStaysChecked() throws InterruptedException{
+	public void UploadFullFileOptionStaysCheckedAndOverridePrevious() throws InterruptedException{
 		MappingPage mappingPage = UploadFullFile();
 		DetailsPage detailsPage = mappingPage.automap();
 		
@@ -152,9 +155,24 @@ public class AddCatalogPageTest extends EmbedBaseTest{
 		assertTrue(uploadPopup.isFullFile());
 		uploadPopup.clickCancel();
 		
-		detailsPage.clickUploadFile();
+		uploadPopup = detailsPage.clickUploadFile();
 		assertTrue(uploadPopup.isFullFile());
-
+		
+		uploadPopup = uploadLocalFileOSSpecific(uploadPopup).selectDropBoxOption(UploadType.TXT).clickSetUpColumnMapping().checkFullFile().clickNext();
+		MappingPage mappingPageNew = (MappingPage) uploadPopup.clickNextAfterUpload(true);
+		mappingPageNew.setCnetField(CNetFields.NotMapped, 1);
+		mappingPageNew.setCnetField(CNetFields.ManufacturerName, 2);
+		mappingPageNew.setCnetField(CNetFields.ProductId, 3);
+		mappingPageNew.setCnetField(CNetFields.ManufacturerPartNumber, 1);
+		mappingPageNew.clickSave();
+		
+		
+		DetailsPage detailsPageNew = PageFactory.initElements(driver, DetailsPage.class);
+		assertTrue(detailsPageNew.FileUploadIsDone());
+		
+		CatalogsPage catPage = detailsPageNew.clickReturnToList();
+		ProductsCatalogPage productPage = catPage.goToCatalogByName(tempFile);
+		assertTrue(productPage.getTotalProducts()==7);
 	}
 	
 	@Test

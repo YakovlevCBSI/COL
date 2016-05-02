@@ -193,7 +193,7 @@ public class MappingPage extends BasePage{
 	}
 	
 	public MappingPage setCnetField(CNetFields value, int n){
-		WebElement dropdown = driver.findElement(By.cssSelector("table.catalog-mapping-table tr:nth-child(" + n + ") td a"));
+		WebElement dropdown = driver.findElement(By.cssSelector("table.catalog-mapping-table tbody tr:nth-child(" + n + ") td a"));
 		scrollToView(dropdown);
 		dropdown.click();
 		
@@ -211,6 +211,11 @@ public class MappingPage extends BasePage{
 	}
 	
 	public enum CNetFields{
+		NotMapped{
+			public String toString(){
+				return "";
+			}
+		},
 		ProductId{
 			public String toString(){
 				return "id";

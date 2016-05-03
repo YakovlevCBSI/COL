@@ -239,7 +239,7 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num1, int num2){
-		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
+//		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
 		
 		WebElement elementToUse =getCatalogByNameAndProductNumber("albert", num1, num2);
 		elementToUse.click();

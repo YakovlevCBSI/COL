@@ -70,7 +70,8 @@ public class BaseTest {
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
 
-	
+	protected CatalogsPage catalogsPage;
+
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
@@ -101,7 +102,6 @@ public class BaseTest {
 	}
 	*/
 
-	protected CatalogsPage catalogsPage;
 	
 	@Before
 	public void startUp(){
@@ -137,7 +137,15 @@ public class BaseTest {
 				System.out.println("in firefox conditions");
 				try{
 					FirefoxProfile profile = new FirefoxProfile();
+					/**
+					 * custom profile for timeout on firefox. FF takes too long to load details page.
+					 */
+					profile.setAcceptUntrustedCertificates(true);
+					profile.setPreference("network.http.connection-timeout", 10);
+					profile.setPreference("network.http.connection-retry-timeout", 10);
+					
 					emptyDriver = new FirefoxDriver(profile);
+					emptyDriver.manage().deleteAllCookies();
 				}catch(Exception e){
 					System.out.println("Failed to create a firefox driver");
 					e.printStackTrace();
@@ -313,7 +321,7 @@ public class BaseTest {
 	}
 	
 	public void setDisplayToVm(){
-		driver.manage().window().setSize(new Dimension(1024, 768));
+		driver.manage().window().setSize(new Dimension(1600, 900));
 
 	}
 	
@@ -674,7 +682,7 @@ c			System.out.println("message:" + js);
 	public MappingPage UploadFullFile() throws InterruptedException{
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).selectDropBoxOption(UploadType.TXT).clickNext();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).selectDropBoxOption(UploadType.TXT).checkFullFile().clickNext();
 		
 		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
 		return mappingPage;

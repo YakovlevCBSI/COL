@@ -288,8 +288,8 @@ public class ProductsCatalogPage_ext_Test extends EmbedBaseTest{
 	
 	@Test
 	public void searchPidMfpnTest() throws Exception{
-//		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,100);
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+//		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,100);
 
 		productsCatalogPage.searchFor(ItemIds.ID, "00");
 		productsCatalogPage.searchFor(ItemIds.MF, "abc");

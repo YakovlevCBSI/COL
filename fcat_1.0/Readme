@@ -1,0 +1,80 @@
+README
+------------------------------------------------------------------------------
+PROJECT STRUCTURE
+-src/main/java:
+	--com.cbsi.fcat
+	 	--database
+			--mongo : pacakage contains mongo operation related classes
+		 	--sql	: pacakage contains mysql operation related classes
+		  	--util	: connector classes for mysql, sqlserver, and mongo
+		--pageobject
+			--catalogpage 	: page classes for various fcat pages.  This include low level defining elements and navigation methods
+			--foundation	: Abstract base page servers as a base page class for other catalogspage classes.
+			--homepage		: fcat and bfp portal homepage classes
+			--others		: dashboard page class
+			--sidebar		: pages that are accessible via fcat side bar
+		--util				: various utility classes that are related to configuration for UI test, and azure blob, cache that are not selenium related.
+		
+-src/test/java:
+	--com.cbsi.fcat
+		--pageobject
+			--catalogpage	: test pages that tests each page classes from src/main/java/com/cbsi/fcat/pageboject
+			--foundation	: contains master base test which extends in other sub base tests.  It includes junit methods that helps selenium test such as configuring drivers, creating driver object, screenshot, clean up methods, etc.
+			--homepage		: Login tests for admin and non admins. 
+			--others		:
+			--sidebar		: test pages that test each page classes from sidebar in src/main/java
+		--util				: these tests include mongo coverage collection, cache(fastmap), remap job.
+		--xmltest
+		
+-modify_pom_exclude.py		:dirty way to modify file for "prod" environment.
+-pom.xml
+
+------------------------------------------------------------------------------
+
+HOW TO UPDATE SELENIUM
+1. Go to "http://www.seleniumhq.org/download/" to check the latest version.
+2. In pom.xml, update version dependency.
+3. Check the latest chromedriver "https://sites.google.com/a/chromium.org/chromedriver/" for both linux and mac and paste them into src/test/resource
+4. Update chromeDriverVersion variable in "BaseTest.java".
+5. Clean and recompile the project.
+
+------------------------------------------------------------------------------
+
+HOW TO CONFIGURE TESTING FOR DEV, STAGE, OR PROD
+In eclipse:
+	1. Go to "GlobalVar.java"
+	2. DEV = set isDev = true.
+	3. STAGE = set isDev and isProd = false.
+	4  PROD = set isProd = true.
+	
+In maven command line:
+	1. DEV: mvn test -Denv.DEV=dev
+	2. STAGE: mvn test
+	3. PROD: mvn test -Devn.DEV=prod
+	
+------------------------------------------------------------------------------
+
+RUNNING TEST IN JENKINS
+To deploy all stage tests on demand:
+1. Go to qeload-master.local/8080
+2. Login as admin/admin
+3. Click "Bulk builder" in the left side.
+4. Click "Build all jobs"
+5. Click "Limit to jobs in view". Select fcat stage
+6. Click "Build!" button.
+7. All tests should finish <= 2hr. See results in "fcat stage" tab.
+*Stage is set to run at 1am everyday.
+
+To deploy all prod tests on demand:
+1. Go to qeload-master.local/8080
+2. Login as admin/admin
+3. Click "Bulk builder" in the left side.
+4. Click "Build all jobs"
+5. Click "Limit to jobs in view". Select fcat prod
+6. Click "Build!" button.
+7. All tests should finish <= 1.5hr. See results in "fcat prod" tab.
+
+------------------------------------------------------------------------------
+  
+
+  

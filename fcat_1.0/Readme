@@ -33,7 +33,7 @@ PROJECT STRUCTURE
 
 HOW TO UPDATE SELENIUM
 1. Go to "http://www.seleniumhq.org/download/" to check the latest version.
-2. In pom.xml, update version dependency.
+2. In pom.xml, update <selenium-version> dependency.
 3. Check the latest chromedriver "https://sites.google.com/a/chromium.org/chromedriver/" for both linux and mac and paste them into src/test/resource
 4. Update chromeDriverVersion variable in "BaseTest.java".
 5. Clean and recompile the project.

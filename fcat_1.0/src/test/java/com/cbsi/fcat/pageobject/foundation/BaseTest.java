@@ -43,6 +43,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.cbsi.fcat.database.mongo.Product;
+import com.cbsi.fcat.database.sql.Catalog;
 import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage;
@@ -54,8 +56,6 @@ import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.pageobject.homepage.FCatLoginPage;
 import com.cbsi.fcat.pageobject.others.EmbedPage;
 import com.cbsi.fcat.util.GlobalVar;
-import com.cbsi.tests.FCatMongoObject.Product;
-import com.cbsi.tests.FCatSqlObject.Catalog;
 
 public class BaseTest {
 	public WebDriver driver;
@@ -65,12 +65,13 @@ public class BaseTest {
 	
 	private String chromeDriverVersion = System.getProperty("chromedriver-version", "2.20");
 	public boolean isGrid = System.getProperty("useGrid", "false").equals("true") ;
-//	public boolean isGrid = true;
+//	public boolean isGrid = GlobalVar.isGrid;
 	
 	private String username = System.getProperty("user.name");
 	public boolean screenShotCreated = false;
 
-	
+	protected CatalogsPage catalogsPage;
+
 	public BaseTest(String URL, String browser){
 		this.URL = URL;
 		this.browser = browser;
@@ -101,7 +102,6 @@ public class BaseTest {
 	}
 	*/
 
-	protected CatalogsPage catalogsPage;
 	
 	@Before
 	public void startUp(){
@@ -137,7 +137,15 @@ public class BaseTest {
 				System.out.println("in firefox conditions");
 				try{
 					FirefoxProfile profile = new FirefoxProfile();
+					/**
+					 * custom profile for timeout on firefox. FF takes too long to load details page.
+					 */
+					profile.setAcceptUntrustedCertificates(true);
+					profile.setPreference("network.http.connection-timeout", 10);
+					profile.setPreference("network.http.connection-retry-timeout", 10);
+					
 					emptyDriver = new FirefoxDriver(profile);
+					emptyDriver.manage().deleteAllCookies();
 				}catch(Exception e){
 					System.out.println("Failed to create a firefox driver");
 					e.printStackTrace();
@@ -313,7 +321,8 @@ public class BaseTest {
 	}
 	
 	public void setDisplayToVm(){
-		driver.manage().window().setSize(new Dimension(1024, 768));
+		driver.manage().window().setSize(new Dimension(1600, 900));
+
 	}
 	
 	public void EasyLoginToLocal(){
@@ -494,9 +503,9 @@ public class BaseTest {
                         }
                     }
                     if(isAutoRun()){
-                    	System.out.println("killed all driver instances");
-        				runCommand("killall firefox");
-        				runCommand("killall chrome");
+//                    	System.out.println("killed all driver instances");
+//        				runCommand("killall firefox");
+//        				runCommand("killall chrome");
         			}
                     System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
                     throw caughtThrowable;
@@ -544,7 +553,7 @@ public class BaseTest {
 	}
 	
 	public boolean isAutoRun(){
-		if(username.equals("jenkins") || username.contains("slave")) return true;
+		if(username.equals("jenkins") || getHostname().toLowerCase().contains("qe")) return true;
 		return false;
 	}
 	//------------------------------------------common methods-----------------------------------//
@@ -576,7 +585,7 @@ public class BaseTest {
 				return false;
 			}
 			String js = (String) ((JavascriptExecutor)driver).executeScript("return window.javascript_errors ");
-			System.out.println("message:" + js);
+c			System.out.println("message:" + js);
 			
 		}
 		 */
@@ -673,7 +682,7 @@ public class BaseTest {
 	public MappingPage UploadFullFile() throws InterruptedException{
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
 		uploadPopupPage.clickUploadFile();
-		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).clickNext();
+		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage).selectDropBoxOption(UploadType.TXT).checkFullFile().clickNext();
 		
 		MappingPage mappingPage = (MappingPage) uploadPopupPage.clickNextAfterUpload(true);
 		return mappingPage;
@@ -684,7 +693,15 @@ public class BaseTest {
 	}
 	
 	public MappingPage UploadFullFile(String filename, UploadType type){
+		return UploadFullFile(filename, type, true);
+	}
+	
+	public MappingPage UploadFullFile(String filename, UploadType type, boolean hasHeader){
 		UploadPopupPage uploadPopupPage = navigateToAddcatalogPage(false).fillInName();
+		
+		if(!hasHeader){
+			uploadPopupPage.clickHasHeader();
+		}
 		uploadPopupPage.selectDropBoxOption(type);
 		uploadPopupPage.clickUploadFile();
 		uploadPopupPage = uploadLocalFileOSSpecific(uploadPopupPage, filename).clickNext();
@@ -695,6 +712,7 @@ public class BaseTest {
 	
 	protected static List<String> tempFiles;
 	public String tempFile;
+	
 	public AddCatalogPage navigateToAddcatalogPage(boolean isAutomatic){
 		tempFiles= new ArrayList<String>();
 		//System.out.println("drive rnull? " + driver == null);
@@ -766,5 +784,19 @@ public class BaseTest {
 	
 	public String getRandomNumber(){
 		return System.currentTimeMillis() + "";
+	}
+	
+	public static String getHostname(){
+		String hostName="";
+		try{
+		    InetAddress addr;
+		    addr = InetAddress.getLocalHost();
+		    hostName = addr.getHostName();
+		}
+		catch (UnknownHostException ex){
+		    System.out.println("Hostname can not be resolved");
+		}
+		
+		return hostName;
 	}
 }

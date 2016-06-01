@@ -17,10 +17,10 @@ import com.cbsi.fcat.pageobject.catatlogpage.EditProductPopupPage;
 import com.cbsi.fcat.pageobject.catatlogpage.MapProductsDialog;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage;
 import com.cbsi.fcat.pageobject.catatlogpage.ProductsCatalogPage.ItemIds;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
 import com.cbsi.fcat.util.ElementConstants;
 
-public class ProductsCatalogPage_ext_Test extends AllBaseTest{
+public class ProductsCatalogPage_ext_Test extends EmbedBaseTest{
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -160,8 +160,13 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		
 		DetailsPage detailsPage = UploadFullFile().automap();
 		CatalogsPage catalogsPage = detailsPage.clickReturnToList();
-		productPage = catalogsPage.goToCatalogByName(tempFile);
 		
+		while(catalogsPage.getProductNumberByCatalog(tempFile) <=0){
+			catalogsPage.refresh();
+			catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);
+		}
+		
+		productPage = catalogsPage.goToCatalogByName(tempFile);
 		assertTrue(productPage.getTotalProducts() == 7);
 		assertTrue(productPage.getMapped() == 6);
 		assertTrue(productPage.getNotMapped() == 1);	
@@ -283,8 +288,8 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 	
 	@Test
 	public void searchPidMfpnTest() throws Exception{
-//		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
-		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,10);
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(100, 600000);
+//		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage(1,100);
 
 		productsCatalogPage.searchFor(ItemIds.ID, "00");
 		productsCatalogPage.searchFor(ItemIds.MF, "abc");
@@ -401,6 +406,28 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		assertTrue(!editProduct.getManufacturerName().isEmpty() || !editProduct.getManufacturerPartNumber().isEmpty() || !editProduct.getUpcEan().isEmpty());
 	}
 	
+	@Test
+	public void wrongUrlRedirectsToCatalogPage(){
+		String url = "";
+		String id = "";
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		
+		url = productsCatalogPage.getCurrentURL();
+		id = url.substring(url.lastIndexOf("#")+1);
+		
+		driver.get(url.replace(id, "junk123"));
+		
+		catalogsPage = PageFactory.initElements(driver, CatalogsPage.class);	
+		
+	}
+
+	@Test
+	public void setItemsPerPage(){
+		ProductsCatalogPage productsCatalogPage = navigateToProductsCatalogPage();
+		productsCatalogPage = productsCatalogPage.selectItemNumberPerPage(50);
+		assertTrue(productsCatalogPage.getDataRows().size() == 50);
+	}
+	
 	public ProductsCatalogPage ifMappedUnmapItem(MapProductsDialog mapDialog){
 		ProductsCatalogPage productsCatalogPageNew= null;
 		
@@ -415,4 +442,5 @@ public class ProductsCatalogPage_ext_Test extends AllBaseTest{
 		
 		return productsCatalogPageNew;
 	}
+	
 }

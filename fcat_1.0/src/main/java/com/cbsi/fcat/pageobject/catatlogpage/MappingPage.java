@@ -22,6 +22,7 @@ public class MappingPage extends BasePage{
 		super(driver);
 		waitForPageToLoad();
 		// TODO Auto-generated constructor stub
+		waitForTextToBeVisible("(Mapping)", "h1");
 	}
 	
 	@Override
@@ -54,7 +55,17 @@ public class MappingPage extends BasePage{
 				
 			WebElement dropdown = e.findElement(By.xpath("../td[contains(@class,'fields-column')]/a/span[@class='selectBox-label']"));
 			scrollToView(dropdown);
-			dropdown.click();
+			
+			//work around for firefox having issues not able to click what is not visible in dropdown. Needs scrolling.
+			try{
+				dropdown.click();
+			}catch(WebDriverException ex){
+				//failed, due to a dropdown being open
+//				getActions().moveToElement(dropdown, -400, 0).click().build().perform();
+				e.click();
+				dropdown.click();
+			}
+			
 			customWait(5);
 //			forceWait(1000);
 			List<WebElement> dropdownSelections = driver.findElements(By.cssSelector("ul.selectBox-dropdown-menu li"));
@@ -97,7 +108,6 @@ public class MappingPage extends BasePage{
 		
 		scrollToView(Save);
 		clickSave();
-		
 		return PageFactory.initElements(driver, DetailsPage.class);
 
 	}
@@ -109,6 +119,16 @@ public class MappingPage extends BasePage{
 		return headers;
 	}
 	
+	public List<String> collectHeadersAsString(){
+		List<String> headersAsString = new ArrayList<String>();
+		
+		for(WebElement e: collectHeaders()){
+			if(!e.findElement(By.xpath("input")).getText().isEmpty())
+				headersAsString.add(e.findElement(By.xpath("input")).getText());
+		}
+		
+		return headersAsString;
+	}
 	public List<WebElement> collectDataPreviews(){
 		List<WebElement> dataPreviews = driver.findElements(By.cssSelector("tr.highlighted td.data-preview-column"));
 		return dataPreviews;
@@ -117,7 +137,7 @@ public class MappingPage extends BasePage{
 	private static String[] id = {"product id", "id", "customerpn", "partnumber", "part number", "pn"};
 	private static String[] mfpn = {"manufacturer part number", "mfrpn", "part number", "manufacturer", "mfpn"};
 	private static String[] mf = {"manufacturer name", "mf", "name", "manufacturer", "mfn", "mfrname"};
-	private static String[] cnetSkuId={"cnet sku id", "cnetSkuId", "cnetproductid"}; 
+	private static String[] cnetSkuId={"cnet sku id", "cnetSkuId", "cnetproductid", "skuid", "sku"}; 
 	private static String[] upcean = {"upc/ean", "upcean", "upc", "ean"};
 	private static String[] msrp = {"msrp", "msr"};
 	private static String[] price = {"price", "sell price"};
@@ -174,7 +194,7 @@ public class MappingPage extends BasePage{
 	}
 	
 	public MappingPage setCnetField(CNetFields value, int n){
-		WebElement dropdown = driver.findElement(By.cssSelector("table.catalog-mapping-table tr:nth-child(" + n + ") td a"));
+		WebElement dropdown = driver.findElement(By.cssSelector("table.catalog-mapping-table tbody tr:nth-child(" + n + ") td a"));
 		scrollToView(dropdown);
 		dropdown.click();
 		
@@ -192,6 +212,11 @@ public class MappingPage extends BasePage{
 	}
 	
 	public enum CNetFields{
+		NotMapped{
+			public String toString(){
+				return "";
+			}
+		},
 		ProductId{
 			public String toString(){
 				return "id";
@@ -244,6 +269,7 @@ public class MappingPage extends BasePage{
 	public MappingPage clickSave(){
 		waitForElementToBeVisible("a#save_mappings_button");
 		Save.click();
+		waitForElementToBeInvisible(By.cssSelector("a#save_mappings_button"));
 		return this;
 	}
 	
@@ -277,6 +303,29 @@ public class MappingPage extends BasePage{
 		
 	}
 	
+	@FindBy(css="td.cnet-fields-column a")
+	private WebElement CnetFieldDropdown;
+	
+	@FindBy(css="div.panel")
+	private WebElement MapPanel;
+	
+	public int getCnetFieldDropdownUpperRightX(){
+		int startPoint = CnetFieldDropdown.getLocation().getX();
+		int width = CnetFieldDropdown.getSize().width;
+		
+		int rightX = startPoint + width;
+		
+		return rightX;		
+	}
+	
+	public int getPanelUpperRightX(){
+		int startPoint = MapPanel.getLocation().getX();
+		int width = MapPanel.getSize().getWidth();
+		
+		int rightX = startPoint + width;
+		
+		return rightX;
+	}
 	/**
 	 * If list contains elements with styles that are different from one anther
 	 * return false;

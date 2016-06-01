@@ -1,4 +1,4 @@
-package com.cbsi.tests.FCatMongoObject;
+package com.cbsi.fcat.database.mongo;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;

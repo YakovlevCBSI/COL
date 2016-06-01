@@ -1,0 +1,8 @@
+id	mf	mfPn	upc	skuId
+aaaaabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdeza	aaaaabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdeza	aaaaabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdeza	abcdefghijabcdefghijabcdefghijabcdefghijabcdefghija	abcdefghijabcdefghijabcdefghijabcdefghijabcdefghiza
+s	b	c	d	e
+a	b	c	d	e
+j	f	h	k	i	
+1	sd	fd	fd	
+3	sd	12	12	12
+6	12	23	21	3

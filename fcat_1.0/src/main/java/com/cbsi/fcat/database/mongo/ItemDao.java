@@ -1,11 +1,12 @@
-package com.cbsi.tests.FCatMongoObject;
+package com.cbsi.fcat.database.mongo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cbsi.tests.FcatDB.MongoConnector;
+import com.cbsi.fcat.database.util.MongoConnector;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.ReadPreference;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
@@ -59,5 +60,9 @@ public class ItemDao {
 	
 	public static MongoCollection<DBObject> getItemCollection(){
 		return MongoConnector.getDBObject("item");
+	}
+	
+	public static void main(String[] args){
+		ItemDao.getItemFirst(5605, 10);
 	}
 }

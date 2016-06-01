@@ -1,10 +1,15 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -21,6 +26,9 @@ public class DetailsPage extends BasePage{
 	public DetailsPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+		waitForTextToBeVisible(20, "Processing Queue", "div.processing-queue-achor"); //look for a specific path, in case there is a large workflow.
+
+		forceWait(500);
 	}
 	
 	public static final String AUTOMATIC= "Automatic";
@@ -76,7 +84,11 @@ public class DetailsPage extends BasePage{
 	@FindBy(xpath="//tbody/tr[1]")
 	private WebElement FirstProcessingRow;
 	
-	private static String uploadStatus = "";
+	public String getFileName(){
+		return FirstProcessingRow.findElement(By.xpath("td[1]/span[2]")).getText();
+	}
+	
+//	private static String uploadStatus = "";
 	public String getStatus(){
 		WebElement status=null;
 		try{
@@ -91,8 +103,9 @@ public class DetailsPage extends BasePage{
 			refresh();
 			status = refreshStaleElement(By.xpath("//tbody/tr[1]/td[contains(@class,'status')]/span"));
 		}
-		uploadStatus =status.getText();
-		return uploadStatus;
+//		uploadStatus =status.getText();
+//		return uploadStatus;
+		return status.getText();
 	}
 	
 	@FindBy(css="span.text.current")
@@ -103,11 +116,12 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public boolean FileUploadIsDone(){
-		while(uploadStatus.equals(UploadStatus.INPROGRESS.toString())){		
+		while(getStatus().equals(UploadStatus.INPROGRESS.toString())){		
 			refresh();
 			forceWait(1000);
 		}
 		if(getStatus().equals(UploadStatus.DONE.toString())){
+			logger.info("file status shows DONE");
 			return true;
 		}
 		
@@ -115,16 +129,37 @@ public class DetailsPage extends BasePage{
 	}
 	
 	public DetailsPage expandDetails(){
-		FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
-		FirstProcessingRow.click();
+		boolean isClickable = false;
+		long startTime = System.currentTimeMillis();
+		
+		while(!isClickable && System.currentTimeMillis()- startTime <15000){
+			try{
+				FirstProcessingRow = refreshStaleElement(By.xpath("//tbody/tr[1]"));
+				scrollToView(FirstProcessingRow);
+				FirstProcessingRow.click();
+				
+				isClickable = true;
+			}catch(WebDriverException e){
+				forceWait(500);
+				refresh();
+			}
+		}
 		return this;
 	}
 	
-	public static Boolean storeAndMapExists;
-	
 	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified){
+		return getProcessingQueueMessage(DifferenceParseOrFileUpload, messageOrStatusOrModified, false);
+	}
+	
+	public Boolean storeAndMapExist;
+	public Boolean diffExists;
+	
+	public String getProcessingQueueMessage(ProcessingQueue DifferenceParseOrFileUpload, InfoType messageOrStatusOrModified, boolean detailedMessage){
 		WebElement whichDetailedMessageRow = null;
 		String rowNum="";
+		
+		//check if element is staled.
+		FirstProcessingRow = refreshStaleElement(By.cssSelector("tbody tr:nth-child(1)"));
 		
 		if(!FirstProcessingRow.getTagName().equals("tr"))
 			FirstProcessingRow = FirstProcessingRow.findElement(By.xpath("../../../tr[1]"));
@@ -132,42 +167,89 @@ public class DetailsPage extends BasePage{
 		rowNum = FirstProcessingRow.getAttribute("name").split("-")[1].trim();
 	
 		//check if this is full or upload catalog by counting status columns.
-		if(storeAndMapExists == null){
-			List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
-			if(statusList.size() ==5){
-				storeAndMapExists = true;
+		List<WebElement> statusList = FirstProcessingRow.findElements(By.xpath("../tr[contains(@name,'status-row-for-" + rowNum+"')]"));
+
+		if(storeAndMapExist == null){
+			if(statusList.size() >=5){
+				logger.debug("size 5 condition");
+				storeAndMapExist = true;
+				diffExists = true;
+			}else if(statusList.size() ==2){
+				logger.debug("size 2 condition");
+				storeAndMapExist= false;
+				diffExists = false;
 			}else{
-				storeAndMapExists= false;
+				logger.debug("last condition");
+				storeAndMapExist= false;
+				diffExists = true;
 			}
 		}
 
+		logger.info("storeAndMapExists: " + storeAndMapExist + "\n" + "diffExists: " + diffExists);
+		int nthTr= 0;
 		String details ="";
 		if(DifferenceParseOrFileUpload.equals(ProcessingQueue.DIFFERENCE)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+			if(!storeAndMapExist) {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+				nthTr= 2;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+				nthTr= 4;
+			}
 		
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.PARSE)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));
+			logger.info("ProcessingQueue Parse condition at work");
+			
+			if(!diffExists && !storeAndMapExist)  {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+				nthTr= 2;
+			}
+			else if(!storeAndMapExist){
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+				nthTr= 3;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[5]"));
+				nthTr= 5;
+			}
 			
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.FILEUPLOAD)){
-			if(!storeAndMapExists) whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
-			else whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[6]"));
+			if(!diffExists && !storeAndMapExist)  {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+				nthTr= 3;
+			}
+			else if(!storeAndMapExist) {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[4]"));
+				nthTr= 4;
+			}
+			else {
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[6]"));
+				nthTr= 6;
+			}
 		}
 		else if (DifferenceParseOrFileUpload.equals(ProcessingQueue.STORE)){
 			whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[2]"));
+			nthTr= 2;
 		}
 		else if(DifferenceParseOrFileUpload.equals(ProcessingQueue.MAP)){
 			whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[3]"));
+			nthTr= 3;
 		}
 
 		if(messageOrStatusOrModified.equals(InfoType.MESSAGE)){
-			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'name-column')]")).getText();
+			if(detailedMessage){
+				whichDetailedMessageRow = FirstProcessingRow.findElement(By.xpath("../tr[" + (nthTr+1)+ "]"));
+				details = whichDetailedMessageRow.findElement(By.xpath("td/p")).getText();
+			}
+			else{
+				details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'name-column')]")).getText();
+			}
 		}
 		else if(messageOrStatusOrModified.equals(InfoType.STATUS)){
-			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'status-column']/span")).getText();
+			details = whichDetailedMessageRow.findElement(By.xpath("td[contains(@class,'status-column')]/span")).getText();
 		}
 		else if(messageOrStatusOrModified.equals(InfoType.MODIFIED)){
 			details = whichDetailedMessageRow.findElement(By.xpath("td[@class='date-column']/span")).getText();
@@ -175,7 +257,7 @@ public class DetailsPage extends BasePage{
 		
 		return details;
 	}
-	
+
 	public enum ProcessingQueue{
 		DIFFERENCE, PARSE, FILEUPLOAD, MAP, STORE;
 	}
@@ -192,13 +274,5 @@ public class DetailsPage extends BasePage{
 			}
 		},
 		ERROR
-	}
-	
-	@FindBy(linkText="Return to List")
-	private WebElement ReturnToList;
-	public CatalogsPage clickReturnToList(){
-		waitForElementToClickable(By.linkText("Return to List"));
-		ReturnToList.click();
-		return PageFactory.initElements(driver, CatalogsPage.class);
 	}
 }

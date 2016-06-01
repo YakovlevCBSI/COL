@@ -1,4 +1,4 @@
-package com.cbsi.tests.FcatDB;
+package com.cbsi.fcat.database.util;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -14,11 +14,14 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser.Feature;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.cbsi.fcat.database.mongo.MongoItem;
+import com.cbsi.fcat.database.mongo.Product;
+import com.cbsi.fcat.database.sql.LogoContentDao;
 import com.cbsi.fcat.util.GlobalVar;
 import com.cbsi.fcat.util.PropertyUtil;
-import com.cbsi.tests.FCatMongoObject.MongoItem;
-import com.cbsi.tests.FCatMongoObject.Product;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -33,6 +36,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoConnector {
+
+	public final static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
 
 	private static String host =  PropertyUtil.get("mongo.server");
 	private static String port = PropertyUtil.get("mongo.port");	
@@ -55,10 +60,10 @@ public class MongoConnector {
 
 	public static void connectToMongo(){
 		
-		System.out.println(host);
-		System.out.println(username);
-		System.out.println(pw);
-		System.out.println(dbname);
+//		System.out.println(host);
+//		System.out.println(username);
+//		System.out.println(pw);
+//		System.out.println(dbname);
 		
 		MongoCredential credential = MongoCredential.createScramSha1Credential(username, dbname, pw.toCharArray());
 		List<MongoCredential> credentials =new ArrayList<MongoCredential>();

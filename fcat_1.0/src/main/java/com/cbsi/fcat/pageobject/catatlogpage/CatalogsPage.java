@@ -54,7 +54,6 @@ public class CatalogsPage extends BasePage{
 		
 		return this;
 	}
-
 	
 	public void setMyCatalog(){
 		logger.info("looking for my catalog element to use");
@@ -73,6 +72,11 @@ public class CatalogsPage extends BasePage{
 		}
 		myCatalog = elementToUse;
 	}
+		
+	public String getMyCatalog(){
+		return myCatalog.getText();
+	}
+
 	/**
 	 * switched the css path due to catalogs 
 	 */
@@ -141,15 +145,17 @@ public class CatalogsPage extends BasePage{
 		return this;
 	}
 	
+	public static int tdAciton = 7; 
+
 	public DetailsPage clickDetails(){
-		WebElement Info = myCatalog.findElement(By.xpath("../../td[6]/a[1]"));
+		WebElement Info = myCatalog.findElement(By.xpath("../../td["+tdAciton+"]/div/a[1]"));
 		customWait(3);
 		Info.click();
 		return PageFactory.initElements(driver, DetailsPage.class);
 	}
 	
 	public AddCatalogPage clickEdit(){
-		WebElement Edit = myCatalog.findElement(By.xpath("../../td[6]/a[2]"));
+		WebElement Edit = myCatalog.findElement(By.xpath("../../td["+tdAciton+"]/div/a[2]"));
 		customWait(3);
 		Edit.click();
 		return PageFactory.initElements(driver, AddCatalogPage.class);
@@ -159,7 +165,7 @@ public class CatalogsPage extends BasePage{
 		logger.info((myCatalog == null) + "");
 		logger.info("text : " + myCatalog.getText());
 		//setMyCatalog();
-		WebElement Upload = myCatalog.findElement(By.xpath("../../td[6]/a[3]"));
+		WebElement Upload = myCatalog.findElement(By.xpath("../../td["+tdAciton+"]/div/a[3]"));
 		//WebElement Upload = myCatalog.findElement(By.xpath("../.."));
 
 		customWait(3);
@@ -169,14 +175,14 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public CatalogsPage clickDelete(){
-		WebElement Delete = myCatalog.findElement(By.xpath("../../td[6]/a[4]"));
+		WebElement Delete = myCatalog.findElement(By.xpath("../../td[" +tdAciton+ "]/div/a[4]"));
 		customWait(3);
 		Delete.click();
 		return this;
 	}
 	
 	public CoverageReportPage clickCoverageReport(){
-		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[6]/a[5]"));
+		WebElement CoverageReport = myCatalog.findElement(By.xpath("../../td[" +tdAciton+ "]/div/a[5]"));
 		customWait(3);
 		CoverageReport.click();
 		return PageFactory.initElements(driver, CoverageReportPage.class);
@@ -206,7 +212,9 @@ public class CatalogsPage extends BasePage{
 				break;
 			}
 		}
-		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[6]/a[4]"));
+		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[" +tdAciton+ "]/div/a[4]"));
+//		WebElement tempElementDeleteButton = tempElement.findElement(By.xpath("../../td[@class='actions-column']/div/a[4]"));
+
 //		waitForElementToClickable(By.xpath("../../td[6]/a[4]"));
 		tempElementDeleteButton.click();
 		customWait(5);
@@ -231,7 +239,7 @@ public class CatalogsPage extends BasePage{
 	}
 	
 	public ProductsCatalogPage goToCatalogWithSomeNumberOfProducts(int num1, int num2){
-		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
+//		List<WebElement> productNumbers = driver.findElements(By.cssSelector("td.number-column span"));
 		
 		WebElement elementToUse =getCatalogByNameAndProductNumber("albert", num1, num2);
 		elementToUse.click();
@@ -339,6 +347,7 @@ public class CatalogsPage extends BasePage{
 		refresh();
 		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
 		for(WebElement catalogName: catalogNames){
+			System.out.println(catalogName.getText());
 			catalogNamesToString.add(catalogName.getText());
 		}
 		
@@ -358,7 +367,7 @@ public class CatalogsPage extends BasePage{
 	public CatalogsPage cleanUpLeftOverCatalogs(){
 		List<String> catalogNamesToString= getCatalogNames();
 		for(String catalog: catalogNamesToString){
-			if(StringUtils.isNumeric(catalog) || catalog.startsWith(getHostname())){
+			if(StringUtils.isNumeric(catalog) || catalog.startsWith(getHostUserName())){
 				deleteTempFile(catalog);
 			}
 		}	
@@ -377,5 +386,20 @@ public class CatalogsPage extends BasePage{
 		Logout.click();
 		return PageFactory.initElements(driver, FCatLoginPage.class);
 	}
-
+	
+	public int getProductNumberByCatalog(String catalogName){
+		List<WebElement> catalogNames = driver.findElements(By.cssSelector("td.name-column a"));
+		for(WebElement c:catalogNames){
+			logger.info("looking for " + catalogName);
+			if(c.getText().equalsIgnoreCase(catalogName)){
+				return Integer.parseInt(c.findElement(By.xpath("../../td[@class ='number-column']/span")).getText());
+			}
+		}
+		
+		return -1;
+	}
+	
+	public String getMarketByCatalog(String catalog){
+		return myCatalog.findElement(By.xpath("../../td[@class='market-column']/span")).getText();
+	}	 
 }

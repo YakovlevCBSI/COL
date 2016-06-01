@@ -1,4 +1,4 @@
-package com.cbsi.tests.FCatMongoObject;
+package com.cbsi.fcat.database.mongo;
 
 import java.util.Map;
 
@@ -20,6 +20,9 @@ public class MongoItem {
 	public static final String PARTYID = "partyId";
 	
 	public static final String MODID = "modId";
+	
+	public static final String MFID = "mfId";
+	public static final String CTYPE = "ctype";
 	
 	private String masterId;
 	private Map<String, String> itemIds;

@@ -1,4 +1,4 @@
-package com.cbsi.tests.FcatDB;
+package com.cbsi.fcat.database.util;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -10,8 +10,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.cbsi.fcat.database.sql.Catalog;
+import com.cbsi.fcat.database.sql.LogoContentDao;
 import com.cbsi.fcat.util.GlobalVar;
-import com.cbsi.tests.FCatSqlObject.Catalog;
 
 public class MySQLConnector {
 	
@@ -19,7 +23,8 @@ public class MySQLConnector {
 //	static String dbURL = GlobalVar.dbURL;
 //	static String userName = GlobalVar.dbUserName;
 //	static String password = GlobalVar.dbPassword;
-	
+	public final static Logger logger = LoggerFactory.getLogger(MySQLConnector.class);
+
 	static String dbURL = "jdbc:mysql://fcat-engine.cloudapp.net:3306";
 	static String userName = "greenbox";
 	static String password = "greenbox";

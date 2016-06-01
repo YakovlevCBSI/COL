@@ -1,5 +1,6 @@
 package com.cbsi.fcat.pageobject.catalogpage;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -55,6 +56,20 @@ public class MappingPageTest extends AllBaseTest{
 	public void parseHeaderWithWhiteSpace(){
 		MappingPage mappingPage = UploadFullFile("whitespaceHeader.txt", UploadType.TXT);
 		assertTrue(mappingPage.getHeaders().equals(expectedPreviewsFromWhiteSpace));
+	}
+	
+	@Test
+	public void longTextPushesCnetDropdownToRight(){
+		MappingPage mappingPage = UploadFullFile("ProductUrlLong.txt", UploadType.TXT);
+		
+		assertTrue(mappingPage.getCnetFieldDropdownUpperRightX() < mappingPage.getPanelUpperRightX());
+	}
+	
+	@Test
+	public void dostNotHaveAHeader(){
+		MappingPage mappingPage = UploadFullFile("whitespaceHeader.txt", UploadType.TXT, false);
+		assertTrue(mappingPage.collectHeadersAsString().size() ==0);
+
 	}
 	
 	@After

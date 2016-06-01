@@ -1,0 +1,2 @@
+CustomerPN	MfrName	MfrPN	CNETProductID	Category	Sub-Category	Title	Description	Inventory	MSRP	Sell Price	UPCEAN	ProductURL
+ACME123	Hewlett-Packard	BL035US#ABA	S7695812	Systems	Desktops & Servers	6005 PRO SFF ATH X2 B22 2.8G		235	580,00	570,00	1234567890	http://www.site.com/product/acme123/product/acme123/product/acme123/product/acme123/product/acme123/product/acme123/product/acme123/product/acme123/product/acme123

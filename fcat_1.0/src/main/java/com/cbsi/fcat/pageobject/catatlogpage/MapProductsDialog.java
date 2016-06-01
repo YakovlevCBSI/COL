@@ -1,6 +1,8 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,9 +20,17 @@ public class MapProductsDialog extends BasePage{
 	public MapProductsDialog(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad(By.cssSelector("div#mappingDialog div.content.catalog"));
-		// TODO Auto-generated constructor stub
+		resizeMapDialog();
 		
-		//waitforpage to Load.
+		// Firefox loads slow.  Wait for the navi button that might be cut off until visible.
+		waitForPageToLoad(By.cssSelector("div#mappingDialog div div div.nav-bar.actions a.nav-button"));
+	}
+	
+	public void resizeMapDialog(){
+		int numheight = 720;
+		JavascriptExecutor js =(JavascriptExecutor)(driver);
+		js.executeScript("document.getElementsByClassName(\"fancybox-inner\")[0].style.width=\"" + numheight + "px\";");
+//		js.executeScript("document.getElementsByClassName(\"ui-dialog-content\")[0].style.height=\"" + (numheight-100) +"px\";");
 	}
 	
 	@FindBy(css="#mappedFlag")
@@ -56,6 +66,7 @@ public class MapProductsDialog extends BasePage{
 	private WebElement Cancel;
 	
 	public ProductsCatalogPage clickCancel(){
+		scrollToView(Cancel);
 		Cancel.click();
 		waitForElementToBeInvisible(By.cssSelector("div#mappingDialog div.content.catalog"));
 		forceWait(500);
@@ -92,10 +103,24 @@ public class MapProductsDialog extends BasePage{
 	@FindBy(css="input[id='manufacturer-name-mapper']")
 	private WebElement ManufactuererName;
 	
+	@FindBy(css="input#manufacturer-pn-mapper")
+	private WebElement ManufacturerPartNumber;
+	
 	public MapProductsDialog searchName(String searchText){	
 		waitForElementToClickable(By.cssSelector("input[id='manufacturer-name-mapper']"));
 		//forceWait(3);
 		deleteText();
+		ManufactuererName.sendKeys(searchText);
+
+		waitForMapSearch();
+		
+		return this;
+	}
+	
+	public MapProductsDialog searchMfPn(String searchText){	
+		waitForElementToClickable(By.cssSelector("input[id='manufacturer-name-mapper']"));
+		//forceWait(3);
+		deleteTextMfPn();
 		ManufactuererName.sendKeys(searchText);
 
 		waitForMapSearch();
@@ -142,4 +167,16 @@ public class MapProductsDialog extends BasePage{
 			logger.info("deleteText is ignored...");
 		}
 	}
+	
+	public void deleteTextMfPn(){
+		try{
+			int wordLength = this.ManufacturerPartNumber.getAttribute("value").length();
+			for(int i=0; i<wordLength; i++){
+				this.ManufactuererName.sendKeys(Keys.BACK_SPACE);
+			}
+		}catch(NullPointerException e){
+			logger.info("deleteText is ignored...");
+		}
+	}
+	
 }

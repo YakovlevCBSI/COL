@@ -2,13 +2,15 @@ package com.cbsi.fcat.pageobject.catatlogpage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ public class AddCatalogPage extends BasePage {
 	public AddCatalogPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+//		waitForTextToBeVisible("Properties", "h1");
 		logger.info("Done loading addCatalogs page.");
 	}
 	
@@ -48,6 +51,14 @@ public class AddCatalogPage extends BasePage {
 	@FindBy(css="select[name='CountryMarket']") 
 	private WebElement Market;
 	
+	@FindBy(css="label[for='FullFile']")
+	private WebElement FullFile;
+	
+	public AddCatalogPage setFullFile(){
+		FullFile.click();
+		return this;
+	}
+	
 	public UploadPopupPage clickNext(){
 		Next.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);
@@ -65,7 +76,7 @@ public class AddCatalogPage extends BasePage {
 		//customWait(20);
 		logger.info("file created: " +tempFileName);
 		name.sendKeys(tempFileName);
-		customWait(5);
+		customWait(20);
 		Next.click();
 		return PageFactory.initElements(driver, UploadPopupPage.class);
 	}
@@ -81,15 +92,14 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage setMarket(String country){
-		Market.click();
-		List<WebElement> list = Market.findElements(By.cssSelector("option"));
+		forceWait(500);
+		WebElement dropdown = Market.findElement(By.xpath("../a"));
+		dropdown.click();
 		
-		for(WebElement e: list){
-			if(e.getText().toLowerCase().equals(country.toLowerCase())){
-				e.click();
-				break;
-			}
-		}
+		WebElement countryFromDropdown = driver.findElement(By.cssSelector("ul.selectBox-dropdown-menu li a[rel='" + getCodeByCountry(country) + "']"));
+		
+		waitForElementToBeVisible(countryFromDropdown);
+		countryFromDropdown.click();
 		return this;
 	}
 	
@@ -112,6 +122,25 @@ public class AddCatalogPage extends BasePage {
 		return errorSpan.isDisplayed();	
 	}
 	
+	public String[] countries = new String[] {"Belgium (Dutch)", "El Salvador", "Switzerland (English)", "United Kingdom", "World Wide"};
+	public String[] code = new String[] {"NL-BEL", "SLV", "EN-CHE","GBR", "WW"};
+	
+	public String pickRandomMarket(){
+		int randomNumber = new Random().nextInt(countries.length);
+		return countries[randomNumber];
+	}
+	
+	public String getCodeByCountry(String country){
+		int index=-1;
+		for(int i=0; i<countries.length; i++){
+			if(countries[i].equals(country)){
+				index = i;
+				break;
+			}
+		}
+		
+		return code[index];
+	}
 	//=================================== Automatic components ==========================================//
 	
 	@FindBy(css="label#lb_UploadMode_Manual")
@@ -140,16 +169,19 @@ public class AddCatalogPage extends BasePage {
 	@FindBy(css="input#FileLocation_Password")
 	private WebElement Password;
 	
-	public AddCatalogPage typeFileLocation(String fileLocal){
+	public AddCatalogPage setFileLocation(String fileLocal){
+		waitForElementToBeVisible(FileLocation);
+		FileLocation.clear();
 		FileLocation.sendKeys(fileLocal);
 		return this;
 	}
-	public AddCatalogPage typeUserName(String username){
+	public AddCatalogPage setUserName(String username){
+		waitForElementToBeVisible(Username);
 		Username.sendKeys(username);
 		return this;
 	}
 	
-	public AddCatalogPage typePassword(String password){
+	public AddCatalogPage setPassword(String password){
 		Password.sendKeys(password);
 		return this;
 	}
@@ -202,8 +234,8 @@ public class AddCatalogPage extends BasePage {
 		
 		return this;
 	}
-	public AddCatalogPage typeFileAndUserInfoAll(String fileLocation, String username, String password){
-		return typeFileLocation(fileLocation).typeUserName(username).typePassword(password);
+	public AddCatalogPage setFileAndUserInfoAll(String fileLocation, String username, String password){
+		return setFileLocation(fileLocation).setUserName(username).setPassword(password);
 		
 	}
 	
@@ -214,6 +246,7 @@ public class AddCatalogPage extends BasePage {
 	}
 	
 	public AddCatalogPage clickDoNotUseSchedule(){
+		forceWait(500);
 		DoNotUseSchedule.click();
 		return this;
 	}

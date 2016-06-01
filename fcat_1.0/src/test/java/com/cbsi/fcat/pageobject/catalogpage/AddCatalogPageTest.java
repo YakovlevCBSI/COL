@@ -3,20 +3,10 @@ package com.cbsi.fcat.pageobject.catalogpage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.InvocationTargetException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import net.jcip.annotations.NotThreadSafe;
-
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 
 import com.cbsi.fcat.pageobject.catatlogpage.AddCatalogPage;
@@ -29,10 +19,12 @@ import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.InfoType;
 import com.cbsi.fcat.pageobject.catatlogpage.DetailsPage.ProcessingQueue;
 import com.cbsi.fcat.pageobject.catatlogpage.MappingPage.CNetFields;
 import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage.UploadType;
-import com.cbsi.fcat.pageobject.foundation.AllBaseTest;
+import com.cbsi.fcat.pageobject.foundation.EmbedBaseTest;
+import com.cbsi.fcat.pageobject.foundation.FormBaseTest;
 import com.cbsi.fcat.util.GlobalVar;
 
-public class AddCatalogPageTest extends AllBaseTest{
+//public class AddCatalogPageTest extends EmbedBaseTest{
+public class AddCatalogPageTest extends FormBaseTest{
 
 	public AddCatalogPageTest(String URL, String browser) {
 		super(URL, browser);
@@ -60,16 +52,37 @@ public class AddCatalogPageTest extends AllBaseTest{
 	
 	
 	private String URL= GlobalVar.ftpURL + "Test/myFullFile.txt";
-	private String ExceUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
+	private String sURL=GlobalVar.sftpURL + "Test/myFullFile.txt";
+	private String xlsUrl= GlobalVar.ftpURL + "Test/Xls.xls";
+	private String xlsxUrl=GlobalVar.ftpURL + "Test/Excel.xlsx";
 	private String USERNAME = GlobalVar.ftpUserName;
 	private String PASSWORD = GlobalVar.ftpPassword;
+	
+	public static final String ConnectionError = "Cannot connect to the specified ftp server.";
+	public static final String UrlError = "Invalid File URL.";
+	
+	
 
 	@Test
 	public void automaticUploadInvalidURL(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
-		addCatalogPage.fillInName().clickGetFile();
-		try{ } catch(RuntimeException e){}
+		addCatalogPage.setFileAndUserInfoAll("ftp://test.com", USERNAME, PASSWORD);
+		UploadPopupPage uploadPage = addCatalogPage.fillInName().clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPage.getMessage());
+		
+		assertTrue(hasNoError());
+	}
+	
+	@Test
+	public void automaticUploadInvalidFilePath(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(URL+"a", USERNAME, PASSWORD);
+		UploadPopupPage uploadPage = addCatalogPage.fillInName().clickGetFile();
+		
+		//GetMessage
+		assertEquals(UrlError, uploadPage.getMessage());
 		
 		assertTrue(hasNoError());
 	}
@@ -77,9 +90,12 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void automaticUploadWithInvalidUsername(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, "bad", PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(URL, "bad", PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		uploadPopupPage.clickGetFile();
+		UploadPopupPage uploadPage = uploadPopupPage.clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPage.getMessage());
 		
 		assertTrue(hasNoError());		
 	}
@@ -87,20 +103,34 @@ public class AddCatalogPageTest extends AllBaseTest{
 	@Test
 	public void automaticUploadWithInvalidPassword(){
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, "bad");
+		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, "bad");
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
 		uploadPopupPage.clickGetFile();
+		
+		//GetMessage
+		assertEquals(ConnectionError, uploadPopupPage.getMessage());
 		
 		assertTrue(hasNoError());
 	}
 
 	@Test
-	public void UploadFullFileAutomaticFromScratch(){
+	public void UploadFullFileAutomaticFtpFromScratch(){
 //		driver.manage().window().setSize(new Dimension(570, 500));
 		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
-		addCatalogPage.typeFileAndUserInfoAll(URL, USERNAME, PASSWORD);
+		addCatalogPage.setFileAndUserInfoAll(URL, USERNAME, PASSWORD);
 		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
-		MappingPage mappingPage = (MappingPage)uploadPopupPage.clickGetFile().clickNextAfterUpload(true);
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void UploadFullFilAutomaticSftpFromScratch(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(sURL, USERNAME, PASSWORD).setFullFile();
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.TXT).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
@@ -112,6 +142,37 @@ public class AddCatalogPageTest extends AllBaseTest{
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void UploadFullFileOptionStaysCheckedAndOverridePrevious() throws InterruptedException{
+		MappingPage mappingPage = UploadFullFile();
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		detailsPage.FileUploadIsDone();
+		
+		UploadPopupPage uploadPopup = detailsPage.clickUploadFile();
+		assertTrue(uploadPopup.isFullFile());
+		uploadPopup.clickCancel();
+		
+		uploadPopup = detailsPage.clickUploadFile();
+		assertTrue(uploadPopup.isFullFile());
+		
+		uploadPopup = uploadLocalFileOSSpecific(uploadPopup).selectDropBoxOption(UploadType.TXT).clickSetUpColumnMapping().checkFullFile().clickNext();
+		MappingPage mappingPageNew = (MappingPage) uploadPopup.clickNextAfterUpload(true);
+		mappingPageNew.setCnetField(CNetFields.NotMapped, 1);
+		mappingPageNew.setCnetField(CNetFields.ManufacturerName, 2);
+		mappingPageNew.setCnetField(CNetFields.ProductId, 3);
+		mappingPageNew.setCnetField(CNetFields.ManufacturerPartNumber, 1);
+		mappingPageNew.clickSave();
+		
+		
+		DetailsPage detailsPageNew = PageFactory.initElements(driver, DetailsPage.class);
+		assertTrue(detailsPageNew.FileUploadIsDone());
+		
+		CatalogsPage catPage = detailsPageNew.clickReturnToList();
+		ProductsCatalogPage productPage = catPage.goToCatalogByName(tempFile);
+		assertTrue(productPage.getTotalProducts()==7);
 	}
 	
 	@Test
@@ -131,8 +192,38 @@ public class AddCatalogPageTest extends AllBaseTest{
 	}
 	
 	@Test
-	public void uploadfullFileExcelManual(){
+	public void uploadfullFileExcelXlsxManual(){
 		MappingPage mappingPage = UploadFullFile("Excel.xlsx", UploadType.EXCEL);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullfileManualExcelXls(){
+		MappingPage mappingPage = UploadFullFile("Xls.xls", UploadType.EXCEL);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullfileAutomaticFtplExcelXlsx(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(xlsxUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
+		DetailsPage detailsPage = mappingPage.automap();
+		
+		assertTrue(detailsPage.FileUploadIsDone());
+	}
+	
+	@Test
+	public void uploadFullfileAutomaticFtplExcelXls(){
+		AddCatalogPage addCatalogPage = navigateToAddcatalogPage(true);
+		addCatalogPage.setFileAndUserInfoAll(xlsUrl, USERNAME, PASSWORD);
+		UploadPopupPage uploadPopupPage= addCatalogPage.fillInName();
+		MappingPage mappingPage = (MappingPage)uploadPopupPage.selectDropBoxOption(UploadType.EXCEL).clickGetFile().clickNextAfterUpload(true);
 		DetailsPage detailsPage = mappingPage.automap();
 		
 		assertTrue(detailsPage.FileUploadIsDone());
@@ -162,7 +253,39 @@ public class AddCatalogPageTest extends AllBaseTest{
 		assertTrue(detailsPage.FileUploadIsDone());
 	}
 
+	@Test
+	public void dataValidationOnItemIds(){
+		MappingPage mappingPage = UploadFullFile("validation.txt", UploadType.TXT);
+		DetailsPage detailsPage = mappingPage.automap();
+		assertTrue(detailsPage.FileUploadIsDone());
 
+		detailsPage.expandDetails();
+		String message = detailsPage.getProcessingQueueMessage(ProcessingQueue.PARSE, InfoType.MESSAGE, true);
+
+		assertTrue(message.contains("Product ID must be at most 100 characters long"));
+		assertTrue(message.contains("CNET SKU ID must be at most 50 characters long"));
+		assertTrue(message.contains("UPC/EAN must be at most 50 characters long"));
+		assertTrue(message.contains("Manufacturer Name must be at most 100 characters long"));
+		assertTrue(message.contains("Manufacturer Part Number must be at most 100 characters long"));
+	}
+
+	@Test
+	public void deliemiterIsSavedDependsOnFileType(){
+		uploadFullFileXMLManual();
+		DetailsPage detailsPage = PageFactory.initElements(driver, DetailsPage.class);
+		UploadPopupPage uploadPopupInDetails = detailsPage.clickUploadFile();
+		
+		assertTrue(uploadPopupInDetails.getFileType()+"", uploadPopupInDetails.getFileType() == UploadType.XML);
+		
+		uploadPopupInDetails.clickCancel();
+		
+		CatalogsPage catalogsPage = detailsPage.clickReturnToList();
+		UploadPopupPage uploadPopupInCatalogs = catalogsPage.setMyCatalog(tempFile).clickUpload();
+		
+		assertTrue(uploadPopupInCatalogs.getFileType()+"", uploadPopupInCatalogs.getFileType() == UploadType.XML);
+		
+	}
+	
 	public String getProcessedNumber(String queueMessage){
 		System.out.println(queueMessage);
 		String numInString = queueMessage.split(": ")[1].replace(".", "");

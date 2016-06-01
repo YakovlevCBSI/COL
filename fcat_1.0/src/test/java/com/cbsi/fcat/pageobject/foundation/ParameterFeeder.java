@@ -6,14 +6,15 @@ import java.util.Collection;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.cbsi.fcat.util.GlobalVar;
+import com.cbsi.fcat.util.GlobalVar.Env;
 import com.cbsi.fcat.util.ReadFile;
 
 
 public class ParameterFeeder {
-	public static boolean isDevTest = true;
+	public static boolean isDevTest = GlobalVar.isDev;
 //	public static boolean isProdTest = false;
 //	private boolean isDevTest = true;
-	public static boolean isProdTest = false;
+	public static boolean isProdTest = GlobalVar.isProd;
 	private boolean includeHttps = true;
 
 	public ParameterFeeder(){
@@ -25,9 +26,7 @@ public class ParameterFeeder {
 			e.printStackTrace();
 		}
 		isDevTest = isDevTesting();
-//		isDevTest=true;
 		isProdTest = isProdTesting();
-//		isProdTest = true;
 
 		System.out.println("//------------DEVorPROD: " + isDevTest +" / " + isProdTest +"---------//");
 	}
@@ -35,8 +34,12 @@ public class ParameterFeeder {
 	public boolean isDevTesting(){
 		String system="";
 		if((system = System.getProperty("environment")) != null){
-			if(system.equals("dev")) return true;
+			if(system.equals("dev")) 
+				return true;
 		}
+		
+		if(isDevTest) 
+			return true;
 	
 		return false;
 	}
@@ -44,27 +47,38 @@ public class ParameterFeeder {
 	public boolean isProdTesting(){
 		String system="";
 		if((system = System.getProperty("environment")) != null){
-			if(system.equals("prod")) return true;
+			System.out.println(system = System.getProperty("environment"));
+			System.out.println("is not null");
+			if(system.equals("prod")) {
+				return true;
+
+			}
+		}
+		
+		if(isProdTest)  {
+			
+			System.out.println(isProdTest);
+			return true;
 		}
 		 return false;
 	}
 	
-	public Object[][] configureTestParams(String whichURLArray){
+	public Object[][] configureTestParams(Env env){
 		String[] URLs = null;
 		
-		if(whichURLArray.equals("all")){
+		if(env == Env.ALL){
 			URLs= getAllURL();
 		}
-		else if(whichURLArray.equals("embed")){
+		else if(env == Env.EMBED){
 			URLs = getEmbedURL();
 		}
-		else if(whichURLArray.equals("form")){
+		else if(env == Env.FORM){
 			URLs = getFormURL();
 		}
-		else if(whichURLArray.equals("stage")){
+		else if(env == Env.STAGE){
 			URLs = getStageURL();
 		}
-		else if(whichURLArray.equals("allAndSecure")){
+		else if(env == Env.ALLSECURE){
 			URLs = doubleArrayUrlWithHttps(getAllURL());
 		}
 		
@@ -191,6 +205,13 @@ public class ParameterFeeder {
 			};
 			URLFinal = URLsDev;
 		}
+		else if (isProdTest){
+			String[] URLsProd= {
+					GlobalVar.prodServer
+			};
+			URLFinal = URLsProd;
+
+		}
 		
 		return URLFinal;
 	}
@@ -219,7 +240,7 @@ public class ParameterFeeder {
 	}
 	
 	public static void pritnParams(){
-		Object[][] objects =  new ParameterFeeder().configureTestParams("allAndSecure");
+		Object[][] objects =  new ParameterFeeder().configureTestParams(Env.ALLSECURE);
 		int count=0;
 		for(int i= 0; i< objects.length; i++){
 //			for (int j=0; j<objects[i].length; j++){
@@ -247,7 +268,9 @@ public class ParameterFeeder {
 		}
 		
 		for(int i=0; i<insecureUrls.length; i++){
-			insecureUrls[i] = getHttps(insecureUrls[i]);
+			if(!insecureUrls[i].contains("dev-")){
+				insecureUrls[i] = getHttps(insecureUrls[i]);
+			}
 		}
 		
 		return ArrayUtils.addAll(insecureUrlsToKeep, insecureUrls);

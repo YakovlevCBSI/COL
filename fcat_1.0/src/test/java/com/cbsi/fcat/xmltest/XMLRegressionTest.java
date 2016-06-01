@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
@@ -83,6 +84,7 @@ public class XMLRegressionTest extends FormBaseTest{
 		}
 	}
 	
+	@Ignore("Not a bug")
 	@Test
 	public void xmltest3_AddProductIsDisabled(){
 		for(int i=0; i<partyCodes.size()/5; i++){

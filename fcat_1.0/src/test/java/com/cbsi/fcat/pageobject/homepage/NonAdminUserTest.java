@@ -47,7 +47,7 @@ public class NonAdminUserTest extends FormBaseTest{
 	
 	public void loginAsNonAdmin() {
 		FCatLoginPage loginPage = PageFactory.initElements(driver, FCatLoginPage.class);
-		homePage = loginPage.loginToHomePage(username, password).goToHomePage();
+		homePage = loginPage.loginToHomePage(username, password);//.goToHomePage();
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {

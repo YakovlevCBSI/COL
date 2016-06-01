@@ -1,6 +1,7 @@
 package com.cbsi.fcat.pageobject.catatlogpage;
 
 import java.io.File;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -23,6 +24,9 @@ public class UploadPopupPage extends BasePage{
 	public UploadPopupPage(WebDriver driver){
 		super(driver);
 		waitForPageToLoad();
+//		logger.debug("wait for page load done.");
+		waitForTextToBeVisible("Upload Catalog", "div.overlay-header.dialog");
+
 		forceWait(500);
 	}
 	
@@ -49,9 +53,13 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div.tab-panel p a.next-button")
 	private WebElement Next;
 	
-	@FindBy(linkText="Cancel")
+	private static final String CancelPath = "p a.x-cancel";
+	@FindBy(css=CancelPath)
 	private WebElement Cancel;
 
+	@FindBy(linkText="Sample File")
+	private WebElement SampleFile;
+	
 	private WebElement Title;
 
 	private WebElement Cross;
@@ -59,6 +67,26 @@ public class UploadPopupPage extends BasePage{
 	@FindBy(css="div.overlay-upload-catalog-body.dialog")
 	private WebElement dialogBody;
 		
+	public void clickCancel(){
+		waitForElementToBeVisible(Cancel);
+		Cancel.click();
+		waitForElementToBeInvisible(By.cssSelector(CancelPath));
+	}
+	
+	public String getSampleFileUrl(){
+		return SampleFile.getAttribute("href");
+	}
+	
+	public UploadPopupPage clickSampleFile(){
+		SampleFile.click();
+		return this;
+	}
+	
+	public UploadPopupPage clickHasHeader(){
+		FirstRow.click();
+		return this;
+	}
+	
 	public boolean isTitleDisplayed(){
 		Title = dialogBody.findElement(By.xpath("../div[contains(@class, 'overlay-header dialog')]"));	
 		return Title.isDisplayed() && !Title.getText().isEmpty();
@@ -98,7 +126,7 @@ public class UploadPopupPage extends BasePage{
 	private WebElement NextAfterUpload;
 	public BasePage clickNextAfterUpload(boolean noMappingDefined){
 		//customWait(30);
-		waitForElementToBeVisible(By.cssSelector("div#backButtonContainer a#progressNextButton"));
+		waitForQuickLoad(30);		
 		NextAfterUpload.click();
 		if(noMappingDefined){
 			return PageFactory.initElements(driver, MappingPage.class);		
@@ -106,6 +134,11 @@ public class UploadPopupPage extends BasePage{
 		else{
 			return PageFactory.initElements(driver, DetailsPage.class);
 		}
+	}
+	
+	public String getMessage(){
+		waitForElementToBeVisible(By.cssSelector("div.upload-result"));
+		return driver.findElement(By.cssSelector("div.upload-result")).getText();
 	}
 	
 	@FindBy(css="div.upload-result")
@@ -138,36 +171,51 @@ public class UploadPopupPage extends BasePage{
 	}
 	
 	@FindBy(css="label#lb_Full_File")
+//	@FindBy(css="input#Full_File")
 	private WebElement FullFile;
 	public UploadPopupPage checkFullFile(){
-		if(!FullFile.isSelected()){
+		if(!isFullFile()){
 			FullFile.click();
 		}
 		
 		return this;
 	}
 	
-	@FindBy(css="lb_ChangeImportSettings")
+	public boolean isFullFile(){
+		return FullFile.getAttribute("class").contains("checked")?true:false;
+	}
+	
+	@FindBy(css="label#lb_ChangeImportSettings")
 	private WebElement SetUpColumnMapping;
-	public void clickSetUpColumnMapping(){
-		if(!SetUpColumnMapping.isEnabled()){
+	public UploadPopupPage clickSetUpColumnMapping(){
+		if(!isColumnMappingEnabled()){
 			SetUpColumnMapping.click();
 		}
+		
+		return this;
+	}
+	
+	public boolean isColumnMappingEnabled(){
+		return SetUpColumnMapping.getAttribute("class").contains("checked")?true:false;
 	}
 	
 	@FindBy(css="div.tab-panel div a.selectBox span.selectBox-arrow")
 	private WebElement dropbox;
 	
-	@FindBy(css="li a[rel='Comma']")
+	private final static String CsvPath = "li a[rel='Comma']";
+	@FindBy(css=CsvPath)
 	private WebElement CSV;
 	
-	@FindBy(css="li a[rel='Tab']")
+	private final static String TxtPath = "li a[rel='Tab']";
+	@FindBy(css=TxtPath)
 	private WebElement TXT;
 	
-	@FindBy(css="li a[rel='Excel']")
+	private final static String ExcelPath = "li a[rel='Excel']";
+	@FindBy(css=ExcelPath)
 	private WebElement Excel;
 	
-	@FindBy(css="li a[rel='Xml']")
+	private final static String XmlPath = "li a[rel='Xml']";
+	@FindBy(css=XmlPath)
 	private WebElement XML;
 	
 	public UploadPopupPage selectDropBoxOption(UploadType type){
@@ -178,6 +226,15 @@ public class UploadPopupPage extends BasePage{
 			e.printStackTrace();
 		}
 		dropbox.click();
+		
+		List<WebElement> FileTypes = driver.findElements(By.cssSelector("ul[class*='selectBox-dropdown-menu']"));
+		WebElement lastFileType = FileTypes.get(FileTypes.size() -1);
+		
+		CSV = lastFileType.findElement(By.cssSelector(CsvPath));
+		TXT = lastFileType.findElement(By.cssSelector(TxtPath));
+		Excel = lastFileType.findElement(By.cssSelector(ExcelPath));
+		XML = lastFileType.findElement(By.cssSelector(XmlPath));
+		
 		quickWait();
 		if(type == UploadType.CSV) CSV.click();
 		else if(type == UploadType.TXT) TXT.click();
@@ -187,6 +244,24 @@ public class UploadPopupPage extends BasePage{
 		return this;
 	}
 	
+//	public void setupCheckBoxes(){
+//		CSV = driver.findElements(By.cssSelector(CsvPath)).get(index);
+//	}
+	
+	@FindBy(css="a.selectBox span.selectBox-label")
+	private WebElement selectedFileType;
+	
+	public UploadType getFileType(){
+		String fileType = selectedFileType.getText();
+		
+		if(fileType.equalsIgnoreCase(UploadType.CSV.toString())) return UploadType.CSV;
+		else if(fileType.toUpperCase().contains(UploadType.TXT.toString())) return UploadType.TXT;
+		else if(fileType.toUpperCase().contains(UploadType.EXCEL.toString())) return UploadType.EXCEL;
+		else if(fileType.toUpperCase().contains(UploadType.XML.toString())) return UploadType.XML;
+
+		return null;
+	}
+	
 	public enum UploadType{
 		CSV,
 		TXT,
@@ -194,26 +269,31 @@ public class UploadPopupPage extends BasePage{
 		XML		
 	}
 
-	public String getProgress(){
-		int count =0;
-		String status= "";
-		long startTime= System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < 40000){
-			if (!status.equals(progress.getText())){
-				status = progress.getText();
-				logger.info(status);
-				if(status.contains("100")) break;
-			}
-			count++;
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return progress.getText();
+//	public String getProgress(){
+//		int count =0;
+//		String status= "";
+//		long startTime= System.currentTimeMillis();
+//		while(System.currentTimeMillis() - startTime < 40000){
+//			if (!status.equals(progress.getText())){
+//				status = progress.getText();
+//				logger.info(status);
+//				if(status.contains("100")) break;
+//			}
+//			count++;
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return progress.getText();
+//	}
+	
+	public void waitForProgress(){
+		waitForQuickLoad(30);
+
 	}
 	
 	public UploadPopupPage uploadLocalFileFromFinder() throws InterruptedException{
@@ -240,7 +320,9 @@ public class UploadPopupPage extends BasePage{
 		}else{
 			pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/London.csv";
 			if(isGrid){
-				pathToFile = "/home/slave/Documents/Catalogs/London.csv";
+				pathToFile = "/home/qe/Documents/Catalogs/London.csv";
+//				pathToFile = "/home/qe/Documents/London.csv";
+
 			}
 		}
 		
@@ -261,8 +343,9 @@ public class UploadPopupPage extends BasePage{
 		}
 		
 		String pathToFile = System.getProperty("user.dir")  + "/src/test/resources/Catalogs/"+fileName;
+		
 		if(isGrid){
-			pathToFile = "/home/slave/Documents/Catalogs/" + fileName;
+			pathToFile = "/home/qe/Documents" + fileName;
 		}
 		
 		logger.info(pathToFile);

@@ -6,19 +6,23 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.ListUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cbsi.fcat.pageobject.catatlogpage.CatalogsPage;
 import com.cbsi.fcat.pageobject.catatlogpage.CoverageReportPage;
+import com.cbsi.fcat.pageobject.catatlogpage.UploadPopupPage;
 import com.cbsi.fcat.pageobject.homepage.FCatHomePage;
 import com.cbsi.fcat.util.GlobalVar;
 
@@ -40,6 +44,14 @@ public abstract class BasePage {
 	}
 	
 	public FCatHomePage goToHomePage(){
+		return goToHomePage(false);
+	}
+	
+	public FCatHomePage goToHomePage(boolean clickLinkToGo){
+		if(clickLinkToGo){
+			driver.findElement(By.cssSelector("a[href='/fcat/']")).click();
+		}
+		
 		return PageFactory.initElements(driver, FCatHomePage.class);
 	}
 
@@ -91,7 +103,7 @@ public abstract class BasePage {
 	public void waitForElementToBeInvisible(By by){
 		waitForElementToBeInvisible(by, 30000);
 	}
-	
+
 	public void waitForElementToBeInvisible(By by, long timeInMilli){
 		new WebDriverWait(driver, timeInMilli).until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
@@ -106,11 +118,15 @@ public abstract class BasePage {
 	}
 	
 	public void waitForTextToBeVisible(String text, String...tagNames){
+		waitForTextToBeVisible(10, text, tagNames);
+	}
+	public void waitForTextToBeVisible(int seconds, String text, String...tagNames){
 		String[] tags = tagNames;
 		WebElement headerOnWait= null;
 		long start = System.currentTimeMillis();
 	
-		while(headerOnWait== null && (System.currentTimeMillis() - start < 10000)){
+		logger.debug("waiting for text [" + text + "]");
+		while(headerOnWait== null && (System.currentTimeMillis() - start < (seconds*1000))){
 			
 			List<WebElement> headers  = null;
 			
@@ -119,12 +135,16 @@ public abstract class BasePage {
 				
 				if(tags.length >=2 && headers != null) headers = ListUtils.union(headers, header1s);
 				else headers =header1s;
+				
+				logger.debug("tag size found: " + headers.size());
 			}
 			
 			for(WebElement h: headers){
+				logger.debug("inner text: " + h.getText());
 				try{
 					if(h.getText().contains(text)){
 						headerOnWait = h;
+						logger.debug("found text [" + text + "]");
 						break;
 					}
 				}catch(Exception e){
@@ -169,10 +189,10 @@ public abstract class BasePage {
 		}catch(TimeoutException e){
 			
 		}
-		waitForElementToBeInvisible(By.cssSelector("div.splash-image"), 5);
+		waitForElementToBeInvisible(By.cssSelector("div.splash-image"), second);
 	}
 	
-	protected String tempFileName = getHostname() + System.currentTimeMillis() + "";
+	protected String tempFileName = getHostUserName() + System.currentTimeMillis() + "";
 	public String getTempFileName(){
 		return tempFileName;
 	}
@@ -188,23 +208,68 @@ public abstract class BasePage {
 		   forceWait(500);
 	}
 	
+	public void scrollToViewXAndY(WebElement element){
+		int elmenentPositionX = element.getLocation().getX();
+		int elementPositionY = element.getLocation().getY();
+	   String js = String.format("window.scroll(%s, %s)", elmenentPositionX, elementPositionY);
+	   ((JavascriptExecutor)driver).executeScript(js);
+	   forceWait(500);
+	}
+	
 	public String escapeHtml(String text){
 		return text.replace("<", "&lt;").replace(">","&gt;");
 	}
 	
 	
-	public static String getHostname(){
-		String hostName="";
+//	public static String getHostname(){
+//		String hostName="";
+//		try{
+//		    InetAddress addr;
+//		    addr = InetAddress.getLocalHost();
+//		    hostName = addr.getHostName();
+//		}
+//		catch (UnknownHostException ex){
+//		    logger.info("Hostname can not be resolved");
+//		}
+//		
+//		return hostName;
+//	}
+//	
+	public String getHostUserName(){
+		return System.getProperty("user.name");
+	}
+	
+	//-------------------- Bottome Bar ----------------//
+	@FindBy(linkText="Return to List")
+	private WebElement ReturnToList;
+	
+	public CatalogsPage clickReturnToList(){
 		try{
-		    InetAddress addr;
-		    addr = InetAddress.getLocalHost();
-		    hostName = addr.getHostName();
-		}
-		catch (UnknownHostException ex){
-		    logger.info("Hostname can not be resolved");
+			waitForElementToClickable(By.linkText("Return to List"));
+			ReturnToList.click();
+		}catch(Exception e){
+			
 		}
 		
-		return hostName;
+		return PageFactory.initElements(driver, CatalogsPage.class);
+	}
+	
+	@FindBy(css="a#upload-file")
+	private WebElement UploadFile;
+	
+	public UploadPopupPage clickUploadFile(){
+		UploadFile.click();
+		return PageFactory.initElements(driver, UploadPopupPage.class);
+	}
+	
+	public void acceptAlert(){
+		forceWait(500);
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+	}
+	
+	public void navigateBack(){
+		driver.navigate().back();
 	}
 	
 }

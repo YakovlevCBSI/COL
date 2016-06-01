@@ -1,4 +1,4 @@
-package com.cbsi.tests.FCatSqlObject;
+package com.cbsi.fcat.database.sql;
 
 import java.util.Date;
 

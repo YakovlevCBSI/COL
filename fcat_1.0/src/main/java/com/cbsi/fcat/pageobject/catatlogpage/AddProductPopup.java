@@ -38,6 +38,16 @@ public class AddProductPopup extends BasePage{
 	
 	@FindBy(css="table.fcat-tbl tbody tr td input[name='skuId']")
 	private WebElement cnetSkuId;
+		
+	@FindBy(linkText="Save")
+	private WebElement Save;
+	
+	@FindBy(css="div#errorMsg")
+	private WebElement ErrorMessage;
+	
+	@FindBy(css="div#addProductConfirm a")
+	private WebElement OK;
+	
 	
 	private WebElement inventory;
 	private WebElement price;
@@ -63,30 +73,42 @@ public class AddProductPopup extends BasePage{
 		cnetSkuId.sendKeys(text);
 	}
 	
-	@FindBy(linkText="Save")
-	private WebElement Save;
-	
 	public ProductsCatalogPage clickSave(){
 		Save.click();
 		forceWait(1000);
+		
+		/**
+		 * Javascript alert is removed from UI.
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         if(alert.getText().contains("be mapped")){
         	throw new NullPointerException("Unable to add product: " + alert.getText());
         }
         alert.accept();
-        forceWait(1000); //change this to wait for splash screen.
+        */
+		
+//        forceWait(1000); //change this to wait for splash screen.
+        confirmAddProductDialog();
+        
 		return PageFactory.initElements(driver, ProductsCatalogPage.class);
+	}
+	
+	public void confirmAddProductDialog(){
+		waitForPageToLoad(By.cssSelector("div.overlay-header.dialog"));
+		OK.click();		
 	}
 	
 	public String clickSaveFail(){
 		Save.click();
 		forceWait(1000);
+		/**
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertText=  alert.getText();
         alert.accept();
-        return alertText;
+        */
+		
+		return ErrorMessage.getText();
 	}
 	
 	@FindBy(linkText="Cancel")
